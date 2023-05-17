@@ -37,15 +37,6 @@ private:
     void OnSaveAs(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnClickAnalyzer(wxCommandEvent& event);
-
-    //wxBoxSizer* _mainSizer;
-    //wxMenu* _fileMenu;
-    //wxMenu* _editMenu;
-    //wxMenu* _statMenu;
-    //wxMenuBar* _menuBar;
-    //wxSplitterWindow* _splitter;
-    //Canvas* _canvas;
-    //LeftToolbar* _toolbar;
 };
 
 

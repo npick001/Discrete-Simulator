@@ -81,7 +81,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
     // background colors
     left->SetBackgroundColour(*wxCYAN);
     middle_top->SetBackgroundColour(*wxBLACK);
-    middle_bottom->SetBackgroundColour(*wxRED);
+    middle_bottom->SetBackgroundColour(*wxWHITE);
     right->SetBackgroundColour(*wxBLUE);
 
     // minimum pane sizes

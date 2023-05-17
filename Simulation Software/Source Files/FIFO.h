@@ -7,10 +7,10 @@ Defined using a template so that can be used to hold anything.  Type supplied wh
 Template structure requires implementation to be provided in the header.
 */
 template <class T>
-class LinkedList
+class FIFO
 {
 public:
-	LinkedList()
+	FIFO()
 	{
 		_head = 0;
 		_tail = 0;

@@ -10,6 +10,13 @@ public:
 		_heapType = type;
 	}
 
+	~Heap() {
+		for (int i = 0; i < _size; i++) {
+			delete _heap[i];
+		}
+		delete _heap;
+	}
+
 	T* GetElement()
 	{
 		T* root = _heap[0];
@@ -19,7 +26,7 @@ public:
 		return root;
 	}
 
-	void Insert(T* t) {
+	void InsertElement(T* t) {
 		_heap[_size] = new Node(t);
 		_size++;
 	}
@@ -35,12 +42,12 @@ public:
 	}
 
 private:
-	Heapify(int start) {
+	void Heapify(int start) {
 		// lc = 2i+1
 		// Rc = 2i+2
 		// P = floor[(i-1)/2]
 
-		int i = currNode;
+		int i = start;
 		int lc = 2 * i + 1;
 		int rc = 2 * i + 2;
 
@@ -69,11 +76,11 @@ private:
 		}
 
 
-		if (i != currNode) {
+		if (i != start) {
 #if SIM_OUTPUT
-			std::cout << "SWAPPING " << _heap[i]->data << " AND " << _heap[currNode]->data << "\t\t HEAP SIZE: " << _size << std::endl;
+			std::cout << "SWAPPING " << _heap[i]->data << " AND " << _heap[start]->data << "\t\t HEAP SIZE: " << _size << std::endl;
 #endif // SIM_OUTPUT
-			std::swap(_heap[currNode], _heap[i]);
+			std::swap(_heap[start], _heap[i]);
 
 			Heapify(i);
 		}

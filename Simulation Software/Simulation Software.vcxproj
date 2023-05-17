@@ -163,13 +163,12 @@
     <ClInclude Include="Source Files\LinkedList.h" />
     <ClInclude Include="Source Files\MainApp.h" />
     <ClInclude Include="Source Files\MainFrame.h" />
-    <ClInclude Include="Source Files\MyTask.h" />
     <ClInclude Include="Source Files\NodeDataObject.h" />
     <ClInclude Include="Source Files\NodeDropTarget.h" />
     <ClInclude Include="Source Files\Set.h" />
     <ClInclude Include="Source Files\SimulationExecutive.h" />
+    <ClInclude Include="Source Files\SpecificNodes.h" />
     <ClInclude Include="Source Files\Statistics.h" />
-    <ClInclude Include="Source Files\Task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Canvas.cpp" />
@@ -179,11 +178,10 @@
     <ClCompile Include="Source Files\LeftToolbar.cpp" />
     <ClCompile Include="Source Files\MainApp.cpp" />
     <ClCompile Include="Source Files\MainFrame.cpp" />
-    <ClCompile Include="Source Files\MyTask.cpp" />
     <ClCompile Include="Source Files\NodeDropTarget.cpp" />
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />
+    <ClCompile Include="Source Files\SpecificNodes.cpp" />
     <ClCompile Include="Source Files\Statistics.cpp" />
-    <ClCompile Include="Source Files\Task.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

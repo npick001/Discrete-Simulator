@@ -1,4 +1,5 @@
 #pragma once
+#include "Heap.h"
 
 typedef double Time;
 
