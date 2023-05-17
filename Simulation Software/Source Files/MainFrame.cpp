@@ -4,88 +4,55 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
    
     //_mainSizer = new wxBoxSizer(wxHORIZONTAL);
     //
-    ////Create menus
-    //_fileMenu = new wxMenu();
-    //_editMenu = new wxMenu();
-    //_statMenu = new wxMenu();
-    //
-    //// FILE MENU
-    //// mem leaks here
-    //_fileMenu->Append(wxID_OPEN);
-    //_fileMenu->Append(wxID_SAVE);
-    //_fileMenu->Append(wxID_SAVEAS);
-    //_fileMenu->Append(ID_Exit, "&Exit\tAlt-F4", "Exit the application");
+    //Create menus
+    auto* file_menu = new wxMenu();
+    auto* edit_menu = new wxMenu();
+    auto* settings = new wxMenu();
+    auto* stat_menu = new wxMenu();
+    
+    // FILE MENU
+    file_menu->Append(wxID_OPEN);
+    file_menu->Append(wxID_SAVE);
+    file_menu->Append(wxID_SAVEAS);
+    file_menu->Append(ID_Exit, "&Exit\tAlt-F4", "Exit the application");
 
-    //// EDIT MENU
-    //// mem leaks here
-    //_editMenu->Append(wxID_UNDO);
-    //_editMenu->Append(wxID_REDO);
-    //_editMenu->AppendSeparator();
-    //_editMenu->Append(wxID_CUT);
-    //_editMenu->Append(wxID_COPY);
-    //_editMenu->Append(wxID_PASTE);
+    // EDIT MENU
+    edit_menu->Append(wxID_UNDO);
+    edit_menu->Append(wxID_REDO);
+    edit_menu->AppendSeparator();
+    edit_menu->Append(wxID_CUT);
+    edit_menu->Append(wxID_COPY);
+    edit_menu->Append(wxID_PASTE);
+
+    // SETTINGS MENU
+    settings->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
 
     //// STAT MENU
     //// LOTS of mem leaks here
     ////_statMenu->Append(ID_Input_Analyzer, "&Input Analyzer", "Shows up in bottom left when clicked and hovered over");
 
-    //// Use menus in menu bar
-    //// mem leaks here
-    //_menuBar = new wxMenuBar;
-    //_menuBar->Append(_fileMenu, "&File");
-    //_menuBar->Append(_editMenu, "&Edit");
-    ////_menuBar->Append(_statMenu, "&Statistics");
-    //SetMenuBar(_menuBar);
+    // Use menus in menu bar
+    // mem leaks here
+    auto* menu_bar = new wxMenuBar();
+    menu_bar->Append(file_menu, "&File");
+    menu_bar->Append(edit_menu, "&Edit");
+    menu_bar->Append(settings, "&Settings");
+    //_menuBar->Append(_statMenu, "&Statistics");
+    SetMenuBar(menu_bar);
 
-    //// Create splitter
-    //_splitter = new wxSplitterWindow(this);
-    //_mainSizer->Add(_splitter, 1, wxEXPAND);
+    // Create status bar
+    CreateStatusBar();
+    SetStatusText("Welcome to the Dynamic GUI Application!");
 
-    //// Create toolbar
-    //_toolbar = new LeftToolbar(_splitter);
-
-    //// Get the image file path
-    //wxString imagePath = wxStandardPaths::Get().GetExecutablePath();
-    //wxFileName fileName(imagePath);
-    //fileName.RemoveLastDir();
-    //fileName.RemoveLastDir();
-    //fileName.AppendDir("Images");
-    //fileName.SetFullName("KaiQuiSeth.png");
-    //imagePath = fileName.GetFullPath();
-    ////wxLogMessage(imagePath);
-
-    //// add the node to the toolbar
-    //for (int i = 0; i < 8; i++) {
-    //    wxString nodeName = "test " + std::to_string(i);
-    //    _toolbar->AddNode(new GenericNode(nodeName, imagePath));
-    //}
-   
-    //// Create canvas
-    //_canvas = new Canvas(_splitter);
-    //int leftToolbarSize = 100;
-    //_splitter->SplitVertically(_toolbar, _canvas, leftToolbarSize);
-    //_splitter->SetMinimumPaneSize(leftToolbarSize);
-    //_splitter->SetSashGravity(0.0); // left toolbar fixed size, canvas expand to size
-
-    //// Create status bar
-    //CreateStatusBar();
-    //SetStatusText("Welcome to the Dynamic GUI Application!");
-
-    //// Bind the events 
-    //this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
-    //this->Bind(wxEVT_MENU, &MainFrame::OnSave, this, wxID_SAVE);
-    //this->Bind(wxEVT_MENU, &MainFrame::OnSaveAs, this, wxID_SAVEAS);
-    //this->Bind(wxEVT_MENU, &MainFrame::OnExit, this, ID_Exit);
-    //this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
-
-    //SetSizer(_mainSizer);
     int minPaneSize = 150;
     wxSize window_size = this->GetClientSize();
 
+    /******************
+    SPLITTERS FOR TEMPLATE
+    ******************/
     auto left_splitter = new wxSplitterWindow(this);
     auto right_splitter = new wxSplitterWindow(left_splitter);
     auto middle_splitter = new wxSplitterWindow(right_splitter);
-
 
     auto* left = new LeftToolbar(left_splitter);
     auto* middle_top = new Canvas(middle_splitter);
@@ -94,7 +61,6 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
         0, wxDefaultValidator, "Console");
 
     auto* right = new wxPanel(right_splitter);
-
 
     // Get the image file path
     wxString imagePath = wxStandardPaths::Get().GetExecutablePath();
@@ -106,26 +72,36 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
     imagePath = fileName.GetFullPath();
     //wxLogMessage(imagePath);
 
-    // add the node to the toolbar
-    for (int i = 0; i < 8; i++) {
+    // populating toolbar with dummy nodes
+   /* for (int i = 0; i < 8; i++) {
         wxString nodeName = "test " + std::to_string(i);
         left->AddNode(new GenericNode(nodeName, imagePath));
-    }
+    }*/
 
+    // background colors
     left->SetBackgroundColour(*wxCYAN);
     middle_top->SetBackgroundColour(*wxBLACK);
     middle_bottom->SetBackgroundColour(*wxRED);
     right->SetBackgroundColour(*wxBLUE);
 
-
+    // minimum pane sizes
     left_splitter->SetMinimumPaneSize(minPaneSize);
     middle_splitter->SetMinimumPaneSize(minPaneSize);
     right_splitter->SetMinimumPaneSize(minPaneSize);
 
-
+    // splitting
     middle_splitter->SplitHorizontally(middle_top, middle_bottom);
     right_splitter->SplitVertically(middle_splitter, right);
     left_splitter->SplitVertically(left, right_splitter);
+
+    //SetSizer(_mainSizer);
+    
+    // Bind the events 
+    this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
+    this->Bind(wxEVT_MENU, &MainFrame::OnSave, this, wxID_SAVE);
+    this->Bind(wxEVT_MENU, &MainFrame::OnSaveAs, this, wxID_SAVEAS);
+    this->Bind(wxEVT_MENU, &MainFrame::OnExit, this, ID_Exit);
+    this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
 }
 
 MainFrame::~MainFrame() {
@@ -134,7 +110,7 @@ MainFrame::~MainFrame() {
 
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
-    wxLogMessage("Inside OnOpen");
+    //wxLogMessage("Inside OnOpen");
 
     try {
         // open the file explorer

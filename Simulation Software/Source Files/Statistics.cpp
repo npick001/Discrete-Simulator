@@ -211,6 +211,8 @@ void StatTesting() {
 	CreateDummyData(dataPoints, tri);
 	ReadStatFile("test.txt");
 	ComputeFilePDF();
+
+	ResetStatistics();
 #endif // DEBUG
 }
 

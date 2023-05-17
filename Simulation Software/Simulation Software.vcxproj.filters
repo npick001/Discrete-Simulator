@@ -15,13 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source Files\Entity.h">
+    <ClInclude Include="Source Files\MainApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source Files\FIFO.h">
+    <ClInclude Include="Source Files\MainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source Files\MyTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\NodeDataObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\NodeDropTarget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source Files\Set.h">
@@ -30,16 +36,37 @@
     <ClInclude Include="Source Files\SimulationExecutive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source Files\Statistics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source Files\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source Files\Distribution.h">
+    <ClInclude Include="Source Files\Canvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\CustomEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source Files\Directives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source Files\Distribution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\FIFO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\GenericNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source Files\Heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\LeftToolbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source Files\LinkedList.h">
@@ -47,16 +74,28 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source Files\Main.cpp">
+    <ClCompile Include="Source Files\MainFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MainApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\NodeDropTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source Files\SimulationExecutive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Statistics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source Files\Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Distribution.cpp">
@@ -65,7 +104,10 @@
     <ClCompile Include="Source Files\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Statistics.cpp">
+    <ClCompile Include="Source Files\GenericNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\LeftToolbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
