@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 #include "Task.h"
 #include "Distribution.h"
 #include "SimulationExecutive.h"

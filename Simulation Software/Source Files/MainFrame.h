@@ -21,7 +21,8 @@
 enum {
     ID_Exit = 1,
     ID_Input_Analyzer,
-    ID_Run_Sim
+    ID_Run_Sim,
+    ID_Model_Settings
 };
 
 class MainFrame : public wxFrame {
