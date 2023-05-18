@@ -140,8 +140,8 @@ void MainFrame::OnSaveAs(wxCommandEvent& event) {
     try {
         // save the file to the browsed location
         // will need to choose the file type
-        wxFileDialog saveFileDialog(this, _("Save XYZ file"), "", "",
-            "XYZ files (*.xyz)|*.xyz", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+        wxFileDialog saveFileDialog(this, _("Save PNG file"), "", "",
+            "PNG files (*.png)|*.xyz", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
         if (saveFileDialog.ShowModal() == wxID_CANCEL)
             return;     // the user changed idea...
@@ -177,7 +177,7 @@ void MainFrame::OnExit(wxCommandEvent& event) {
 void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 
     try {
-        StatTesting();
+       // StatTesting();
     }
     catch (const std::exception& e) {
         wxLogError("Exception caught in OnOpen: %s", e.what());
