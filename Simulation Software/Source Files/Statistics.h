@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include <list>
+#include <wx/vector.h>
 //#include <boost/math/distributions/chi_squared.hpp>
 //#include <boost/math/distributions/kolmogorov_smirnov.hpp>
 #include "Distribution.h"
@@ -42,6 +43,7 @@ public:
 	void ResetStatistics();
 	void ComputeFilePDF();
 	void StatTesting();
+	inline wxVector<float> GetDataset() { return dataset; }
 
 	// required file format is:
 	// int number of data points \n
@@ -53,7 +55,7 @@ private:
 	std::list<Distribution*> testDistributions;
 
 	// Input data
-	std::unique_ptr<float[]> dataset;
+	wxVector<float> dataset;
 	int numDataPoints;
 	float dataRange;
 	float binSize;
@@ -63,7 +65,7 @@ private:
 
 	// Histogram
 	int numHistogramIntervals;
-	std::unique_ptr<float[]> intervalDensity;
+	wxVector<float> intervalDensity;
 
 	// Theoretical distributions
 	int numCurvePoints;
