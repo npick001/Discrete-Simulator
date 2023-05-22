@@ -1,6 +1,5 @@
 #pragma once
 #include <wx/dnd.h>
-#include "CustomEvents.h"
 #include "GenericNode.h"
 #include "NodeDataObject.h"
 

@@ -41,7 +41,7 @@ public:
 protected:
 	int _maxEntities;
 private:
-	LinkedList<Entity> _entities;
+	FIFO<Entity> _entities;
 };
 
 #endif

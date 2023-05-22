@@ -1,58 +1,60 @@
 #include "GenericNode.h"
 
-GenericNode::GenericNode(const wxString& name, const wxString& imagePath) {
-    _name = name;
-    _imagePath = imagePath;
+int GenericNode::m_nextID = 0;
+
+void GenericNode::SetNext(GenericNode* next) {
+    m_next = next;
+}
+
+void GenericNode::SetPrevious(GenericNode* prev) {
+    m_prev = prev;
+}
+
+void GenericNode::SetImagePath(const wxString& imagePath) {
+    m_imagePath = imagePath;
+}
+
+wxString GenericNode::GetName() {
+    return m_name;
+}
+
+wxString GenericNode::GetImagePath() {
+    return m_imagePath;
+}
+
+void GenericNode::InstantiateNode(int x, int y, wxSize size) {
+    m_position.x = x;
+    m_position.y = y;
+    m_size = size;
+}
+
+void GenericNode::Arrive(Entity* entity) {
+    NodeProcess(entity);
+}
+
+GenericNode::GenericNode(const wxString& name) {
+    m_name = name;
+    m_imagePath = "";
+    m_id = m_nextID++;
+
+    m_next = 0;
+    m_prev = 0;
+
+    m_size = wxSize(100, 50);
 }
 
 // Copy constructor
 GenericNode::GenericNode(const GenericNode& other) {
-    _name = other._name;
-    _imagePath = other._imagePath;
+    m_name = other.m_name;
+    m_imagePath = other.m_imagePath;
 }
 
 GenericNode::~GenericNode() {
-    delete _prev;
-    delete _next;
+    delete m_prev;
+    delete m_next;
 }
 
-wxString GenericNode::GetName() {
-    return _name;
-}
-
-wxString GenericNode::GetImagePath() {
-    return _imagePath;
-}
-
-void GenericNode::SetNext(GenericNode* next) {
-    _next = next;
-}
-
-void GenericNode::SetPrev(GenericNode* prev) {
-    _prev = prev;
-}
-
-void GenericNode::Draw(wxGraphicsContext* gc) {
-    // Load the image
-    wxImage image(_imagePath);
-    if (!image.IsOk()) {
-        return;
-    }
-
-    // Convert the wxImage to wxBitmap
-    wxBitmap bitmap(image);
-
-    // Draw the image on the graphics context
-    gc->DrawBitmap(bitmap, _position.x, _position.y, _size.GetWidth(), _size.GetHeight());
-}
-
-void GenericNode::InstantiateNode(int x, int y, wxSize size) {
-    _position.x = x;
-    _position.y = y;
-    _size = size;
-}
-
-Connection::~Connection(){
-    delete _startNode;
-    delete _endNode;
+void GenericNode::Depart(Entity* entity) {
+    entity->SetSource(m_id);
+    m_next->Arrive(entity);
 }

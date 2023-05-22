@@ -152,38 +152,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source Files\Canvas.h" />
-    <ClInclude Include="Source Files\CustomEvents.h" />
     <ClInclude Include="Source Files\Directives.h" />
     <ClInclude Include="Source Files\Distribution.h" />
     <ClInclude Include="Source Files\Entity.h" />
     <ClInclude Include="Source Files\FIFO.h" />
     <ClInclude Include="Source Files\GenericNode.h" />
-    <ClInclude Include="Source Files\Heap.h" />
+    <ClInclude Include="Source Files\GraphicalEdge.h" />
+    <ClInclude Include="Source Files\GraphicalNode.h" />
     <ClInclude Include="Source Files\LeftToolbar.h" />
-    <ClInclude Include="Source Files\LinkedList.h" />
     <ClInclude Include="Source Files\MainApp.h" />
     <ClInclude Include="Source Files\MainFrame.h" />
-    <ClInclude Include="Source Files\MyTask.h" />
-    <ClInclude Include="Source Files\NodeDataObject.h" />
-    <ClInclude Include="Source Files\NodeDropTarget.h" />
     <ClInclude Include="Source Files\Set.h" />
     <ClInclude Include="Source Files\SimulationExecutive.h" />
+    <ClInclude Include="Source Files\SpecificNodes.h" />
     <ClInclude Include="Source Files\Statistics.h" />
-    <ClInclude Include="Source Files\Task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Canvas.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\GenericNode.cpp" />
+    <ClCompile Include="Source Files\GraphicalEdge.cpp" />
+    <ClCompile Include="Source Files\GraphicalNode.cpp" />
     <ClCompile Include="Source Files\LeftToolbar.cpp" />
     <ClCompile Include="Source Files\MainApp.cpp" />
     <ClCompile Include="Source Files\MainFrame.cpp" />
-    <ClCompile Include="Source Files\MyTask.cpp" />
-    <ClCompile Include="Source Files\NodeDropTarget.cpp" />
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />
+    <ClCompile Include="Source Files\SpecificNodes.cpp" />
     <ClCompile Include="Source Files\Statistics.cpp" />
-    <ClCompile Include="Source Files\Task.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
