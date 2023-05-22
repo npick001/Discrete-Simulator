@@ -85,7 +85,7 @@ void Canvas::PanCamera(wxPoint2DDouble clickPosition) {
 }
 
 // Move a graphical node by the displacement of the mouse position
-void Canvas::MoveComponent(wxPoint2DDouble clickPosition) {
+void Canvas::MoveNode(wxPoint2DDouble clickPosition) {
 	auto dragVector = clickPosition - m_previousMousePosition;
 
 	auto inv = GetCameraTransform();
@@ -112,6 +112,7 @@ void Canvas::OnMiddleUp(wxMouseEvent& event) {
 }
 
 // Capture when user holds down left mouse button in order to drag or connect nodes
+// Panning also occurs when selection state is none
 void Canvas::OnLeftDown(wxMouseEvent& event) {
 	SelectionInfo selection = GetNodeSelectionInfo(event.GetPosition());
 	m_selectedNode = selection.node;
@@ -128,13 +129,19 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		edge.SetSource(m_selectedNode);
 		m_edges.push_back(edge);
 
+		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
 		break;
 	case GraphicalNode::SelectionState::SELECT_INPUT:
 		edge.SetDestination(m_selectedNode);
 		m_edges.push_back(edge);
 
+		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
+		break;
+	case GraphicalNode::SelectionState::SELECT_NONE:
+		m_isPanning = true;
+		m_previousMousePosition = event.GetPosition();
 		break;
 	}
 
@@ -167,6 +174,9 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			m_debugStatusBar->SetStatusText("Connected " + m_selectedNode->GetText() + " to "
 				+ endSelection.node->GetText(), DebugField::COMPONENTS_CONNECTED);
 		}
+		break;
+	case GraphicalNode::SelectionState::SELECT_NONE:
+		m_isPanning = false;
 	}
 
 	m_selectedNode = nullptr;
@@ -193,7 +203,7 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 
 	switch (m_nodeSelectionState) {
 	case GraphicalNode::SelectionState::SELECT_NODE:
-		MoveComponent(mousePosition);
+		MoveNode(mousePosition);
 		break;
 	case GraphicalNode::SelectionState::SELECT_OUTPUT:
 		m_incompleteEdge->SetDestinationPoint(inverse.TransformPoint(mousePosition));

@@ -49,7 +49,7 @@ private:
 	// Displacement is based on clickPosition and m_previousPosition which is
 	// handled by the mouse event functions
 	void PanCamera(wxPoint2DDouble clickPosition);
-	void MoveComponent(wxPoint2DDouble clickPosition);
+	void MoveNode(wxPoint2DDouble clickPosition);
 
 	// OnPaint is triggered by a call to Refresh
 	// Draws custom graphical elements to the canvas such as graphical nodes and connections
