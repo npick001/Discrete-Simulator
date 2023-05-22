@@ -1,6 +1,9 @@
 #include "GraphicalEdge.h"
 
 GraphicalEdge::GraphicalEdge() {
+	m_source = nullptr;
+	m_destination = nullptr;
+
 	m_sourcePoint = wxPoint2DDouble();
 	m_destinationPoint = wxPoint2DDouble();
 }
@@ -12,16 +15,32 @@ GraphicalEdge::GraphicalEdge(GraphicalNode* source, GraphicalNode* destination) 
 
 void GraphicalEdge::SetSource(GraphicalNode* source) {
 	m_source = source;
-	m_sourcePoint = source->GetOutputPoint();
 
-	source->SetOutputEdge(this);
+	if (!m_source)
+		return;
+
+	m_sourcePoint = source->GetOutputPoint();
+	m_source->SetOutputEdge(this);
 }
 
 void GraphicalEdge::SetDestination(GraphicalNode* destination) {
 	m_destination = destination;
-	m_destinationPoint = destination->GetInputPoint();
 
-	destination->SetInputEdge(this);
+	if (!m_destination)
+		return;
+	
+	m_destinationPoint = destination->GetInputPoint();
+	m_destination->SetInputEdge(this);
+}
+
+void GraphicalEdge::RemoveSource() {
+	m_source->SetOutputEdge(nullptr);
+	m_source = nullptr;
+}
+
+void GraphicalEdge::RemoveDestination() {
+	m_destination->SetInputEdge(nullptr);
+	m_destination = nullptr;
 }
 
 // Draws the edge to a wxGraphicsContext

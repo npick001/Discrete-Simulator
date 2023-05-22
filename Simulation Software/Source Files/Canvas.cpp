@@ -8,17 +8,27 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 {
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
 
+	// UI Elements
 	m_debugStatusBar = statusBar;
 	m_debugStatusBar->SetFieldsCount(DebugField::FIELDS_MAX);
 
-	AddGraphicalNode(FromDIP(wxPoint(-150, 0)), "Component 1");
-	AddGraphicalNode(FromDIP(wxPoint(   0, 0)), "Component 2");
-	AddGraphicalNode(FromDIP(wxPoint( 150, 0)), "Component 3");
+	m_canvasMenu = new wxMenu("Canvas");
+	m_canvasMenu->Append(ID_ADD_NODE, "Add node", "Add a node to the canvas");
+	m_canvasMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddNode, this, ID_ADD_NODE);
+
+	m_nodeMenu = new wxMenu("");
+	m_nodeMenu->Append(ID_DELETE_NODE, "Delete", "Delete the currently selected node");
+	m_nodeMenu->Bind(wxEVT_MENU, &Canvas::OnMenuDeleteNode, this, ID_DELETE_NODE);
+
+	// Canvas Elements
+	AddNode(FromDIP(wxPoint(-150, 0)));
+	AddNode(FromDIP(wxPoint(   0, 0)));
+	AddNode(FromDIP(wxPoint( 150, 0)));
 
 	wxSize size = parent->GetSize();
 	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
 
-	m_nodeSelectionState = GraphicalNode::SelectionState::SELECT_NONE;
+	m_nodeSelectionState = GraphicalNode::SelectionState::NONE;
 
 	// Event bindings
 	this->Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
@@ -29,14 +39,47 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	this->Bind(wxEVT_LEFT_UP, &Canvas::OnLeftUp, this);
 	this->Bind(wxEVT_MOTION, &Canvas::OnMotion, this);
 	this->Bind(wxEVT_MOUSEWHEEL, &Canvas::OnMouseWheel, this);
+	this->Bind(wxEVT_RIGHT_UP, &Canvas::OnRightUp, this);
 	this->Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnLeaveWindow, this);
+	this->Bind(wxEVT_ENTER_WINDOW, &Canvas::OnEnterWindow, this);
+}
+
+Canvas::~Canvas() {
+	m_canvasMenu->Destroy(ID_ADD_NODE);
+	delete m_canvasMenu;
+
+	m_nodeMenu->Destroy(ID_DELETE_NODE);
+	delete m_nodeMenu;
 }
 
 // Adds a graphical node to the canvas
-void Canvas::AddGraphicalNode(wxPoint center, const std::string& text) {
+void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
 	GraphicalNode obj(this, center, text);
 	m_nodes.push_back(obj);
 
+	Refresh();
+}
+
+// Adds a graphical node to the canvas, name is auto populated with id number
+void Canvas::AddNode(wxPoint2DDouble center) {
+	GraphicalNode obj(this, center);
+	m_nodes.push_back(obj);
+
+	Refresh();
+}
+
+// Deletes the currently selected node
+void Canvas::DeleteNode() {
+	if (!m_selectedNode)
+		return;
+
+	if (m_selectedNode->isOutputConnected())
+		m_selectedNode->RemoveOutputEdge();
+
+	if (m_selectedNode->isInputConnected())
+		m_selectedNode->RemoveInputEdge();
+
+	m_nodes.remove(*m_selectedNode);
 	Refresh();
 }
 
@@ -49,19 +92,25 @@ wxAffineMatrix2D Canvas::GetCameraTransform() const {
 
 // Return selection information containing which graphical node, if any, was selected and the state of the selection
 SelectionInfo Canvas::GetNodeSelectionInfo(wxPoint2DDouble clickPosition) {
+
+	if (m_nodes.empty())
+		return { nullptr, GraphicalNode::SelectionState::NONE };
+
 	GraphicalNode::SelectionState state;
 
 	auto selectedComponentIter = std::find_if(m_nodes.rbegin(), m_nodes.rend(),
 		[this, &state, clickPosition](const GraphicalNode& graphicalNode) mutable {
 		state = graphicalNode.GetSelectionState(GetCameraTransform(), clickPosition);
-		return (state != GraphicalNode::SelectionState::SELECT_NONE);
+		return (state != GraphicalNode::SelectionState::NONE);
 	});
 
 	m_debugStatusBar->SetStatusText("Selection State: " + GraphicalNode::ms_selectionStateNames[state],
 		DebugField::SELECTION_STATE);
 
-	if (selectedComponentIter == m_nodes.rend())
-		return { nullptr, GraphicalNode::SelectionState::SELECT_NONE };
+	if (selectedComponentIter == m_nodes.rend()) {
+		m_debugStatusBar->SetStatusText("No object selected", DebugField::COMPONENT_SELECTED);
+		return { nullptr, GraphicalNode::SelectionState::NONE };
+	}
 
 	m_debugStatusBar->SetStatusText("Object Selected: " + selectedComponentIter->GetText(),
 		DebugField::COMPONENT_SELECTED);
@@ -100,15 +149,34 @@ void Canvas::MoveNode(wxPoint2DDouble clickPosition) {
 	Refresh();
 }
 
+// Called upon user selecting add node in popup canvas menu
+void Canvas::OnMenuAddNode(wxCommandEvent& event) {
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(inverse.TransformPoint(m_previousMousePosition));
+}
+
+// Called upon user selecting delete node in popup node menu
+void Canvas::OnMenuDeleteNode(wxCommandEvent& event) {
+	DeleteNode();
+
+	event.Skip();
+}
+
 // Capture when user holds down middle mouse button in order to pan
 void Canvas::OnMiddleDown(wxMouseEvent& event) {
 	m_isPanning = true;
 	m_previousMousePosition = event.GetPosition();
+
+	event.Skip();
 }
 
 // Capture release of middle mouse button in order to stop panning
 void Canvas::OnMiddleUp(wxMouseEvent& event) {
 	m_isPanning = false;
+
+	event.Skip();
 }
 
 // Capture when user holds down left mouse button in order to drag or connect nodes
@@ -122,30 +190,42 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	GraphicalEdge edge;
 
 	switch (m_nodeSelectionState) {
-	case GraphicalNode::SelectionState::SELECT_NODE:
+
+	// Prepare to drag selected node
+	case GraphicalNode::SelectionState::NODE:
 		m_previousMousePosition = event.GetPosition();
 		break;
-	case GraphicalNode::SelectionState::SELECT_OUTPUT:
-		edge.SetSource(m_selectedNode);
+
+	// Instatiate an edge and connect source to node's output
+	case GraphicalNode::SelectionState::OUTPUT:
 		m_edges.push_back(edge);
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
+		m_incompleteEdge->SetSource(m_selectedNode);
+		m_incompleteEdge->SetDestinationPoint(m_incompleteEdge->GetSourcePoint());
 		break;
-	case GraphicalNode::SelectionState::SELECT_INPUT:
-		edge.SetDestination(m_selectedNode);
+
+	// Instatiate an edge and connect destination to node's input
+	case GraphicalNode::SelectionState::INPUT:
 		m_edges.push_back(edge);
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
+		m_incompleteEdge->SetDestination(m_selectedNode);
+		m_incompleteEdge->SetSourcePoint(m_incompleteEdge->GetDestinationPoint());
 		break;
-	case GraphicalNode::SelectionState::SELECT_NONE:
+
+	// Panning also works with left click
+	case GraphicalNode::SelectionState::NONE:
 		m_isPanning = true;
 		m_previousMousePosition = event.GetPosition();
 		break;
 	}
 
 	Refresh();
+
+	event.Skip();
 }
 
 // Capture release of left mouse button in order to stop dragging or finalize a connection
@@ -154,43 +234,63 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 	// Holds which node and selection state occurred upon user's left button up
 	auto endSelection = GetNodeSelectionInfo(event.GetPosition());
 
+	wxPoint2DDouble outEdgeSourcePoint;
+
 	switch (m_nodeSelectionState) {
-	case GraphicalNode::SelectionState::SELECT_INPUT:
-		
-		// Inputs can only connect to outputs
-		if (endSelection.state == GraphicalNode::SelectionState::SELECT_OUTPUT) {
-			m_incompleteEdge->SetSource(endSelection.node);
 
-			m_debugStatusBar->SetStatusText("Connected " + endSelection.node->GetText() + " to "
-				+ m_selectedNode->GetText(), DebugField::COMPONENTS_CONNECTED);
-		}
-		break;
-	case GraphicalNode::SelectionState::SELECT_OUTPUT:
+	// Check that user selected an input to pair with the output and then connect
+	case GraphicalNode::SelectionState::OUTPUT:
+		if (endSelection.state == GraphicalNode::SelectionState::INPUT
+			&& endSelection.node != m_selectedNode) {
 
-		// Outputs can only connect to inputs
-		if (endSelection.state == GraphicalNode::SelectionState::SELECT_INPUT) {
 			m_incompleteEdge->SetDestination(endSelection.node);
 
 			m_debugStatusBar->SetStatusText("Connected " + m_selectedNode->GetText() + " to "
 				+ endSelection.node->GetText(), DebugField::COMPONENTS_CONNECTED);
 		}
+		else {
+			m_incompleteEdge->RemoveSource();
+			m_edges.pop_back();
+		}
 		break;
-	case GraphicalNode::SelectionState::SELECT_NONE:
+
+	// Check that user selected an output to pair with the input and then connect
+	case GraphicalNode::SelectionState::INPUT:
+		if (endSelection.state == GraphicalNode::SelectionState::OUTPUT
+			&& endSelection.node != m_selectedNode) {
+
+			m_incompleteEdge->SetSource(endSelection.node);
+
+			m_debugStatusBar->SetStatusText("Connected " + endSelection.node->GetText() + " to "
+				+ m_selectedNode->GetText(), DebugField::COMPONENTS_CONNECTED);
+		}
+		else {
+			m_incompleteEdge->RemoveDestination();
+			m_edges.pop_back();
+		}
+		break;
+
+	// User is no longer panning camera
+	case GraphicalNode::SelectionState::NONE:
 		m_isPanning = false;
 	}
 
 	m_selectedNode = nullptr;
 	m_incompleteEdge = nullptr;
-	m_nodeSelectionState = GraphicalNode::SelectionState::SELECT_NONE;
+	m_nodeSelectionState = GraphicalNode::SelectionState::NONE;
 
 	Refresh();
+
+	event.Skip();
 }
 
 // Capture mouse movement for panning and moving graphical nodes
 void Canvas::OnMotion(wxMouseEvent& event) {
 	wxPoint2DDouble mousePosition = event.GetPosition();
 
-	if (m_isPanning) {
+	if (m_isPanning && (event.ButtonIsDown(wxMOUSE_BTN_LEFT)
+		|| event.ButtonIsDown(wxMOUSE_BTN_MIDDLE))) {
+
 		PanCamera(mousePosition);
 	}
 	else if (!m_selectedNode)
@@ -202,18 +302,43 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 	inverse.Invert();
 
 	switch (m_nodeSelectionState) {
-	case GraphicalNode::SelectionState::SELECT_NODE:
-		MoveNode(mousePosition);
+
+	// Move node
+	case GraphicalNode::SelectionState::NODE:
+		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
+			MoveNode(mousePosition);
 		break;
-	case GraphicalNode::SelectionState::SELECT_OUTPUT:
-		m_incompleteEdge->SetDestinationPoint(inverse.TransformPoint(mousePosition));
+
+	// Move destination point of edge
+	case GraphicalNode::SelectionState::OUTPUT:
+
+		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
+			m_incompleteEdge->SetDestinationPoint(inverse.TransformPoint(mousePosition));
+		else {
+			m_incompleteEdge->RemoveSource();
+			m_incompleteEdge = nullptr;
+			m_edges.pop_back();
+		}
+
 		Refresh();
 		break;
-	case GraphicalNode::SelectionState::SELECT_INPUT:
-		m_incompleteEdge->SetSourcePoint(inverse.TransformPoint(mousePosition));
+
+	// Move source point of edge
+	case GraphicalNode::SelectionState::INPUT:
+
+		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
+			m_incompleteEdge->SetSourcePoint(inverse.TransformPoint(mousePosition));
+		else {
+			m_incompleteEdge->RemoveDestination();
+			m_incompleteEdge = nullptr;
+			m_edges.pop_back();
+		}
+
 		Refresh();
 		break;
 	}
+
+	event.Skip();
 }
 
 // Capture mouse scrolling in order to zoom the camera
@@ -222,13 +347,54 @@ void Canvas::OnMouseWheel(wxMouseEvent& event) {
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
 
 	Refresh();
+
+	event.Skip();
+}
+
+// Capture release of right mouse button in order to present user with a popup menu
+void Canvas::OnRightUp(wxMouseEvent& event) {
+	SelectionInfo selection = GetNodeSelectionInfo(event.GetPosition());
+	m_selectedNode = selection.node;
+	m_nodeSelectionState = selection.state;
+
+	switch (selection.state) {
+
+	// Popup node menu options
+	case GraphicalNode::SelectionState::NODE:
+		m_nodeMenu->SetTitle(selection.node->GetText());
+		PopupMenu(m_nodeMenu);
+		break;
+
+	// Popup I/O menu options and bind output edge disconnection handler
+	case GraphicalNode::SelectionState::OUTPUT:
+		wxLogMessage("Right clicked output of %s", selection.node->GetText());
+		break;
+
+	// Popup I/O menu options and bind input edge disconnection handler
+	case GraphicalNode::SelectionState::INPUT:
+		wxLogMessage("Right clicked input of %s", selection.node->GetText());
+		break;
+
+	// Popup canvas menu options
+	case GraphicalNode::SelectionState::NONE:
+		m_previousMousePosition = event.GetPosition();
+		PopupMenu(m_canvasMenu);
+		break;
+	}
+
+	event.Skip();
 }
 
 // Unable to track mouse position outside of window; therefore, panning and dragging is disabled when the mouse leaves
 void Canvas::OnLeaveWindow(wxMouseEvent& event) {
-	m_selectedNode = nullptr;
-	m_nodeSelectionState = GraphicalNode::SelectionState::SELECT_NONE;
-	m_isPanning = false;
+
+	event.Skip();
+}
+
+// Prevent camera from suddenly jerking to new position upon re-entry of window
+void Canvas::OnEnterWindow(wxMouseEvent& event) {
+	if (m_isPanning)
+		m_previousMousePosition = event.GetPosition();
 }
 
 // Custom graphical elements such as graphical nodes and connections are drawn here
@@ -241,25 +407,20 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	if (!gc)
 		return;
 
-	for (const GraphicalNode& node : m_nodes) {
+	for (const GraphicalNode& node : m_nodes)
 		node.Draw(GetCameraTransform(), gc);
 
-		// DEBUG code
-		if (node.m_outputEdge) {
-			wxPoint2DDouble point1 = node.m_outputEdge->GetSourcePoint();
-			wxPoint2DDouble point2 = node.m_outputEdge->GetDestinationPoint();
-			dc.DrawLine(wxPoint(point1.m_x, point1.m_y), wxPoint(point2.m_x, point2.m_y));
-		}
-	}
-
-	for (const GraphicalEdge& edge : m_edges) {
+	for (const GraphicalEdge& edge : m_edges)
 		edge.Draw(GetCameraTransform(), gc);
-	}
 
 	delete gc;
+
+	event.Skip();
 }
 
 // Refresh, i.e. redraw the window, upon resizing
 void Canvas::OnSize(wxSizeEvent& event) {
 	Refresh();
+
+	event.Skip();
 }

@@ -15,7 +15,11 @@ public:
 	void SetSource(GraphicalNode* source);
 	void SetDestination(GraphicalNode* destination);
 
+	void RemoveSource();
+	void RemoveDestination();
+
 	// Used to set the point during incomplete connection state
+	// Also used by GraphicalNode::Move to update edge points
 	inline void SetSourcePoint(wxPoint2DDouble sourcePoint)
 		{ m_sourcePoint = sourcePoint; }
 	inline void SetDestinationPoint(wxPoint2DDouble destinationPoint)
