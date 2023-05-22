@@ -36,6 +36,8 @@ enum {
     ID_SampleItem,
 };
 
+class Canvas;
+
 class MainFrame : public wxFrame {
 public:
     MainFrame(const wxString& title);
@@ -44,6 +46,7 @@ public:
     void DoUpdate();
 private:
     wxAuiManager m_manager;
+    wxAuiNotebook* m_mainCanvas;
     wxArrayString m_perspectives;
     long m_notebook_style;
     long m_notebook_theme;

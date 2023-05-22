@@ -1,4 +1,5 @@
 #include "MainFrame.h"
+#include "Canvas.h"
 
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
@@ -41,18 +42,15 @@ MainFrame::MainFrame(const wxString& title)
     // SETTINGS MENU
     settings_menu->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
 
-    //// STAT MENU
-    //// LOTS of mem leaks here
-    ////_statMenu->Append(ID_Input_Analyzer, "&Input Analyzer", "Shows up in bottom left when clicked and hovered over");
+    // STAT MENU
+    stat_menu->Append(ID_Input_Analyzer, "&Input Analyzer", "Shows up in bottom left when clicked and hovered over");
 
     // Use menus in menu bar
-    // mem leaks here
-
-    menu_bar->Append(file_menu, _("File"));
-    menu_bar->Append(edit_menu, _("Edit"));
-    menu_bar->Append(view_menu, _("View"));
-    menu_bar->Append(settings_menu, _("Settings"));
-    //_menuBar->Append(_statMenu, "&Statistics");
+    menu_bar->Append(file_menu, _("&File"));
+    menu_bar->Append(edit_menu, _("&Edit"));
+    menu_bar->Append(view_menu, _("&View"));
+    menu_bar->Append(settings_menu, _("&Settings"));
+    menu_bar->Append(stat_menu, _("&Statistics"));
     SetMenuBar(menu_bar);
 
     // Create status bar
@@ -62,12 +60,55 @@ MainFrame::MainFrame(const wxString& title)
     int minPaneSize = 150;
     wxSize window_size = this->GetClientSize();
 
+    // Prepare a few custom overflow elements for the toolbars overflow buttons.
+    wxAuiToolBarItemArray prepend_items;
+    wxAuiToolBarItemArray append_items;
+    wxAuiToolBarItem item;
+    item.SetKind(wxITEM_SEPARATOR);
+    append_items.Add(item);
+    item.SetKind(wxITEM_NORMAL);
+    item.SetId(ID_CustomizeToolbar);
+    item.SetLabel(_("Customize..."));
+    append_items.Add(item);
+
+    // Generate first toolbar with all question marks
+    wxAuiToolBar* tb1 = new wxAuiToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+        wxAUI_TB_DEFAULT_STYLE | wxAUI_TB_OVERFLOW | wxAUI_TB_HORIZONTAL);
+
+    wxBitmapBundle tb1_bmp1 = wxArtProvider::GetBitmapBundle(wxART_QUESTION, wxART_OTHER, wxSize(16, 16));
+    tb1->AddTool(ID_SampleItem + 6, "Disabled", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 7, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 8, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 9, "Test", tb1_bmp1);
+    tb1->AddSeparator();
+    tb1->AddTool(ID_SampleItem + 10, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 11, "Test", tb1_bmp1);
+    tb1->AddSeparator();
+    tb1->AddTool(ID_SampleItem + 12, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 13, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 14, "Test", tb1_bmp1);
+    tb1->AddTool(ID_SampleItem + 15, "Test", tb1_bmp1);
+    tb1->SetCustomOverflowItems(prepend_items, append_items);
+    tb1->EnableTool(ID_SampleItem + 6, false);
+    tb1->Realize();
+
+
+
+
+    m_mainCanvas = CreateNotebook();
 
     m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().Name("Current Directory").
         Dockable(true).Left());
-    //m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Name("Current Model").
-    //    Dockable(true).Right());
+    m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
+        Dockable(true).CenterPane());
+    m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Name("Example Grid").
+        Dockable(true).Right());
 
+    m_manager.AddPane(tb1, wxAuiPaneInfo().Name("Tb1").
+        Caption("Main Toolbar").ToolbarPane().Top());
+
+
+    m_manager.Update();
 
     // Bind the events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
@@ -98,7 +139,10 @@ wxAuiNotebook* MainFrame::CreateNotebook()
                                         FromDIP(wxSize(430, 200)));
     notebook->Freeze();
 
+    wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
+
     // Write the code for adding models in here.
+    notebook->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
 
     notebook->Thaw();
 
@@ -216,6 +260,8 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
 void MainFrame::OnSave(wxCommandEvent& event) {
     // save the file 
     // will need to check if file has been saved already
+
+
 }
 void MainFrame::OnSaveAs(wxCommandEvent& event) {
 
