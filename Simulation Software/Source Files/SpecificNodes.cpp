@@ -18,21 +18,21 @@ private:
 
 void Source::ArriveEM() {
 
-	Depart(_entity->New());
+	Depart(m_entity->New());
 
-	if (_numGen > 0) {
-		Time t = _dist->GetRV();
+	if (m_numberToGenerate > 0) {
+		Time t = m_arrivalDistribution->GetRV();
 
 		std::cout << "Scheduling source arrival event in " << t << std::endl;
 		ScheduleEventIn(t, new ArriveEA(this));
-		_numGen--;
+		m_numberToGenerate--;
 	}
 }
 
 Source::Source(std::string name, int numGen, Entity* entity, Distribution* dist) : GenericNode(name) {
-	_numGen = numGen;
-	_dist = dist;
-	_entity = entity;
+	m_numberToGenerate = numGen;
+	m_arrivalDistribution = dist;
+	m_entity = entity;
 	ScheduleEventIn(0.0, new ArriveEA(this));
 };
 
@@ -41,11 +41,12 @@ void Sink::NodeProcess(Entity* entity) {
 	delete(entity);
 }
 
-FIFO<Entity>* ServerQueue::_queue = new FIFO<Entity>;
+//FIFO<Entity>* ServerQueue::m_queue = new FIFO<Entity>;
 
 ServerQueue::ServerQueue(std::string name, Distribution* serviceTime) : GenericNode(name) {
-	_state = idle;
-	_serviceTime = serviceTime;
+	m_state = idle;
+	m_serviceTime = serviceTime;
+	m_queue = new FIFO_Queue();
 }
 
 class ServerQueue::StartProcessingEA : public EventAction {
@@ -77,49 +78,49 @@ private:
 };
 
 void ServerQueue::StartProcessingEM() {
-	_state = busy;
-	Entity* e = _queue->GetEntity();
-	ScheduleEventIn(_serviceTime->GetRV(), new EndProcessingEA(this, e));
+	m_state = busy;
+	Entity* e = m_queue->GetEntity();
+	ScheduleEventIn(m_serviceTime->GetRV(), new EndProcessingEA(this, e));
 }
 
 void ServerQueue::EndProcessingEM(Entity* e) {
-	_state = idle;
-	if (!_queue->IsEmpty()) {
+	m_state = idle;
+	if (!m_queue->IsEmpty()) {
 		ScheduleEventIn(0.0, new StartProcessingEA(this));
 	}
 	Depart(e);
 }
 
 void ServerQueue::NodeProcess(Entity* e) {
-	_queue->AddEntity(e);
+	m_queue->AddEntity(e);
 
-	if (_state == idle) {
+	if (m_state == idle) {
 		ScheduleEventIn(0.0, new StartProcessingEA(this));
 	}
 }
 
 SystemOfSSSQs::SystemOfSSSQs(int numSSSQs, Distribution* distr)
 {
-	_numSSSQs = numSSSQs;
-	_sssqs = new ServerQueue * [numSSSQs];
+	m_numSSSQs = numSSSQs;
+	m_sssqs = new ServerQueue * [numSSSQs];
 	for (int i = 0; i < numSSSQs; i++) {
-		_sssqs[i] = new ServerQueue("Server", distr);
+		m_sssqs[i] = new ServerQueue("Server", distr);
 	}
 }
 
 ServerQueue* SystemOfSSSQs::GetRandomSSSQ()
 {
 	static std::default_random_engine generator;
-	static std::uniform_int_distribution<> unif_distr(0, _numSSSQs - 1); // define the range
+	static std::uniform_int_distribution<> unif_distr(0, m_numSSSQs - 1); // define the range
 
 	int id = unif_distr(generator);
-	return _sssqs[id];
+	return m_sssqs[id];
 }
 
 void SystemOfSSSQs::SetNextNodes(GenericNode* next) {
 
-	for (int i = 0; i < _numSSSQs; i++) {
-		_sssqs[i]->SetNext(next);
+	for (int i = 0; i < m_numSSSQs; i++) {
+		m_sssqs[i]->SetNext(next);
 	}
 
 }
@@ -146,11 +147,11 @@ void Delay::DepartEM(Entity* e) {
 }
 
 void Delay::NodeProcess(Entity* e) {
-	ScheduleEventIn(_delay->GetRV(), new DepartEA(this, e));
+	ScheduleEventIn(m_delayTime->GetRV(), new DepartEA(this, e));
 }
 
 Delay::Delay(std::string name, Distribution* d) : GenericNode(name) {
-	_delay = d;
+	m_delayTime = d;
 }
 
 /***************************************
@@ -158,45 +159,45 @@ Delay::Delay(std::string name, Distribution* d) : GenericNode(name) {
 ***************************************/
 
 DecisionNode::DecisionNode(std::string name, DecisionFn Decision) : GenericNode(name) {
-	_Decision = Decision;
-	_trueNode = NULL;
-	_falseNode = NULL;
+	m_decisionFn = Decision;
+	m_trueNode = NULL;
+	m_falseNode = NULL;
 }
 
 void DecisionNode::SetNextNodes(GenericNode* trueTask, GenericNode* falseTask) {
-	_trueNode = trueTask;
-	_falseNode = falseTask;
+	m_trueNode = trueTask;
+	m_falseNode = falseTask;
 }
 
 void DecisionNode::NodeProcess(Entity* entity) {
 
-	bool route = _Decision(entity);
+	bool route = m_decisionFn(entity);
 
 	if (route) {
-		SetNext(_trueNode);
-		std::cout << "Decision: Sending to task: " << _trueNode->GetName() << std::endl;
+		SetNext(m_trueNode);
+		std::cout << "Decision: Sending to task: " << m_trueNode->GetName() << std::endl;
 	}
 	else {
-		SetNext(_falseNode);
-		std::cout << "Decision: Sending to task: " << _falseNode->GetName() << std::endl;
+		SetNext(m_falseNode);
+		std::cout << "Decision: Sending to task: " << m_falseNode->GetName() << std::endl;
 	}
 	Depart(entity);
 }
 
 DecisionNNode::DecisionNNode(string name, int n, DecisionNFn DecisionN) : GenericNode(name) {
-	_decisionOutcomes = new GenericNode * [n];
-	_DecisionN = DecisionN;
+	m_outcomes = new GenericNode * [n];
+	m_decisionNFn = DecisionN;
 }
 
 void DecisionNNode::SetNextNodes(int index, GenericNode* nextTask) {
-	_decisionOutcomes[index] = nextTask;
+	m_outcomes[index] = nextTask;
 }
 
 void DecisionNNode::NodeProcess(Entity* entity) {
 
-	int decision = _DecisionN(entity);
-	SetNext(_decisionOutcomes[decision]);
-	wxString taskName = _decisionOutcomes[decision]->GetName();
+	int decision = m_decisionNFn(entity);
+	SetNext(m_outcomes[decision]);
+	wxString taskName = m_outcomes[decision]->GetName();
 	std::cout << "DecisionN: Sending to task: " << taskName << std::endl;
 }
 
@@ -205,25 +206,25 @@ void DecisionNNode::NodeProcess(Entity* entity) {
 		 BATCH ENTITY
 
 *******************************/
-Batch::Batch()
+Batch::Batch(Time creationTime) : Entity(creationTime)
 {
 }
 Batch::~Batch() {
-	while (_b.GetSize() > 0) {
-		delete _b.GetEntity();
+	while (m_entityList.GetSize() > 0) {
+		delete m_entityList.GetEntity();
 	}
 }
 void Batch::AddEntity(Entity* entity) {
-	_b.AddEntity(entity);
+	m_entityList.AddEntity(entity);
 }
 Entity* Batch::GetEntity() {
-	return _b.GetEntity();
+	return m_entityList.GetEntity();
 }
 Entity* Batch::New() {
-	return this;
+	return (new Batch(GetSimulationTime()));
 }
 int Batch::GetSize() {
-	return _b.GetSize();
+	return m_entityList.GetSize();
 }
 /******************************
 
@@ -231,18 +232,18 @@ int Batch::GetSize() {
 
 *******************************/
 BatchNode::BatchNode(std::string name, int batchSize) : GenericNode(name) {
-	_batchSize = batchSize;
-	_batch = new Batch();
-	_count = 0;
+	m_batchSize = batchSize;
+	m_batch = new Batch(GetSimulationTime());
+	m_count = 0;
 }
 void BatchNode::NodeProcess(Entity* entity) {
-	_batch->AddEntity(entity);
-	_count++;
+	m_batch->AddEntity(entity);
+	m_count++;
 
-	if (!(_count < _batchSize)) {
-		Depart(_batch);
-		_count = 0;
-		_batch = new Batch();
+	if (!(m_count < m_batchSize)) {
+		Depart(m_batch);
+		m_count = 0;
+		m_batch = new Batch(GetSimulationTime());
 	}
 }
 /******************************
@@ -265,33 +266,33 @@ void UnBatchNode::NodeProcess(Entity* entity) {
 
 *******************************/
 ResourcePool::ResourcePool(std::string name, int numResources) {
-	_resources = numResources;
-	_name = name;
-	_requestQueue = new FIFO<EventAction>();
+	m_numResources = numResources;
+	m_name = name;
+	m_requestQueue = new FIFO<EventAction>();
 }
 void ResourcePool::Request(EventAction* ea) {
 
-	cout << "Resource Pool" << _name << " Request" << endl;
+	cout << "Resource Pool" << m_name << " Request" << endl;
 
-	if (_resources > 0) {
+	if (m_numResources > 0) {
 		ScheduleEventIn(0.0, ea);
-		_resources--;
+		m_numResources--;
 	}
 	else {
-		_requestQueue->AddEntity(ea);
+		m_requestQueue->AddEntity(ea);
 	}
 }
 void ResourcePool::Release() {
 
-	cout << "Resource Pool " << _name << " Release" << endl;
+	cout << "Resource Pool " << m_name << " Release" << endl;
 
-	_resources++;
-	if (_requestQueue->GetSize() > 0) {
-		ScheduleEventIn(0.0, _requestQueue->GetEntity());
+	m_numResources++;
+	if (m_requestQueue->GetSize() > 0) {
+		ScheduleEventIn(0.0, m_requestQueue->GetEntity());
 	}
 }
 std::string ResourcePool::GetName() {
-	return _name;
+	return m_name;
 }
 
 /******************************
@@ -326,13 +327,13 @@ private:
 	Entity* _e;
 };
 void AcquireNode::SendRequestEM(Entity* e) {
-	_rp->Request(new RequestGrantedEA(this, e));
+	m_rpToRequest->Request(new RequestGrantedEA(this, e));
 }
 void AcquireNode::RequestGrantedEM(Entity* e) {
 	Depart(e);
 }
 AcquireNode::AcquireNode(std::string name, ResourcePool* rp) : GenericNode(name) {
-	_rp = rp;
+	m_rpToRequest = rp;
 }
 void AcquireNode::NodeProcess(Entity* entity) {
 	ScheduleEventIn(0.0, new SendRequestEA(this, entity));
@@ -344,10 +345,10 @@ void AcquireNode::NodeProcess(Entity* entity) {
 
 *******************************/
 ReleaseNode::ReleaseNode(std::string name, ResourcePool* rp) : GenericNode(name) {
-	_rp = rp;
+	m_rpToRelease = rp;
 }
 void ReleaseNode::NodeProcess(Entity* e) {
-	_rp->Release();
+	m_rpToRelease->Release();
 	Depart(e);
 }
 
@@ -359,20 +360,20 @@ void ReleaseNode::NodeProcess(Entity* e) {
 *******************************/
 ForkNode::ForkNode(string name, int n) : GenericNode(name)
 {
-	_numNextNodes = n;
-	_forkOutcomes = new GenericNode * [n];
+	m_numNextNodes = n;
+	m_forkOutcomes = new GenericNode * [n];
 }
 
 void ForkNode::SetNextNodes(int index, GenericNode* nextTask)
 {
-	_forkOutcomes[index] = nextTask;
+	m_forkOutcomes[index] = nextTask;
 }
 
 void ForkNode::NodeProcess(Entity* entity)
 {
 	cout << "In fork task process" << endl;
-	for (int i = 0; i < _numNextNodes; i++) {
-		m_next = _forkOutcomes[i];
+	for (int i = 0; i < m_numNextNodes; i++) {
+		m_next = m_forkOutcomes[i];
 		cout << "Fork " << GetName() << " sending to " << m_next->GetName() << endl;
 		Depart(entity);
 	}
@@ -385,16 +386,16 @@ void ForkNode::NodeProcess(Entity* entity)
 *******************************/
 JoinNode::JoinNode(string name, int n) : GenericNode(name)
 {
-	_numIncomingQueues = n;
+	m_numIncomingQueues = n;
 
-	_incomingQueues = new Set<Entity>[n];
+	m_incomingQueues = new Set<Entity>[n];
 
-	_previousNodeID = new int[n];
+	m_previousNodeID = new int[n];
 }
 
 void JoinNode::SetPreviousNodeID(int index, int id)
 {
-	_previousNodeID[index] = id;
+	m_previousNodeID[index] = id;
 }
 
 void JoinNode::NodeProcess(Entity* entity)
@@ -404,23 +405,23 @@ void JoinNode::NodeProcess(Entity* entity)
 	int previousTask = -1;
 
 	// find where its coming from
-	for (int i = 0; i < _numIncomingQueues; i++) {
-		if (_previousNodeID[i] == entity->GetSource()) {
+	for (int i = 0; i < m_numIncomingQueues; i++) {
+		if (m_previousNodeID[i] == entity->GetSource()) {
 			previousTask = i;
 		}
 	}
 
 	// add to the right queue
-	_incomingQueues[previousTask].AddEntity(entity);
+	m_incomingQueues[previousTask].AddEntity(entity);
 
 	// check if it exists in all incoming queues
-	for (int i = 0; i < _numIncomingQueues; i++) {
+	for (int i = 0; i < m_numIncomingQueues; i++) {
 		bool inThisSet = false;
-		inThisSet = _incomingQueues[i].HasEntity(entity);
+		inThisSet = m_incomingQueues[i].HasEntity(entity);
 
 		if (inThisSet) {
 			numSetsWithEntity++;
-			if (numSetsWithEntity == _numIncomingQueues) {
+			if (numSetsWithEntity == m_numIncomingQueues) {
 				InAllSets = true;
 			}
 		}

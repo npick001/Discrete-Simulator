@@ -3,11 +3,12 @@
 #include "Distribution.h"
 #include "SimulationExecutive.h"
 #include "FIFO.h"
+#include "FIFO_Queue.h"
 #include "Set.h"
 #include "GenericNode.h"
 
 using namespace std;
-
+class FIFO_Queue;
 class Source : public GenericNode
 {
 public:
@@ -15,13 +16,13 @@ public:
 
 	void NodeProcess(Entity* e) override
 	{
-		std::cout << "ERROR -> SHOULD NOT BE CALLED";
+		std::cout << "ERROR -> Source.Arrive() SHOULD NOT BE CALLED";
 	}
 
 private:
-	Distribution* _dist;
-	int _numGen;
-	Entity* _entity;
+	Distribution* m_arrivalDistribution;
+	int m_numberToGenerate;
+	Entity* m_entity;
 	class ArriveEA;
 	void ArriveEM();
 };
@@ -38,11 +39,12 @@ private:
 	void EndProcessingEM(Entity* e);
 
 	enum ServerState { busy, idle };
-	ServerState _state;
+	ServerState m_state;
 
-	Distribution* _serviceTime;
+	Distribution* m_serviceTime;
 
-	static FIFO<Entity>* _queue;
+	//static FIFO<Entity>* m_queue;
+	FIFO_Queue* m_queue;
 };
 
 /****************************************************************/
@@ -61,8 +63,8 @@ public:
 	void SetNextNodes(GenericNode* next);
 
 private:
-	int _numSSSQs;
-	ServerQueue** _sssqs;
+	int m_numSSSQs;
+	ServerQueue** m_sssqs;
 };
 
 class Delay : public GenericNode {
@@ -70,7 +72,7 @@ public:
 	Delay(std::string name, Distribution* d);
 	void NodeProcess(Entity* e);
 private:
-	Distribution* _delay;
+	Distribution* m_delayTime;
 
 	class DepartEA;
 	void DepartEM(Entity* e);
@@ -101,19 +103,19 @@ public:
 	/*
 	Behavior:		Defines the next GenericNodes based on the decision outcome
 	Parameters:		trueGenericNode:	next GenericNode if decision is true
-					falseGenericNode:	next GenericNode if decision is falst
+					falseGenericNode:	next GenericNode if decision is false
 	Return Value:	none
 	*/
 private:
 	void NodeProcess(Entity* entity);
 	/*
 	Behavior:		This GenericNode evaluations the function _Decision( entity).  If
-					true, the next GenericNode is set to _trueGenericNode, else to _falstGenericNode.
+					true, the next GenericNode is set to _trueGenericNode, else to _falseGenericNode.
 	Parameters:		entity:	the entity the GenericNode is to work on
 	Return Value:	none
 	*/
-	DecisionFn _Decision;			//decision logic function
-	GenericNode* _trueNode, * _falseNode;	//GenericNodes entity is sent to based on the Decision function
+	DecisionFn m_decisionFn;			//decision logic function
+	GenericNode* m_trueNode, * m_falseNode;	//GenericNodes entity is sent to based on the Decision function
 };
 
 class DecisionNNode : public GenericNode
@@ -142,8 +144,8 @@ private:
 	Parameters:		entity:	the entity the GenericNode is to work on
 	Return Value:	none
 	*/
-	DecisionNFn _DecisionN;	//decision function returning 1 of N outcomes
-	GenericNode** _decisionOutcomes;			//array of size N possible decision outcomes
+	DecisionNFn m_decisionNFn;	//decision function returning 1 of N outcomes
+	GenericNode** m_outcomes;			//array of size N possible decision outcomes
 };
 
 /*
@@ -153,14 +155,14 @@ entities grouped together to pass through a set of GenericNodes as one unit.
 class Batch : public Entity
 {
 public:
-	Batch();
+	Batch(Time creationTime);
 	~Batch();
 	void AddEntity(Entity* entity);
 	Entity* GetEntity();
 	Entity* New();
 	int GetSize();
 private:
-	FIFO<Entity> _b;
+	FIFO<Entity> m_entityList;
 };
 
 /*
@@ -173,9 +175,9 @@ public:
 	BatchNode(string name, int batchSize);
 private:
 	void NodeProcess(Entity* entity);
-	int _batchSize;
-	int _count;
-	Batch* _batch;
+	int m_batchSize;
+	int m_count;
+	Batch* m_batch;
 };
 
 /*
@@ -198,9 +200,9 @@ public:
 	void Release();
 	std::string GetName();
 private:
-	int _resources;
-	std::string _name;
-	FIFO<EventAction>* _requestQueue;
+	int m_numResources;
+	std::string m_name;
+	FIFO<EventAction>* m_requestQueue;
 };
 
 class AcquireNode : public GenericNode
@@ -214,7 +216,7 @@ private:
 	void RequestGrantedEM(Entity* e);
 
 	void NodeProcess(Entity* entity);
-	ResourcePool* _rp;
+	ResourcePool* m_rpToRequest;
 };
 
 class ReleaseNode : public GenericNode
@@ -223,7 +225,7 @@ public:
 	ReleaseNode(std::string name, ResourcePool* rp);
 private:
 	void NodeProcess(Entity* entity);
-	ResourcePool* _rp;
+	ResourcePool* m_rpToRelease;
 };
 
 class ForkNode : public GenericNode
@@ -233,8 +235,8 @@ public:
 	void SetNextNodes(int index, GenericNode* nextGenericNode);
 private:
 	void NodeProcess(Entity* entity);
-	int _numNextNodes;
-	GenericNode** _forkOutcomes;			//array of size N possible decision outcomes
+	int m_numNextNodes;
+	GenericNode** m_forkOutcomes;			//array of size N possible decision outcomes
 };
 
 class JoinNode : public GenericNode
@@ -244,8 +246,8 @@ public:
 	void SetPreviousNodeID(int index, int id);
 private:
 	void NodeProcess(Entity* entity);
-	int _numIncomingQueues;
-	Set<Entity>* _incomingQueues;			//array of size N possible incoming queues of entities
-	int* _previousNodeID;
+	int m_numIncomingQueues;
+	Set<Entity>* m_incomingQueues;			//array of size N possible incoming queues of entities
+	int* m_previousNodeID;
 };
 
