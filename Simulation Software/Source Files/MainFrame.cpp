@@ -1,13 +1,22 @@
 #include "MainFrame.h"
 
-MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600)) {
-   
+MainFrame::MainFrame(const wxString& title) 
+    : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
+{   
+    m_manager.SetManagedWindow(this);
+
+    // set up default notebook style
+    m_notebook_style = wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER;
+    m_notebook_theme = 0;
+
     //_mainSizer = new wxBoxSizer(wxHORIZONTAL);
     //
     //Create menus
+    auto* menu_bar = new wxMenuBar();
     auto* file_menu = new wxMenu();
     auto* edit_menu = new wxMenu();
-    auto* settings = new wxMenu();
+    auto* view_menu = new wxMenu();
+    auto* settings_menu = new wxMenu();
     auto* stat_menu = new wxMenu();
     
     // FILE MENU
@@ -24,8 +33,13 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
     edit_menu->Append(wxID_COPY);
     edit_menu->Append(wxID_PASTE);
 
+    // VIEW MENU
+    view_menu->Append(ID_CreateTree, _("Create Tree"));
+    view_menu->Append(ID_CreateNotebook, _("Create Notebook"));
+    view_menu->Append(ID_CreateGrid, _("Create Grid"));
+
     // SETTINGS MENU
-    settings->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
+    settings_menu->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
 
     //// STAT MENU
     //// LOTS of mem leaks here
@@ -33,10 +47,11 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
 
     // Use menus in menu bar
     // mem leaks here
-    auto* menu_bar = new wxMenuBar();
-    menu_bar->Append(file_menu, "&File");
-    menu_bar->Append(edit_menu, "&Edit");
-    menu_bar->Append(settings, "&Settings");
+
+    menu_bar->Append(file_menu, _("File"));
+    menu_bar->Append(edit_menu, _("Edit"));
+    menu_bar->Append(view_menu, _("View"));
+    menu_bar->Append(settings_menu, _("Settings"));
     //_menuBar->Append(_statMenu, "&Statistics");
     SetMenuBar(menu_bar);
 
@@ -47,65 +62,132 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, "Dynami
     int minPaneSize = 150;
     wxSize window_size = this->GetClientSize();
 
-    /******************
-    SPLITTERS FOR TEMPLATE
-    ******************/
-    auto left_splitter = new wxSplitterWindow(this);
-    auto right_splitter = new wxSplitterWindow(left_splitter);
-    auto middle_splitter = new wxSplitterWindow(right_splitter);
 
-    auto* left = new LeftToolbar(left_splitter);
-    auto* middle_top = new Canvas(middle_splitter);
-    auto* middle_bottom = new wxTextCtrl(middle_splitter, wxID_ANY,
-        wxEmptyString, wxDefaultPosition, wxDefaultSize,
-        0, wxDefaultValidator, "Console");
+    m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().Name("Current Directory").
+        Dockable(true).Left());
+    //m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Name("Current Model").
+    //    Dockable(true).Right());
 
-    auto* right = new wxPanel(right_splitter);
 
-    // Get the image file path
-    wxString imagePath = wxStandardPaths::Get().GetExecutablePath();
-    wxFileName fileName(imagePath);
-    fileName.RemoveLastDir();
-    fileName.RemoveLastDir();
-    fileName.AppendDir("Images");
-    fileName.SetFullName("KaiQuiSeth.png");
-    imagePath = fileName.GetFullPath();
-    //wxLogMessage(imagePath);
-
-    // populating toolbar with dummy nodes
-   /* for (int i = 0; i < 8; i++) {
-        wxString nodeName = "test " + std::to_string(i);
-        left->AddNode(new GenericNode(nodeName, imagePath));
-    }*/
-
-    // background colors
-    left->SetBackgroundColour(*wxCYAN);
-    middle_top->SetBackgroundColour(*wxBLACK);
-    middle_bottom->SetBackgroundColour(*wxWHITE);
-    right->SetBackgroundColour(*wxBLUE);
-
-    // minimum pane sizes
-    left_splitter->SetMinimumPaneSize(minPaneSize);
-    middle_splitter->SetMinimumPaneSize(minPaneSize);
-    right_splitter->SetMinimumPaneSize(minPaneSize);
-
-    // splitting
-    middle_splitter->SplitHorizontally(middle_top, middle_bottom);
-    right_splitter->SplitVertically(middle_splitter, right);
-    left_splitter->SplitVertically(left, right_splitter);
-
-    //SetSizer(_mainSizer);
-    
     // Bind the events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     this->Bind(wxEVT_MENU, &MainFrame::OnSave, this, wxID_SAVE);
     this->Bind(wxEVT_MENU, &MainFrame::OnSaveAs, this, wxID_SAVEAS);
     this->Bind(wxEVT_MENU, &MainFrame::OnExit, this, ID_Exit);
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateNotebook, this, ID_CreateNotebook);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateTree, this, ID_CreateTree);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateGrid, this, ID_CreateGrid);
 }
 
 MainFrame::~MainFrame() {
 
+}
+
+void MainFrame::DoUpdate()
+{
+    m_manager.Update();
+}
+
+wxAuiNotebook* MainFrame::CreateNotebook()
+{
+    wxSize client_size = GetClientSize();
+
+    wxAuiNotebook* notebook = new wxAuiNotebook(this, wxID_ANY,
+                                        wxPoint(client_size.x, client_size.y),
+                                        FromDIP(wxSize(430, 200)));
+    notebook->Freeze();
+
+    // Write the code for adding models in here.
+
+    notebook->Thaw();
+
+
+    return notebook;
+}
+
+wxTreeCtrl* MainFrame::CreateTreeCtrl()
+{
+    // Create the file tree
+    wxTreeCtrl* files = new wxTreeCtrl(this, wxID_ANY,
+        wxPoint(0, 0), FromDIP(wxSize(160, 250)),
+        wxTR_DEFAULT_STYLE | wxNO_BORDER);
+
+    // set the images for the files in the tree
+    wxSize size(16, 16);
+    wxVector<wxBitmapBundle> images;
+    images.push_back(wxArtProvider::GetBitmapBundle(wxART_FOLDER, wxART_OTHER, size));
+    images.push_back(wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, size));
+    files->SetImages(images);
+
+    // get the names of the parent directory
+    wxFileName exeFile;
+    exeFile.MakeRelativeTo();
+    const wxString& parentDir = exeFile.GetPath();
+    
+    //exeFile.RemoveLastDir();
+    //exeFile.AppendDir("Simulation Software");
+    exeFile.AppendDir("Source Files");
+
+    // get the names of the children
+    const wxString& dir = exeFile.GetPath();
+
+    // Create the tree
+    wxTreeItemId root = files->AddRoot(dir, 0);
+    files->Expand(root);
+    LoadDirectory(files, root, dir);
+
+    return files;
+}
+
+void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory)
+{
+    // open the passed directory
+    wxDir dir(directory);
+
+    wxString dirName = dir.GetName();
+
+    // make sure its open
+    if (!dir.IsOpened()) {
+        // Error handling
+        return;
+    }
+
+    // get the first filename from the directory
+    wxString filename;
+    bool keepGoing = dir.GetFirst(&filename);
+    while (keepGoing) {
+
+        // creating a filename object to access the members
+        wxFileName fn(directory, filename);
+        if (fn.DirExists()) {
+            wxTreeItemId id = treeCtrl->AppendItem(parent, filename);
+
+            // recursively populate the tree with children
+            LoadDirectory(treeCtrl, id, fn.GetFullPath());
+        }
+        else {
+            treeCtrl->AppendItem(parent, filename);
+        }
+
+        // decide if we should keep going
+        keepGoing = dir.GetNext(&filename);
+    }
+}
+
+wxGrid* MainFrame::CreateGrid()
+{
+    wxGrid* grid = new wxGrid(this, wxID_ANY,
+        wxPoint(0, 0),
+        FromDIP(wxSize(150, 250)),
+        wxNO_BORDER | wxWANTS_CHARS);
+    grid->CreateGrid(50, 20);
+    return grid;
+}
+
+wxPoint MainFrame::GetStartPosition()
+{
+    return wxPoint();
 }
 
 void MainFrame::OnOpen(wxCommandEvent& event) {
@@ -185,4 +267,28 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
     catch (...) {
         wxLogError("Unknown exception caught in OnOpen");
     }
+}
+
+void MainFrame::OnCreateNotebook(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Caption("Notebook").
+        Float().FloatingPosition(GetStartPosition()).CloseButton(true).MaximizeButton(true));
+    m_manager.Update();
+}
+
+void MainFrame::OnCreateTree(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().
+        Caption("Tree Control").
+        Float().FloatingPosition(GetStartPosition()).
+        FloatingSize(FromDIP(wxSize(150, 300))));
+    m_manager.Update();
+}
+
+void MainFrame::OnCreateGrid(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Dockable(true).
+        Caption("Grid").Float().FloatingPosition(GetStartPosition()).
+        FloatingSize(FromDIP(wxSize(150, 300))));
+    m_manager.Update();
 }
