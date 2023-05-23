@@ -18,10 +18,6 @@
 #include "Canvas.h"
 #include "LeftToolbar.h"
 
-#ifdef __WXMSW__
-    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
-#endif
-
 enum {
     ID_Exit = 1,
     ID_Input_Analyzer,
@@ -53,19 +49,28 @@ private:
 
     wxAuiNotebook* CreateNotebook();
     wxTreeCtrl* CreateTreeCtrl();
-    void LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory);
     wxGrid* CreateGrid();
+
+    // Loads the .\Source Files directory into the passed tree.
+    void LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory);
+    
     wxPoint GetStartPosition();
  
-    // Application Events
+    // File menu events
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnClickAnalyzer(wxCommandEvent& event);
+    void OnExit(wxCommandEvent& event);\
+
+    // Edit menu events
+    
+    // View menu events    
     void OnCreateNotebook(wxCommandEvent& event);
     void OnCreateTree(wxCommandEvent& event);
     void OnCreateGrid(wxCommandEvent& event);  
+
+    // Statistics menu events
+    void OnClickAnalyzer(wxCommandEvent& event);
 };
 
 

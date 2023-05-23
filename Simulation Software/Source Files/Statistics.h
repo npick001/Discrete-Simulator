@@ -28,6 +28,8 @@ void WriteFile(std::string filename, T data, int openMode) {
 	outfile.close();
 }
 
+class Entity;
+
 // Self contained fild reader and container.
 // Provides support for generating probability density histograms for input data.
 class StatisticsObject

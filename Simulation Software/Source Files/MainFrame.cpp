@@ -57,8 +57,8 @@ MainFrame::MainFrame(const wxString& title)
     CreateStatusBar();
     SetStatusText("Welcome to the Dynamic GUI Application!");
 
-    int minPaneSize = 150;
-    wxSize window_size = this->GetClientSize();
+    //int minPaneSize = 150;
+    //wxSize window_size = this->GetClientSize();
 
     // Prepare a few custom overflow elements for the toolbars overflow buttons.
     wxAuiToolBarItemArray prepend_items;
@@ -75,7 +75,10 @@ MainFrame::MainFrame(const wxString& title)
     wxAuiToolBar* tb1 = new wxAuiToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
         wxAUI_TB_DEFAULT_STYLE | wxAUI_TB_OVERFLOW | wxAUI_TB_HORIZONTAL);
 
+    // get the art provider for each tool in the toolbar
     wxBitmapBundle tb1_bmp1 = wxArtProvider::GetBitmapBundle(wxART_QUESTION, wxART_OTHER, wxSize(16, 16));
+
+    // add some random placeholder tools
     tb1->AddTool(ID_SampleItem + 6, "Disabled", tb1_bmp1);
     tb1->AddTool(ID_SampleItem + 7, "Test", tb1_bmp1);
     tb1->AddTool(ID_SampleItem + 8, "Test", tb1_bmp1);
@@ -92,11 +95,18 @@ MainFrame::MainFrame(const wxString& title)
     tb1->EnableTool(ID_SampleItem + 6, false);
     tb1->Realize();
 
-
-
-
+    // make the default notebook on startup
     m_mainCanvas = CreateNotebook();
+    wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
 
+    // Add a second page to the canvas
+    m_mainCanvas->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
+
+    // display the toolbar 
+    m_manager.AddPane(tb1, wxAuiPaneInfo().Name("Tb1").
+        Caption("Main Toolbar").ToolbarPane().Top());
+
+    // Add the basic panes to the AUI manager for display
     m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().Name("Current Directory").
         Dockable(true).Left());
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
@@ -104,32 +114,32 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Name("Example Grid").
         Dockable(true).Right());
 
-    m_manager.AddPane(tb1, wxAuiPaneInfo().Name("Tb1").
-        Caption("Main Toolbar").ToolbarPane().Top());
-
-
+    // Commit the changes with the AUI manager
     m_manager.Update();
 
-    // Bind the events 
+    // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     this->Bind(wxEVT_MENU, &MainFrame::OnSave, this, wxID_SAVE);
     this->Bind(wxEVT_MENU, &MainFrame::OnSaveAs, this, wxID_SAVEAS);
     this->Bind(wxEVT_MENU, &MainFrame::OnExit, this, ID_Exit);
-    this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
+
+    // Edit menu events
+
+    // View menu Events
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateNotebook, this, ID_CreateNotebook);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateTree, this, ID_CreateTree);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateGrid, this, ID_CreateGrid);
-}
 
+    // Statistics menu Events
+    this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
+}
 MainFrame::~MainFrame() {
 
 }
-
 void MainFrame::DoUpdate()
 {
     m_manager.Update();
 }
-
 wxAuiNotebook* MainFrame::CreateNotebook()
 {
     wxSize client_size = GetClientSize();
@@ -146,10 +156,8 @@ wxAuiNotebook* MainFrame::CreateNotebook()
 
     notebook->Thaw();
 
-
     return notebook;
 }
-
 wxTreeCtrl* MainFrame::CreateTreeCtrl()
 {
     // Create the file tree
@@ -183,7 +191,15 @@ wxTreeCtrl* MainFrame::CreateTreeCtrl()
 
     return files;
 }
-
+wxGrid* MainFrame::CreateGrid()
+{
+    wxGrid* grid = new wxGrid(this, wxID_ANY,
+        wxPoint(0, 0),
+        FromDIP(wxSize(150, 250)),
+        wxNO_BORDER | wxWANTS_CHARS);
+    grid->CreateGrid(50, 20);
+    return grid;
+}
 void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory)
 {
     // open the passed directory
@@ -218,22 +234,10 @@ void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, 
         keepGoing = dir.GetNext(&filename);
     }
 }
-
-wxGrid* MainFrame::CreateGrid()
-{
-    wxGrid* grid = new wxGrid(this, wxID_ANY,
-        wxPoint(0, 0),
-        FromDIP(wxSize(150, 250)),
-        wxNO_BORDER | wxWANTS_CHARS);
-    grid->CreateGrid(50, 20);
-    return grid;
-}
-
 wxPoint MainFrame::GetStartPosition()
 {
     return wxPoint();
 }
-
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
     //wxLogMessage("Inside OnOpen");
@@ -302,6 +306,27 @@ void MainFrame::OnExit(wxCommandEvent& event) {
         wxLogError("Unknown exception caught in OnOpen");
     }
 }
+void MainFrame::OnCreateNotebook(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Caption("Notebook").
+        Float().FloatingPosition(GetStartPosition()).CloseButton(true).MaximizeButton(true));
+    m_manager.Update();
+}
+void MainFrame::OnCreateTree(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().
+        Caption("Tree Control").
+        Float().FloatingPosition(GetStartPosition()).
+        FloatingSize(FromDIP(wxSize(150, 300))));
+    m_manager.Update();
+}
+void MainFrame::OnCreateGrid(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Dockable(true).
+        Caption("Grid").Float().FloatingPosition(GetStartPosition()).
+        FloatingSize(FromDIP(wxSize(150, 300))));
+    m_manager.Update();
+}
 void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 
     try {
@@ -313,28 +338,4 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
     catch (...) {
         wxLogError("Unknown exception caught in OnOpen");
     }
-}
-
-void MainFrame::OnCreateNotebook(wxCommandEvent& event)
-{
-    m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Caption("Notebook").
-        Float().FloatingPosition(GetStartPosition()).CloseButton(true).MaximizeButton(true));
-    m_manager.Update();
-}
-
-void MainFrame::OnCreateTree(wxCommandEvent& event)
-{
-    m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().
-        Caption("Tree Control").
-        Float().FloatingPosition(GetStartPosition()).
-        FloatingSize(FromDIP(wxSize(150, 300))));
-    m_manager.Update();
-}
-
-void MainFrame::OnCreateGrid(wxCommandEvent& event)
-{
-    m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Dockable(true).
-        Caption("Grid").Float().FloatingPosition(GetStartPosition()).
-        FloatingSize(FromDIP(wxSize(150, 300))));
-    m_manager.Update();
 }

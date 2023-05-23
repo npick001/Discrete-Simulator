@@ -3,226 +3,153 @@
 
 using namespace std;
 
-class SimulationExecutive
+struct Event
 {
-public:
-	static void InitializeSimulation();
-	/*
-	Behavior - Initializes the simulation.  Simulation time is initialized to 0.
-	*/
-
-	static Time GetSimulationTime();
-	/*
-	Behavior - returns the current simulation time.
-	*/
-
-	static void RunSimulation();
-	/*
-	Behavior - Executes the simulation.  It continually selects the event with
-	the smallest timestamp for execution until there are no events left to
-	execute (selection of simultaneous events not specified).  Prior to
-	advancing time, the set of registered conditional events are each evaluated
-	and should their condition be met, their event action is executed.
-	*/
-
-	static void RunSimulation(Time endTime);
-	/*
-	Behavior - Identical to the above behavior except that the simulation will
-	also terminate if (simulation time > endTime).
-	*/
-
-	static void ScheduleEventIn(Time delta, EventAction* ea);
-	/*
-	Behavior - Scheduled the event action ea to be executed when the simulation
-	time equals the current simulation time plus delta.
-	*/
-
-	static void ScheduleEventAt(Time time, EventAction* ea);
-	/*
-	Behavior - Scheduled the event action ea to be executed when the simulation
-	time equals time.
-	*/
-
-private:
-	struct Event;
-	class EventSet;
-	static EventSet _eventSet;
-	static Time _simTime;
-};
-
-
-struct SimulationExecutive::Event
-{
-	Event(Time time, EventAction *ea)
+	Event(Time time, EventAction* ea)
 	{
 		_time = time;
 		_ea = ea;
-		_nextEvent = 0;
+		_nextEvent = NULL;
 	}
 	Time _time;
-	EventAction *_ea;
-	Event *_nextEvent;
+	EventAction* _ea;
+	Event* _nextEvent;
 };
 
-class SimulationExecutive::EventSet
+class SimulationExecutive
 {
 public:
-	EventSet()
+	static Time GetSimulationTime() { return _simTime; }
+	static void RunSimulation()
 	{
-		_size = 0;
-		_heap = new Event * [5000];
-	}
+		_simTime = 0.0;
 
-	~EventSet() {
-		for (int i = 0; i < _size; i++) {
-			delete _heap[i];
-		}
-		delete _heap;
-	}
-
-	void AddEvent(Time time, EventAction* ea)
-	{
-		_heap[_size] = new Event(time, ea);
-		_size++;
-	}
-
-	Event* GetEvent()
-	{
-		Event* root = _heap[0];
-		_heap[0] = _heap[_size - 1];
-		_size--;
-		Heapify(0);
-		return root;
-	}
-
-	Time GetTime()
-	{
-		return _heap[0]->_time;
-	}
-
-	bool HasEvent()
-	{
-		return (_size > 0);
-	}
-
-	void PrintHeap() {
-		std::cout << "\n----- PRINTING HEAP. -----" << std::endl;
-		for (int index = 0; index < _size; index++) {
-			std::cout << "\t- Index " << index << " Time: " << _heap[index]->_time << std::endl;
+		while (_eventList.HasEvent()) {
+			Event* e = _eventList.GetEvent();
+			_simTime = e->_time;
+			e->_ea->Execute();
+			delete e;
 		}
 	}
 
-	void PrintHeapSize() {
-		std::cout << "HEAP SIZE: " << _size << std::endl;
-	}
+	static void RunSimulation(Time endTime)
+	{
+		_simTime = 0.0;
 
-	void SetSize(int size) {
-		_size = size;
-	}
-
-	void SetHeapSize(int heapsize) {
-
-		for (int i = 0; i < _size; i++) {
-			delete _heap[i];
+		while (_eventList.HasEvent() && _simTime <= endTime) {
+			Event* e = _eventList.GetEvent();
+			_simTime = e->_time;
+			if (_simTime <= endTime) {
+				e->_ea->Execute();
+			}
+			delete e;
 		}
-		delete _heap;
+	}
 
-		_heap = new Event * [heapsize];
+	static void ScheduleEventIn(Time delta, EventAction *ea)
+	{
+		_eventList.AddEvent(_simTime + delta, ea);
+	}
+
+	static void ScheduleEventAt(Time time, EventAction*ea)
+	{
+		_eventList.AddEvent(time, ea);
 	}
 
 private:
-	void Heapify(int currNode)
+
+	class EventList
 	{
-		// lc = 2i+1
-		// Rc = 2i+2
-		// P = floor[(i-1)/2]
-
-		int i = currNode;
-		int lc = 2 * i + 1;
-		int rc = 2 * i + 2;
-
-		// check if left child is smaller than current 
-		if (lc < _size && _heap[lc]->_time < _heap[i]->_time) {
-			i = lc;
-		}
-		// check if right child is smaller than current 
-		if (rc < _size && _heap[rc]->_time < _heap[i]->_time) {
-			i = rc;
+	public:
+		EventList()
+		{
+			_eventList = 0;
 		}
 
-		if (i != currNode) {
-#if SIM_OUTPUT
-			std::cout << "SWAPPING " << _heap[i]->_time << " AND " << _heap[currNode]->_time << "\t\t HEAP SIZE: " << _size << std::endl;
-#endif // SIM_OUTPUT
-			std::swap(_heap[currNode], _heap[i]);
-
-			Heapify(i);
+		void AddEvent(Time time, EventAction*ea)
+		{
+			Event *e = new Event(time, ea);
+			if (_eventList == 0) {
+				//event list empty
+				_eventList = e;
+			}
+			else if (time < _eventList->_time) {
+				//goes at the head of the list
+				e->_nextEvent = _eventList;
+				_eventList = e;
+			}
+			else {
+				//search for where to put the event
+				Event *curr = _eventList;
+				while ((curr->_nextEvent != 0) ? (e->_time >= curr->_nextEvent->_time) : false) {
+					curr = curr->_nextEvent;
+				}
+				if (curr->_nextEvent == 0) {
+					//goes at the end of the list
+					curr->_nextEvent = e;
+				}
+				else {
+					e->_nextEvent = curr->_nextEvent;
+					curr->_nextEvent = e;
+				}
+			}
 		}
-	}
 
-	Event** _heap;
-	int _size;
+		Event* GetEvent()
+		{
+			Event *next = _eventList;
+			_eventList = _eventList->_nextEvent;
+			return next;
+		}
+
+		bool HasEvent()
+		{
+			return _eventList != 0;
+		}
+
+	private:
+		Event *_eventList;
+
+		void PrintEventList()
+		{
+			Event* e = _eventList;
+			cout << "     EventList: " << endl;;
+			while (e != NULL) {
+				cout << "          " << e << ", " << e->_time << ", " << e->_ea << endl;
+				e = e->_nextEvent;
+			}
+		}
+	};
+
+	static EventList _eventList;
+	static Time _simTime;
 };
 
-SimulationExecutive::EventSet SimulationExecutive::_eventSet;
+SimulationExecutive::EventList SimulationExecutive::_eventList;
 Time SimulationExecutive::_simTime = 0.0;
 
-void SimulationExecutive::InitializeSimulation()
+Time GetSimulationTime()
 {
-	_simTime = 0.0;
-	_eventSet = SimulationExecutive::EventSet();
-}
-
-Time SimulationExecutive::GetSimulationTime()
-{
-	return _simTime;
-}
-
-void SimulationExecutive::RunSimulation()
-{
-	while (_eventSet.HasEvent()) {
-		_simTime = _eventSet.GetTime();
-		Event *e = _eventSet.GetEvent();
-		e->_ea->Execute();
-		delete e;
-	}
-}
-
-void SimulationExecutive::RunSimulation(Time endTime)
-{
-	while (_eventSet.HasEvent() && _simTime <= endTime) {
-		_simTime = _eventSet.GetTime();
-		Event* e = _eventSet.GetEvent();
-		e->_ea->Execute();
-		delete e;
-	}
-}
-
-void SimulationExecutive::ScheduleEventIn(Time delta, EventAction *ea)
-{
-	_eventSet.AddEvent(_simTime + delta, ea);
-}
-
-void SimulationExecutive::ScheduleEventAt(Time time, EventAction *ea)
-{
-	_eventSet.AddEvent(time, ea);
-}
-
-void InitializeSimulation() {
-	SimulationExecutive::InitializeSimulation();
-}
-Time GetSimulationTime() {
 	return SimulationExecutive::GetSimulationTime();
 }
-void RunSimulation() {
+
+void RunSimulation()
+{
 	SimulationExecutive::RunSimulation();
 }
-void RunSimulation(Time endtime) {
-	SimulationExecutive::RunSimulation(endtime);
+
+void RunSimulation(Time endTime)
+{
+	SimulationExecutive::RunSimulation(endTime);
 }
-void ScheduleEventIn(Time delta, EventAction* ea) {
+
+void ScheduleEventIn(Time delta, EventAction*ea)
+{
 	SimulationExecutive::ScheduleEventIn(delta, ea);
 }
-void ScheduleEventAt(Time time, EventAction* ea) {
-	SimulationExecutive::ScheduleEventIn(time, ea);
+
+void ScheduleEventAt(Time time, EventAction*ea)
+{
+	SimulationExecutive::ScheduleEventAt(time, ea);
 }
+
