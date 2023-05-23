@@ -60,6 +60,9 @@
     <ClInclude Include="Source Files\GraphicalNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicalElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\MainFrame.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\GraphicalNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicalElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GraphicalElement.h" />
     <ClInclude Include="Source Files\Canvas.h" />
     <ClInclude Include="Source Files\Directives.h" />
     <ClInclude Include="Source Files\Distribution.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Source Files\Statistics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GraphicalElement.cpp" />
     <ClCompile Include="Source Files\Canvas.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
