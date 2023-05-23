@@ -15,6 +15,11 @@ public:
 	GraphicalNode(wxWindow* window, wxPoint2DDouble center, const std::string& _text);
 	GraphicalNode(wxWindow* window, wxPoint2DDouble center);
 
+	// Also disconnects attached edges, preparing them for deletion
+	~GraphicalNode();
+
+	friend class GraphicalEdge;
+
 	enum SelectionState : unsigned int {
 		NONE,
 		NODE,
@@ -25,12 +30,11 @@ public:
 
 	static const std::string ms_selectionStateNames[SelectionState::STATES_MAX];
 
-	GraphicalNode* m_inputObject;
-	GraphicalNode* m_outputObject;
+	inline unsigned int GetID() const { return m_id; }
 
 	// Return a copy of m_transform because outside code should not
 	// be able to change this variable directly
-	inline wxAffineMatrix2D GetTransform() const { return wxAffineMatrix2D(m_transform); }
+	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
 	
 	inline wxString GetText() const { return m_text; }
 	inline void SetText(const std::string& text) { m_text = text; }
@@ -40,14 +44,17 @@ public:
 	wxPoint2DDouble GetOutputPoint() const;
 	wxPoint2DDouble GetInputPoint() const;
 
+	inline const GraphicalEdge& GetOutputEdge() { return *m_outputEdge; }
 	void SetOutputEdge(GraphicalEdge* outputEdge);
+
+	inline const GraphicalEdge& GetInputEdge() { return *m_inputEdge; }
 	void SetInputEdge(GraphicalEdge* inputEdge);
 
-	inline bool isOutputConnected() const { return m_outputEdge; }
-	inline bool isInputConnected() const { return m_inputEdge; }
+	inline bool isOutputConnected() const { return m_outputEdge != nullptr; }
+	inline bool isInputConnected() const { return m_inputEdge != nullptr; }
 
-	void RemoveOutputEdge();
-	void RemoveInputEdge();
+	void DisconnectOutput();
+	void DisconnectInput();
 
 	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const;
 	SelectionState GetSelectionState(wxAffineMatrix2D cameraTransform,

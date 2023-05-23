@@ -1,6 +1,13 @@
 #include "GraphicalEdge.h"
 
+#include "Canvas.h"
+
+unsigned int GraphicalEdge::ms_nextID = 1;
+
 GraphicalEdge::GraphicalEdge() {
+	m_id = ms_nextID;
+	ms_nextID++;
+
 	m_source = nullptr;
 	m_destination = nullptr;
 
@@ -9,38 +16,55 @@ GraphicalEdge::GraphicalEdge() {
 }
 
 GraphicalEdge::GraphicalEdge(GraphicalNode* source, GraphicalNode* destination) {
-	SetSource(source);
-	SetDestination(destination);
+	m_id = ms_nextID;
+	ms_nextID++;
+
+	ConnectSource(source);
+	ConnectDestination(destination);
 }
 
-void GraphicalEdge::SetSource(GraphicalNode* source) {
-	m_source = source;
-
-	if (!m_source)
-		return;
-
-	m_sourcePoint = source->GetOutputPoint();
-	m_source->SetOutputEdge(this);
+GraphicalEdge::~GraphicalEdge() {
+	Disconnect();
 }
 
-void GraphicalEdge::SetDestination(GraphicalNode* destination) {
-	m_destination = destination;
-
-	if (!m_destination)
+void GraphicalEdge::ConnectSource(GraphicalNode* source) {
+	if (!source)
 		return;
 	
+	m_source = source;
+	m_sourcePoint = source->GetOutputPoint();
+	m_source->SetOutputEdge(this);
+
+	if (m_destination)
+		return;
+
+	m_destinationPoint = m_sourcePoint;
+}
+
+void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
+	if (!destination)
+		return;
+	
+	m_destination = destination;
 	m_destinationPoint = destination->GetInputPoint();
 	m_destination->SetInputEdge(this);
+
+	if (m_source)
+		return;
+
+	m_sourcePoint = m_destinationPoint;
 }
 
-void GraphicalEdge::RemoveSource() {
-	m_source->SetOutputEdge(nullptr);
-	m_source = nullptr;
-}
+void GraphicalEdge::Disconnect() {
+	if (m_source) {
+		m_source->m_outputEdge = nullptr;
+		m_source = nullptr;
+	}
 
-void GraphicalEdge::RemoveDestination() {
-	m_destination->SetInputEdge(nullptr);
-	m_destination = nullptr;
+	if (m_destination) {
+		m_destination->m_inputEdge = nullptr;
+		m_destination = nullptr;
+	}
 }
 
 // Draws the edge to a wxGraphicsContext

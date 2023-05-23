@@ -3,6 +3,8 @@
 #include "wx/graphics.h"
 #include "wx/dcbuffer.h"
 
+#include "Canvas.h"
+
 // Used for outputting debug information to the debug status bar
 const std::string GraphicalNode::ms_selectionStateNames[GraphicalNode::SelectionState::STATES_MAX] = {
 	"NONE",
@@ -21,15 +23,15 @@ const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
 const wxColor GraphicalNode::ms_textColor = *wxWHITE;
 
-unsigned int GraphicalNode::ms_nextID = 0;
+unsigned int GraphicalNode::ms_nextID = 1;
 
-GraphicalNode::GraphicalNode(wxWindow* window, wxPoint2DDouble center, const std::string& text) {
+GraphicalNode::GraphicalNode(wxWindow* parent, wxPoint2DDouble center, const std::string& text) {
 
 	m_id = ms_nextID;
 	ms_nextID++;
 
-	wxSize bodySize = window->FromDIP(ms_bodySize);
-	wxSize ioSize = window->FromDIP(ms_ioSize);
+	wxSize bodySize = parent->FromDIP(ms_bodySize);
+	wxSize ioSize = parent->FromDIP(ms_ioSize);
 
 	m_rect = wxRect2DDouble(-bodySize.GetWidth() / 2, -bodySize.GetHeight() / 2, bodySize.GetWidth(), bodySize.GetHeight());
 	m_text = text;
@@ -39,8 +41,13 @@ GraphicalNode::GraphicalNode(wxWindow* window, wxPoint2DDouble center, const std
 	m_outputRect = wxRect2DDouble(m_rect.m_width / 2 - ioSize.GetWidth() / 2, -ioSize.GetHeight() / 2, ioSize.GetWidth(), ioSize.GetHeight());
 }
 
-GraphicalNode::GraphicalNode(wxWindow* window, wxPoint2DDouble center)
-	: GraphicalNode(window, center, "Node " + std::to_string(ms_nextID)) {}
+GraphicalNode::GraphicalNode(wxWindow* parent, wxPoint2DDouble center)
+	: GraphicalNode(parent, center, "Node " + std::to_string(ms_nextID)) {}
+
+GraphicalNode::~GraphicalNode() {
+	DisconnectInput();
+	DisconnectOutput();
+}
 
 wxPoint2DDouble GraphicalNode::GetOutputPoint() const {
 	wxPoint2DDouble outputPoint = {
@@ -68,14 +75,14 @@ void GraphicalNode::SetInputEdge(GraphicalEdge* inputEdge) {
 	m_inputEdge = inputEdge;
 }
 
-void GraphicalNode::RemoveOutputEdge() {
-	m_outputEdge->SetSource(nullptr);
-	m_outputEdge = nullptr;
+void GraphicalNode::DisconnectOutput() {
+	if (m_outputEdge)
+		m_outputEdge->Disconnect();
 }
 
-void GraphicalNode::RemoveInputEdge() {
-	m_inputEdge->SetDestination(nullptr);
-	m_inputEdge = nullptr;
+void GraphicalNode::DisconnectInput() {
+	if (m_inputEdge)
+		m_inputEdge->Disconnect();
 }
 
 // Draws the node to a wxGraphicsContext
@@ -126,8 +133,8 @@ void GraphicalNode::Move(wxPoint2DDouble displacement) {
 	m_transform.Translate(displacement.m_x, displacement.m_y);
 	
 	if (m_inputEdge)
-		m_inputEdge->SetDestinationPoint(GetInputPoint());
+		m_inputEdge->m_destinationPoint = GetInputPoint();
 
 	if (m_outputEdge)
-		m_outputEdge->SetSourcePoint(GetOutputPoint());
+		m_outputEdge->m_sourcePoint = GetOutputPoint();
 }

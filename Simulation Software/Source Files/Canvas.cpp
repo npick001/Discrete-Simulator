@@ -73,13 +73,25 @@ void Canvas::DeleteNode() {
 	if (!m_selectedNode)
 		return;
 
+	// Get input and output edge IDs, before removing all references, for later removal
+	unsigned int outputID = 0;
+	unsigned int inputID = 0;
+
 	if (m_selectedNode->isOutputConnected())
-		m_selectedNode->RemoveOutputEdge();
+		outputID = m_selectedNode->GetOutputEdge().GetID();
 
 	if (m_selectedNode->isInputConnected())
-		m_selectedNode->RemoveInputEdge();
+		inputID = m_selectedNode->GetInputEdge().GetID();
 
+	// Node is deleted and it's edges are disconnected on all sides
 	m_nodes.remove(*m_selectedNode);
+
+	// Edges are then deleted afterwards
+	if (outputID || inputID)
+		m_edges.remove_if([inputID, outputID](const GraphicalEdge& edge) {
+			return edge.GetID() == inputID || edge.GetID() == outputID;
+		});
+
 	Refresh();
 }
 
@@ -99,8 +111,8 @@ SelectionInfo Canvas::GetNodeSelectionInfo(wxPoint2DDouble clickPosition) {
 	GraphicalNode::SelectionState state;
 
 	auto selectedComponentIter = std::find_if(m_nodes.rbegin(), m_nodes.rend(),
-		[this, &state, clickPosition](const GraphicalNode& graphicalNode) mutable {
-		state = graphicalNode.GetSelectionState(GetCameraTransform(), clickPosition);
+		[this, &state, clickPosition](const GraphicalNode& node) mutable {
+		state = node.GetSelectionState(GetCameraTransform(), clickPosition);
 		return (state != GraphicalNode::SelectionState::NONE);
 	});
 
@@ -202,8 +214,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
-		m_incompleteEdge->SetSource(m_selectedNode);
-		m_incompleteEdge->SetDestinationPoint(m_incompleteEdge->GetSourcePoint());
+		m_incompleteEdge->ConnectSource(m_selectedNode);
 		break;
 
 	// Instatiate an edge and connect destination to node's input
@@ -212,8 +223,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
-		m_incompleteEdge->SetDestination(m_selectedNode);
-		m_incompleteEdge->SetSourcePoint(m_incompleteEdge->GetDestinationPoint());
+		m_incompleteEdge->ConnectDestination(m_selectedNode);
 		break;
 
 	// Panning also works with left click
@@ -243,13 +253,13 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == GraphicalNode::SelectionState::INPUT
 			&& endSelection.node != m_selectedNode) {
 
-			m_incompleteEdge->SetDestination(endSelection.node);
+			m_incompleteEdge->ConnectDestination(endSelection.node);
 
 			m_debugStatusBar->SetStatusText("Connected " + m_selectedNode->GetText() + " to "
 				+ endSelection.node->GetText(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else {
-			m_incompleteEdge->RemoveSource();
+			m_incompleteEdge->Disconnect();
 			m_edges.pop_back();
 		}
 		break;
@@ -259,13 +269,13 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == GraphicalNode::SelectionState::OUTPUT
 			&& endSelection.node != m_selectedNode) {
 
-			m_incompleteEdge->SetSource(endSelection.node);
+			m_incompleteEdge->ConnectSource(endSelection.node);
 
 			m_debugStatusBar->SetStatusText("Connected " + endSelection.node->GetText() + " to "
 				+ m_selectedNode->GetText(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else {
-			m_incompleteEdge->RemoveDestination();
+			m_incompleteEdge->Disconnect();
 			m_edges.pop_back();
 		}
 		break;
@@ -315,7 +325,7 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
 			m_incompleteEdge->SetDestinationPoint(inverse.TransformPoint(mousePosition));
 		else {
-			m_incompleteEdge->RemoveSource();
+			m_incompleteEdge->Disconnect();
 			m_incompleteEdge = nullptr;
 			m_edges.pop_back();
 		}
@@ -329,7 +339,7 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
 			m_incompleteEdge->SetSourcePoint(inverse.TransformPoint(mousePosition));
 		else {
-			m_incompleteEdge->RemoveDestination();
+			m_incompleteEdge->Disconnect();
 			m_incompleteEdge = nullptr;
 			m_edges.pop_back();
 		}
