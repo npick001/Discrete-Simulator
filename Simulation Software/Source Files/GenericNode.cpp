@@ -22,11 +22,11 @@ wxString GenericNode::GetImagePath() {
     return m_imagePath;
 }
 
-void GenericNode::InstantiateNode(int x, int y, wxSize size) {
-    m_position.x = x;
-    m_position.y = y;
-    m_size = size;
-}
+//void GenericNode::InstantiateNode(int x, int y, wxSize size) {
+//    m_position.x = x;
+//    m_position.y = y;
+//    m_size = size;
+//}
 
 void GenericNode::Arrive(Entity* entity) {
 #if SIM_OUTPUT

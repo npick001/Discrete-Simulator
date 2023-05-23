@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "SimulationExecutive.h"
 #include "Distribution.h"
 //#include "MyTask.h"
@@ -17,75 +19,76 @@ int RandomIndex()
 }
 void NodeTesting() {
 
-	/******************************
+	///******************************
 
-		DELAY TESTING => WORKING
+	//	DELAY TESTING => WORKING
 
-	*******************************/
+	//*******************************/
+	//Distribution* arrivalRate = new Triangular(1, 2, 3);
 	//Distribution* delayTime = new Triangular(100, 200, 300);
-	//Source* src = new Source("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
-	//Delay* delay = new Delay("Delay", delayTime);
-	//Sink* sink = new Sink("Sink");
+	//SourceNode* src = new SourceNode("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
+	//DelayNode* delay = new DelayNode("Delay", delayTime);
+	//SinkNode* sink = new SinkNode("Sink");
 	//src->SetNext(delay);
 	//delay->SetNext(sink);
 
-	/******************************
+	///******************************
 
-		SERVER TESTING => WORKING
+	//	SERVER TESTING => WORKING
 
-	*******************************/
+	//*******************************/
 	//Distribution* arrivalRate = new Triangular(1, 2, 3);
 	//Distribution* serviceTime = new Triangular(5, 6, 7);
-	//Source* src = new Source("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
-	//ServerQueue* server = new ServerQueue("Server", serviceTime);
-	//Sink* sink = new Sink("Sink");
+	//SourceNode* src = new SourceNode("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
+	//SSSQ* server = new SSSQ("Server", serviceTime);
+	//SinkNode* sink = new SinkNode("Sink");
 	//src->SetNext(server);
 	//server->SetNext(sink);
 
-	/******************************
+	///******************************
 
-	DECISION NODE TESTING => WORKING
+	//DECISION NODE TESTING => WORKING
 
-	*******************************/
+	//*******************************/
 	//Distribution* arrivalRate = new Triangular(1, 2, 3);
 	//Distribution* delayTime = new Triangular(100, 200, 300);
-	//Source* src = new Source("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
-	//Delay* delay = new Delay("Delay", delayTime);
+	//SourceNode* src = new SourceNode("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
+	//DelayNode* delay = new DelayNode("Delay", delayTime);
 	//DecisionNode* testDecision = new DecisionNode("Test Decision", (DecisionFn)&Rework);
-	//Sink* sink = new Sink("Sink");
+	//SinkNode* sink = new SinkNode("Sink");
 	//src->SetNext(testDecision);
 	//testDecision->SetNextNodes(delay, sink);
 	//delay->SetNext(sink);
 
-	/******************************
+	///******************************
 
-   DECISION N NODE TESTING => WORKING
+ //  DECISION N NODE TESTING => WORKING
 
-	*******************************/
-	Distribution* arrivalRate = new Triangular(1, 2, 3);
-	Distribution* delayTime = new Triangular(1000, 2000, 3000);
-	Distribution* serviceTime = new Triangular(1, 2, 3);
-	Source* src = new Source("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
-	Sink* sink = new Sink("Sink");
-	Delay* delay = new Delay("Delay", delayTime);
-	ServerQueue* sssq = new ServerQueue("Server", serviceTime);
-	DecisionNNode* testDecision = new DecisionNNode("Test Decision", 3, (DecisionNFn)&RandomIndex);
-	src->SetNext(testDecision);
-	delay->SetNext(sink);
-	sssq->SetNext(sink);
-	testDecision->SetNextNodes(0, delay);
-	testDecision->SetNextNodes(1, sssq);
-	testDecision->SetNextNodes(2, sink);
+	//*******************************/
+	//Distribution* arrivalRate = new Triangular(1, 2, 3);
+	//Distribution* delayTime = new Triangular(1000, 2000, 3000);
+	//Distribution* serviceTime = new Triangular(1, 2, 3);
+	//SourceNode* src = new SourceNode("Source", 5, new MyEntity(GetSimulationTime()), arrivalRate);
+	//SinkNode* sink = new SinkNode("Sink");
+	//DelayNode* delay = new DelayNode("Delay", delayTime);
+	//SSSQ* sssq = new SSSQ("Server", serviceTime);
+	//DecisionNNode* testDecision = new DecisionNNode("Test Decision", 3, (DecisionNFn)&RandomIndex);
+	//src->SetNext(testDecision);
+	//delay->SetNext(sink);
+	//sssq->SetNext(sink);
+	//testDecision->SetNextNodes(0, delay);
+	//testDecision->SetNextNodes(1, sssq);
+	//testDecision->SetNextNodes(2, sink);
 
-	/******************************
+	///******************************
 
-		BATCH TESTING => WORKING
+	//	BATCH TESTING => WORKING
 
-	*******************************/
-	//Source* src1 = new Source("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
-	//Source* src2 = new Source("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
-	//Sink* batchSink = new Sink("Batch Sink");
-	//Sink* sink = new Sink("Entity Sink");
+	//*******************************/
+	//SourceNode* src1 = new SourceNode("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
+	//SourceNode* src2 = new SourceNode("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
+	//SinkNode* batchSink = new SinkNode("Batch Sink");
+	//SinkNode* sink = new SinkNode("Entity Sink");
 	//BatchNode* batching = new BatchNode("Batch 1", 3);
 	//UnBatchNode* unbatching = new UnBatchNode("Unbatch 1");
 	//src1->SetNext(batching);
@@ -94,21 +97,21 @@ void NodeTesting() {
 	//src2->SetNext(batching);
 	//batching->SetNext(batchSink);
 
-	/******************************
+	///******************************
 
-	RESOURCE POOL TESTING => WORKING
+	//RESOURCE POOL TESTING => WORKING
 
-	*******************************/
-	//Source* src1 = new Source("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
-	//Source* src2 = new Source("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
+	//*******************************/
+	//SourceNode* src1 = new SourceNode("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
+	//SourceNode* src2 = new SourceNode("Batching Test", 50, new MyEntity(GetSimulationTime()), new Exponential(0.3));
 	//ResourcePool* mechanics = new ResourcePool("Mechanics", 1);
 	//AcquireNode* aq1 = new AcquireNode("Test AQ 1", mechanics);
 	//AcquireNode* aq2 = new AcquireNode("Test AQ 2", mechanics);
-	//Delay* delay1 = new Delay("Delay 1", new Triangular(1, 2, 3));
-	//Delay* delay2 = new Delay("Delay 2", new Triangular(1, 2, 3));
+	//DelayNode* delay1 = new DelayNode("Delay 1", new Triangular(1, 2, 3));
+	//DelayNode* delay2 = new DelayNode("Delay 2", new Triangular(1, 2, 3));
 	//ReleaseNode* r1 = new ReleaseNode("Release AQ 1", mechanics);
 	//ReleaseNode* r2 = new ReleaseNode("Release AQ 2", mechanics);
-	//Sink* sink = new Sink("Sink");
+	//SinkNode* sink = new SinkNode("Sink");
 	//src1->SetNext(aq1);
 	//aq1->SetNext(delay1);
 	//delay1->SetNext(r1);
@@ -118,20 +121,20 @@ void NodeTesting() {
 	//delay2->SetNext(r2);
 	//r2->SetNext(sink);
 
-	/******************************
+	///******************************
 
-	  FORKJOIN TESTING => WORKING
+	//  FORKJOIN TESTING => WORKING
 
-	*******************************/
+	//*******************************/
 	//Distribution* arrivalRate = new Triangular(1, 2, 3);
 	//Distribution* delay = new Triangular(1000, 2000, 3000);
 
-	//Source* src = new Source("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
+	//SourceNode* src = new SourceNode("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
 	//ForkNode* fork = new ForkNode("Fork", 2);
 	//JoinNode* join = new JoinNode("Join", 2);
-	//Delay* d1 = new Delay("Delay1", delay);
-	//Delay* d2 = new Delay("Delay2", delay);
-	//Sink* sink = new Sink("Sink");
+	//DelayNode* d1 = new DelayNode("Delay1", delay);
+	//DelayNode* d2 = new DelayNode("Delay2", delay);
+	//SinkNode* sink = new SinkNode("Sink");
 	//src->SetNext(fork);
 	//fork->SetNextNodes(0, d1);
 	//fork->SetNextNodes(1, d2);
@@ -147,9 +150,34 @@ int main() {
 	/*StatisticsObject statobj(50);
 	statobj.StatTesting();*/
 
-	NodeTesting();
+	//NodeTesting();
+
+	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+
+	Distribution* arrivalRate = new Triangular(1, 2, 3);
+	SourceNode* src = new SourceNode("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
+	SinkNode* sink = new SinkNode("Sink");
+	src->SetNext(sink);
 
 	RunSimulation();
+	
+	std::cout << "\n--------------------------------------------------------\n"
+		<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
+
+	stats.push_back(src->GetStatistics());
+	stats.push_back(sink->GetStatistics());
+
+	for (int i = 0; i < stats.size(); i++) {
+
+		stats[i].get()->ReportStats();
+	
+		std::cout << "(o)(o)" << std::endl;
+	}
+
+	src->Test();
+	sink->Test();
+
+	//src->GetStatistics().get()->ReportStats();
 
 	return 0;
 }
