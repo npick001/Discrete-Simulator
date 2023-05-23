@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GraphicalElement.h" />
     <ClInclude Include="Source Files\Canvas.h" />
     <ClInclude Include="Source Files\Directives.h" />
     <ClInclude Include="Source Files\Distribution.h" />
@@ -159,6 +158,7 @@
     <ClInclude Include="Source Files\FIFO.h" />
     <ClInclude Include="Source Files\GenericNode.h" />
     <ClInclude Include="Source Files\GraphicalEdge.h" />
+    <ClInclude Include="Source Files\GraphicalElement.h" />
     <ClInclude Include="Source Files\GraphicalNode.h" />
     <ClInclude Include="Source Files\LeftToolbar.h" />
     <ClInclude Include="Source Files\MainApp.h" />
@@ -169,12 +169,12 @@
     <ClInclude Include="Source Files\Statistics.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GraphicalElement.cpp" />
     <ClCompile Include="Source Files\Canvas.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\GenericNode.cpp" />
     <ClCompile Include="Source Files\GraphicalEdge.cpp" />
+    <ClCompile Include="Source Files\GraphicalElement.cpp" />
     <ClCompile Include="Source Files\GraphicalNode.cpp" />
     <ClCompile Include="Source Files\LeftToolbar.cpp" />
     <ClCompile Include="Source Files\MainApp.cpp" />

@@ -60,7 +60,7 @@
     <ClInclude Include="Source Files\GraphicalNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicalElement.h">
+    <ClInclude Include="Source Files\GraphicalElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,7 +101,7 @@
     <ClCompile Include="Source Files\GraphicalNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicalElement.cpp">
+    <ClCompile Include="Source Files\GraphicalElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

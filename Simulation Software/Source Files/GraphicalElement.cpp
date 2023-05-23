@@ -9,3 +9,7 @@ GraphicalElement::GraphicalElement() {
 
 	ms_elements[m_id] = *this;
 }
+
+GraphicalElement::~GraphicalElement() {
+	ms_elements.erase(m_id);
+}
