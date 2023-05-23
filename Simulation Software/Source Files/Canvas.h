@@ -1,9 +1,11 @@
 #pragma once
 
 #include <list>
+#include <unordered_map>
 
 #include "wx/wx.h"
 
+#include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
 
