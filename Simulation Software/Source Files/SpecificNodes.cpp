@@ -5,7 +5,7 @@
 class Source::ArriveEA : public EventAction {
 
 public:
-	ArriveEA(Source* src) {
+	ArriveEA(Source* src) { 
 		_src = src;
 	}
 

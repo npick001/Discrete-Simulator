@@ -19,14 +19,11 @@ struct Event
 class SimulationExecutive
 {
 public:
-	static void InitializeSimulation()
-	{
-		_simTime = 0.0;
-	}
-
 	static Time GetSimulationTime() { return _simTime; }
 	static void RunSimulation()
 	{
+		_simTime = 0.0;
+
 		while (_eventList.HasEvent()) {
 			Event* e = _eventList.GetEvent();
 			_simTime = e->_time;
@@ -37,6 +34,8 @@ public:
 
 	static void RunSimulation(Time endTime)
 	{
+		_simTime = 0.0;
+
 		while (_eventList.HasEvent() && _simTime <= endTime) {
 			Event* e = _eventList.GetEvent();
 			_simTime = e->_time;
@@ -128,11 +127,6 @@ private:
 
 SimulationExecutive::EventList SimulationExecutive::_eventList;
 Time SimulationExecutive::_simTime = 0.0;
-
-void InitializeSimulation()
-{
-	SimulationExecutive::InitializeSimulation();
-}
 
 Time GetSimulationTime()
 {

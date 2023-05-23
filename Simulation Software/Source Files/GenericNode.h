@@ -2,6 +2,7 @@
 #include <wx/wx.h>
 #include <wx/graphics.h>
 
+#include "Directives.h"
 #include "Entity.h"
 
 class GenericNode
@@ -12,9 +13,7 @@ public:
     void SetImagePath(const wxString& imagePath);
     wxString GetName();
     wxString GetImagePath();    
-
-    //// NOT SURE WHAT I WANT TO DO WITH THIS YET
-    //virtual void Draw(wxGraphicsContext* gc) = 0;
+    inline int GetID() { return m_id; }
 
     // At (x, y) instantiate a node of specified size
     void InstantiateNode(int x, int y, wxSize size);

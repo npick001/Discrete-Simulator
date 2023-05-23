@@ -29,7 +29,20 @@ void GenericNode::InstantiateNode(int x, int y, wxSize size) {
 }
 
 void GenericNode::Arrive(Entity* entity) {
+#if SIM_OUTPUT
+    std::cout << "time = " << GetSimulationTime() << ", " << " " << m_name << ", arrive, entity: " << entity->GetID() << std::endl << std::flush;
+#endif
+
     NodeProcess(entity);
+}
+
+void GenericNode::Depart(Entity* entity) {
+#if SIM_OUTPUT
+    std::cout << "time = " << GetSimulationTime() << ", " << " " << m_name << ", depart, entity: " << entity->GetID() << std::endl << std::flush;
+#endif
+    
+    entity->SetSource(m_id);
+    m_next->Arrive(entity);
 }
 
 GenericNode::GenericNode(const wxString& name) {
@@ -52,9 +65,4 @@ GenericNode::GenericNode(const GenericNode& other) {
 GenericNode::~GenericNode() {
     delete m_prev;
     delete m_next;
-}
-
-void GenericNode::Depart(Entity* entity) {
-    entity->SetSource(m_id);
-    m_next->Arrive(entity);
 }
