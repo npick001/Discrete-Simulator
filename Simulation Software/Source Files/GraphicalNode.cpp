@@ -23,26 +23,44 @@ const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
 const wxColor GraphicalNode::ms_textColor = *wxWHITE;
 
-unsigned int GraphicalNode::ms_nextID = 1;
+GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_transform(), m_inputRect(), m_outputRect() {
+	m_inputEdge = nullptr;
+	m_outputEdge = nullptr;
+}
 
-GraphicalNode::GraphicalNode(wxWindow* parent, wxPoint2DDouble center, const std::string& text) {
-
-	m_id = ms_nextID;
-	ms_nextID++;
-
+GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center)
+	: GraphicalNode(id) {
+	
 	wxSize bodySize = parent->FromDIP(ms_bodySize);
 	wxSize ioSize = parent->FromDIP(ms_ioSize);
 
 	m_rect = wxRect2DDouble(-bodySize.GetWidth() / 2, -bodySize.GetHeight() / 2, bodySize.GetWidth(), bodySize.GetHeight());
-	m_text = text;
 	m_transform.Translate(center.m_x, center.m_y);
 
 	m_inputRect = wxRect2DDouble(-m_rect.m_width / 2 - ioSize.GetWidth() / 2, -ioSize.GetHeight() / 2, ioSize.GetWidth(), ioSize.GetHeight());
 	m_outputRect = wxRect2DDouble(m_rect.m_width / 2 - ioSize.GetWidth() / 2, -ioSize.GetHeight() / 2, ioSize.GetWidth(), ioSize.GetHeight());
 }
 
-GraphicalNode::GraphicalNode(wxWindow* parent, wxPoint2DDouble center)
-	: GraphicalNode(parent, center, "Node " + std::to_string(ms_nextID)) {}
+GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center, const std::string& label)
+	: GraphicalNode(id, parent, center) {
+
+	m_label = label;
+}
+
+GraphicalNode::GraphicalNode(const GraphicalNode& other) : GraphicalElement(other) {
+	(*this) = other;
+}
+
+GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
+	if (this == &other)
+		return (*this);
+
+	m_transform = other.m_transform;
+	m_outputEdge = other.m_outputEdge;
+	m_inputEdge = other.m_inputEdge;
+
+	return (*this);
+}
 
 GraphicalNode::~GraphicalNode() {
 	DisconnectInput();
@@ -104,9 +122,9 @@ void GraphicalNode::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 	gc->SetFont(*wxNORMAL_FONT, ms_textColor);
 
 	double textWidth, textHeight;
-	gc->GetTextExtent(m_text, &textWidth, &textHeight);
+	gc->GetTextExtent(m_label, &textWidth, &textHeight);
 
-	gc->DrawText(m_text, m_rect.m_x + m_rect.m_width / 2 - textWidth / 2, m_rect.m_y + m_rect.m_height / 2 - textHeight);
+	gc->DrawText(m_label, m_rect.m_x + m_rect.m_width / 2 - textWidth / 2, m_rect.m_y + m_rect.m_height / 2 - textHeight);
 }
 
 // Returns the selection state of the component given where the user clicked

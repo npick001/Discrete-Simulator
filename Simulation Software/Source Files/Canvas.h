@@ -10,6 +10,9 @@
 #include "GraphicalEdge.h"
 
 class Canvas : public wxPanel {
+private:
+	ElementKey m_nextID;
+
 public:
 	Canvas(wxWindow* parent, wxStatusBar* status);
 	~Canvas();
@@ -35,6 +38,8 @@ private:
 		ID_REMOVE_EDGE
 	};
 
+	typedef std::unordered_map<ElementKey, GraphicalElement*> ElementMap;
+
 	// Debug status bar used to display node information
 	wxStatusBar* m_debugStatusBar;
 
@@ -43,6 +48,7 @@ private:
 	wxMenu* m_nodeMenu;
 	wxMenu* m_ioMenu;
 
+	ElementMap m_elements;
 	std::list<GraphicalNode> m_nodes;
 	std::list<GraphicalEdge> m_edges;
 

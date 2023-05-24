@@ -4,11 +4,23 @@
 #include "wx/dcbuffer.h"
 
 Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
-	: wxPanel(parent, wxID_ANY)
+	: wxPanel(parent, wxID_ANY), m_elements(), m_nodes(), m_edges()
 {
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
 
-	// UI Elements
+	// Canvas
+	m_nextID = 1;
+
+	AddNode(FromDIP(wxPoint(-150, 0)));
+	AddNode(FromDIP(wxPoint(   0, 0)));
+	AddNode(FromDIP(wxPoint( 150, 0)));
+
+	wxSize size = parent->GetSize();
+	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
+
+	m_nodeSelectionState = GraphicalNode::SelectionState::NONE;
+
+	// UI
 	m_debugStatusBar = statusBar;
 	m_debugStatusBar->SetFieldsCount(DebugField::FIELDS_MAX);
 
@@ -19,16 +31,6 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_nodeMenu = new wxMenu("");
 	m_nodeMenu->Append(ID_DELETE_NODE, "Delete", "Delete the currently selected node");
 	m_nodeMenu->Bind(wxEVT_MENU, &Canvas::OnMenuDeleteNode, this, ID_DELETE_NODE);
-
-	// Canvas Elements
-	AddNode(FromDIP(wxPoint(-150, 0)));
-	AddNode(FromDIP(wxPoint(   0, 0)));
-	AddNode(FromDIP(wxPoint( 150, 0)));
-
-	wxSize size = parent->GetSize();
-	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
-
-	m_nodeSelectionState = GraphicalNode::SelectionState::NONE;
 
 	// Event bindings
 	this->Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
@@ -54,7 +56,7 @@ Canvas::~Canvas() {
 
 // Adds a graphical node to the canvas
 void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
-	GraphicalNode obj(this, center, text);
+	GraphicalNode obj(m_nextID, this, center, text);
 	m_nodes.push_back(obj);
 
 	Refresh();
@@ -62,7 +64,7 @@ void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
 
 // Adds a graphical node to the canvas, name is auto populated with id number
 void Canvas::AddNode(wxPoint2DDouble center) {
-	GraphicalNode obj(this, center);
+	GraphicalNode obj(m_nextID, this, center);
 	m_nodes.push_back(obj);
 
 	Refresh();
@@ -124,7 +126,7 @@ SelectionInfo Canvas::GetNodeSelectionInfo(wxPoint2DDouble clickPosition) {
 		return { nullptr, GraphicalNode::SelectionState::NONE };
 	}
 
-	m_debugStatusBar->SetStatusText("Object Selected: " + selectedComponentIter->GetText(),
+	m_debugStatusBar->SetStatusText("Object Selected: " + selectedComponentIter->GetLabel(),
 		DebugField::COMPONENT_SELECTED);
 
 	return { &(*selectedComponentIter), state};
@@ -199,7 +201,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	m_nodeSelectionState = selection.state;
 
 	// Defined before switch statement to avoid redefinition
-	GraphicalEdge edge;
+	GraphicalEdge edge(m_nextID);
 
 	switch (m_nodeSelectionState) {
 
@@ -255,8 +257,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 
 			m_incompleteEdge->ConnectDestination(endSelection.node);
 
-			m_debugStatusBar->SetStatusText("Connected " + m_selectedNode->GetText() + " to "
-				+ endSelection.node->GetText(), DebugField::COMPONENTS_CONNECTED);
+			m_debugStatusBar->SetStatusText("Connected " + m_selectedNode->GetLabel() + " to "
+				+ endSelection.node->GetLabel(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else {
 			m_incompleteEdge->Disconnect();
@@ -271,8 +273,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 
 			m_incompleteEdge->ConnectSource(endSelection.node);
 
-			m_debugStatusBar->SetStatusText("Connected " + endSelection.node->GetText() + " to "
-				+ m_selectedNode->GetText(), DebugField::COMPONENTS_CONNECTED);
+			m_debugStatusBar->SetStatusText("Connected " + endSelection.node->GetLabel() + " to "
+				+ m_selectedNode->GetLabel(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else {
 			m_incompleteEdge->Disconnect();
@@ -371,18 +373,18 @@ void Canvas::OnRightUp(wxMouseEvent& event) {
 
 	// Popup node menu options
 	case GraphicalNode::SelectionState::NODE:
-		m_nodeMenu->SetTitle(selection.node->GetText());
+		m_nodeMenu->SetTitle(selection.node->GetLabel());
 		PopupMenu(m_nodeMenu);
 		break;
 
 	// Popup I/O menu options and bind output edge disconnection handler
 	case GraphicalNode::SelectionState::OUTPUT:
-		wxLogMessage("Right clicked output of %s", selection.node->GetText());
+		wxLogMessage("Right clicked output of %s", selection.node->GetLabel());
 		break;
 
 	// Popup I/O menu options and bind input edge disconnection handler
 	case GraphicalNode::SelectionState::INPUT:
-		wxLogMessage("Right clicked input of %s", selection.node->GetText());
+		wxLogMessage("Right clicked input of %s", selection.node->GetLabel());
 		break;
 
 	// Popup canvas menu options

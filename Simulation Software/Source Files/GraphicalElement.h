@@ -4,50 +4,33 @@
 #include <string>
 #include <unordered_map>
 
-typedef unsigned int GraphicalKey;
+#include "wx/graphics.h"
 
-class ElementContainer;
+typedef unsigned int ElementKey;
 
 class GraphicalElement {
 protected:
-	friend class ElementContainer;
-
-	GraphicalKey m_id;
+	ElementKey m_id;
+	
 	std::string m_label;
-
-	GraphicalElement(GraphicalKey id);
-	GraphicalElement(GraphicalKey id, std::string label);
-
-	GraphicalElement& operator=(const GraphicalElement& other);
+	wxPoint2DDouble m_labelPos;
 
 public:
-	GraphicalElement();
+	GraphicalElement(ElementKey id);
 	GraphicalElement(const GraphicalElement& other);
-	~GraphicalElement();
+	GraphicalElement& operator=(const GraphicalElement& other);
+
+	virtual ~GraphicalElement();
+
+	inline const ElementKey& GetID() const { return m_id; }
+
+	inline std::string GetLabel() const { return m_label; }
+	inline void SetLabel(const std::string& new_label) { m_label = new_label; }
+
+	virtual void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const;
 
 	// Elements are guarenteed to be the same if they share the same day
 	inline bool operator==(const GraphicalElement& other) const {
 		return m_id == other.m_id;
 	}
-};
-
-class ElementContainer {
-public:
-	typedef std::unordered_map<GraphicalKey, GraphicalElement> ElementMap;
-	typedef std::unordered_map<GraphicalKey, GraphicalElement>::value_type ElementPair;
-
-private:
-	GraphicalKey m_nextID;
-	std::unordered_map<GraphicalKey, GraphicalElement> map;
-
-public:
-
-	ElementContainer();
-
-	inline std::pair<ElementMap::iterator, bool> insert_new();
-	
-	inline ElementMap::iterator erase(ElementMap::iterator it) { return map.erase(it); }
-	inline ElementMap::size_type erase(GraphicalKey key) { return map.erase(key); }
-	
-	inline GraphicalElement& operator[](GraphicalKey key) { return map[key]; }
 };

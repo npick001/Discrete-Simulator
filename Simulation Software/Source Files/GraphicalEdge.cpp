@@ -2,22 +2,15 @@
 
 #include "Canvas.h"
 
-unsigned int GraphicalEdge::ms_nextID = 1;
-
-GraphicalEdge::GraphicalEdge() {
-	m_id = ms_nextID;
-	ms_nextID++;
+GraphicalEdge::GraphicalEdge(ElementKey id)
+	: GraphicalElement(id), m_sourcePoint(), m_destinationPoint() {
 
 	m_source = nullptr;
 	m_destination = nullptr;
-
-	m_sourcePoint = wxPoint2DDouble();
-	m_destinationPoint = wxPoint2DDouble();
 }
 
-GraphicalEdge::GraphicalEdge(GraphicalNode* source, GraphicalNode* destination) {
-	m_id = ms_nextID;
-	ms_nextID++;
+GraphicalEdge::GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination)
+	: GraphicalEdge(id) {
 
 	ConnectSource(source);
 	ConnectDestination(destination);
@@ -72,11 +65,17 @@ void GraphicalEdge::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 
 	// Transform from world to window coordinates
 	gc->SetTransform(gc->CreateMatrix(camera));
-	gc->SetPen(wxPen(*wxBLACK));
+	gc->SetPen(wxPen(*wxBLACK, 2));
 
 	auto path = gc->CreatePath();
 	path.MoveToPoint(m_sourcePoint);
 	path.AddLineToPoint(m_destinationPoint);
 	path.CloseSubpath();
 	gc->StrokePath(path);
+
+	double textWidth, textHeight;
+	gc->GetTextExtent(m_label, &textWidth, &textHeight);
+
+	gc->DrawText(m_label, (m_sourcePoint.m_x - m_destinationPoint.m_x) / 2 - textWidth / 2,
+		(m_sourcePoint.m_y - m_destinationPoint.m_y) / 2 - textHeight);
 }

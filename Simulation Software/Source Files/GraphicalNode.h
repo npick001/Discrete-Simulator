@@ -6,19 +6,35 @@
 #include "wx/graphics.h"
 #include "wx/wx.h"
 
+#include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 
 class GraphicalEdge;
 
-class GraphicalNode {
+class GraphicalNode : public GraphicalElement {
+private:
+	friend class GraphicalEdge;
+
+	wxAffineMatrix2D m_transform;
+
+	wxRect2DDouble m_rect;
+
+	wxRect2DDouble m_inputRect;
+	wxRect2DDouble m_outputRect;
+
+	GraphicalEdge* m_inputEdge;
+	GraphicalEdge* m_outputEdge;
+
 public:
-	GraphicalNode(wxWindow* window, wxPoint2DDouble center, const std::string& _text);
-	GraphicalNode(wxWindow* window, wxPoint2DDouble center);
+	GraphicalNode(ElementKey id);
+	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center, const std::string& _text);
+	GraphicalNode(const GraphicalNode& other);
+
+	GraphicalNode& operator=(const GraphicalNode& other);
 
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
-
-	friend class GraphicalEdge;
 
 	enum SelectionState : unsigned int {
 		NONE,
@@ -30,14 +46,9 @@ public:
 
 	static const std::string ms_selectionStateNames[SelectionState::STATES_MAX];
 
-	inline unsigned int GetID() const { return m_id; }
-
 	// Return a copy of m_transform because outside code should not
 	// be able to change this variable directly
 	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
-	
-	inline wxString GetText() const { return m_text; }
-	inline void SetText(const std::string& text) { m_text = text; }
 
 	// Returns the points at which an edge should be drawn between
 	// Points are in world coordinates
@@ -56,33 +67,14 @@ public:
 	void DisconnectOutput();
 	void DisconnectInput();
 
-	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const;
+	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const override;
+
 	SelectionState GetSelectionState(wxAffineMatrix2D cameraTransform,
 		wxPoint2DDouble clickPosition) const;
 
 	void Move(wxPoint2DDouble displacement);
 
-	// Nodes are compared based on their ID
-	inline bool operator==(const GraphicalNode& other) const {
-		return m_id == other.m_id;
-	}
-
 private:
-	// IDs are unique for each node
-	static unsigned int ms_nextID;
-	unsigned int m_id;
-
-	wxAffineMatrix2D m_transform;
-
-	wxString m_text;
-	wxRect2DDouble m_rect;
-
-	wxRect2DDouble m_inputRect;
-	wxRect2DDouble m_outputRect;
-	
-	GraphicalEdge* m_inputEdge;
-	GraphicalEdge* m_outputEdge;
-
 	static const wxSize ms_bodySize;
 	static const wxColor ms_bodyColor;
 
