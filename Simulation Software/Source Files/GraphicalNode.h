@@ -81,7 +81,7 @@ private:
 	static const wxSize ms_ioSize;
 	static const wxColor ms_ioColor;
 
-	static const wxColor ms_textColor;
+	static const wxColor ms_labelColor;
 };
 
 // Node selection information

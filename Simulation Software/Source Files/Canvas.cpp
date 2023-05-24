@@ -54,10 +54,19 @@ Canvas::~Canvas() {
 	delete m_nodeMenu;
 }
 
+void Canvas::AddNode(const GraphicalNode& obj) {
+	m_nodes.push_back(obj);
+
+	GraphicalNode* added = &(*m_nodes.rbegin());
+	m_elements[added->GetID()] = added;
+}
+
 // Adds a graphical node to the canvas
 void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
 	GraphicalNode obj(m_nextID, this, center, text);
-	m_nodes.push_back(obj);
+	m_nextID++;
+	
+	AddNode(obj);
 
 	Refresh();
 }
@@ -65,7 +74,9 @@ void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
 // Adds a graphical node to the canvas, name is auto populated with id number
 void Canvas::AddNode(wxPoint2DDouble center) {
 	GraphicalNode obj(m_nextID, this, center);
-	m_nodes.push_back(obj);
+	m_nextID++;
+	
+	AddNode(obj);
 
 	Refresh();
 }
@@ -202,6 +213,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// Defined before switch statement to avoid redefinition
 	GraphicalEdge edge(m_nextID);
+	m_nextID++;
 
 	switch (m_nodeSelectionState) {
 

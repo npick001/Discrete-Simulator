@@ -21,5 +21,3 @@ GraphicalElement& GraphicalElement::operator=(const GraphicalElement& other) {
 }
 
 GraphicalElement::~GraphicalElement() {}
-
-void GraphicalElement::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {}

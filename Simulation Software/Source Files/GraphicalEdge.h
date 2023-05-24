@@ -46,5 +46,8 @@ public:
 	inline bool operator==(const GraphicalEdge& other) const {
 		return m_id == other.m_id;
 	}
+
+private:
+	static const wxColor ms_labelColor;
 };
 

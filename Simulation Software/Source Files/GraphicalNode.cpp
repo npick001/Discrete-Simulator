@@ -21,9 +21,12 @@ const wxColor GraphicalNode::ms_bodyColor = wxColor(64, 64, 64);
 const wxSize GraphicalNode::ms_ioSize = wxSize(15, 15);
 const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
-const wxColor GraphicalNode::ms_textColor = *wxWHITE;
+const wxColor GraphicalNode::ms_labelColor = *wxWHITE;
 
 GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_transform(), m_inputRect(), m_outputRect() {
+
+	m_label = "Node " + std::to_string(m_id);
+
 	m_inputEdge = nullptr;
 	m_outputEdge = nullptr;
 }
@@ -54,6 +57,10 @@ GraphicalNode::GraphicalNode(const GraphicalNode& other) : GraphicalElement(othe
 GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
 	if (this == &other)
 		return (*this);
+
+	m_rect = other.m_rect;
+	m_inputRect = other.m_inputRect;
+	m_outputRect = other.m_outputRect;
 
 	m_transform = other.m_transform;
 	m_outputEdge = other.m_outputEdge;
@@ -119,7 +126,7 @@ void GraphicalNode::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 	gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
 	gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
 
-	gc->SetFont(*wxNORMAL_FONT, ms_textColor);
+	gc->SetFont(*wxNORMAL_FONT, ms_labelColor);
 
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <utility>
-#include <string>
 #include <unordered_map>
 
 #include "wx/graphics.h"
@@ -27,7 +25,7 @@ public:
 	inline std::string GetLabel() const { return m_label; }
 	inline void SetLabel(const std::string& new_label) { m_label = new_label; }
 
-	virtual void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const;
+	virtual void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const = 0;
 
 	// Elements are guarenteed to be the same if they share the same day
 	inline bool operator==(const GraphicalElement& other) const {

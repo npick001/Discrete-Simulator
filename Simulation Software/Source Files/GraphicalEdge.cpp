@@ -2,8 +2,12 @@
 
 #include "Canvas.h"
 
+const wxColor GraphicalEdge::ms_labelColor = wxColor(64, 64, 64);
+
 GraphicalEdge::GraphicalEdge(ElementKey id)
 	: GraphicalElement(id), m_sourcePoint(), m_destinationPoint() {
+
+	m_label = "Edge " + std::to_string(m_id);
 
 	m_source = nullptr;
 	m_destination = nullptr;
@@ -73,9 +77,11 @@ void GraphicalEdge::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 	path.CloseSubpath();
 	gc->StrokePath(path);
 
+	gc->SetFont(*wxNORMAL_FONT, ms_labelColor);
+
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
 
-	gc->DrawText(m_label, (m_sourcePoint.m_x - m_destinationPoint.m_x) / 2 - textWidth / 2,
-		(m_sourcePoint.m_y - m_destinationPoint.m_y) / 2 - textHeight);
+	gc->DrawText(m_label, m_sourcePoint.m_x + (m_destinationPoint.m_x - m_sourcePoint.m_x) / 2 - textWidth / 2,
+		m_sourcePoint.m_y + (m_destinationPoint.m_y - m_sourcePoint.m_y) / 2 - textHeight);
 }
