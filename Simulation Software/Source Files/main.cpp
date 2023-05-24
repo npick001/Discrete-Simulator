@@ -155,29 +155,48 @@ int main() {
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 
 	Distribution* arrivalRate = new Triangular(1, 2, 3);
+	Distribution* serviceTime = new Triangular(0.75, 1.5, 2);
+
 	SourceNode* src = new SourceNode("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
+	SSSQ* server = new SSSQ("SSSQ", serviceTime);
+	SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
+	SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
+	SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
+	SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
 	SinkNode* sink = new SinkNode("Sink");
-	src->SetNext(sink);
+	src->SetNext(server);
+	server->SetNext(server1);
+	server1->SetNext(server2);
+	server2->SetNext(server3);
+	server3->SetNext(server4);
+	server4->SetNext(sink);
 
 	RunSimulation();
 	
 	std::cout << "\n--------------------------------------------------------\n"
 		<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
 
+	src->Test();
+	server->Test();
+	sink->Test();
+
 	stats.push_back(src->GetStatistics());
 	stats.push_back(sink->GetStatistics());
+	stats.push_back(server->GetStatistics());
+	stats.push_back(server1->GetStatistics());
+	stats.push_back(server2->GetStatistics());
+	stats.push_back(server3->GetStatistics());
+	stats.push_back(server4->GetStatistics());
 
-	for (int i = 0; i < stats.size(); i++) {
+	int size = stats.size();
+	std::cout << "Stats container size: " << stats.size() << std::endl;
+
+	for (int i = 0; i < size; i++) {
 
 		stats[i].get()->ReportStats();
 	
-		std::cout << "(o)(o)" << std::endl;
+		//std::cout << "(o)(o)" << std::endl;
 	}
-
-	src->Test();
-	sink->Test();
-
-	//src->GetStatistics().get()->ReportStats();
 
 	return 0;
 }

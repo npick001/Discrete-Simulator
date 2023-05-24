@@ -2,7 +2,49 @@ SOURCE 0
 
 	- Entities Created: 11
 	- Total Entities Created: 11
-SINK 1
+
+SINK 6
 
 	- Entities Created: 11
 	- Total Entities Created: 11
+
+SSSQ 1
+
+	- Entities Processed: 11
+	- Time Waiting: 11.715752
+	- Time in Service: 16.477649
+	- Time Idle: 8.525765
+	- Percent Utilization: 0.659016
+
+SSSQ 2
+
+	- Entities Processed: 11
+	- Time Waiting: 11.715752
+	- Time in Service: 15.224167
+	- Time Idle: 9.779247
+	- Percent Utilization: 0.608884
+
+SSSQ 3
+
+	- Entities Processed: 11
+	- Time Waiting: 11.715752
+	- Time in Service: 15.801430
+	- Time Idle: 9.201984
+	- Percent Utilization: 0.631971
+
+SSSQ 4
+
+	- Entities Processed: 11
+	- Time Waiting: 11.715752
+	- Time in Service: 14.501130
+	- Time Idle: 10.502283
+	- Percent Utilization: 0.579966
+
+SSSQ 5
+
+	- Entities Processed: 11
+	- Time Waiting: 11.715752
+	- Time in Service: 14.768311
+	- Time Idle: 10.235102
+	- Percent Utilization: 0.590652
+

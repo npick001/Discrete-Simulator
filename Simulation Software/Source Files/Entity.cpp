@@ -26,6 +26,11 @@ void Entity::SetType(EntityType myType)
 	m_entityType = myType;
 }
 
+void Entity::SetDeletionTime(Time timeNow)
+{
+	m_destinationTime = timeNow;
+}
+
 EntityType Entity::GetType()
 {
 	return m_entityType;

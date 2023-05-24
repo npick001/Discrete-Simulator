@@ -21,6 +21,7 @@ public:
 	// Setters
 	void SetSource(int id);
 	void SetType(EntityType myType);
+	void SetDeletionTime(Time timeNow);
 	
 	// Statistics time stamping functions
 	void EnterQueue(Time timeNow);
