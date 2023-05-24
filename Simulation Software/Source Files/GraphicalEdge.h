@@ -12,6 +12,8 @@ class GraphicalEdge : public GraphicalElement {
 private:
 	friend class GraphicalNode;
 
+	static GraphicalElement::Type ms_type;
+
 	GraphicalNode* m_source;
 	GraphicalNode* m_destination;
 
@@ -19,6 +21,9 @@ private:
 	wxPoint2DDouble m_destinationPoint;
 
 public:
+	GraphicalElement::Type GetType() const override
+		{ return ms_type; }
+
 	GraphicalEdge(ElementKey id);
 	GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination);
 

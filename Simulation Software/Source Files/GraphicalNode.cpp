@@ -5,6 +5,8 @@
 
 #include "Canvas.h"
 
+GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
+
 // Used for outputting debug information to the debug status bar
 const std::string GraphicalNode::ms_selectionStateNames[GraphicalNode::SelectionState::STATES_MAX] = {
 	"NONE",

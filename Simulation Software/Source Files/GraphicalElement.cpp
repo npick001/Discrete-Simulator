@@ -3,7 +3,7 @@
 // Graphical Element
 
 GraphicalElement::GraphicalElement(ElementKey id)
-	: m_id(id), m_label("Element"), m_labelPos() {}
+	: m_id(id), m_label("Element " + std::to_string(id)), m_labelPos() {}
 
 GraphicalElement::GraphicalElement(const GraphicalElement& other) {
 	(*this) = other;

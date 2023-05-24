@@ -15,6 +15,8 @@ class GraphicalNode : public GraphicalElement {
 private:
 	friend class GraphicalEdge;
 
+	static GraphicalElement::Type ms_type;
+
 	wxAffineMatrix2D m_transform;
 
 	wxRect2DDouble m_rect;
@@ -26,6 +28,9 @@ private:
 	GraphicalEdge* m_outputEdge;
 
 public:
+	GraphicalElement::Type GetType() const override
+		{ return ms_type; }
+
 	GraphicalNode(ElementKey id);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center, const std::string& _text);

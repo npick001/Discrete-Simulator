@@ -2,6 +2,8 @@
 
 #include "Canvas.h"
 
+GraphicalElement::Type GraphicalEdge::ms_type = GraphicalElement::EDGE;
+
 const wxColor GraphicalEdge::ms_labelColor = wxColor(64, 64, 64);
 
 GraphicalEdge::GraphicalEdge(ElementKey id)

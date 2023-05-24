@@ -16,7 +16,7 @@ public:
 	~Canvas();
 
 	// Adds a new graphical node to the canvas at a certain location with a given label
-	void AddNode(wxPoint2DDouble center, const std::string& text);
+	void AddNode(wxPoint2DDouble center, const std::string& label);
 	void AddNode(wxPoint2DDouble center);
 
 private:

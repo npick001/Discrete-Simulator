@@ -9,7 +9,7 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
 
 	// Canvas
-	m_nextID = 1;
+	m_nextID = 0;
 
 	AddNode(FromDIP(wxPoint(-150, 0)));
 	AddNode(FromDIP(wxPoint(   0, 0)));
@@ -62,8 +62,8 @@ void Canvas::AddNode(const GraphicalNode& obj) {
 }
 
 // Adds a graphical node to the canvas
-void Canvas::AddNode(wxPoint2DDouble center, const std::string& text) {
-	GraphicalNode obj(m_nextID, this, center, text);
+void Canvas::AddNode(wxPoint2DDouble center, const std::string& label) {
+	GraphicalNode obj(m_nextID, this, center, label);
 	m_nextID++;
 	
 	AddNode(obj);
