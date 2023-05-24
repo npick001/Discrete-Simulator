@@ -56,10 +56,7 @@ public:
 	wxPoint2DDouble GetInputPoint() const;
 
 	inline const GraphicalEdge& GetOutputEdge() { return *m_outputEdge; }
-	void SetOutputEdge(GraphicalEdge* outputEdge);
-
 	inline const GraphicalEdge& GetInputEdge() { return *m_inputEdge; }
-	void SetInputEdge(GraphicalEdge* inputEdge);
 
 	inline bool isOutputConnected() const { return m_outputEdge != nullptr; }
 	inline bool isInputConnected() const { return m_inputEdge != nullptr; }

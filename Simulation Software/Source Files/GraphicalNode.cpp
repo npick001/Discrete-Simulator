@@ -92,14 +92,6 @@ wxPoint2DDouble GraphicalNode::GetInputPoint() const {
 	return m_transform.TransformPoint(inputPoint);
 }
 
-void GraphicalNode::SetOutputEdge(GraphicalEdge* outputEdge) {
-	m_outputEdge = outputEdge;
-}
-
-void GraphicalNode::SetInputEdge(GraphicalEdge* inputEdge) {
-	m_inputEdge = inputEdge;
-}
-
 void GraphicalNode::DisconnectOutput() {
 	if (m_outputEdge)
 		m_outputEdge->Disconnect();

@@ -30,7 +30,7 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 	
 	m_source = source;
 	m_sourcePoint = source->GetOutputPoint();
-	m_source->SetOutputEdge(this);
+	m_source->m_outputEdge = this;
 
 	if (m_destination)
 		return;
@@ -44,7 +44,7 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 	
 	m_destination = destination;
 	m_destinationPoint = destination->GetInputPoint();
-	m_destination->SetInputEdge(this);
+	m_destination->m_inputEdge = this;
 
 	if (m_source)
 		return;

@@ -213,7 +213,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// Defined before switch statement to avoid redefinition
 	GraphicalEdge edge(m_nextID);
-	m_nextID++;
+	
 
 	switch (m_nodeSelectionState) {
 
@@ -225,6 +225,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	// Instatiate an edge and connect source to node's output
 	case GraphicalNode::SelectionState::OUTPUT:
 		m_edges.push_back(edge);
+		m_nextID++;
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
@@ -234,6 +235,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	// Instatiate an edge and connect destination to node's input
 	case GraphicalNode::SelectionState::INPUT:
 		m_edges.push_back(edge);
+		m_nextID++;
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = &(*m_edges.rbegin());
