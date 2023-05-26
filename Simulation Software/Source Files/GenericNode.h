@@ -2,11 +2,8 @@
 #include <wx/wx.h>
 #include <wx/graphics.h>
 
+#include "Directives.h"
 #include "Entity.h"
-
-#ifdef __WXMSW__
-    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
-#endif
 
 class GenericNode
 {
@@ -14,17 +11,28 @@ public:
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
     void SetImagePath(const wxString& imagePath);
+    inline void SetNodeType(std::string nodetype) { m_nodeType = nodetype; }
     wxString GetName();
     wxString GetImagePath();    
-
-    //// NOT SURE WHAT I WANT TO DO WITH THIS YET
-    //virtual void Draw(wxGraphicsContext* gc) = 0;
+    inline int GetID() { return m_id; }
+    inline std::string GetType() { return m_nodeType; }
 
     // At (x, y) instantiate a node of specified size
-    void InstantiateNode(int x, int y, wxSize size);
+    //void InstantiateNode(int x, int y, wxSize size);
 
-    // Have entity begin arrival logic
     void Arrive(Entity* entity);
+
+    class StatisticsWrapper {
+    public:
+        StatisticsWrapper(int id) : m_id(id) {}
+        virtual void ReportStats() = 0;
+
+    protected:
+        int m_id;
+    };
+
+    // Virtual function returning a wrapper
+    virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
     GenericNode(const wxString& name);
@@ -43,8 +51,17 @@ protected:
     // Node process handler
     virtual void NodeProcess(Entity* entity) = 0;
 
+
+    class Statistics {
+    public: 
+        virtual void Report(std::string header) = 0;
+    protected:
+        inline Statistics() {};
+    };
+
 private:
     int m_id;
+    std::string m_nodeType;
     static int m_nextID;
     wxString m_name;
     wxString m_imagePath;
