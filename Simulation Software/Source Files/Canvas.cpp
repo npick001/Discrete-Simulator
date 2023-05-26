@@ -82,9 +82,9 @@ void Canvas::DeleteNode() {
 		return;
 
 	// Edges are disconnected and deleted
-	if (auto outputEdge = m_nodes[m_selection.element->GetID()].GetOutputEdge())
+	if (auto outputEdge = m_nodes[m_selection->GetID()].GetOutputEdge())
 		m_edges.erase(outputEdge->GetID());
-	if (auto inputEdge = m_nodes[m_selection.element->GetID()].GetInputEdge())
+	if (auto inputEdge = m_nodes[m_selection->GetID()].GetInputEdge())
 		m_edges.erase(inputEdge->GetID());
 
 	// Node is then deleted
@@ -103,29 +103,28 @@ wxAffineMatrix2D Canvas::GetCameraTransform() const {
 // Return selection information containing which graphical node, if any, was selected and the state of the selection
 Selection Canvas::GetElementSelectionInfo(wxPoint2DDouble clickPosition) {
 
-	if (m_nodes.empty())
+	if (m_elements.empty())
 		return Selection();
 
-	Selection::State state;
+	Selection selection;
 
-	auto selectedIter = std::find_if(m_elements.rbegin(), m_elements.rend(),
-		[this, &state, clickPosition](GraphicalElement* const& element) mutable {
-		state = element->Select(GetCameraTransform(), clickPosition);
-		return (state != Selection::State::NONE);
-	});
-
-	m_debugStatusBar->SetStatusText("Selection State: " + GraphicalElement::ms_selectionStateNames[state],
-		DebugField::SELECTION_STATE);
-
-	if (selectedIter == m_elements.rend()) {
-		m_debugStatusBar->SetStatusText("No object selected", DebugField::COMPONENT_SELECTED);
-		return { nullptr, Selection::State::NONE };
+	for (GraphicalElement* const& element : m_elements) {
+		if (selection = element->Select(GetCameraTransform(), clickPosition)) 
+			break;
 	}
 
-	m_debugStatusBar->SetStatusText("Object Selected: " + (*selectedIter)->GetLabel(),
+	m_debugStatusBar->SetStatusText("Selection State: " + GraphicalElement::ms_selectionStateNames[selection.state],
+		DebugField::SELECTION_STATE);
+
+	if (!selection) {
+		m_debugStatusBar->SetStatusText("No object selected", DebugField::COMPONENT_SELECTED);
+		return selection;
+	}
+
+	m_debugStatusBar->SetStatusText("Object Selected: " + selection->GetLabel(),
 		DebugField::COMPONENT_SELECTED);
 
-	return { (*selectedIter), state};
+	return selection;
 } 
 
 // Pan the camera by the displacement of the mouse position
@@ -361,18 +360,18 @@ void Canvas::OnRightUp(wxMouseEvent& event) {
 
 	// Popup node menu options
 	case Selection::State::NODE:
-		m_nodeMenu->SetTitle(m_selection.element->GetLabel());
+		m_nodeMenu->SetTitle(m_selection->GetLabel());
 		PopupMenu(m_nodeMenu);
 		break;
 
 	// Popup I/O menu options and bind output edge disconnection handler
 	case Selection::State::NODE_OUTPUT:
-		wxLogMessage("Right clicked output of %s", m_selection.element->GetLabel());
+		wxLogMessage("Right clicked output of %s", m_selection->GetLabel());
 		break;
 
 	// Popup I/O menu options and bind input edge disconnection handler
 	case Selection::State::NODE_INPUT:
-		wxLogMessage("Right clicked input of %s", m_selection.element->GetLabel());
+		wxLogMessage("Right clicked input of %s", m_selection->GetLabel());
 		break;
 
 	// Popup canvas menu options
@@ -407,8 +406,8 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	if (!gc)
 		return;
 
-	for (auto it = m_elements.cbegin(); it != m_elements.cend(); it++)
-		(*it)->Draw(GetCameraTransform(), gc);
+	for (GraphicalElement* const& element: m_elements)
+		element->Draw(GetCameraTransform(), gc);
 
 	delete gc;
 

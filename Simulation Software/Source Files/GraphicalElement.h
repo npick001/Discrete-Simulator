@@ -7,7 +7,9 @@
 typedef int ElementKey;
 class GraphicalElement;
 
-// Element selection information
+// Element selection object
+// Use just like a GraphicalElement pointer but you can also access .state
+// for more selection information
 struct Selection {
 	enum State : unsigned int {
 		NONE,
@@ -49,10 +51,14 @@ struct Selection {
 		state = State::NONE;
 	}
 
+	// Reset selection to default setup
 	inline void reset() {
 		element = nullptr;
 		state = State::NONE;
 	}
+
+	GraphicalElement* operator->()
+		{ return element; }
 
 	operator bool()
 		{ return (element && state); }
@@ -90,8 +96,8 @@ public:
 
 	virtual void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const = 0;
 
-	virtual Selection::State Select(const wxAffineMatrix2D& camera,
-		wxPoint2DDouble clickPosition) const = 0;
+	virtual Selection Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) = 0;
 
 	virtual Type GetType() const = 0;
 
@@ -131,6 +137,9 @@ public:
 		{ return m_elements.rbegin(); }
 	inline reverse_iterator rend()
 		{ return m_elements.rend(); }
+
+	inline bool empty()
+		{ return m_elements.empty(); }
 
 	inline void push_back(GraphicalElement* const& element)
 		{ m_elements.push_back(element); }

@@ -125,7 +125,7 @@ void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 }
 
 // Returns the selection state of the component given where the user clicked
-Selection::State GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) const {
+Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) {
 
 	// Transform click position from window coordinates to node's local coordinates
 	auto windowToLocal = camera;
@@ -135,13 +135,13 @@ Selection::State GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2D
 
 	// Return selection state according to what user clicked on
 	if (m_inputRect.Contains(clickPosition))
-		return Selection::State::NODE_INPUT;
+		return { this, Selection::State::NODE_INPUT };
 	else if (m_outputRect.Contains(clickPosition))
-		return Selection::State::NODE_OUTPUT;
+		return { this, Selection::State::NODE_OUTPUT };
 	else if (m_rect.Contains(clickPosition))
-		return Selection::State::NODE;
+		return { this, Selection::State::NODE };
 	else
-		return Selection::State::NONE;
+		return { nullptr, Selection::State::NONE };
 }
 
 void GraphicalNode::Move(wxPoint2DDouble displacement) {

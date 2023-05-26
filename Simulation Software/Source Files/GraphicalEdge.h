@@ -49,8 +49,8 @@ public:
 
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
 
-	Selection::State Select(const wxAffineMatrix2D& camera,
-		wxPoint2DDouble clickPosition) const override;
+	Selection Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) override;
 
 	inline const wxPoint2DDouble& GetSourcePoint() const { return m_sourcePoint; }
 	inline const wxPoint2DDouble& GetDestinationPoint() const { return m_destinationPoint; }

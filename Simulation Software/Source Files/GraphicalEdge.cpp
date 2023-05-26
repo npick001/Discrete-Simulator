@@ -109,8 +109,8 @@ void GraphicalEdge::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 		m_sourcePoint.m_y + (m_destinationPoint.m_y - m_sourcePoint.m_y) / 2 - textHeight);
 }
 
-Selection::State GraphicalEdge::Select
-	(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) const {
+Selection GraphicalEdge::Select
+	(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) {
 
-	return Selection::State::NONE;
+	return { nullptr, Selection::State::NONE };
 }

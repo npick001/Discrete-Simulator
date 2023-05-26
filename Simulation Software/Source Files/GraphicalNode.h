@@ -62,8 +62,8 @@ public:
 
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
 
-	Selection::State Select(const wxAffineMatrix2D& camera,
-		wxPoint2DDouble clickPosition) const override;
+	Selection Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) override;
 
 	void Move(wxPoint2DDouble displacement);
 
