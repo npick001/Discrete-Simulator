@@ -45,8 +45,8 @@ private:
 	wxMenu* m_ioMenu;
 
 	ElementList m_elements;
-	NodeContainer m_nodes;
-	EdgeContainer m_edges;
+	NodeMap m_nodes;
+	EdgeMap m_edges;
 
 	Selection m_selection;
 

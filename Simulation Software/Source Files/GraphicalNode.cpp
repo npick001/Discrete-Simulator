@@ -14,14 +14,10 @@ const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
 const wxColor GraphicalNode::ms_labelColor = *wxWHITE;
 
-GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputEdge(), m_outputEdge() {}
+GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() {}
 
-GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputEdge(), m_outputEdge() {
-
+GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs() {
 	m_label = "Node " + std::to_string(m_id);
-
-	m_inputEdge = nullptr;
-	m_outputEdge = nullptr;
 }
 
 GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center)
@@ -58,15 +54,15 @@ GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
 	m_inputRect = other.m_inputRect;
 
 	m_transform = other.m_transform;
-	m_outputEdge = other.m_outputEdge;
-	m_inputEdge = other.m_inputEdge;
+	m_outputs = other.m_outputs;
+	m_inputs = other.m_inputs;
 
 	return (*this);
 }
 
 GraphicalNode::~GraphicalNode() {
-	DisconnectInput();
-	DisconnectOutput();
+	DisconnectInputs();
+	DisconnectOutputs();
 }
 
 wxPoint2DDouble GraphicalNode::GetOutputPoint() const {
@@ -87,14 +83,14 @@ wxPoint2DDouble GraphicalNode::GetInputPoint() const {
 	return m_transform.TransformPoint(inputPoint);
 }
 
-void GraphicalNode::DisconnectOutput() {
-	if (m_outputEdge)
-		m_outputEdge->Disconnect();
+void GraphicalNode::DisconnectOutputs() {
+	for (auto output : m_outputs)
+		output->Disconnect();
 }
 
-void GraphicalNode::DisconnectInput() {
-	if (m_inputEdge)
-		m_inputEdge->Disconnect();
+void GraphicalNode::DisconnectInputs() {
+	for (auto input : m_inputs)
+		input->Disconnect();
 }
 
 // Draws the node to a wxGraphicsContext
@@ -145,9 +141,9 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 void GraphicalNode::Move(wxPoint2DDouble displacement) {
 	m_transform.Translate(displacement.m_x, displacement.m_y);
 	
-	if (m_inputEdge)
-		m_inputEdge->m_destinationPoint = GetInputPoint();
+	for (auto output : m_outputs)
+		output->m_sourcePoint = GetOutputPoint();
 
-	if (m_outputEdge)
-		m_outputEdge->m_sourcePoint = GetOutputPoint();
+	for (auto input : m_inputs)
+		input->m_destinationPoint = GetInputPoint();
 }

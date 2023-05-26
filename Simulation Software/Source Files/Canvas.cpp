@@ -80,11 +80,11 @@ void Canvas::DeleteNode() {
 		return;
 
 	// Edges are disconnected and deleted
-	if (m_nodes[m_selection].IsOutputConnected())
-		m_edges.erase(m_nodes[m_selection].GetOutputEdge().GetID());
+	for (auto output : m_nodes[m_selection].GetOutputs())
+		m_edges.erase(output->GetID());
 
-	if (m_nodes[m_selection].IsInputConnected())
-		m_edges.erase(m_nodes[m_selection].GetInputEdge().GetID());
+	for (auto input : m_nodes[m_selection].GetInputs())
+		m_edges.erase(input->GetID());
 
 	// Node is then deleted
 	m_nodes.erase(m_selection);
@@ -412,7 +412,7 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	if (!gc)
 		return;
 
-	for (GraphicalElement* const& element: m_elements)
+	for (GraphicalElement* const& element : m_elements)
 		element->Draw(GetCameraTransform(), gc);
 
 	delete gc;

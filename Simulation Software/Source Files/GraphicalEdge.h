@@ -62,4 +62,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
-typedef SpecificElementContainer<GraphicalEdge> EdgeContainer;
+typedef SpecificElementContainer<GraphicalEdge> EdgeMap;

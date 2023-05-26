@@ -87,7 +87,7 @@ public:
 	GraphicalElement(const GraphicalElement& other);
 	GraphicalElement& operator=(const GraphicalElement& other);
 
-	virtual ~GraphicalElement() = 0;
+	virtual ~GraphicalElement() = default;
 
 	inline const ElementKey& GetID() const { return m_id; }
 

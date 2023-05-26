@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <string>
 
 #include "wx/graphics.h"
@@ -23,8 +24,8 @@ private:
 	wxRect2DDouble m_inputRect;
 	wxRect2DDouble m_outputRect;
 
-	GraphicalEdge* m_inputEdge;
-	GraphicalEdge* m_outputEdge;
+	std::list<GraphicalEdge*> m_inputs;
+	std::list<GraphicalEdge*> m_outputs;
 
 	// Returns the points at which an edge should be drawn between
 	// Points are in world coordinates
@@ -51,14 +52,11 @@ public:
 	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
 
 	// Check connection status before using
-	inline const GraphicalEdge& GetOutputEdge() const { return *m_outputEdge; }
-	inline const GraphicalEdge& GetInputEdge() const { return *m_inputEdge; }
+	inline std::list<GraphicalEdge*> GetOutputs() const { return m_outputs; }
+	inline std::list<GraphicalEdge*> GetInputs() const { return m_inputs; }
 
-	inline bool IsOutputConnected() const { return m_outputEdge != nullptr; }
-	inline bool IsInputConnected() const { return m_inputEdge != nullptr; }
-
-	void DisconnectOutput();
-	void DisconnectInput();
+	void DisconnectOutputs();
+	void DisconnectInputs();
 
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
 
@@ -77,4 +75,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
-typedef SpecificElementContainer<GraphicalNode> NodeContainer;
+typedef SpecificElementContainer<GraphicalNode> NodeMap;
