@@ -3,35 +3,64 @@
 #include "wx/dcbuffer.h"
 #include "wx/wx.h"
 
+#include "GraphicalElement.h"
 #include "GraphicalNode.h"
 
 class GraphicalNode;
 
-class GraphicalEdge {
-public:
-	GraphicalEdge();
-	GraphicalEdge(GraphicalNode* source, GraphicalNode* destination);
-
-	void SetSource(GraphicalNode* source);
-	void SetDestination(GraphicalNode* destination);
-
-	// Used to set the point during incomplete connection state
-	inline void SetSourcePoint(wxPoint2DDouble sourcePoint)
-		{ m_sourcePoint = sourcePoint; }
-	inline void SetDestinationPoint(wxPoint2DDouble destinationPoint)
-		{ m_destinationPoint = destinationPoint; }
-
-	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const;
-
-	// DEBUG code
-	inline wxPoint2DDouble GetSourcePoint() const { return m_sourcePoint; }
-	inline wxPoint2DDouble GetDestinationPoint() const { return m_destinationPoint; }
-
+class GraphicalEdge : public GraphicalElement {
 private:
+	friend class GraphicalNode;
+
+	static GraphicalElement::Type ms_type;
+
 	GraphicalNode* m_source;
 	GraphicalNode* m_destination;
 
 	wxPoint2DDouble m_sourcePoint;
 	wxPoint2DDouble m_destinationPoint;
+
+public:
+	GraphicalElement::Type GetType() const override
+		{ return ms_type; }
+
+	GraphicalEdge();
+	GraphicalEdge(ElementKey id);
+	GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination);
+	GraphicalEdge(const GraphicalEdge& other);
+
+	GraphicalEdge& operator=(const GraphicalEdge& other);
+
+	~GraphicalEdge();
+	
+	// Used to connect a source or destination
+	void ConnectSource(GraphicalNode* source);
+	void ConnectDestination(GraphicalNode* destination);
+
+	// Disconnect both the source and destination
+	void Disconnect();
+
+	// Used to set the point during incomplete connection state
+	// Also used by GraphicalNode::Move to update edge points
+	inline void SetSourcePoint(wxPoint2DDouble sourcePoint)
+		{ m_sourcePoint = sourcePoint; }
+	inline void SetDestinationPoint(wxPoint2DDouble destinationPoint)
+		{ m_destinationPoint = destinationPoint; }
+
+	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
+
+	Selection Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) override;
+
+	inline const wxPoint2DDouble& GetSourcePoint() const { return m_sourcePoint; }
+	inline const wxPoint2DDouble& GetDestinationPoint() const { return m_destinationPoint; }
+
+	inline bool operator==(const GraphicalEdge& other) const {
+		return m_id == other.m_id;
+	}
+
+private:
+	static const wxColor ms_labelColor;
 };
 
+typedef SpecificElementContainer<GraphicalEdge> EdgeContainer;

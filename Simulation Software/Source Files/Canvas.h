@@ -8,11 +8,16 @@
 #include "GraphicalEdge.h"
 
 class Canvas : public wxPanel {
+private:
+	ElementKey m_nextID;
+
 public:
 	Canvas(wxWindow* parent, wxStatusBar* status);
+	~Canvas();
 
 	// Adds a new graphical node to the canvas at a certain location with a given label
-	void AddGraphicalNode(wxPoint center, const std::string& text);
+	void AddNode(wxPoint2DDouble center, const std::string& label);
+	void AddNode(wxPoint2DDouble center);
 
 private:
 	// Used to identify and write to specific fields in the debug status bar
@@ -23,13 +28,29 @@ private:
 		FIELDS_MAX
 	};
 
+	// IDs used for popup menu options
+	enum {
+		ID_ADD_NODE = 200,
+		ID_RENAME_NODE,
+		ID_DELETE_NODE,
+		ID_REMOVE_EDGE
+	};
+
+	typedef std::unordered_map<ElementKey, GraphicalElement*> ElementMap;
+
+	// Debug status bar used to display node information
 	wxStatusBar* m_debugStatusBar;
 
-	std::list<GraphicalNode> m_nodes;
-	std::list<GraphicalEdge> m_edges;
+	// Popup menus
+	wxMenu* m_canvasMenu;
+	wxMenu* m_nodeMenu;
+	wxMenu* m_ioMenu;
 
-	GraphicalNode* m_selectedNode;
-	GraphicalNode::SelectionState m_nodeSelectionState;
+	ElementContainer m_elements;
+	NodeContainer m_nodes;
+	EdgeContainer m_edges;
+
+	Selection m_selection;
 
 	GraphicalEdge* m_incompleteEdge;
 
@@ -44,12 +65,19 @@ private:
 	// SelectionInfo contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
 	// Given a click position, returns a SelectionInfo object describing the action
-	SelectionInfo GetNodeSelectionInfo(wxPoint2DDouble clickPosition);
+	Selection GetElementSelectionInfo(wxPoint2DDouble clickPosition);
+
+	void AddNode(const GraphicalNode& obj);
+	void DeleteNode();
 
 	// Displacement is based on clickPosition and m_previousPosition which is
 	// handled by the mouse event functions
 	void PanCamera(wxPoint2DDouble clickPosition);
-	void MoveComponent(wxPoint2DDouble clickPosition);
+	void MoveNode(wxPoint2DDouble clickPosition);
+
+	// Popup menu event handlers
+	void OnMenuAddNode(wxCommandEvent& event);
+	void OnMenuDeleteNode(wxCommandEvent& event);
 
 	// OnPaint is triggered by a call to Refresh
 	// Draws custom graphical elements to the canvas such as graphical nodes and connections
@@ -63,6 +91,8 @@ private:
 	void OnLeftUp(wxMouseEvent& event);
 	void OnMotion(wxMouseEvent& event);
 	void OnMouseWheel(wxMouseEvent& event);
+	void OnRightUp(wxMouseEvent& event);
 	void OnLeaveWindow(wxMouseEvent& event);
+	void OnEnterWindow(wxMouseEvent& event);
 };
 

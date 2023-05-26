@@ -159,6 +159,7 @@
     <ClInclude Include="Source Files\FIFO_Queue.h" />
     <ClInclude Include="Source Files\GenericNode.h" />
     <ClInclude Include="Source Files\GraphicalEdge.h" />
+    <ClInclude Include="Source Files\GraphicalElement.h" />
     <ClInclude Include="Source Files\GraphicalNode.h" />
     <ClInclude Include="Source Files\LeftToolbar.h" />
     <ClInclude Include="Source Files\MainApp.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Source Files\FIFO_Queue.cpp" />
     <ClCompile Include="Source Files\GenericNode.cpp" />
     <ClCompile Include="Source Files\GraphicalEdge.cpp" />
+    <ClCompile Include="Source Files\GraphicalElement.cpp" />
     <ClCompile Include="Source Files\GraphicalNode.cpp" />
     <ClCompile Include="Source Files\LeftToolbar.cpp" />
     <ClCompile Include="Source Files\main.cpp" />

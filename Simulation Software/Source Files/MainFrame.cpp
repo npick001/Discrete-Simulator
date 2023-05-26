@@ -152,7 +152,7 @@ wxAuiNotebook* MainFrame::CreateNotebook()
     wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
 
     // Write the code for adding models in here.
-    notebook->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
+    notebook->AddPage(new Canvas(notebook, GetStatusBar()), "Canvas notebook", true, page_bmp);
 
     notebook->Thaw();
 
