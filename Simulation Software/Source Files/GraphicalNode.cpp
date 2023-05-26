@@ -1,9 +1,6 @@
 #include "GraphicalNode.h"
 
 #include "wx/graphics.h"
-#include "wx/dcbuffer.h"
-
-#include "Canvas.h"
 
 GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
 
@@ -108,7 +105,8 @@ void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 	localToWindow.Concat(m_transform);
 	gc->SetTransform(gc->CreateMatrix(localToWindow));
 
-	// Draw component, input, output, and text
+	gc->SetPen(*wxTRANSPARENT_PEN);
+
 	gc->SetBrush(wxBrush(ms_bodyColor));
 	gc->DrawRectangle(m_rect.m_x, m_rect.m_y, m_rect.m_width, m_rect.m_height);
 

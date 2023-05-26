@@ -1,7 +1,6 @@
 #pragma once
 
-#include "wx/dcbuffer.h"
-#include "wx/wx.h"
+#include "wx/graphics.h"
 
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"

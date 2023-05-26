@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "wx/affinematrix2d.h"
 #include "wx/graphics.h"
 #include "wx/wx.h"
 
@@ -27,6 +26,11 @@ private:
 	GraphicalEdge* m_inputEdge;
 	GraphicalEdge* m_outputEdge;
 
+	// Returns the points at which an edge should be drawn between
+	// Points are in world coordinates
+	wxPoint2DDouble GetOutputPoint() const;
+	wxPoint2DDouble GetInputPoint() const;
+
 public:
 	GraphicalElement::Type GetType() const override
 		{ return ms_type; }
@@ -46,16 +50,12 @@ public:
 	// be able to change this variable directly
 	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
 
-	// Returns the points at which an edge should be drawn between
-	// Points are in world coordinates
-	wxPoint2DDouble GetOutputPoint() const;
-	wxPoint2DDouble GetInputPoint() const;
+	// Check connection status before using
+	inline const GraphicalEdge& GetOutputEdge() const { return *m_outputEdge; }
+	inline const GraphicalEdge& GetInputEdge() const { return *m_inputEdge; }
 
-	inline GraphicalEdge* const& GetOutputEdge() { return m_outputEdge; }
-	inline GraphicalEdge* const& GetInputEdge() { return m_inputEdge; }
-
-	inline bool isOutputConnected() const { return m_outputEdge != nullptr; }
-	inline bool isInputConnected() const { return m_inputEdge != nullptr; }
+	inline bool IsOutputConnected() const { return m_outputEdge != nullptr; }
+	inline bool IsInputConnected() const { return m_inputEdge != nullptr; }
 
 	void DisconnectOutput();
 	void DisconnectInput();

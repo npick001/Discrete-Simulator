@@ -4,13 +4,11 @@
 
 #include "wx/wx.h"
 
+#include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
 
 class Canvas : public wxPanel {
-private:
-	ElementKey m_nextID;
-
 public:
 	Canvas(wxWindow* parent, wxStatusBar* status);
 	~Canvas();
@@ -20,6 +18,8 @@ public:
 	void AddNode(wxPoint2DDouble center);
 
 private:
+	ElementKey m_nextID;
+
 	// Used to identify and write to specific fields in the debug status bar
 	enum DebugField : unsigned int {
 		SELECTION_STATE,
@@ -36,8 +36,6 @@ private:
 		ID_REMOVE_EDGE
 	};
 
-	typedef std::unordered_map<ElementKey, GraphicalElement*> ElementMap;
-
 	// Debug status bar used to display node information
 	wxStatusBar* m_debugStatusBar;
 
@@ -46,7 +44,7 @@ private:
 	wxMenu* m_nodeMenu;
 	wxMenu* m_ioMenu;
 
-	ElementContainer m_elements;
+	ElementList m_elements;
 	NodeContainer m_nodes;
 	EdgeContainer m_edges;
 
@@ -65,7 +63,7 @@ private:
 	// SelectionInfo contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
 	// Given a click position, returns a SelectionInfo object describing the action
-	Selection GetElementSelectionInfo(wxPoint2DDouble clickPosition);
+	Selection Select(wxPoint2DDouble clickPosition);
 
 	void AddNode(const GraphicalNode& obj);
 	void DeleteNode();

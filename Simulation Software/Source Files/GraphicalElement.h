@@ -57,7 +57,7 @@ struct Selection {
 		state = State::NONE;
 	}
 
-	GraphicalElement* operator->()
+	GraphicalElement* operator->() const
 		{ return element; }
 
 	operator bool()
@@ -87,7 +87,7 @@ public:
 	GraphicalElement(const GraphicalElement& other);
 	GraphicalElement& operator=(const GraphicalElement& other);
 
-	virtual ~GraphicalElement();
+	virtual ~GraphicalElement() = 0;
 
 	inline const ElementKey& GetID() const { return m_id; }
 
@@ -110,18 +110,18 @@ public:
 };
 
 // Element container will store the pointers to element objects
-class ElementContainer {
+class ElementList {
 private:
-	typedef std::list<GraphicalElement*> ElementList;
+	typedef std::list<GraphicalElement*> List;
 
-	ElementList m_elements;
+	List m_elements;
 
 public:
-	typedef ElementList::iterator iterator;
-	typedef ElementList::const_iterator const_iterator;
-	typedef ElementList::reverse_iterator reverse_iterator;
+	typedef List::iterator iterator;
+	typedef List::const_iterator const_iterator;
+	typedef List::reverse_iterator reverse_iterator;
 
-	ElementContainer();
+	ElementList();
 
 	inline iterator begin()
 		{ return m_elements.begin(); }
@@ -158,23 +158,24 @@ template <typename T>
 class SpecificElementContainer {
 private:
 	std::unordered_map<ElementKey, T> m_elements;
-	ElementContainer* m_link;
+	ElementList* m_link;
+	T* m_recent;
 
 public:
-	SpecificElementContainer(ElementContainer* const& link) {
-		m_link = link;
-	}
+	SpecificElementContainer(ElementList* const& link)
+		: m_link(link), m_recent(nullptr) {}
 
 	inline void add_new(const T& element) {
 		m_elements[element.GetID()] = element;
-		m_link->push_back(&m_elements[element.GetID()]);
+		m_recent = &m_elements[element.GetID()];
+		m_link->push_back(m_recent);
 	}
 
 	inline T& operator[](const ElementKey& key)
 		{ return m_elements[key]; }
 
 	inline T& operator[](const Selection& selection) {
-		return m_elements[selection.element->GetID()];
+		return m_elements[selection->GetID()];
 	}
 
 	inline bool empty() const
@@ -183,7 +184,10 @@ public:
 	inline bool contains(const ElementKey& key) const
 		{ return bool(m_elements.count(key)); }
 
-	inline std::size_t erase(const ElementKey& key) {
+	inline T* recent() const
+		{ return m_recent; }
+
+	std::size_t erase(const ElementKey& key) {
 		if (!contains(key))
 			return 0;
 
@@ -191,11 +195,11 @@ public:
 		return m_elements.erase(key);
 	}
 
-	inline std::size_t erase(const Selection& selection) {
-		if (!contains(selection.element->GetID()))
+	std::size_t erase(const Selection& selection) {
+		if (!contains(selection->GetID()))
 			return 0;
 
 		m_link->remove(selection.element);
-		return m_elements.erase(selection.element->GetID());
+		return m_elements.erase(selection->GetID());
 	}
 };
