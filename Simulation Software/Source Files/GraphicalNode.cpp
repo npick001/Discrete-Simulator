@@ -7,14 +7,6 @@
 
 GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
 
-// Used for outputting debug information to the debug status bar
-const std::string GraphicalNode::ms_selectionStateNames[GraphicalNode::SelectionState::STATES_MAX] = {
-	"NONE",
-	"COMPONENT",
-	"OUTPUT",
-	"INPUT",
-};
-
 // Default component dimensions and colors
 // High pixel density displays are accounted for in the GraphicalNode constructor
 const wxSize GraphicalNode::ms_bodySize = wxSize(100, 75);
@@ -25,7 +17,9 @@ const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
 const wxColor GraphicalNode::ms_labelColor = *wxWHITE;
 
-GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_transform(), m_inputRect(), m_outputRect() {
+GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputEdge(), m_outputEdge() {}
+
+GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputEdge(), m_outputEdge() {
 
 	m_label = "Node " + std::to_string(m_id);
 
@@ -60,9 +54,11 @@ GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
 	if (this == &other)
 		return (*this);
 
+	GraphicalElement::operator=(other);
+
 	m_rect = other.m_rect;
-	m_inputRect = other.m_inputRect;
 	m_outputRect = other.m_outputRect;
+	m_inputRect = other.m_inputRect;
 
 	m_transform = other.m_transform;
 	m_outputEdge = other.m_outputEdge;
@@ -105,12 +101,12 @@ void GraphicalNode::DisconnectInput() {
 }
 
 // Draws the node to a wxGraphicsContext
-void GraphicalNode::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
+void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const {
 
 	// Transform coordinates according to camera and node transforms
-	wxAffineMatrix2D nodeCameraTransform = camera;
-	nodeCameraTransform.Concat(m_transform);
-	gc->SetTransform(gc->CreateMatrix(nodeCameraTransform));
+	wxAffineMatrix2D localToWindow = camera;
+	localToWindow.Concat(m_transform);
+	gc->SetTransform(gc->CreateMatrix(localToWindow));
 
 	// Draw component, input, output, and text
 	gc->SetBrush(wxBrush(ms_bodyColor));
@@ -129,23 +125,23 @@ void GraphicalNode::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 }
 
 // Returns the selection state of the component given where the user clicked
-GraphicalNode::SelectionState GraphicalNode::GetSelectionState(wxAffineMatrix2D cameraTransform, wxPoint2DDouble clickPosition) const {
+Selection::State GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) const {
 
 	// Transform click position from window coordinates to node's local coordinates
-	auto inverse = cameraTransform;
-	inverse.Concat(m_transform);
-	inverse.Invert();
-	clickPosition = inverse.TransformPoint(clickPosition);
+	auto windowToLocal = camera;
+	windowToLocal.Concat(m_transform);
+	windowToLocal.Invert();
+	clickPosition = windowToLocal.TransformPoint(clickPosition);
 
 	// Return selection state according to what user clicked on
 	if (m_inputRect.Contains(clickPosition))
-		return SelectionState::INPUT;
+		return Selection::State::NODE_INPUT;
 	else if (m_outputRect.Contains(clickPosition))
-		return SelectionState::OUTPUT;
+		return Selection::State::NODE_OUTPUT;
 	else if (m_rect.Contains(clickPosition))
-		return SelectionState::NODE;
+		return Selection::State::NODE;
 	else
-		return SelectionState::NONE;
+		return Selection::State::NONE;
 }
 
 void GraphicalNode::Move(wxPoint2DDouble displacement) {

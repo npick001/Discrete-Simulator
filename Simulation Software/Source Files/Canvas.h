@@ -46,12 +46,11 @@ private:
 	wxMenu* m_nodeMenu;
 	wxMenu* m_ioMenu;
 
-	ElementMap m_elements;
-	std::list<GraphicalNode> m_nodes;
-	std::list<GraphicalEdge> m_edges;
+	ElementContainer m_elements;
+	NodeContainer m_nodes;
+	EdgeContainer m_edges;
 
-	GraphicalNode* m_selectedNode;
-	GraphicalNode::SelectionState m_nodeSelectionState;
+	Selection m_selection;
 
 	GraphicalEdge* m_incompleteEdge;
 
@@ -66,7 +65,7 @@ private:
 	// SelectionInfo contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
 	// Given a click position, returns a SelectionInfo object describing the action
-	SelectionInfo GetNodeSelectionInfo(wxPoint2DDouble clickPosition);
+	Selection GetElementSelectionInfo(wxPoint2DDouble clickPosition);
 
 	void AddNode(const GraphicalNode& obj);
 	void DeleteNode();

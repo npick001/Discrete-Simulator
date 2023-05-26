@@ -31,6 +31,7 @@ public:
 	GraphicalElement::Type GetType() const override
 		{ return ms_type; }
 
+	GraphicalNode();
 	GraphicalNode(ElementKey id);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center, const std::string& _text);
@@ -41,16 +42,6 @@ public:
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
 
-	enum SelectionState : unsigned int {
-		NONE,
-		NODE,
-		OUTPUT,
-		INPUT,
-		STATES_MAX
-	};
-
-	static const std::string ms_selectionStateNames[SelectionState::STATES_MAX];
-
 	// Return a copy of m_transform because outside code should not
 	// be able to change this variable directly
 	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
@@ -60,8 +51,8 @@ public:
 	wxPoint2DDouble GetOutputPoint() const;
 	wxPoint2DDouble GetInputPoint() const;
 
-	inline const GraphicalEdge& GetOutputEdge() { return *m_outputEdge; }
-	inline const GraphicalEdge& GetInputEdge() { return *m_inputEdge; }
+	inline GraphicalEdge* const& GetOutputEdge() { return m_outputEdge; }
+	inline GraphicalEdge* const& GetInputEdge() { return m_inputEdge; }
 
 	inline bool isOutputConnected() const { return m_outputEdge != nullptr; }
 	inline bool isInputConnected() const { return m_inputEdge != nullptr; }
@@ -69,10 +60,10 @@ public:
 	void DisconnectOutput();
 	void DisconnectInput();
 
-	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const override;
+	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
 
-	SelectionState GetSelectionState(wxAffineMatrix2D cameraTransform,
-		wxPoint2DDouble clickPosition) const;
+	Selection::State Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) const override;
 
 	void Move(wxPoint2DDouble displacement);
 
@@ -86,8 +77,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
-// Node selection information
-struct SelectionInfo {
-	GraphicalNode* node;
-	GraphicalNode::SelectionState state;
-};
+typedef SpecificElementContainer<GraphicalNode> NodeContainer;

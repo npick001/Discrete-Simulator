@@ -6,6 +6,8 @@ GraphicalElement::Type GraphicalEdge::ms_type = GraphicalElement::EDGE;
 
 const wxColor GraphicalEdge::ms_labelColor = wxColor(64, 64, 64);
 
+GraphicalEdge::GraphicalEdge() : GraphicalElement(), m_source(), m_destination() {}
+
 GraphicalEdge::GraphicalEdge(ElementKey id)
 	: GraphicalElement(id), m_sourcePoint(), m_destinationPoint() {
 
@@ -20,6 +22,25 @@ GraphicalEdge::GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode
 
 	ConnectSource(source);
 	ConnectDestination(destination);
+}
+
+GraphicalEdge::GraphicalEdge(const GraphicalEdge& other) {
+	(*this) = other;
+}
+
+GraphicalEdge& GraphicalEdge::operator=(const GraphicalEdge& other) {
+	if (this == &other)
+		return (*this);
+
+	GraphicalElement::operator=(other);
+
+	m_source = other.m_source;
+	m_destination = other.m_destination;
+
+	m_sourcePoint = other.m_sourcePoint;
+	m_destinationPoint = other.m_destinationPoint;
+
+	return (*this);
 }
 
 GraphicalEdge::~GraphicalEdge() {
@@ -67,7 +88,7 @@ void GraphicalEdge::Disconnect() {
 }
 
 // Draws the edge to a wxGraphicsContext
-void GraphicalEdge::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
+void GraphicalEdge::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const {
 
 	// Transform from world to window coordinates
 	gc->SetTransform(gc->CreateMatrix(camera));
@@ -86,4 +107,10 @@ void GraphicalEdge::Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const {
 
 	gc->DrawText(m_label, m_sourcePoint.m_x + (m_destinationPoint.m_x - m_sourcePoint.m_x) / 2 - textWidth / 2,
 		m_sourcePoint.m_y + (m_destinationPoint.m_y - m_sourcePoint.m_y) / 2 - textHeight);
+}
+
+Selection::State GraphicalEdge::Select
+	(const wxAffineMatrix2D& camera, wxPoint2DDouble clickPosition) const {
+
+	return Selection::State::NONE;
 }

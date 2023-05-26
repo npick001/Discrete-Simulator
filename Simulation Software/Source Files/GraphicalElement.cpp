@@ -2,6 +2,17 @@
 
 // Graphical Element
 
+const std::string GraphicalElement::ms_selectionStateNames[Selection::State::STATES_MAX] = {
+	"NONE",
+	"NODE",
+	"NODE_OUTPUT",
+	"NODE_INPUT",
+	"EDGE"
+};
+
+GraphicalElement::GraphicalElement()
+	: m_id(-1), m_label("ERROR"), m_labelPos() {}
+
 GraphicalElement::GraphicalElement(ElementKey id)
 	: m_id(id), m_label("Element " + std::to_string(id)), m_labelPos() {}
 
@@ -21,3 +32,7 @@ GraphicalElement& GraphicalElement::operator=(const GraphicalElement& other) {
 }
 
 GraphicalElement::~GraphicalElement() {}
+
+// Element Container
+
+ElementContainer::ElementContainer() : m_elements() {}

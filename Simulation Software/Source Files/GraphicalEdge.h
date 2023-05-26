@@ -24,8 +24,12 @@ public:
 	GraphicalElement::Type GetType() const override
 		{ return ms_type; }
 
+	GraphicalEdge();
 	GraphicalEdge(ElementKey id);
 	GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination);
+	GraphicalEdge(const GraphicalEdge& other);
+
+	GraphicalEdge& operator=(const GraphicalEdge& other);
 
 	~GraphicalEdge();
 	
@@ -43,7 +47,10 @@ public:
 	inline void SetDestinationPoint(wxPoint2DDouble destinationPoint)
 		{ m_destinationPoint = destinationPoint; }
 
-	void Draw(wxAffineMatrix2D camera, wxGraphicsContext* gc) const override;
+	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
+
+	Selection::State Select(const wxAffineMatrix2D& camera,
+		wxPoint2DDouble clickPosition) const override;
 
 	inline const wxPoint2DDouble& GetSourcePoint() const { return m_sourcePoint; }
 	inline const wxPoint2DDouble& GetDestinationPoint() const { return m_destinationPoint; }
@@ -56,3 +63,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
+typedef SpecificElementContainer<GraphicalEdge> EdgeContainer;
