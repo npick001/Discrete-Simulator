@@ -8,8 +8,10 @@
 
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
+#include "Action.h"
 
 class GraphicalEdge;
+class MoveNodeAction;
 
 class GraphicalNode : public GraphicalElement {
 private:
@@ -47,8 +49,9 @@ public:
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
 
-	wxAffineMatrix2D GetTransform() const;
+	inline wxPoint2DDouble GetPosition() { return m_position; }
 	inline void SetPosition(const wxPoint2DDouble& position) { m_position = position; }
+	wxAffineMatrix2D GetTransform() const;
 
 	// Check connection status before using
 	inline std::list<GraphicalEdge*> GetOutputs() const { return m_outputs; }

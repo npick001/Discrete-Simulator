@@ -4,7 +4,8 @@
 #include "wx/dcbuffer.h"
 
 Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
-	: wxPanel(parent, wxID_ANY), m_nextID(0), m_elements(), m_nodes(&m_elements), m_edges(&m_elements), m_selection(), m_incompleteEdge()
+	: wxPanel(parent, wxID_ANY), m_nextID(0), m_elements(), m_nodes(&m_elements),
+	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
 {
 	// Canvas
 	AddNode(FromDIP(wxPoint(-150, 0)));
@@ -29,8 +30,14 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_nodeMenu->Bind(wxEVT_MENU, &Canvas::OnMenuDeleteNode, this, ID_DELETE_NODE);
 
 	// Event bindings
+
+	// Event for drawing to the canvas
 	this->Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
+
+	// Refresh the canvas upon resizing
 	this->Bind(wxEVT_SIZE, &Canvas::OnSize, this);
+
+	// Capture mouse events
 	this->Bind(wxEVT_MIDDLE_DOWN, &Canvas::OnMiddleDown, this);
 	this->Bind(wxEVT_MIDDLE_UP, &Canvas::OnMiddleUp, this);
 	this->Bind(wxEVT_LEFT_DOWN, &Canvas::OnLeftDown, this);
@@ -40,6 +47,9 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	this->Bind(wxEVT_RIGHT_UP, &Canvas::OnRightUp, this);
 	this->Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnLeaveWindow, this);
 	this->Bind(wxEVT_ENTER_WINDOW, &Canvas::OnEnterWindow, this);
+
+	// Capture key events
+	this->Bind(wxEVT_CHAR_HOOK, &Canvas::OnCharHook, this);
 }
 
 Canvas::~Canvas() {
@@ -170,23 +180,17 @@ void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 // Called upon user selecting delete node in popup node menu
 void Canvas::OnMenuDeleteNode(wxCommandEvent& event) {
 	DeleteNode();
-
-	event.Skip();
 }
 
 // Capture when user holds down middle mouse button in order to pan
 void Canvas::OnMiddleDown(wxMouseEvent& event) {
 	m_isPanning = true;
 	m_previousMousePosition = event.GetPosition();
-
-	event.Skip();
 }
 
 // Capture release of middle mouse button in order to stop panning
 void Canvas::OnMiddleUp(wxMouseEvent& event) {
 	m_isPanning = false;
-
-	event.Skip();
 }
 
 // Capture when user holds down left mouse button in order to drag or connect nodes
@@ -198,6 +202,8 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// Prepare to drag selected node
 	case Selection::State::NODE:
+		m_moveNodeAction = MoveNodeAction(m_selection->GetID(), &m_nodes);
+		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection].GetPosition());
 		m_previousMousePosition = event.GetPosition();
 		break;
 
@@ -229,8 +235,6 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	}
 
 	Refresh();
-
-	event.Skip();
 }
 
 // Capture release of left mouse button in order to stop dragging or finalize a connection
@@ -239,9 +243,13 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 	// Holds which node and selection state occurred upon user's left button up
 	auto endSelection = Select(event.GetPosition());
 
-	wxPoint2DDouble outEdgeSourcePoint;
-
 	switch (m_selection.state) {
+
+	// Finish move action
+	case Selection::State::NODE:
+		m_moveNodeAction.SetNextPosition(m_nodes[m_selection].GetPosition());
+		m_history.LogAction(m_moveNodeAction);
+		break;
 
 	// Check that user selected an input to pair with the output and then connect
 	case Selection::State::NODE_OUTPUT:
@@ -282,8 +290,6 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 	m_incompleteEdge = nullptr;
 
 	Refresh();
-
-	event.Skip();
 }
 
 // Capture mouse movement for panning and moving graphical nodes
@@ -339,8 +345,6 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 		Refresh();
 		break;
 	}
-
-	event.Skip();
 }
 
 // Capture mouse scrolling in order to zoom the camera
@@ -349,8 +353,6 @@ void Canvas::OnMouseWheel(wxMouseEvent& event) {
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
 
 	Refresh();
-
-	event.Skip();
 }
 
 // Capture release of right mouse button in order to present user with a popup menu
@@ -386,14 +388,16 @@ void Canvas::OnRightUp(wxMouseEvent& event) {
 		PopupMenu(m_canvasMenu);
 		break;
 	}
-
-	event.Skip();
 }
 
 // Unable to track mouse position outside of window; therefore, panning and dragging is disabled when the mouse leaves
 void Canvas::OnLeaveWindow(wxMouseEvent& event) {
+	if (m_selection.state == Selection::State::NODE) {
+		m_moveNodeAction.SetNextPosition(m_nodes[m_selection].GetPosition());
+		m_history.LogAction(m_moveNodeAction);
+	}
+
 	Refresh();
-	event.Skip();
 }
 
 // Prevent camera from suddenly jerking to new position upon re-entry of window
@@ -416,13 +420,25 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 		element->Draw(GetCameraTransform(), gc);
 
 	delete gc;
-
-	event.Skip();
 }
 
 // Refresh, i.e. redraw the window, upon resizing
 void Canvas::OnSize(wxSizeEvent& event) {
 	Refresh();
+}
 
-	event.Skip();
+void Canvas::OnCharHook(wxKeyEvent& event) {
+
+	if (event.ControlDown()) {
+		switch (event.GetKeyCode()) {
+		case 'Y':
+			m_history.Redo();
+			break;
+		case 'Z':
+			m_history.Undo();
+			break;
+		}
+	}
+
+	Refresh();
 }

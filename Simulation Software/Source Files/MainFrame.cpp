@@ -101,6 +101,7 @@ MainFrame::MainFrame(const wxString& title)
 
     // Add a second page to the canvas
     m_mainCanvas->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
+    m_mainCanvas->GetPage(1)->SetFocus();
 
     // display the toolbar 
     m_manager.AddPane(tb1, wxAuiPaneInfo().Name("Tb1").
