@@ -17,7 +17,7 @@ private:
 
 	static GraphicalElement::Type ms_type;
 
-	wxAffineMatrix2D m_transform;
+	wxPoint2DDouble m_position;
 
 	wxRect2DDouble m_rect;
 
@@ -47,9 +47,8 @@ public:
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
 
-	// Return a copy of m_transform because outside code should not
-	// be able to change this variable directly
-	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
+	wxAffineMatrix2D GetTransform() const;
+	inline void SetPosition(const wxPoint2DDouble& position) { m_position = position; }
 
 	// Check connection status before using
 	inline std::list<GraphicalEdge*> GetOutputs() const { return m_outputs; }
