@@ -1,6 +1,6 @@
 #pragma once
 
-#include <deque>
+#include <list>
 
 #include "wx/geometry.h"
 
@@ -27,9 +27,11 @@ public:
 
 class History {
 private:
+	typedef std::list<Action*> ActionList;
+
 	unsigned int m_maxHistory;
-	std::deque<Action*> m_history;
-	unsigned int m_current;
+	ActionList m_history;
+	ActionList::iterator m_current;
 
 public:
 	History(unsigned int maxHistory);
@@ -37,23 +39,20 @@ public:
 
 	template<typename T>
 	void LogAction(const T& action) {
-		if (m_current > 0) {
-			auto it = m_history.begin();
-			it = it + m_current;
-
+		if (m_current != m_history.begin()) {
 			// Delete allocated actions before erasing pointers
-			for (unsigned int i = 0; i < m_current; i++)
-				delete m_history[i];
+			for (auto it = m_history.begin(); it != m_current; it++)
+				delete *it;
 
-			m_history.erase(m_history.begin(), it);
-			m_current = 0;
+			m_history.erase(m_history.begin(), m_current);
 		}
 
 		m_history.push_front(new T(action));
+		m_current = m_history.begin();
 
 		// Delete allocated action before erasing pointer
 		if (m_history.size() > m_maxHistory) {
-			delete m_history[m_maxHistory];
+			delete m_history.back();
 			m_history.pop_back();
 		}
 	}

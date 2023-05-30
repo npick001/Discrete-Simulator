@@ -8,26 +8,27 @@ Action::Action(ElementKey id) : m_elementID(id) {}
 
 // History
 
-History::History(unsigned int maxHistory) : m_maxHistory(maxHistory), m_history(), m_current(0) {}
+History::History(unsigned int maxHistory)
+	: m_maxHistory(maxHistory), m_history(), m_current(m_history.begin()) {}
 
 History::~History() {
-	for (unsigned int i = 0; i < m_history.size(); i++)
-		delete m_history[i];
+	for (auto it = m_history.begin(); it != m_history.end(); it++)
+		delete* it;
 }
 
 void History::Redo() {
-	if (m_history.size() == 0 || m_current < 1)
+	if (m_history.size() == 0 || m_current == m_history.begin())
 		return;
 
 	m_current--;
-	m_history[m_current]->Redo();
+	(*m_current)->Redo();
 }
 
 void History::Undo() {
-	if (m_history.size() == 0 || m_current >= m_history.size())
+	if (m_history.size() == 0 || m_current == m_history.end())
 		return;
 
-	m_history[m_current]->Undo();
+	(*m_current)->Undo();
 	m_current++;
 }
 
