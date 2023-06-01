@@ -17,15 +17,13 @@ public:
     inline int GetID() { return m_id; }
     inline std::string GetType() { return m_nodeType; }
 
-    // At (x, y) instantiate a node of specified size
-    //void InstantiateNode(int x, int y, wxSize size);
-
     void Arrive(Entity* entity);
 
     class StatisticsWrapper {
     public:
         StatisticsWrapper(int id) : m_id(id) {}
         virtual void ReportStats() = 0;
+        virtual void DeleteStats() = 0;
 
     protected:
         int m_id;
@@ -50,7 +48,6 @@ protected:
 
     // Node process handler
     virtual void NodeProcess(Entity* entity) = 0;
-
 
     class Statistics {
     public: 

@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <crtdbg.h>
+#include <cstdlib>
 #include <vector>
 
 #include "SimulationExecutive.h"
@@ -154,22 +157,27 @@ int main() {
 
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 
+	srand(time(NULL));
+
 	Distribution* arrivalRate = new Triangular(1, 2, 3);
 	Distribution* serviceTime = new Triangular(0.75, 1.5, 2);
 
-	SourceNode* src = new SourceNode("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
+	SourceNode* src = new SourceNode("Source", 100, new MyEntity(GetSimulationTime()), arrivalRate);
 	SSSQ* server = new SSSQ("SSSQ", serviceTime);
-	SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
-	SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
-	SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
-	SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
+	//SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
+	//SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
+	//SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
+	//SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
 	SinkNode* sink = new SinkNode("Sink");
+	//src->SetNext(server);
+	//server->SetNext(server1);
+	//server1->SetNext(server2);
+	//server2->SetNext(server3);
+	//server3->SetNext(server4);
+	//server4->SetNext(sink);
+
 	src->SetNext(server);
-	server->SetNext(server1);
-	server1->SetNext(server2);
-	server2->SetNext(server3);
-	server3->SetNext(server4);
-	server4->SetNext(sink);
+	server->SetNext(sink);
 
 	RunSimulation();
 	
@@ -183,20 +191,37 @@ int main() {
 	stats.push_back(src->GetStatistics());
 	stats.push_back(sink->GetStatistics());
 	stats.push_back(server->GetStatistics());
-	stats.push_back(server1->GetStatistics());
+	/*stats.push_back(server1->GetStatistics());
 	stats.push_back(server2->GetStatistics());
 	stats.push_back(server3->GetStatistics());
-	stats.push_back(server4->GetStatistics());
+	stats.push_back(server4->GetStatistics());*/
 
 	int size = stats.size();
 	std::cout << "Stats container size: " << stats.size() << std::endl;
 
+	// Which file to reset and write to
+	auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
+
+	// final parameter of write file is 1 for reset, 0 for append to current file
+	// Reset the file data before new stats are written
+	WriteFile(outputFile, "Simulation Statistics\n", 1);
+	WriteFile(outputFile, "Simulation End Time: " + std::to_string(GetSimulationTime()) + '\n', 0);
+
 	for (int i = 0; i < size; i++) {
 
 		stats[i].get()->ReportStats();
-	
+		//stats[i].get()->DeleteStats();
 		//std::cout << "(o)(o)" << std::endl;
 	}
 
-	return 0;
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
+
+	//delete arrivalRate;
+	//delete serviceTime;
+	delete src;
+	delete server;
+	delete sink;
+
+	system("Pause");
 }

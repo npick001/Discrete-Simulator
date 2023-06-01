@@ -12,6 +12,7 @@ class FIFO_Queue
 {
 public:
 	FIFO_Queue();
+	~FIFO_Queue();
 
 	void AddEntity(Entity* e);
 	Entity* GetEntity();

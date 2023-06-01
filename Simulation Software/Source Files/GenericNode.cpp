@@ -63,6 +63,10 @@ GenericNode::GenericNode(const GenericNode& other) {
 }
 
 GenericNode::~GenericNode() {
-    delete m_prev;
-    delete m_next;
+    //delete m_prev;
+    //delete m_next;
+}
+
+void GenericNode::StatisticsWrapper::DeleteStats()
+{
 }

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <vector>
 #include "SimulationExecutive.h"
+#include "Entity.h"
 
 using namespace std;
 
@@ -56,8 +58,12 @@ public:
 		_eventList.AddEvent(time, ea);
 	}
 
-private:
+	static void RegisterCreatedEntity(Entity* entity)
+	{
+		_entities.push_back(entity);
+	}
 
+private:
 	class EventList
 	{
 	public:
@@ -123,6 +129,7 @@ private:
 
 	static EventList _eventList;
 	static Time _simTime;
+	static std::vector<Entity*> _entities;
 };
 
 SimulationExecutive::EventList SimulationExecutive::_eventList;
@@ -151,5 +158,9 @@ void ScheduleEventIn(Time delta, EventAction*ea)
 void ScheduleEventAt(Time time, EventAction*ea)
 {
 	SimulationExecutive::ScheduleEventAt(time, ea);
+}
+
+void RegisterCreatedEntity(Entity* entity)
+{
 }
 

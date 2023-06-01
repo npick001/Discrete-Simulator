@@ -1,6 +1,3 @@
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
 #include "Statistics.h"
 #include "Entity.h"
 #include "FIFO_Queue.h"

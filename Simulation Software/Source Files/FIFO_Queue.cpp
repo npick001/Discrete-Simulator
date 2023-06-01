@@ -16,6 +16,14 @@ FIFO_Queue::FIFO_Queue()
 	m_cdfWaits = 0;
 }
 
+FIFO_Queue::~FIFO_Queue()
+{
+	while (GetEntity()) {
+		Entity* e = GetEntity();
+		delete e;
+	}
+}
+
 void FIFO_Queue::AddEntity(Entity* e)
 {
 	Node* node = new Node(e);
@@ -26,6 +34,11 @@ void FIFO_Queue::AddEntity(Entity* e)
 		m_tail = m_tail->next = node;
 	}
 	m_size++;
+	m_total++;
+
+	if (m_size > m_queueSizeMax) {
+		m_queueSizeMax = m_size;
+	}
 
 	e->EnterQueue(GetSimulationTime());
 }
@@ -39,6 +52,10 @@ Entity* FIFO_Queue::GetEntity()
 		m_head = m_head->next;
 		m_size--;
 
+		if (m_size < m_queueSizeMin) {
+			m_queueSizeMin = m_size;
+		}
+		e->LeaveQueue(GetSimulationTime());
 		m_cdfWaits += e->LeaveQueue(GetSimulationTime());
 		m_queueSizeSum += m_size;
 		return e;
@@ -47,7 +64,7 @@ Entity* FIFO_Queue::GetEntity()
 
 Entity* FIFO_Queue::ViewEntity()
 {
-	return(m_head->m_entity);
+	return (m_head->m_entity);
 }
 
 double FIFO_Queue::GetAverageWaitTime()

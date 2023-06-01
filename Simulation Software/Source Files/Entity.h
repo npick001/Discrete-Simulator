@@ -11,6 +11,7 @@ class Entity
 {
 public:
 	Entity(Time creationTime);
+	~Entity() {};
 	virtual Entity *New() = 0;
 
 	// Getters
@@ -49,6 +50,7 @@ class MyEntity : public Entity
 {
 public:
 	MyEntity(Time creationTime) : Entity(creationTime) {};
+	~MyEntity() {};
 
 	Entity* New() override { return new MyEntity(GetSimulationTime()); }
 };

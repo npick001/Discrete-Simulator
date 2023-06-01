@@ -1,50 +1,25 @@
+Simulation Statistics
+
+Simulation End Time: 199.488279
+
 SOURCE 0
 
-	- Entities Created: 11
-	- Total Entities Created: 11
+	- Entities Created: 100
+	- Total Entities Created: 100
 
-SINK 6
+SINK 2
 
-	- Entities Created: 11
-	- Total Entities Created: 11
+	- Entities Created: 100
+	- Total Entities Created: 100
 
 SSSQ 1
 
-	- Entities Processed: 11
-	- Time Waiting: 11.715752
-	- Time in Service: 16.477649
-	- Time Idle: 8.525765
-	- Percent Utilization: 0.659016
-
-SSSQ 2
-
-	- Entities Processed: 11
-	- Time Waiting: 11.715752
-	- Time in Service: 15.224167
-	- Time Idle: 9.779247
-	- Percent Utilization: 0.608884
-
-SSSQ 3
-
-	- Entities Processed: 11
-	- Time Waiting: 11.715752
-	- Time in Service: 15.801430
-	- Time Idle: 9.201984
-	- Percent Utilization: 0.631971
-
-SSSQ 4
-
-	- Entities Processed: 11
-	- Time Waiting: 11.715752
-	- Time in Service: 14.501130
-	- Time Idle: 10.502283
-	- Percent Utilization: 0.579966
-
-SSSQ 5
-
-	- Entities Processed: 11
-	- Time Waiting: 11.715752
-	- Time in Service: 14.768311
-	- Time Idle: 10.235102
-	- Percent Utilization: 0.590652
-
+	- Entities Processed: 100
+	- Time Waiting: 8.658662
+	- Time in Service: 138.278948
+	- Time Idle: 61.209331
+	- Percent Utilization: 0.693168
+	- Average Queue Wait Time: 0.086587
+	- Average Queue Size: 0.000000
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000

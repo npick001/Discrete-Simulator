@@ -134,7 +134,7 @@ MainFrame::MainFrame(const wxString& title)
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
 }
 MainFrame::~MainFrame() {
-
+    Destroy();
 }
 void MainFrame::DoUpdate()
 {
