@@ -161,6 +161,7 @@
     <ClInclude Include="Source Files\SimulationExecutive.h" />
     <ClInclude Include="Source Files\SpecificNodes.h" />
     <ClInclude Include="Source Files\Statistics.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Distribution.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />
     <ClCompile Include="Source Files\SpecificNodes.cpp" />
     <ClCompile Include="Source Files\Statistics.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

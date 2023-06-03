@@ -5,7 +5,6 @@
 
 #include "SimulationExecutive.h"
 #include "Distribution.h"
-//#include "MyTask.h"
 #include "SpecificNodes.h"
 #include "Statistics.h"
 
@@ -150,78 +149,90 @@ void NodeTesting() {
 
 int main() {
 
-	/*StatisticsObject statobj(50);
-	statobj.StatTesting();*/
+	StatisticsObject statobj(50);
+	//statobj.StatTesting();
+	//statobj.GammaFunction(1);
+	double critApprox = statobj.ChiSquareCriticalValue(0.05, 6);
+	std::cout << "Critical Value (p=0.05, df=6): " << critApprox << std::endl;
+
+	//std::vector<double> RKpoints = statobj.RungeKutta4(&PDF_Chi_Square, 0.001, 10.0, (10.0 / 0.1));
+	//std::vector<double> CS_Dist = statobj.Chi_Square_Distribution(10, 1000);
+	system("Pause");
+}
+
+	// THIS IS WRONG, NEED AN INVERSE SOMEWHERE
+	/*double pValue = chisquare_cdf(0.95, 9.0);
+	std::cout << "Critical Value (p=0.05, df=9): " << pValue << std::endl;*/
 
 	//NodeTesting();
 
-	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+	//std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 
-	srand(time(NULL));
+	//srand(time(NULL));
 
-	Distribution* arrivalRate = new Triangular(1, 2, 3);
-	Distribution* serviceTime = new Triangular(0.75, 1.5, 2);
+	//Distribution* arrivalRate = new Triangular(1, 2, 3);
+	//Distribution* serviceTime = new Triangular(0.75, 1.5, 2);
 
-	SourceNode* src = new SourceNode("Source", 100, new MyEntity(GetSimulationTime()), arrivalRate);
-	SSSQ* server = new SSSQ("SSSQ", serviceTime);
-	//SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
-	//SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
-	//SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
-	//SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
-	SinkNode* sink = new SinkNode("Sink");
+	//SourceNode* src = new SourceNode("Source", 100, new MyEntity(GetSimulationTime()), arrivalRate);
+	//SSSQ* server = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
+	//SinkNode* sink = new SinkNode("Sink");
+	////src->SetNext(server);
+	////server->SetNext(server1);
+	////server1->SetNext(server2);
+	////server2->SetNext(server3);
+	////server3->SetNext(server4);
+	////server4->SetNext(sink);
+
 	//src->SetNext(server);
-	//server->SetNext(server1);
-	//server1->SetNext(server2);
-	//server2->SetNext(server3);
-	//server3->SetNext(server4);
-	//server4->SetNext(sink);
+	//server->SetNext(sink);
 
-	src->SetNext(server);
-	server->SetNext(sink);
+	//RunSimulation();
+	//
+	//std::cout << "\n--------------------------------------------------------\n"
+	//	<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
 
-	RunSimulation();
-	
-	std::cout << "\n--------------------------------------------------------\n"
-		<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
+	//src->Test();
+	//server->Test();
+	//sink->Test();
 
-	src->Test();
-	server->Test();
-	sink->Test();
+	//stats.push_back(src->GetStatistics());
+	//stats.push_back(sink->GetStatistics());
+	//stats.push_back(server->GetStatistics());
+	///*stats.push_back(server1->GetStatistics());
+	//stats.push_back(server2->GetStatistics());
+	//stats.push_back(server3->GetStatistics());
+	//stats.push_back(server4->GetStatistics());*/
 
-	stats.push_back(src->GetStatistics());
-	stats.push_back(sink->GetStatistics());
-	stats.push_back(server->GetStatistics());
-	/*stats.push_back(server1->GetStatistics());
-	stats.push_back(server2->GetStatistics());
-	stats.push_back(server3->GetStatistics());
-	stats.push_back(server4->GetStatistics());*/
+	//int size = stats.size();
+	//std::cout << "Stats container size: " << stats.size() << std::endl;
 
-	int size = stats.size();
-	std::cout << "Stats container size: " << stats.size() << std::endl;
+	//// Which file to reset and write to
+	//auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
 
-	// Which file to reset and write to
-	auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
+	//// final parameter of write file is 1 for reset, 0 for append to current file
+	//// Reset the file data before new stats are written
+	//WriteFile(outputFile, "Simulation Statistics\n", 1);
+	//WriteFile(outputFile, "Simulation End Time: " + std::to_string(GetSimulationTime()) + '\n', 0);
 
-	// final parameter of write file is 1 for reset, 0 for append to current file
-	// Reset the file data before new stats are written
-	WriteFile(outputFile, "Simulation Statistics\n", 1);
-	WriteFile(outputFile, "Simulation End Time: " + std::to_string(GetSimulationTime()) + '\n', 0);
+	//for (int i = 0; i < size; i++) {
 
-	for (int i = 0; i < size; i++) {
+	//	stats[i].get()->ReportStats();
+	//	//stats[i].get()->DeleteStats();
+	//	//std::cout << "(o)(o)" << std::endl;
+	//}
 
-		stats[i].get()->ReportStats();
-		//stats[i].get()->DeleteStats();
-		//std::cout << "(o)(o)" << std::endl;
-	}
+	//_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	//_CrtDumpMemoryLeaks();
 
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	////delete arrivalRate;
+	////delete serviceTime;
+	//delete src;
+	//delete server;
+	//delete sink;
 
-	//delete arrivalRate;
-	//delete serviceTime;
-	delete src;
-	delete server;
-	delete sink;
-
-	system("Pause");
-}
+//	system("Pause");
+//}

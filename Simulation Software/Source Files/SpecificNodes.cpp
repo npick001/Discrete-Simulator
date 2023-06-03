@@ -27,14 +27,14 @@ public:
 
 		// final parameter of write file is 1 for reset, 0 for append to current file
 		// Generate the header
-		WriteFile(outputFile, header, 0);
+		WriteToFile(outputFile, header, 0);
 
 		// to_string the data
 		std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesCreated) +
 			"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesCreated) + '\n';
 
 		// write data to the file
-		WriteFile(outputFile, data, 0);
+		WriteToFile(outputFile, data, 0);
 	}
 
 private:
@@ -179,14 +179,14 @@ public:
 
 		// final parameter of write file is 1 for reset, 0 for append to current file
 		// Generate the header
-		WriteFile(outputFile, header, 0);
+		WriteToFile(outputFile, header, 0);
 
 		// to_string the data
 		std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesDestroyed) +
 			"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesDestroyed) + '\n';
 
 		// write data to the file
-		WriteFile(outputFile, data, 0);
+		WriteToFile(outputFile, data, 0);
 	}
 
 private:
@@ -284,7 +284,7 @@ public:
 
 		// final parameter of write file is 1 for reset, 0 for append to current file
 		// Generate the header
-		WriteFile(outputFile, header, 0);
+		WriteToFile(outputFile, header, 0);
 
 		// to_string the data
 		std::string data = "\t- Entities Processed: " + std::to_string(m_sm_processed) +
@@ -294,7 +294,7 @@ public:
 			"\n\t- Minimum Queue Size: " + std::to_string(m_sm_QminSize) + "\n\t- Maximum Queue Size: " + std::to_string(m_sm_QmazSize);
 
 		// write data to the file
-		WriteFile(outputFile, data, 0);
+		WriteToFile(outputFile, data, 0);
 	}
 
 private:
@@ -493,7 +493,7 @@ public:
 
 		// final parameter of write file is 1 for reset, 0 for append to current file
 		// Generate the header
-		WriteFile(outputFile, header, 0);
+		WriteToFile(outputFile, header, 0);
 
 		// to_string the data
 		std::string data = "\t- Entities Processed: " + std::to_string(m_sm_processed) +
@@ -503,7 +503,7 @@ public:
 			"\n\t- Minimum Queue Size: " + std::to_string(m_sm_QminSize) + "\n\t- Maximum Queue Size: " + std::to_string(m_sm_QmazSize);
 
 		// write data to the file
-		WriteFile(outputFile, data, 0);
+		WriteToFile(outputFile, data, 0);
 	}
 
 private:
