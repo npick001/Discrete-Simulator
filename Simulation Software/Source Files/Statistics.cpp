@@ -196,8 +196,7 @@ double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<dou
 
 	// calculate expected values
 	for (int i = 0; i < size; i++) {
-		expected.push_back(0.0);
-		expected[i] = probabilities[i] * dataSum;
+		expected.push_back((probabilities[i] / 100) * dataSum);
 	}
 
 	// calculate test statistic
@@ -207,11 +206,14 @@ double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<dou
 
 		double relativeError = (numerator / denominator);
 		testStat += relativeError;
-	}
-	
-	int dof = size - 1;
-	double p = ChiSquareCDF(dof, testStat, 100);
+	}	
 
+	int dof = size - 1;
+	int numPointsToGen = 100000;
+	double p = 1 - ChiSquareCDF(dof, testStat, numPointsToGen);
+
+	std::cout << "Test statistic: " << testStat << std::endl;
+	std::cout << "Degrees of Freedom: " << dof << std::endl;
 	std::cout << "P value: " << p << std::endl;
 
 	return p;
@@ -559,7 +561,7 @@ double StatisticsObject::ChiSquareCDF(double dof, double x_upper, int steps)
 	//}
 
 	double totalArea = 1 - area;
-	std::cout << "Definite Integral Evaluated: " << totalArea << std::endl;
+	std::cout << "Definite Integral Evaluated: " << area << std::endl;
 
 	return area;
 }
