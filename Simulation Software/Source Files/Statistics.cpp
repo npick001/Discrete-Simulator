@@ -178,17 +178,43 @@ void StatisticsObject::ComputeFilePDF()
 	m_dataRange = m_yMaximum - m_yMinimum;
 }
 
-void StatisticsObject::ChiSquareTest()
+double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<double> probabilities)
 {
+	// make sure they are the same size.
+	_ASSERT(data.size() == probabilities.size());
 
-	//double ChiSquareCDF(callback_function_DBL pdf, double dof, double x_upper, int steps);
-	//double PDF_Chi_Square(double x, double dof);
+	int size = data.size();
+	std::vector<double> observed = data;
+	std::vector<double> expected;
+	double dataSum = 0;
+	double testStat = 0;
 
-	//// Approximate the critical value using Newton-Raphson iteration
-	//// max iterations = 2500
-	//double ChiSquareCriticalValue(callback_function_DBL pdf, double dof, double alpha);
+	// calculate sample size
+	for (int i = 0; i < size; i++) {
+		dataSum += observed[i];
+	}
 
-	//double critApprox = ChiSquareCriticalValue(&PDF_Chi_Square, )
+	// calculate expected values
+	for (int i = 0; i < size; i++) {
+		expected.push_back(0.0);
+		expected[i] = probabilities[i] * dataSum;
+	}
+
+	// calculate test statistic
+	for (int i = 0; i < size; i++) {
+		double numerator = pow((observed[i] - expected[i]), 2);
+		double denominator = expected[i];
+
+		double relativeError = (numerator / denominator);
+		testStat += relativeError;
+	}
+	
+	int dof = size - 1;
+	double p = ChiSquareCDF(dof, testStat, 100);
+
+	std::cout << "P value: " << p << std::endl;
+
+	return p;
 }
 
 double StatisticsObject::NewtonsMethod(double alpha, double initialGuess)
@@ -248,6 +274,9 @@ double StatisticsObject::NewtonsMethod(double alpha, double initialGuess)
 }
 
 double StatisticsObject::ChiSquareCriticalValue(double alpha, double dof) {
+
+	// Use newton iteration to approximate the critical value
+
 	double x = 2.0 * dof;  // A reasonable initial guess
 	int max_iters = 250000;
 
@@ -429,6 +458,28 @@ double StatisticsObject::GammaFunction(unsigned int n)
 	return gamma;
 }
 
+std::vector<double> StatisticsObject::Get_LCG_Stream(int x0, int a, int c, int m, int N)
+{
+	std::vector<int> xStream;
+	std::vector<double> stream;
+	double xi = 0;
+	double ri = 0;
+
+	for (int i = 1; i <= N; i++) {
+		if (i == 1) {
+			xStream.push_back((a * x0 + c) % m);
+		}
+		else {
+			xStream.push_back((a * xStream[i - 1] + c) % m);
+		}
+		xi = xStream[i];
+		ri = ((double)xi / (double)m);
+		stream.push_back(ri);
+	}
+
+	return stream;
+}
+
 std::vector<double> StatisticsObject::Chi_Square_Distribution(int dof, int numPoints)
 {
 	// Plug in values to the chi-square distribution pdf
@@ -460,32 +511,55 @@ std::vector<double> StatisticsObject::Chi_Square_Distribution(int dof, int numPo
 
 double StatisticsObject::ChiSquareCDF(double dof, double x_upper, int steps)
 {
-
 	// define step size
 	double stepSize = x_upper / steps;
 
 	// initialize x and area under curve
-	double x = 0.0;
+	double x = 0.001;
 	double area = 0.0;
 
-	// RK Integration
-	for (int i = 0; i < steps; i++) {
+	// container to hold the points for testing
+	std::vector<double> points;
+	points.push_back(x);
 
-		// Compute Runge-Kutta terms
-		double k1 = stepSize * PDF_Chi_Square(x, dof);
-		double k2 = stepSize * PDF_Chi_Square(x + 0.5 * stepSize, dof);
-		double k3 = stepSize * PDF_Chi_Square(x + 0.5 * stepSize, dof);
-		double k4 = stepSize * PDF_Chi_Square(x + stepSize, dof);
+	std::vector<double> areas;
+
+	// PDF Manual Integration
+	for (int i = 1; i <= steps; i++) {
+
+		// IF CONFUSED ON WHAT IS HERE, REFERENCE
+		// NICKS NOTES ON HIS REMARKABLE
+
+		double h = stepSize;
+		double y1 = PDF_Chi_Square(x, dof);
+		double y2 = PDF_Chi_Square(x + h, dof);
+
+		// Split section into rectangle and triangle
+		// get areas for each separately
+		// then combine for approximated section area
+		double rectArea = y1 * h;
+		double triArea = (1 / 2) * h * (y2 - y1);
 
 		// Combine terms to estimate area under curve for this segment
-		double segmentArea = (1.0 / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4);
+		double sectionArea = (rectArea + triArea);
+
+		// is this producing the right values?
+		areas.push_back(sectionArea);
 
 		// Accumulate total area under curve
-		area += segmentArea;
+		area += sectionArea;
 
 		// advance x
 		x += stepSize;
+		points.push_back(x);
 	}
+
+	//for (int i = 0; i < points.size(); i++) {
+	//	std::cout << "Step: " << i << ", Value: " << points[i] << std::endl;
+	//}
+
+	double totalArea = 1 - area;
+	std::cout << "Definite Integral Evaluated: " << totalArea << std::endl;
 
 	return area;
 }

@@ -1,6 +1,6 @@
 #pragma once
-#include <wx/wx.h>
-#include <wx/graphics.h>
+//#include <wx/wx.h>
+//#include <wx/graphics.h>
 
 #include "Directives.h"
 #include "Entity.h"
@@ -10,10 +10,10 @@ class GenericNode
 public:
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
-    void SetImagePath(const wxString& imagePath);
+    void SetImagePath(const std::string& imagePath);
     inline void SetNodeType(std::string nodetype) { m_nodeType = nodetype; }
-    wxString GetName();
-    wxString GetImagePath();    
+    std::string GetName();
+    std::string GetImagePath();
     inline int GetID() { return m_id; }
     inline std::string GetType() { return m_nodeType; }
 
@@ -33,7 +33,7 @@ public:
     virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
-    GenericNode(const wxString& name);
+    GenericNode(const std::string& name);
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
@@ -60,10 +60,10 @@ private:
     int m_id;
     std::string m_nodeType;
     static int m_nextID;
-    wxString m_name;
-    wxString m_imagePath;
-    wxPoint m_position;
-    wxSize m_size;
+    std::string m_name;
+    std::string m_imagePath;
+    //wxPoint m_position;
+    //wxSize m_size;
 
     GenericNode* m_prev;
     //GraphicalNode* m_graphics;

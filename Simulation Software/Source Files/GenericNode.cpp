@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GenericNode.h"
 
 int GenericNode::m_nextID = 0;
@@ -10,15 +11,15 @@ void GenericNode::SetPrevious(GenericNode* prev) {
     m_prev = prev;
 }
 
-void GenericNode::SetImagePath(const wxString& imagePath) {
+void GenericNode::SetImagePath(const std::string& imagePath) {
     m_imagePath = imagePath;
 }
 
-wxString GenericNode::GetName() {
+std::string GenericNode::GetName() {
     return m_name;
 }
 
-wxString GenericNode::GetImagePath() {
+std::string GenericNode::GetImagePath() {
     return m_imagePath;
 }
 
@@ -45,7 +46,7 @@ void GenericNode::Depart(Entity* entity) {
     m_next->Arrive(entity);
 }
 
-GenericNode::GenericNode(const wxString& name) {
+GenericNode::GenericNode(const std::string& name) {
     m_name = name;
     m_imagePath = "";
     m_id = m_nextID++;
@@ -53,7 +54,7 @@ GenericNode::GenericNode(const wxString& name) {
     m_next = 0;
     m_prev = 0;
 
-    m_size = wxSize(100, 50);
+    //m_size = wxSize(100, 50);
 }
 
 // Copy constructor

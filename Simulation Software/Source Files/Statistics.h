@@ -5,7 +5,6 @@
 #include <math.h>
 #include <list>
 #include <random>
-#include <wx/vector.h>
 #include "Distribution.h"
 #include "Directives.h"
 
@@ -62,7 +61,10 @@ public:
 	double GammaFunction(unsigned int n);
 
 	// NEED TO BE IMPLEMENTED
-	void ChiSquareTest();
+
+	// for this to work, data.size() must == probabilities.size()
+	// Test returns p-value
+	double ChiSquareTest(std::vector<double> data, std::vector<double> probabilities);
 	void KolmogorovSmirnovTest();
 	void LeastSquaresEstimate();
 	//////////////////////////
@@ -81,6 +83,22 @@ public:
 	// max iterations = 2500
 	// sooooo close
 	double ChiSquareCriticalValue(double alpha, double dof);
+
+	/*
+		Define the Linear Congruential Generator (LCG).
+		Params:
+		- x0: Seed
+		- a: Multiplier
+		- c: increment
+		- m: modulus
+		- N: number of RN to generate
+
+		This function returns a stream of numbers (0, 1), which may or may not be
+		a valid number generator for analysis.
+
+		Primarily used for testing Chi-Square Test.
+	*/
+	std::vector<double> Get_LCG_Stream(int x0, int a, int c, int m, int N);
 
 protected:
 	// CHI-SQUARE DISTRIBUTION => WORKING

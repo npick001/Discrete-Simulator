@@ -152,8 +152,11 @@ int main() {
 	StatisticsObject statobj(50);
 	//statobj.StatTesting();
 	//statobj.GammaFunction(1);
-	double critApprox = statobj.ChiSquareCriticalValue(0.05, 6);
-	std::cout << "Critical Value (p=0.05, df=6): " << critApprox << std::endl;
+
+	std::vector<double> data = {89.0, 37.0, 30.0, 28.0, 2.0};
+	std::vector<double> probs = {40.0, 20.0, 20.0, 15.0, 5.0};
+
+	double critApprox = statobj.ChiSquareTest(data, probs);
 
 	//std::vector<double> RKpoints = statobj.RungeKutta4(&PDF_Chi_Square, 0.001, 10.0, (10.0 / 0.1));
 	//std::vector<double> CS_Dist = statobj.Chi_Square_Distribution(10, 1000);
