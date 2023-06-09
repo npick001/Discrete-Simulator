@@ -252,7 +252,7 @@ class SSSQ::MyStatistics : public Statistics
 {
 public:
 	MyStatistics() {
-		m_sm_processed = 0.0;
+		m_sm_processed = 0;
 		m_sm_waitTime = 0.0;
 		m_sm_totalServiceTime = 0.0;
 		m_sm_idleTime = 0.0;

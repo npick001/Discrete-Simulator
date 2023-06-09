@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <vector>
 
+#include "stats.hpp"
 #include "SimulationExecutive.h"
 #include "Distribution.h"
 #include "SpecificNodes.h"
@@ -149,23 +150,37 @@ void NodeTesting() {
 
 int main() {
 
-	StatisticsObject statobj(50);
+	StatisticsObject statobj(10);
 	//statobj.StatTesting();
 	//statobj.GammaFunction(1);
 
-	std::vector<double> data = {89.0, 37.0, 30.0, 28.0, 2.0};
-	std::vector<double> probs = {40.0, 20.0, 20.0, 15.0, 5.0};
+	/*Exponential* exponential = new Exponential(3);
+	std::cout << "\nEXPONENTIAL DISTRIBUTION (5)\n";*/
+
+	//Normal* norm = new Normal(5, 1);
+	//std::cout << "\nNORMAL DISTRIBUTION (5, 1)\n";
+
+	/*statobj.CreateDummyData(2500, exponential);
+	Distribution* bestfit = statobj.GenerateBestFitDistribution(".\\Output Files\\MLEDistributionData.txt");*/
+
+	std::vector<double> data = {28.0, 18.0, 19.0, 25.0, 26.0,
+								16.0, 21.0, 16.0, 18.0, 13.0};
+
+	std::vector<double> probs = {20.0, 20.0, 20.0, 20.0, 20.0,
+								 20.0, 20.0, 20.0, 20.0, 20.0};
+
 
 	double critApprox = statobj.ChiSquareTest(data, probs);
+
+
+	//std::vector<double> x = { 1.8, 0.7, 4.2 };
+	//stats::pchisq(x, 4, false);
+
 
 	//std::vector<double> RKpoints = statobj.RungeKutta4(&PDF_Chi_Square, 0.001, 10.0, (10.0 / 0.1));
 	//std::vector<double> CS_Dist = statobj.Chi_Square_Distribution(10, 1000);
 	system("Pause");
 }
-
-	// THIS IS WRONG, NEED AN INVERSE SOMEWHERE
-	/*double pValue = chisquare_cdf(0.95, 9.0);
-	std::cout << "Critical Value (p=0.05, df=9): " << pValue << std::endl;*/
 
 	//NodeTesting();
 
