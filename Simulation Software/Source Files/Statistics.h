@@ -3,35 +3,13 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
+#include <cmath>
 #include <list>
 #include <random>
+#include "stats.hpp"
+#include "Utility.h"
 #include "Distribution.h"
 #include "Directives.h"
-
-// Differential equation callback function
-typedef double (*callback_function_DBL)(double,double);
-
-template <typename T>
-void WriteToFile(std::string filename, T data, int openMode) {
-
-	std::ofstream outfile;
-
-	switch (openMode) {
-	case 0:
-		outfile.open(filename, std::ios_base::app);
-		break;
-	case 1:
-		outfile.open(filename, std::ios_base::trunc);
-		break;
-	}
-
-	if (!outfile.is_open()) {
-		std::cout << filename << " WAS UNABLE TO OPEN. " << std::endl;
-	}
-
-	outfile << data << '\n';
-	outfile.close();
-}
 
 class Entity;
 
@@ -45,37 +23,36 @@ public:
 	// required file format is:
 	// int number of data points \n
 	// data point i \n until eof
+	// MAKE SURE TO ADD FORMATTING CONSTRAINTS TO CODE.
 	void ReadStatFile(std::string filename);
-	void CreateDummyData(int dataSize, Distribution* distribution);
+
+	// Returns a vector of size dataSize
+	// with random variates drawn from the distribution/
+	std::vector<double> CreateDummyData(int dataSize, Distribution* distribution);
 	void ResetStatistics();
 	void ComputeFilePDF();
 	void StatTesting();
 
-	// setter for tolerance
-	// default tolerance = 10^-6
-	// default iterations = 500
-	inline void SetIterativeTolerance(double tolerance) { m_iterationTolerance = tolerance; }
-
-	// GAMMA FUNCTION
-	// CONSTRAINED x > 0 for x = 1,2,3,...,n
-	double GammaFunction(unsigned int n);
-
-	// NEED TO BE IMPLEMENTED
-
-	// for this to work, data.size() must == probabilities.size()
-	// Test returns p-value
-	double ChiSquareTest(std::vector<double> data, std::vector<double> probabilities);
-	void KolmogorovSmirnovTest();
-	void LeastSquaresEstimate();
-	//////////////////////////
-
 	// required file format is:
 	// int number of data points \n
 	// data point i \n until eof
-	void GenerateHistogramFromData(std::string fileName);
-	inline std::vector<double> GetDataset() { return m_dataset; }
+	Distribution* GenerateBestFitDistribution(std::string fileName);
 
-	// needs to be tested
+	// Distribution testing functions
+	void GenerateTestDistributions(std::vector<double> data);
+	Exponential* GenerateExponentialFromParams(std::vector<double> params);
+	Normal* GenerateNormalFromParams(std::vector<double> params);
+
+	// returns a vector containing the intervals for the PDF
+	std::vector<double> ComputePDF(std::vector<double> data, int numBins);
+
+	// MUST BE CALLED AFTER GENERATE TEST DISTRIBUTIONS
+	Distribution* DetermineBestFit();
+
+	// for this to work, data.size() must == probabilities.size()
+	// Test returns p-value
+	// Chi-square testing and p-values are approximately correct.
+	double ChiSquareTest(std::vector<double> data, std::vector<double> probabilities);
 	double ChiSquareCDF(double dof, double x_upper, int steps);
 	double PDF_Chi_Square(double x, double dof);
 
@@ -83,6 +60,18 @@ public:
 	// max iterations = 2500
 	// sooooo close
 	double ChiSquareCriticalValue(double alpha, double dof);
+
+	// NEED TO BE IMPLEMENTED //
+	void KolmogorovSmirnovTest();
+	void LeastSquaresEstimate();
+	////////////////////////////
+
+
+	// setter for tolerance
+	// default tolerance = 10^-6
+	// default iterations = 500
+	inline void SetIterativeTolerance(double tolerance) { m_iterationTolerance = tolerance; }
+	inline std::vector<double> GetDataset() { return m_dataset; }
 
 	/*
 		Define the Linear Congruential Generator (LCG).
@@ -121,12 +110,16 @@ protected:
 	// Recursively compute the factorial => WORKING
 	unsigned long long factorial(unsigned int n);
 
+	// GAMMA FUNCTION
+	// CONSTRAINED x > 0 for x = 1,2,3,...,n
+	double GammaFunction(unsigned int n);
+
 	// NOTHING CREATED
 	//double GetChiSquareCriticalValue(double alpha, double dof);
 
 private:
 	// distributions to test input data against
-	std::list<Distribution*> m_testDistributions;
+	std::vector<Distribution*> m_testDistributions;
 
 	// Input data
 	std::vector<double> m_dataset;
@@ -147,8 +140,4 @@ private:
 	// Newtons Method
 	double m_iterationTolerance;
 	double m_iterations;
-
-	// goodness of fit tests
-	//std::chi_squared_distribution<double> m_chi_square_dist;
-	float m_pValue;
 };

@@ -17,7 +17,6 @@ StatisticsObject::StatisticsObject(int histogramIntervals)
 
 	// Theoretical distributions
 	m_numCurvePoints = 100;
-	m_pValue = -1;
 
 	// Newtons Method
 	// default tolerance 10^-6
@@ -72,24 +71,25 @@ void StatisticsObject::ReadStatFile(std::string filename)
 	iFile.close();
 }
 
-void StatisticsObject::CreateDummyData(int dataSize, Distribution* distribution)
+std::vector<double> StatisticsObject::CreateDummyData(int dataSize, Distribution* distribution)
 {
 	Distribution* dist = distribution;
-	std::unique_ptr<double[]> distData(new double[dataSize]);
+	std::vector<double> distData;
 
 #if WRITETOFILE
-	WriteToFile("test.txt", dataSize, 1);
+	WriteToFile(".\\Output Files\\MLEDistributionData.txt", dataSize, 1);
 #endif // WRITETOFILE
 
 	for (int i = 0; i < dataSize; i++) {
-		distData[i] = dist->GetRV();
+		distData.push_back(dist->GetRV());
 
 #if WRITETOFILE
-		WriteToFile("test.txt", distData[i], 0);
+		WriteToFile(".\\Output Files\\MLEDistributionData.txt", distData[i], 0);
 #endif // WRITETOFILE
 	}
 
 	delete dist;
+	return distData;
 }
 
 void StatisticsObject::ResetStatistics()
@@ -101,7 +101,6 @@ void StatisticsObject::ResetStatistics()
 	m_binSize = 0;
 	m_currentFile = "";
 	m_numCurvePoints = 100;
-	m_pValue = -1;
 #if DEBUG
 	std::cout << "Resetting Statistics.\n" << std::endl;
 #endif // DEBUG
@@ -149,9 +148,9 @@ void StatisticsObject::ComputeFilePDF()
 	}
 
 #if WRITETOFILE
-	WriteToFile("HistogramDensity.txt", "Resetting file.", 1);
+	WriteToFile(".\\Output Files\\HistogramDensity.txt", "Resetting file.", 1);
 #endif // WRITETOFILE
-	double total = 0;
+	double total = 0.0;
 	for (int j = 0; j < m_numHistogramIntervals; j++) {
 
 		// get the density of points in bin / total number of points
@@ -169,7 +168,7 @@ void StatisticsObject::ComputeFilePDF()
 #endif // DEBUG
 
 #if WRITETOFILE
-		WriteToFile("HistogramDensity.txt", m_intervalDensity[j], 0);
+		WriteToFile(".\\Output Files\\HistogramDensity.txt", m_intervalDensity[j], 0);
 #endif // WRITETOFILE
 		total += m_intervalDensity[j];
 	}
@@ -181,23 +180,16 @@ void StatisticsObject::ComputeFilePDF()
 double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<double> probabilities)
 {
 	// make sure they are the same size.
-	_ASSERT(data.size() == probabilities.size());
+	if (!(data.size() == probabilities.size())) {
+		std::cout << "Data and probability sizes are not the same." << std::endl;
+		return -1.0;
+	}
 
 	int size = data.size();
 	std::vector<double> observed = data;
-	std::vector<double> expected;
-	double dataSum = 0;
-	double testStat = 0;
-
-	// calculate sample size
-	for (int i = 0; i < size; i++) {
-		dataSum += observed[i];
-	}
-
-	// calculate expected values
-	for (int i = 0; i < size; i++) {
-		expected.push_back((probabilities[i] / 100) * dataSum);
-	}
+	std::vector<double> expected = probabilities;
+	double dataSum = 0.0;
+	double testStat = 0.0;
 
 	// calculate test statistic
 	for (int i = 0; i < size; i++) {
@@ -208,9 +200,9 @@ double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<dou
 		testStat += relativeError;
 	}	
 
-	int dof = size - 1;
+	double dof = (double)(size - 1);
 	int numPointsToGen = 100000;
-	double p = 1 - ChiSquareCDF(dof, testStat, numPointsToGen);
+	double p = 1.0 - ChiSquareCDF(dof, testStat, numPointsToGen);
 
 	std::cout << "Test statistic: " << testStat << std::endl;
 	std::cout << "Degrees of Freedom: " << dof << std::endl;
@@ -238,41 +230,7 @@ double StatisticsObject::NewtonsMethod(double alpha, double initialGuess)
 		x_(n+1) = x_n - f(x_n) / f'(x_n)
 
 	*/
-
-
-	double Xi = initialGuess;
-	//for (int i = 0; i < m_iterations; i++) {
-
-	//	// eval f()
-	//	double c_point = m_chi_square_dist(Xi);
-	//	double fx = c_point - alpha;
-	//	if (std::abs(fx) < m_iterationTolerance) {
-	//		return Xi;
-	//	}
-	//}
-	//	
-	//	// take the central difference to get the derivative of fx
-	//	// these had to be stored in variables.
-	//	// The chi-square distribution doesn't like taking in expressions
-	//	double xPlus = Xi + m_iterationTolerance;
-	//	double xMinus = Xi - m_iterationTolerance;
-
-	//	// eval f'()
-	//	// find the slope at the current point by using the 
-	//	// points on either side of Xi using the iteration tolerance.
-	//	double dfx = (m_chi_square_dist(xPlus) - m_chi_square_dist(xMinus)) / (2.0 * m_iterationTolerance);
-	//	if (dfx == 0.0) {
-
-	//		// would be div by 0
-	//		std::cout << "Warning: derivative is 0, Newton's Method may fail." << std::endl;
-	//		dfx = m_iterationTolerance;
-	//	}
-
-	//	// actually newtons method
-	//	Xi -= fx / dfx;
-	//}
-
-	return Xi;
+	return 0;
 }
 
 double StatisticsObject::ChiSquareCriticalValue(double alpha, double dof) {
@@ -311,74 +269,213 @@ void StatisticsObject::LeastSquaresEstimate()
 void StatisticsObject::StatTesting()
 {
 #if DEBUG
-	//Triangular* tri = new Triangular(1, 2, 3);
-	//Normal* norm = new Normal(5, 1);
-	//Exponential* exp = new Exponential(5);
-	//Uniform* uni = new Uniform(-1, 1);
-	//int dataPoints = 500;
+	Triangular* tri = new Triangular(1, 2, 3);
+	Normal* norm = new Normal(5, 1);
+	Exponential* exp = new Exponential(5);
+	Uniform* uni = new Uniform(-1, 1);
+	int dataPoints = 500;
 
-	//// UNIFORM
-	//std::cout << "\nUNIFORM DISTRIBUTION (-1, 1)\n";
-	//CreateDummyData(dataPoints, uni);
-	//ReadStatFile("test.txt");
-	//ComputeFilePDF();
+	// UNIFORM
+	std::cout << "\nUNIFORM DISTRIBUTION (-1, 1)\n";
+	CreateDummyData(dataPoints, uni);
+	ReadStatFile("test.txt");
+	ComputeFilePDF();
 
-	//// NORMAL
-	//std::cout << "\nNORMAL DISTRIBUTION (5, 1)\n";
-	//CreateDummyData(dataPoints, norm);
-	//ReadStatFile("test.txt");
-	//ComputeFilePDF();
+	// NORMAL
+	std::cout << "\nNORMAL DISTRIBUTION (5, 1)\n";
+	CreateDummyData(dataPoints, norm);
+	ReadStatFile("test.txt");
+	ComputeFilePDF();
 
-	//std::vector<double> normParams = MLE_Normal(m_dataset);
-	//Normal* norm_MLE = new Normal(normParams[0], normParams[1]);
+	std::vector<double> normParams = MLE_Normal(m_dataset);
+	Normal* norm_MLE = new Normal(normParams[0], normParams[1]);
 
-	//std::cout << "\n MLE FROM NORMAL DISTRIBUTION (5, 1)\n";
-	//CreateDummyData(dataPoints, norm_MLE);
-	//ReadStatFile("test.txt");
-	//ComputeFilePDF();
+	std::cout << "\n MLE FROM NORMAL DISTRIBUTION (5, 1)\n";
+	CreateDummyData(dataPoints, norm_MLE);
+	ReadStatFile("test.txt");
+	ComputeFilePDF();
 
-	//// EXPONENTIAL
-	//std::cout << "\nEXPONENTIAL DISTRIBUTION (5)\n";
-	//CreateDummyData(dataPoints, exp);
-	//ReadStatFile("test.txt");
-	//ComputeFilePDF();
+	// EXPONENTIAL
+	std::cout << "\nEXPONENTIAL DISTRIBUTION (5)\n";
+	CreateDummyData(dataPoints, exp);
+	ReadStatFile("test.txt");
+	ComputeFilePDF();
 
-	//// TRIANGULAR
-	//std::cout << "\nTRIANGULAR DISTRIBUTION (1, 2, 3)\n";
-	//CreateDummyData(dataPoints, tri);
-	//ReadStatFile("test.txt");
-	//ComputeFilePDF();
+	// TRIANGULAR
+	std::cout << "\nTRIANGULAR DISTRIBUTION (1, 2, 3)\n";
+	CreateDummyData(dataPoints, tri);
+	ReadStatFile("test.txt");
+	ComputeFilePDF();
 
-	//ResetStatistics();
-
-
-
-
-
-
+	ResetStatistics();
 #endif // DEBUG
 }
 
+void StatisticsObject::GenerateTestDistributions(std::vector<double> data)
+{
+	// Generate Exponential Test distribution
+	std::vector<double> expParams = MLE_Exponential(data);
+	m_testDistributions.push_back(GenerateExponentialFromParams(expParams));
+
+	// Generate Normal Test distribution
+	std::vector<double> normParams = MLE_Normal(data);
+	m_testDistributions.push_back(GenerateNormalFromParams(normParams));
+}
+
+std::vector<double> StatisticsObject::ComputePDF(std::vector<double> data, int numBins)
+{
+	std::vector<double> intervalDensity;
+	double xMin = DBL_MAX;
+	double xMax = DBL_MIN;
+	double dataRange = 0.0;
+
+	// determine data extrema
+	for (int i = 0; i < data.size(); i++){
+		if (data[i] < xMin) {
+			xMin = data[i];
+		}
+		else if (data[i] > xMax) {
+			xMax = data[i];
+		}
+	}
+
+	// go through and check every value for if its in current bin
+	// if so, increment count to current bin
+	while (intervalDensity.size() < numBins) {
+		intervalDensity.push_back(0.0);
+	}
+
+	dataRange = xMax - xMin;
+	double binSize = dataRange / (float)numBins;
+
+	// define the intervals for the bings
+	std::unique_ptr<float[]> ranges(new float[numBins + 1]);
+	ranges[0] = xMin;
+	for (int i = 1; i <= numBins; i++) {
+		ranges[i] = ranges[i - 1] + binSize;
+#if DEBUG
+		std::cout << "[" << ranges[i - 1] << ", " << ranges[i] << "]" << '\n';
+#endif // DEBUG
+	}
+#if DEBUG
+	std::cout << "Data range: " << dataRange << ", Bin Size: " << binSize << '\n';
+	std::cout << "X max: " << xMax << ", X min: " << xMin << '\n';
+#endif // DEBUG
+
+	// put number of values into respective bin
+	for (int i = 0; i < data.size(); i++) {
+
+		for (int j = 0; j < numBins; j++) {
+			if (data[i] < ranges[j + 1]) {
+				//std::cout << "Increasing bin " << j << '\n';
+				intervalDensity[j]++;
+				break;
+			}
+		}
+
+		//std::cout << "Data Point: " << dataset[i] << ", Bin Index: " << binIndex << '\n';
+	}
+
+#if WRITETOFILE
+	WriteToFile(".\\Output Files\\ComputedDataPDF.txt", "Resetting file.", 1);
+#endif // WRITETOFILE
+	double total = 0.0;
+	double yMin = DBL_MAX;
+	double yMax = DBL_MIN;
+
+	for (int j = 0; j < numBins; j++) {
+
+		// get the density of points in bin / total number of points
+		intervalDensity[j] /= data.size();
+		//intervalDensity[j] /= binSize;
+		//intervalDensity[j] /= numHistogramIntervals;
+
+		// compute pdf min and max
+		if (intervalDensity[j] < yMin)
+			yMin = intervalDensity[j];
+		if (intervalDensity[j] > yMax)
+			yMax = intervalDensity[j];
+#if DEBUG
+		std::cout << "Bin: " << j << ", " << intervalDensity[j] << '\n';
+#endif // DEBUG
+
+#if WRITETOFILE
+		WriteToFile(".\\Output Files\\ComputedDataPDF.txt", intervalDensity[j], 0);
+#endif // WRITETOFILE
+		total += intervalDensity[j];
+	}
+	std::cout << "\nTOTAL: " << total << '\n';
+
+	dataRange = yMax - yMin;
+	return intervalDensity;
+}
+
+Exponential* StatisticsObject::GenerateExponentialFromParams(std::vector<double> params)
+{
+	Exponential* exp = new Exponential(params[0]);
+	return exp;
+}
+
+Normal* StatisticsObject::GenerateNormalFromParams(std::vector<double> params)
+{
+	Normal* norm = new Normal(params[0], params[1]);
+	return norm;
+}
+
+Distribution* StatisticsObject::DetermineBestFit()
+{
+	Distribution* smallest = new Uniform(0, 1);
+	double smallest_p_value = DBL_MAX;
+	for (int i = 0; i < m_testDistributions.size(); i++) {
+		std::vector<double> distData;
+		std::vector<double> pdf;
+
+		distData = CreateDummyData(2500, m_testDistributions[i]);
+		pdf = ComputePDF(distData, m_numHistogramIntervals);
+
+		double current_p_value = ChiSquareTest(pdf, m_intervalDensity);
+
+		for (int i = 0; i < pdf.size(); i++) {
+			std::cout << "Observed: " << pdf[i] << ", Expected: " << m_intervalDensity[i] << std::endl;
+		}
+
+		// determine the smallest p-value
+		// and save distribution.
+		if (smallest_p_value > current_p_value) {
+
+			smallest_p_value = current_p_value;
+			smallest = m_testDistributions[i];
+		}
+	}
+
+	return smallest;
+}
+
 // NOT TESTED
-void StatisticsObject::GenerateHistogramFromData(std::string fileName)
+Distribution* StatisticsObject::GenerateBestFitDistribution(std::string fileName)
 {
 	ResetStatistics();
 	ReadStatFile(fileName);
 	ComputeFilePDF();
+	GenerateTestDistributions(m_dataset);
+	Distribution* bestFit = DetermineBestFit();
+
+	return bestFit;
 }
 
 std::vector<double> StatisticsObject::MLE_Exponential(std::vector<double>& data)
 {
 	std::vector<double> estimatedParams;
-	double sum = 0;
+	double sum = 0.0;
 	double size = data.size();
 
 	for (int i = 0; i < size; i++) {
 		sum += data[i];
 	}
 
-	double MLE_Estimate = size / sum;
+	double MLE_Estimate = sum / size;
 	estimatedParams.push_back(MLE_Estimate);
+	std::cout << "Exponential Mean Estimate: " << MLE_Estimate << '\n';
 
 	return estimatedParams;
 }
@@ -386,9 +483,9 @@ std::vector<double> StatisticsObject::MLE_Exponential(std::vector<double>& data)
 std::vector<double> StatisticsObject::MLE_Normal(std::vector<double>& data)
 {
 	std::vector<double> estimatedParams;
-	double sum = 0;
+	double sum = 0.0;
 	double size = data.size();
-	double variance = 0;
+	double variance = 0.0;
 	
 	// Sum all the data
 	for (int i = 0; i < size; i++) {
@@ -401,11 +498,11 @@ std::vector<double> StatisticsObject::MLE_Normal(std::vector<double>& data)
 	std::cout << "Normal Mean Estimate: " << meanEstimate << '\n';
 
 	// Calculate variance
-	double varEstimate = 0;
+	double varEstimate = 0.0;
 	for (int i = 0; i < size; i++) {
 		variance += pow((data[i] - meanEstimate), 2);
 	}
-	varEstimate = variance / (size - 1);
+	varEstimate = variance / (double)(size - 1);
 	estimatedParams.push_back(varEstimate);
 	std::cout << "Normal Variance Estimate: " << varEstimate << '\n';
 
@@ -498,8 +595,8 @@ std::vector<double> StatisticsObject::Chi_Square_Distribution(int dof, int numPo
 	for (int i = 0; i < numPoints; i++) {
 		
 		double x = i * stepSize;
-		double numerator = (pow(x, ((dof / 2) - 1))) * exp(-x / 2);
-		double denominator = (pow(2, (dof / 2)) * GammaFunction((dof / 2)));
+		double numerator = (pow(x, ((dof / 2.0) - 1.0))) * exp(-x / 2.0);
+		double denominator = (pow(2.0, (dof / 2.0)) * GammaFunction((dof / 2.0)));
 		double currentPoint = numerator / denominator;
 
 		points.push_back(currentPoint);
@@ -512,56 +609,40 @@ std::vector<double> StatisticsObject::Chi_Square_Distribution(int dof, int numPo
 }
 
 double StatisticsObject::ChiSquareCDF(double dof, double x_upper, int steps)
-{
-	// define step size
+{    
+	// Define step size
 	double stepSize = x_upper / steps;
 
-	// initialize x and area under curve
-	double x = 0.001;
+	// Initialize area
 	double area = 0.0;
 
-	// container to hold the points for testing
-	std::vector<double> points;
-	points.push_back(x);
+	// Apply Simpson's Rule
+	for (int i = 0; i <= steps; i++) {
+		double x = i * stepSize;
+		double multiplier = 1.0;
 
-	std::vector<double> areas;
+		// Check if it's the first point or the last point
+		if (i == 0 || i == steps)
+			multiplier = 1;
+		// Check if it's an odd or even step
+		else if (i % 2 == 1)
+			multiplier = 4;
+		else if (i % 2 == 0)
+			multiplier = 2;
 
-	// PDF Manual Integration
-	for (int i = 1; i <= steps; i++) {
+		double y = PDF_Chi_Square(x, dof);
 
-		// IF CONFUSED ON WHAT IS HERE, REFERENCE
-		// NICKS NOTES ON HIS REMARKABLE
-
-		double h = stepSize;
-		double y1 = PDF_Chi_Square(x, dof);
-		double y2 = PDF_Chi_Square(x + h, dof);
-
-		// Split section into rectangle and triangle
-		// get areas for each separately
-		// then combine for approximated section area
-		double rectArea = y1 * h;
-		double triArea = (1 / 2) * h * (y2 - y1);
-
-		// Combine terms to estimate area under curve for this segment
-		double sectionArea = (rectArea + triArea);
-
-		// is this producing the right values?
-		areas.push_back(sectionArea);
-
-		// Accumulate total area under curve
-		area += sectionArea;
-
-		// advance x
-		x += stepSize;
-		points.push_back(x);
+		area += multiplier * y;
 	}
 
-	//for (int i = 0; i < points.size(); i++) {
-	//	std::cout << "Step: " << i << ", Value: " << points[i] << std::endl;
-	//}
+	// Multiply the result by h/3
+	area *= (stepSize / 3.0);
 
-	double totalArea = 1 - area;
-	std::cout << "Definite Integral Evaluated: " << area << std::endl;
+	if (area > 1.0) {
+		std::cout << "\nERROR IN INTEGRATING CHI_SQUARE PDF. AREA > 1." << std::endl;
+		std::cout << "CALCULATED AREA: " << area << std::endl << std::endl;
+		return -1.0;
+	}
 
 	return area;
 }
@@ -570,9 +651,11 @@ double StatisticsObject::PDF_Chi_Square(double x, double dof)
 {
 	// Evaluate the chi-square PDF at x and t
 	// used for integrating for the CDF
-	double numerator = (pow(x, ((dof / 2) - 1))) * exp(-x / 2);
-	double denominator = (pow(2, (dof / 2)) * GammaFunction((dof / 2)));
+
+	int intDOF = (int)dof;
+
+	double numerator = (pow(x, ((intDOF / 2.0) - 1.0))) * exp(-x / 2.0);
+	double denominator = (pow(2.0, (intDOF / 2.0)) * GammaFunction((intDOF / 2.0)));
 	double currentPoint = numerator / denominator;
 	return currentPoint;
 }
-
