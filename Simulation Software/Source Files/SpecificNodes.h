@@ -8,7 +8,7 @@
 #include "Set.h"
 
 using namespace std;
-class FIFO_Queue;
+class FIFO;
 
 /***************************************
 

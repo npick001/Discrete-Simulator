@@ -155,7 +155,6 @@
     <ClInclude Include="Source Files\Distribution.h" />
     <ClInclude Include="Source Files\Entity.h" />
     <ClInclude Include="Source Files\FIFO.h" />
-    <ClInclude Include="Source Files\FIFO_Queue.h" />
     <ClInclude Include="Source Files\GenericNode.h" />
     <ClInclude Include="Source Files\Set.h" />
     <ClInclude Include="Source Files\SimulationExecutive.h" />
@@ -166,7 +165,7 @@
   <ItemGroup>
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
-    <ClCompile Include="Source Files\FIFO_Queue.cpp" />
+    <ClCompile Include="Source Files\FIFO.cpp" />
     <ClCompile Include="Source Files\GenericNode.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />

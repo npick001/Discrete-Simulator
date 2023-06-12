@@ -1,8 +1,8 @@
 #include <limits.h>
-#include "FIFO_Queue.h"
+#include "FIFO.h"
 #include "Entity.h"
 
-FIFO_Queue::FIFO_Queue()
+FIFO::FIFO()
 {
 	m_head = 0;
 	m_tail = 0;
@@ -16,15 +16,7 @@ FIFO_Queue::FIFO_Queue()
 	m_cdfWaits = 0;
 }
 
-FIFO_Queue::~FIFO_Queue()
-{
-	while (GetEntity()) {
-		Entity* e = GetEntity();
-		delete e;
-	}
-}
-
-void FIFO_Queue::AddEntity(Entity* e)
+void FIFO::AddEntity(Entity* e)
 {
 	Node* node = new Node(e);
 	if (m_head == 0) {	//empty list
@@ -34,16 +26,11 @@ void FIFO_Queue::AddEntity(Entity* e)
 		m_tail = m_tail->next = node;
 	}
 	m_size++;
-	m_total++;
-
-	if (m_size > m_queueSizeMax) {
-		m_queueSizeMax = m_size;
-	}
 
 	e->EnterQueue(GetSimulationTime());
 }
 
-Entity* FIFO_Queue::GetEntity()
+Entity* FIFO::GetEntity()
 {
 	if (m_head == 0) return 0;
 	else {
@@ -52,37 +39,33 @@ Entity* FIFO_Queue::GetEntity()
 		m_head = m_head->next;
 		m_size--;
 
-		if (m_size < m_queueSizeMin) {
-			m_queueSizeMin = m_size;
-		}
-		e->LeaveQueue(GetSimulationTime());
 		m_cdfWaits += e->LeaveQueue(GetSimulationTime());
 		m_queueSizeSum += m_size;
 		return e;
 	}
 }
 
-Entity* FIFO_Queue::ViewEntity()
+Entity* FIFO::ViewEntity()
 {
 	return (m_head->m_entity);
 }
 
-double FIFO_Queue::GetAverageWaitTime()
+double FIFO::GetAverageWaitTime()
 {
 	return (m_cdfWaits / m_total);
 }
 
-double FIFO_Queue::GetAverageQueueSize()
+double FIFO::GetAverageQueueSize()
 {
 	return (m_queueSizeSum / m_total);
 }
 
-double FIFO_Queue::GetMinimumQueueSize()
+double FIFO::GetMinimumQueueSize()
 {
 	return m_queueSizeMin;
 }
 
-double FIFO_Queue::GetMaximumQueueSize()
+double FIFO::GetMaximumQueueSize()
 {
 	return m_queueSizeMax;
 }
