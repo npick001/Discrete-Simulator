@@ -150,7 +150,7 @@ void NodeTesting() {
 
 int main() {
 
-	StatisticsObject statobj(10);
+	//StatisticsObject statobj(10);
 	//statobj.StatTesting();
 	//statobj.GammaFunction(1);
 
@@ -163,19 +163,14 @@ int main() {
 	/*statobj.CreateDummyData(2500, exponential);
 	Distribution* bestfit = statobj.GenerateBestFitDistribution(".\\Output Files\\MLEDistributionData.txt");*/
 
-	std::vector<double> data = {28.0, 18.0, 19.0, 25.0, 26.0,
+	/*std::vector<double> data = {28.0, 18.0, 19.0, 25.0, 26.0,
 								16.0, 21.0, 16.0, 18.0, 13.0};
-
 	std::vector<double> probs = {20.0, 20.0, 20.0, 20.0, 20.0,
-								 20.0, 20.0, 20.0, 20.0, 20.0};
-
-
-	double critApprox = statobj.ChiSquareTest(data, probs);
-
+								 20.0, 20.0, 20.0, 20.0, 20.0};*/
+	//double critApprox = statobj.ChiSquareTest(data, probs);
 
 	//std::vector<double> x = { 1.8, 0.7, 4.2 };
 	//stats::pchisq(x, 4, false);
-
 
 	//std::vector<double> RKpoints = statobj.RungeKutta4(&PDF_Chi_Square, 0.001, 10.0, (10.0 / 0.1));
 	//std::vector<double> CS_Dist = statobj.Chi_Square_Distribution(10, 1000);

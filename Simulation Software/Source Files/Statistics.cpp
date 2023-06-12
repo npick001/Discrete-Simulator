@@ -1,3 +1,6 @@
+
+#include "gcem.hpp"
+#include "stats.hpp"
 #include "Statistics.h"
 #include "Entity.h"
 #include "FIFO_Queue.h"
@@ -177,7 +180,7 @@ void StatisticsObject::ComputeFilePDF()
 	m_dataRange = m_yMaximum - m_yMinimum;
 }
 
-double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<double> probabilities)
+double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<double> probabilities, bool iWrote)
 {
 	// make sure they are the same size.
 	if (!(data.size() == probabilities.size())) {
@@ -204,11 +207,22 @@ double StatisticsObject::ChiSquareTest(std::vector<double> data, std::vector<dou
 	int numPointsToGen = 100000;
 	double p = 1.0 - ChiSquareCDF(dof, testStat, numPointsToGen);
 
+	//double testStatistic = stats::pchisq 
+
 	std::cout << "Test statistic: " << testStat << std::endl;
 	std::cout << "Degrees of Freedom: " << dof << std::endl;
 	std::cout << "P value: " << p << std::endl;
 
 	return p;
+}
+
+double StatisticsObject::ChiSquareTest(std::vector<double> observed, std::vector<double> expected) {
+
+	for (int i = 0; i < observed.size(); i++) {
+		
+	}
+
+	return -1;
 }
 
 double StatisticsObject::NewtonsMethod(double alpha, double initialGuess)

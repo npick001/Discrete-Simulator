@@ -6,6 +6,8 @@
 #include <cmath>
 #include <list>
 #include <random>
+
+#include "gcem.hpp"
 #include "stats.hpp"
 #include "Utility.h"
 #include "Distribution.h"
@@ -52,7 +54,12 @@ public:
 	// for this to work, data.size() must == probabilities.size()
 	// Test returns p-value
 	// Chi-square testing and p-values are approximately correct.
-	double ChiSquareTest(std::vector<double> data, std::vector<double> probabilities);
+	// code I wrote
+	double ChiSquareTest(std::vector<double> data, std::vector<double> probabilities, bool iWrote);
+
+	// code using StatsLib library
+	double ChiSquareTest(std::vector<double> observed, std::vector<double> expected);
+
 	double ChiSquareCDF(double dof, double x_upper, int steps);
 	double PDF_Chi_Square(double x, double dof);
 
