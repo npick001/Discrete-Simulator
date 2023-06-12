@@ -263,7 +263,7 @@ public:
 		m_sm_QmazSize = 0.0;
 	}
 
-	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO_Queue* queue) {
+	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO* queue) {
 
 		m_sm_processed = processed;
 		m_sm_waitTime = waitTime;
@@ -369,7 +369,7 @@ SSSQ::SSSQ(std::string name, Distribution* serviceTime) : GenericNode(name) {
 	sm_stateChangeTimes.push_back(GetSimulationTime());
 
 	m_serviceTime = serviceTime;
-	m_queue = new FIFO_Queue();
+	m_queue = new FIFO();
 
 	m_myStats = new MyStatistics();
 	sm_processed = 0;
@@ -472,7 +472,7 @@ public:
 		m_sm_QmazSize = 0.0;
 	}
 
-	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO_Queue* queue) {
+	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO* queue) {
 
 		m_sm_processed = processed;
 		m_sm_waitTime = waitTime;
@@ -579,7 +579,7 @@ ServerNQueue::ServerNQueue(std::string name, int resources, int queues, Distribu
 	m_maxResources = resources;
 	
 	for (int i = 0; i < queues; i++) {
-		m_queues.push_back(new FIFO_Queue());
+		m_queues.push_back(new FIFO());
 	}
 
 	m_serviceTime = serviceTime;

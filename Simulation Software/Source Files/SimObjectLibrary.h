@@ -1,4 +1,5 @@
 #pragma once
+#include <wx/wx.h>
 #include <wx/dnd.h>
 #include "GenericNode.h"
 #include "NodeDataObject.h"
@@ -7,10 +8,10 @@ enum {
     ID_NodeBeginDrag
 };
 
-class LeftToolbar : public wxPanel {
+class SimObjectLibrary : public wxPanel {
 public:
-    LeftToolbar(wxWindow* parent);
-    ~LeftToolbar();
+    SimObjectLibrary(wxWindow* parent);
+    ~SimObjectLibrary();
     void AddNode(GenericNode* node);
 
     inline wxSize GetSize() { return m_size; }

@@ -4,7 +4,7 @@
 #include "SimulationExecutive.h"
 #include "GenericNode.h"
 #include "Statistics.h"
-#include "FIFO_Queue.h"
+#include "FIFO.h"
 #include "Set.h"
 
 using namespace std;
@@ -144,7 +144,7 @@ private:
 	std::vector<double> sm_states;
 	std::vector<Time> sm_stateChangeTimes;
 
-	FIFO_Queue* m_queue;
+	FIFO* m_queue;
 
 	// Statistics handling
 	Statistics* m_myStats;
@@ -195,7 +195,7 @@ private:
 	Distribution* m_serviceTime;
 
 	//static FIFO<Entity>* m_queue;
-	std::vector<FIFO_Queue*> m_queues;
+	std::vector<FIFO*> m_queues;
 
 	// Statistics handling
 	Statistics* m_myStats;

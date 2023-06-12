@@ -38,6 +38,8 @@ MainFrame::MainFrame(const wxString& title)
     view_menu->Append(ID_CreateTree, _("Create Tree"));
     view_menu->Append(ID_CreateNotebook, _("Create Notebook"));
     view_menu->Append(ID_CreateGrid, _("Create Grid"));
+    view_menu->Append(ID_CreateCanvas, _("Create Canvas"));
+    view_menu->Append(ID_CreateLeftToolbar, _("Create Left Toolbar"));
 
     // SETTINGS MENU
     settings_menu->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
@@ -129,6 +131,8 @@ MainFrame::MainFrame(const wxString& title)
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateNotebook, this, ID_CreateNotebook);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateTree, this, ID_CreateTree);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateGrid, this, ID_CreateGrid);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateCanvas, this, ID_CreateCanvas);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateLeftToolbar, this, ID_CreateLeftToolbar);
 
     // Statistics menu Events
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
@@ -200,6 +204,19 @@ wxGrid* MainFrame::CreateGrid()
     grid->CreateGrid(50, 20);
     return grid;
 }
+
+Canvas* MainFrame::CreateCanvas()
+{
+    Canvas* newCanvas = new Canvas(this, GetStatusBar());    
+    return newCanvas;
+}
+
+SimObjectLibrary* MainFrame::CreateLeftToolbar()
+{
+    SimObjectLibrary* simLibrary = new SimObjectLibrary(this);
+    return simLibrary;
+}
+
 void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory)
 {
     // open the passed directory
@@ -234,10 +251,12 @@ void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, 
         keepGoing = dir.GetNext(&filename);
     }
 }
+
 wxPoint MainFrame::GetStartPosition()
 {
     return wxPoint();
 }
+
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
     //wxLogMessage("Inside OnOpen");
@@ -309,7 +328,7 @@ void MainFrame::OnExit(wxCommandEvent& event) {
 void MainFrame::OnCreateNotebook(wxCommandEvent& event)
 {
     m_manager.AddPane(CreateNotebook(), wxAuiPaneInfo().Caption("Notebook").
-        Float().FloatingPosition(GetStartPosition()).CloseButton(true).MaximizeButton(true));
+        CenterPane().Dockable(true));
     m_manager.Update();
 }
 void MainFrame::OnCreateTree(wxCommandEvent& event)
@@ -327,6 +346,20 @@ void MainFrame::OnCreateGrid(wxCommandEvent& event)
         FloatingSize(FromDIP(wxSize(150, 300))));
     m_manager.Update();
 }
+
+void MainFrame::OnCreateCanvas(wxCommandEvent& event)
+{
+    m_mainCanvas->AddPage(CreateCanvas(), "Model", true, wxID_ANY);
+    m_mainCanvas->Update();
+}
+
+void MainFrame::OnCreateLeftToolbar(wxCommandEvent& event)
+{
+    m_manager.AddPane(CreateLeftToolbar(), wxAuiPaneInfo().Dockable(true).
+        Caption("Simulation Library").Left());
+    m_manager.Update();
+}
+
 void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 
     try {

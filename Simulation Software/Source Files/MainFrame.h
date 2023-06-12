@@ -16,7 +16,7 @@
 #include <wx/dir.h>
 #include "Statistics.h"
 #include "Canvas.h"
-#include "LeftToolbar.h"
+#include "SimObjectLibrary.h"
 
 enum {
     ID_Exit = 1,
@@ -26,6 +26,8 @@ enum {
     ID_CreateNotebook,
     ID_CreateTree,
     ID_CreateGrid,
+    ID_CreateCanvas,
+    ID_CreateLeftToolbar,
     ID_DropDownToolbarItem,
     ID_CustomizeToolbar,
 
@@ -50,6 +52,8 @@ private:
     wxAuiNotebook* CreateNotebook();
     wxTreeCtrl* CreateTreeCtrl();
     wxGrid* CreateGrid();
+    Canvas* CreateCanvas();
+    SimObjectLibrary* CreateLeftToolbar();
 
     // Loads the .\Source Files directory into the passed tree.
     void LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory);
@@ -68,6 +72,8 @@ private:
     void OnCreateNotebook(wxCommandEvent& event);
     void OnCreateTree(wxCommandEvent& event);
     void OnCreateGrid(wxCommandEvent& event);  
+    void OnCreateCanvas(wxCommandEvent& event);
+    void OnCreateLeftToolbar(wxCommandEvent& event);
 
     // Statistics menu events
     void OnClickAnalyzer(wxCommandEvent& event);

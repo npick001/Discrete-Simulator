@@ -44,7 +44,7 @@ private:
 	wxMenu* m_canvasMenu;
 	wxMenu* m_nodeMenu;
 	wxMenu* m_ioMenu;
-
+	
 	// Element containers
 	ElementList m_elements;
 	NodeMap m_nodes;

@@ -3,7 +3,7 @@
 #include "stats.hpp"
 #include "Statistics.h"
 #include "Entity.h"
-#include "FIFO_Queue.h"
+#include "FIFO.h"
 
 StatisticsObject::StatisticsObject(int histogramIntervals)
 {
