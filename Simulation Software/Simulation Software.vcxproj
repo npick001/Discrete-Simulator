@@ -151,11 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source Files\Action.h" />
     <ClInclude Include="Source Files\Directives.h" />
     <ClInclude Include="Source Files\Distribution.h" />
     <ClInclude Include="Source Files\Entity.h" />
     <ClInclude Include="Source Files\FIFO.h" />
     <ClInclude Include="Source Files\GenericNode.h" />
+    <ClInclude Include="Source Files\GraphicalEdge.h" />
+    <ClInclude Include="Source Files\GraphicalElement.h" />
+    <ClInclude Include="Source Files\GraphicalNode.h" />
     <ClInclude Include="Source Files\Set.h" />
     <ClInclude Include="Source Files\SimulationExecutive.h" />
     <ClInclude Include="Source Files\SpecificNodes.h" />
@@ -163,10 +167,14 @@
     <ClInclude Include="Source Files\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\Action.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\FIFO.cpp" />
     <ClCompile Include="Source Files\GenericNode.cpp" />
+    <ClCompile Include="Source Files\GraphicalEdge.cpp" />
+    <ClCompile Include="Source Files\GraphicalElement.cpp" />
+    <ClCompile Include="Source Files\GraphicalNode.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />
     <ClCompile Include="Source Files\SpecificNodes.cpp" />
