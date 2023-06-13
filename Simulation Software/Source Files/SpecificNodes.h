@@ -20,10 +20,7 @@ Naming conventions for this library:
 
 ***************************************/
 
-
 // BEGIN IMPLEMENTED NODES
-// NEED TO GO BACK AND CHANGE CODE FROM .h TO .cpp -- 05/23/23 
-
 
 /****************************************************************/
 /* SourceNode:                                                  */

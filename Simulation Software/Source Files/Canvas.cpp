@@ -8,9 +8,9 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
 {
 	// Canvas
-	AddNode(FromDIP(wxPoint(-150, 0)));
-	AddNode(FromDIP(wxPoint(   0, 0)));
-	AddNode(FromDIP(wxPoint( 150, 0)));
+	//AddNode(FromDIP(wxPoint(-150, 0)));
+	//AddNode(FromDIP(wxPoint(   0, 0)));
+	//AddNode(FromDIP(wxPoint( 150, 0)));
 
 	wxSize size = parent->GetSize();
 	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
@@ -65,21 +65,26 @@ void Canvas::AddNode(const GraphicalNode& obj) {
 }
 
 // Adds a graphical node to the canvas
-void Canvas::AddNode(wxPoint2DDouble center, const std::string& label) {
-	GraphicalNode obj(m_nextID, this, center, label);
+void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label) {
+	
+	// generate the specified graphical node based on the type given
+	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
+	
 	m_nextID++;
 	
-	AddNode(obj);
+	AddNode(*obj);
 
 	Refresh();
 }
 
 // Adds a graphical node to the canvas, name is auto populated with id number
-void Canvas::AddNode(wxPoint2DDouble center) {
-	GraphicalNode obj(m_nextID, this, center);
+void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center) {
+
+	// generate the specified graphical node based on the type given
+	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
 	m_nextID++;
 	
-	AddNode(obj);
+	AddNode(*obj);
 
 	Refresh();
 }
@@ -174,7 +179,7 @@ void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 	auto inverse = GetCameraTransform();
 	inverse.Invert();
 
-	AddNode(inverse.TransformPoint(m_previousMousePosition));
+	//AddNode(inverse.TransformPoint(m_previousMousePosition));
 }
 
 // Called upon user selecting delete node in popup node menu

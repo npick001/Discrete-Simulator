@@ -15,8 +15,8 @@ public:
 	~Canvas();
 
 	// Adds a new graphical node to the canvas at a certain location with a given label
-	void AddNode(wxPoint2DDouble center, const std::string& label);
-	void AddNode(wxPoint2DDouble center);
+	void AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label);
+	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
 private:
 	ElementKey m_nextID;
@@ -69,7 +69,7 @@ private:
 
 	wxAffineMatrix2D GetCameraTransform() const;
 
-	// SelectionInfo contains the graphical node which was selected, if any, and the
+	// Selection contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
 	// Given a click position, returns a SelectionInfo object describing the action
 	Selection Select(wxPoint2DDouble clickPosition);

@@ -86,7 +86,7 @@ void GraphicalEdge::Disconnect() {
 }
 
 // Draws the edge to a wxGraphicsContext
-void GraphicalEdge::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const {
+void GraphicalEdge::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) {
 
 	// Transform from world to window coordinates
 	gc->SetTransform(gc->CreateMatrix(camera));

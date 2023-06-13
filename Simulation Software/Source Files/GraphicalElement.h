@@ -94,7 +94,7 @@ public:
 	inline std::string GetLabel() const { return m_label; }
 	inline void SetLabel(const std::string& new_label) { m_label = new_label; }
 
-	virtual void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const = 0;
+	virtual void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) = 0;
 
 	virtual Selection Select(const wxAffineMatrix2D& camera,
 		wxPoint2DDouble clickPosition) = 0;
