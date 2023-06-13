@@ -6,6 +6,7 @@
 #include "wx/graphics.h"
 #include "wx/wx.h"
 
+#include "GenericNode.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 #include "Action.h"
@@ -14,11 +15,12 @@ class GraphicalEdge;
 class MoveNodeAction;
 
 class GraphicalNode : public GraphicalElement {
-private:
+protected:
 	friend class GraphicalEdge;
 
-	static GraphicalElement::Type ms_type;
+	GenericNode::Type m_type;
 
+	wxColor m_bodyColor;
 	wxPoint2DDouble m_position;
 
 	wxRect2DDouble m_rect;
@@ -35,8 +37,8 @@ private:
 	wxPoint2DDouble GetInputPoint() const;
 
 public:
-	GraphicalElement::Type GetType() const override
-		{ return ms_type; }
+	GenericNode::Type GetType() const
+		{ return m_type; }
 
 	GraphicalNode();
 	GraphicalNode(ElementKey id);
@@ -69,7 +71,6 @@ public:
 
 private:
 	static const wxSize ms_bodySize;
-	static const wxColor ms_bodyColor;
 
 	static const wxSize ms_ioSize;
 	static const wxColor ms_ioColor;
@@ -78,3 +79,21 @@ private:
 };
 
 typedef SpecificElementContainer<GraphicalNode> NodeMap;
+
+class GraphicalSource : public GraphicalNode {
+private:
+	static const wxColor ms_bodyColor;
+
+public:
+	GraphicalSource();
+	GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+};
+
+class GraphicalSink : public GraphicalNode {
+private:
+	static const wxColor ms_bodyColor;
+
+public:
+	GraphicalSink();
+	GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+};

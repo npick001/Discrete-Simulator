@@ -8,14 +8,18 @@
 class GenericNode
 {
 public:
+    enum Type {
+        SOURCE,
+        SINK
+    };
+
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
     void SetImagePath(const wxString& imagePath);
-    inline void SetNodeType(std::string nodetype) { m_nodeType = nodetype; }
     wxString GetName();
     wxString GetImagePath();    
     inline int GetID() { return m_id; }
-    inline std::string GetType() { return m_nodeType; }
+    inline Type GetType() { return m_nodeType; }
 
     // At (x, y) instantiate a node of specified size
     //void InstantiateNode(int x, int y, wxSize size);
@@ -39,6 +43,7 @@ protected:
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
+    Type m_nodeType;
     GenericNode* m_next;
 
     /*
@@ -61,7 +66,6 @@ protected:
 
 private:
     int m_id;
-    std::string m_nodeType;
     static int m_nextID;
     wxString m_name;
     wxString m_imagePath;

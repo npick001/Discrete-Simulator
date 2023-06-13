@@ -153,7 +153,7 @@ public:
 	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
 
 	SinkNode(string name) : GenericNode(name) {
-		SetNodeType("SinkNode");
+		m_nodeType = GenericNode::SINK;
 		sm_entitiesDestroyed = 0;
 		m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
 	};
