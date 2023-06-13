@@ -101,7 +101,7 @@ void SourceNode::ArriveEM() {
 // For finite entity generation
 SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distribution* dist) : GenericNode(name) {
 
-	SetNodeType("SourceNode");
+	m_nodeType = GenericNode::SOURCE;
 
 	m_infiniteGeneration = false;
 	m_numberToGenerate = numGen;
@@ -117,7 +117,7 @@ SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distributio
 // For infinite entity generation => NOT COMPLETED
 SourceNode::SourceNode(std::string name, Entity* entity, Distribution* dist) : GenericNode(name) {
 
-	SetNodeType("SourceNode");
+	m_nodeType = GenericNode::SOURCE;
 
 	m_infiniteGeneration = true;
 	m_numberToGenerate = -1;

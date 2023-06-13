@@ -165,6 +165,7 @@
     <ClInclude Include="Source Files\MainApp.h" />
     <ClInclude Include="Source Files\MainFrame.h" />
     <ClInclude Include="Source Files\Set.h" />
+    <ClInclude Include="Source Files\SimProject.h" />
     <ClInclude Include="Source Files\SimulationExecutive.h" />
     <ClInclude Include="Source Files\SpecificNodes.h" />
     <ClInclude Include="Source Files\Statistics.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\MainApp.cpp" />
     <ClCompile Include="Source Files\MainFrame.cpp" />
+    <ClCompile Include="Source Files\SimProject.cpp" />
     <ClCompile Include="Source Files\SimulationExecutive.cpp" />
     <ClCompile Include="Source Files\SpecificNodes.cpp" />
     <ClCompile Include="Source Files\Statistics.cpp" />

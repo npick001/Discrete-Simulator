@@ -2,12 +2,9 @@
 
 #include "wx/graphics.h"
 
-GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
-
 // Default component dimensions and colors
 // High pixel density displays are accounted for in the GraphicalNode constructor
 const wxSize GraphicalNode::ms_bodySize = wxSize(100, 75);
-const wxColor GraphicalNode::ms_bodyColor = wxColor(64, 64, 64);
 
 const wxSize GraphicalNode::ms_ioSize = wxSize(15, 15);
 const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
@@ -109,7 +106,7 @@ void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 
 	gc->SetPen(*wxTRANSPARENT_PEN);
 
-	gc->SetBrush(wxBrush(ms_bodyColor));
+	gc->SetBrush(wxBrush(m_bodyColor));
 	gc->DrawRectangle(m_rect.m_x, m_rect.m_y, m_rect.m_width, m_rect.m_height);
 
 	gc->SetBrush(wxBrush(ms_ioColor));
@@ -152,4 +149,28 @@ void GraphicalNode::Move(wxPoint2DDouble displacement) {
 
 	for (auto input : m_inputs)
 		input->m_destinationPoint = GetInputPoint();
+}
+
+// GraphicalSource
+
+const wxColor GraphicalSource::ms_bodyColor = wxColor(200, 100, 100);
+
+GraphicalSource::GraphicalSource() : GraphicalNode() {}
+
+GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
+	: GraphicalNode(id, window, center)
+{
+	m_bodyColor = ms_bodyColor;
+}
+
+// GraphicalSink
+
+const wxColor GraphicalSink::ms_bodyColor = wxColor(100, 100, 200);
+
+GraphicalSink::GraphicalSink() : GraphicalNode() {}
+
+GraphicalSink::GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center)
+	: GraphicalNode(id, window, center)
+{
+	m_bodyColor = ms_bodyColor;
 }
