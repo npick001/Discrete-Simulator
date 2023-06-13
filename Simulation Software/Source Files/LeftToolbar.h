@@ -1,17 +1,20 @@
 #pragma once
-#include <wx/wx.h>
 #include <wx/dnd.h>
 #include "GenericNode.h"
 #include "NodeDataObject.h"
+
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif
 
 enum {
     ID_NodeBeginDrag
 };
 
-class SimObjectLibrary : public wxPanel {
+class LeftToolbar : public wxPanel {
 public:
-    SimObjectLibrary(wxWindow* parent);
-    ~SimObjectLibrary();
+    LeftToolbar(wxWindow* parent);
+    ~LeftToolbar();
     void AddNode(GenericNode* node);
 
     inline wxSize GetSize() { return m_size; }

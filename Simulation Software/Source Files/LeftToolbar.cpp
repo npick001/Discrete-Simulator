@@ -1,19 +1,20 @@
-#include "SimObjectLibrary.h"
+#include "LeftToolbar.h"
 
-SimObjectLibrary::SimObjectLibrary(wxWindow * parent) : wxPanel(parent, wxID_ANY) {
+LeftToolbar::LeftToolbar(wxWindow * parent) : wxPanel(parent, wxID_ANY) {
     m_sizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_sizer);
 
-    this->Bind(wxEVT_LEFT_DOWN, &SimObjectLibrary::OnNodeBeginDrag, this, ID_NodeBeginDrag);
+    this->Bind(wxEVT_LEFT_DOWN, &LeftToolbar::OnNodeBeginDrag, this, ID_NodeBeginDrag);
     
     m_size.y = this->GetClientSize().y;
     m_size.x = this->GetMinWidth();
 }
 
-SimObjectLibrary::~SimObjectLibrary() {
+LeftToolbar::~LeftToolbar() {
+    _nodes.~vector();
 }
 
-void SimObjectLibrary::AddNode(GenericNode* node) {
+void LeftToolbar::AddNode(GenericNode* node) {
 
     _nodes.push_back(node);
 
@@ -35,7 +36,7 @@ void SimObjectLibrary::AddNode(GenericNode* node) {
         });
 }
 
-void SimObjectLibrary::OnNodeBeginDrag(wxMouseEvent& event) {
+void LeftToolbar::OnNodeBeginDrag(wxMouseEvent& event) {
 
     // mem leak not here
     int index = event.GetId();
