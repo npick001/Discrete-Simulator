@@ -5,11 +5,10 @@
 #include "GenericNode.h"
 #include "Statistics.h"
 #include "FIFO.h"
-#include "FIFO_Queue.h"
 #include "Set.h"
 
 using namespace std;
-class FIFO_Queue;
+class FIFO;
 
 /***************************************
 
@@ -35,7 +34,6 @@ Naming conventions for this library:
 class SourceNode : public GenericNode
 {
 public:
-
 	void Test() { std::cout << "SOURCE NODE EXISTS" << std::endl; }
 
 	// For finite entity generation
@@ -43,86 +41,25 @@ public:
 
 	// For infinite entity generation => NOT COMPLETED
 	SourceNode(std::string name, Entity* entity, Distribution* dist);
+	//~SourceNode();
+	void NodeProcess(Entity* e) override;
 
-	// THERE ARE MORE THINGS TO DELETE
-	~SourceNode() {
-		std::string header = "SOURCE " + std::to_string(GetID()) + "\n";
-		m_myStats->Report(header);
-	}
+	class SourceStatistics;
 
-	void NodeProcess(Entity* e) override
-	{
-		std::cout << "ERROR -> SourceNode.Arrive() SHOULD NOT BE CALLED";
-	}
+	// commit changes to statistics
+	// should be improved by adding a timer to call this,
+	// investigate more later.
+	void UpdateStatistics();
 
-	void UpdateStatistics() {
-		delete m_myStats;
-		m_myStats = new MyStatistics(sm_entitiesCreated, sm_totalEntitiesCreated);
-	}
-
-	// inherit the statistics wrapper to populate with 
-	class SourceStatistics : public StatisticsWrapper
-	{
-	public:
-		SourceStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
-			m_stats = stats;
-		}
-
-		~SourceStatistics() { delete m_stats; }
-
-		void ReportStats() override {
-			std::string header = "SOURCE " + std::to_string(m_id) + "\n";
-			m_stats->Report(header);
-		}
-	private:
-		Statistics* m_stats;
-	};
-
-	// Override the getStatistics method
-	std::unique_ptr<StatisticsWrapper> GetStatistics() override {
-		UpdateStatistics();
-		return std::make_unique<SourceStatistics>(m_myStats, GetID());
-	}
+	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
 
 protected:
-
-	// Get custom statistics for source
-	class MyStatistics : public Statistics{
-
-	public:
-		MyStatistics() {
-			m_sm_entitiesCreated = 0;
-			m_sm_totalEntitiesCreated = 0;
-		}
-
-		MyStatistics(int entitiesCreated, int totalEntitiesCreated) {
-			m_sm_entitiesCreated = entitiesCreated;
-			m_sm_totalEntitiesCreated = totalEntitiesCreated;
-		}
-
-		// write statistics to a file
-		void Report(std::string header) override {
-
-			auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
-
-			// final parameter of write file is 1 for reset, 0 for append to current file
-			// Generate the header
-			WriteFile(outputFile, header, 0);
-
-			// to_string the data
-			std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesCreated) +
-				"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesCreated);
-
-			// write data to the file
-			WriteFile(outputFile, data, 0);
-		}
-
-	private:
-		int m_sm_entitiesCreated;
-		int m_sm_totalEntitiesCreated;
-	};
+	class MyStatistics;
 
 private:
+	class ArriveEA;
+	void ArriveEM();
+
 	// Generation distribution
 	Distribution* m_arrivalDistribution;
 
@@ -131,12 +68,8 @@ private:
 	int m_numberToGenerate;
 	bool m_infiniteGeneration;
 	
-	// Source Events
-	class ArriveEA;
-	void ArriveEM();
-
 	// Statistics handling
-	Statistics* m_myStats;
+	MyStatistics* m_myStats;
 	int sm_entitiesCreated;
 	static int sm_totalEntitiesCreated;
 };
@@ -149,84 +82,22 @@ private:
 class SinkNode : public GenericNode
 {
 public:
-	
 	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
 
-	SinkNode(string name) : GenericNode(name) {
-		SetNodeType("SinkNode");
-		sm_entitiesDestroyed = 0;
-		m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
-	};
-
-	~SinkNode() {}
-
+	SinkNode(string name);
+	//~SinkNode() {}
 	void NodeProcess(Entity* e);
 
-	void UpdateStatistics() {
-		delete m_myStats;
-		m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
-	}
-
 	// inherit the statistics wrapper to populate 
-	class SinkStatistics : public StatisticsWrapper
-	{
-	public:
-		SinkStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
-			m_stats = stats;
-		}
-		~SinkStatistics() { delete m_stats; }
-
-		void ReportStats() override {
-			std::string header = "SINK " + std::to_string(m_id) + "\n";
-			m_stats->Report(header);
-		}
-	private:
-		Statistics* m_stats;
-	};
+	class SinkStatistics;
+	void UpdateStatistics();
 
 	// Override the GetStatistics method
-	std::unique_ptr<StatisticsWrapper> GetStatistics() override {
-		UpdateStatistics();
-		return std::make_unique<SinkStatistics>(m_myStats, GetID());
-	}
+	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
 
 protected:
+	class MyStatistics;
 
-	// Get custom statistics for sink
-	class MyStatistics : public Statistics {
-
-	public:
-		MyStatistics() {
-			m_sm_entitiesDestroyed = 0;
-			m_sm_totalEntitiesDestroyed = 0;
-		}
-
-		MyStatistics(int entitiesDestroyed, int totalEntitiesDestroyed) {
-			m_sm_entitiesDestroyed = entitiesDestroyed;
-			m_sm_totalEntitiesDestroyed = totalEntitiesDestroyed;
-		}
-
-		// write statistics to a file
-		void Report(std::string header) override {
-
-			auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
-
-			// final parameter of write file is 1 for reset, 0 for append to current file
-			// Generate the header
-			WriteFile(outputFile, header, 0);
-
-			// to_string the data
-			std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesDestroyed) +
-				"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesDestroyed);
-
-			// write data to the file
-			WriteFile(outputFile, data, 0);
-		}
-
-	private:
-		int m_sm_entitiesDestroyed;
-		int m_sm_totalEntitiesDestroyed;
-	};
 private:
 
 	// Statistics handling
@@ -234,61 +105,111 @@ private:
 	int sm_entitiesDestroyed;
 	static int sm_totalEntitiesDestroyed;
 };
-//
-///****************************************************************/
-///* SSSQ:                                                        */
-///* defines a single server single queue object                  */
-///* provides basic server functionality							*/
-///* the server object provides statistics and queue statistics   */
-///****************************************************************/
-//class SSSQ : public GenericNode {
-//public:
-//	SSSQ(std::string name, Distribution* serviceTime);
-//	void NodeProcess(Entity* e);
-//private:
-//
-//	class StartProcessingEA;
-//	void StartProcessingEM();
-//	class EndProcessingEA;
-//	void EndProcessingEM(Entity* e);
-//
-//	enum ServerState { busy, idle };
-//	ServerState m_state;
-//
-//	Distribution* m_serviceTime;
-//
-//	//static FIFO<Entity>* m_queue;
-//	FIFO_Queue* m_queue;
-//};
-//
-///****************************************************************/
-///* ServerNQueue:                                                */
-///* defines a single server having N resources and M queues.	    */
-///* provides advanced server functionality						*/
-///* the server object provides statistics and queue statistics   */
-///****************************************************************/
-//class ServerNQueue : public GenericNode {
-//public:
-//	ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime);
-//	void NodeProcess(Entity* e);
-//
-//	//void ReportStatistics();
-//private:
-//
-//	class StartProcessingEA;
-//	void StartProcessingEM();
-//	class EndProcessingEA;
-//	void EndProcessingEM(Entity* e);
-//
-//	int m_remainingResources;
-//
-//	Distribution* m_serviceTime;
-//
-//	//static FIFO<Entity>* m_queue;
-//	FIFO_Queue* m_queue;
-//};
-//
-//
+
+/****************************************************************/
+/* SSSQ:                                                        */
+/* defines a single server single queue object                  */
+/* provides basic server functionality							*/
+/* the server object provides statistics and queue statistics   */
+/****************************************************************/
+class SSSQ : public GenericNode {
+public:
+	void Test() { std::cout << "SSSQ NODE EXISTS" << std::endl; }
+
+	SSSQ(std::string name, Distribution* serviceTime);
+	~SSSQ();
+	void NodeProcess(Entity* e);
+	void UpdateStatistics();
+
+	class SSSQStatistics;
+
+	// Override the GetStatistics method
+	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
+
+protected:
+	class MyStatistics;
+
+private:
+	class StartProcessingEA;
+	void StartProcessingEM();
+	class EndProcessingEA;
+	void EndProcessingEM(Entity* e);
+
+	Distribution* m_serviceTime;
+
+	enum ServerState { busy, idle };
+	ServerState m_state;
+
+	// for scheduled utilization
+	std::vector<double> sm_states;
+	std::vector<Time> sm_stateChangeTimes;
+
+	FIFO* m_queue;
+
+	// Statistics handling
+	Statistics* m_myStats;
+	int sm_processed;
+	static int sm_totalProcessed;
+	double sm_waitTime; // sum of entity queue times at this server
+	static double sm_totalWaitTime; // sum of entity queue times at all servers
+	double sm_totalServiceTime;
+	double sm_idleTime;
+	static double sm_totalIdleTime;
+	double sm_utilization;
+};
+
+/****************************************************************/
+/* ServerNQueue:                                                */
+/* defines a single server having N resources and M queues.	    */
+/* provides advanced server functionality						*/
+/* the server object provides statistics and queue statistics   */
+/****************************************************************/
+class ServerNQueue : public GenericNode {
+public:
+	ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime);
+	~ServerNQueue();
+	void NodeProcess(Entity* e);
+
+	class ServerNQueueStatistics;
+	void UpdateStatistics();
+
+	// Override the GetStatistics method
+	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
+
+protected:
+	class MyStatistics;
+
+private:
+	class StartProcessingEA;
+	class EndProcessingEA;
+	void StartProcessingEM();
+	void EndProcessingEM(Entity* e);
+
+	int m_maxResources;
+	int m_remainingResources;
+
+	// for scheduled utilization
+	std::vector<double> sm_states;
+	std::vector<Time> sm_stateChangeTimes;
+
+	Distribution* m_serviceTime;
+
+	//static FIFO<Entity>* m_queue;
+	std::vector<FIFO*> m_queues;
+
+	// Statistics handling
+	Statistics* m_myStats;
+	int sm_processed;
+	static int sm_totalProcessed;
+	double sm_waitTime; // sum of entity queue times at this server
+	static double sm_totalWaitTime; // sum of entity queue times at all servers
+	double sm_totalServiceTime;
+	double sm_idleTime;
+	static double sm_totalIdleTime;
+	double sm_utilization;
+};
+
+
 ///****************************************************************/
 ///* SystemOfSSSQs:                                               */
 ///* defines a system consisting of n SSSQs                       */

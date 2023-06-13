@@ -1,8 +1,25 @@
+Simulation Statistics
+
+Simulation End Time: 206.735706
+
 SOURCE 0
 
-	- Entities Created: 11
-	- Total Entities Created: 11
-SINK 1
+	- Entities Created: 100
+	- Total Entities Created: 100
 
-	- Entities Created: 11
-	- Total Entities Created: 11
+SINK 2
+
+	- Entities Created: 100
+	- Total Entities Created: 100
+
+SSSQ 1
+
+	- Entities Processed: 100
+	- Time Waiting: 5.059435
+	- Time in Service: 143.209044
+	- Time Idle: 63.526662
+	- Percent Utilization: 0.692716
+	- Average Queue Wait Time: 0.050594
+	- Average Queue Size: 0.000000
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000

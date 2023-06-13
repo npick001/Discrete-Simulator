@@ -1,8 +1,11 @@
+#include <stdlib.h>
+#include <crtdbg.h>
+#include <cstdlib>
 #include <vector>
 
+//#include "stats.hpp"
 #include "SimulationExecutive.h"
 #include "Distribution.h"
-//#include "MyTask.h"
 #include "SpecificNodes.h"
 #include "Statistics.h"
 
@@ -147,37 +150,102 @@ void NodeTesting() {
 
 int main() {
 
-	/*StatisticsObject statobj(50);
-	statobj.StatTesting();*/
+	//StatisticsObject statobj(10);
+	//statobj.StatTesting();
+	//statobj.GammaFunction(1);
+
+	/*Exponential* exponential = new Exponential(3);
+	std::cout << "\nEXPONENTIAL DISTRIBUTION (5)\n";*/
+
+	//Normal* norm = new Normal(5, 1);
+	//std::cout << "\nNORMAL DISTRIBUTION (5, 1)\n";
+
+	/*statobj.CreateDummyData(2500, exponential);
+	Distribution* bestfit = statobj.GenerateBestFitDistribution(".\\Output Files\\MLEDistributionData.txt");*/
+
+	/*std::vector<double> data = {28.0, 18.0, 19.0, 25.0, 26.0,
+								16.0, 21.0, 16.0, 18.0, 13.0};
+	std::vector<double> probs = {20.0, 20.0, 20.0, 20.0, 20.0,
+								 20.0, 20.0, 20.0, 20.0, 20.0};*/
+	//double critApprox = statobj.ChiSquareTest(data, probs);
+
+	//std::vector<double> x = { 1.8, 0.7, 4.2 };
+	//stats::pchisq(x, 4, false);
+
+	//std::vector<double> RKpoints = statobj.RungeKutta4(&PDF_Chi_Square, 0.001, 10.0, (10.0 / 0.1));
+	//std::vector<double> CS_Dist = statobj.Chi_Square_Distribution(10, 1000);
+	system("Pause");
+}
 
 	//NodeTesting();
 
-	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+	//std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 
-	Distribution* arrivalRate = new Triangular(1, 2, 3);
-	SourceNode* src = new SourceNode("Source", 10, new MyEntity(GetSimulationTime()), arrivalRate);
-	SinkNode* sink = new SinkNode("Sink");
-	src->SetNext(sink);
+	//srand(time(NULL));
 
-	RunSimulation();
-	
-	std::cout << "\n--------------------------------------------------------\n"
-		<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
+	//Distribution* arrivalRate = new Triangular(1, 2, 3);
+	//Distribution* serviceTime = new Triangular(0.75, 1.5, 2);
 
-	stats.push_back(src->GetStatistics());
-	stats.push_back(sink->GetStatistics());
+	//SourceNode* src = new SourceNode("Source", 100, new MyEntity(GetSimulationTime()), arrivalRate);
+	//SSSQ* server = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server1 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server2 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server3 = new SSSQ("SSSQ", serviceTime);
+	////SSSQ* server4 = new SSSQ("SSSQ", serviceTime);
+	//SinkNode* sink = new SinkNode("Sink");
+	////src->SetNext(server);
+	////server->SetNext(server1);
+	////server1->SetNext(server2);
+	////server2->SetNext(server3);
+	////server3->SetNext(server4);
+	////server4->SetNext(sink);
 
-	for (int i = 0; i < stats.size(); i++) {
+	//src->SetNext(server);
+	//server->SetNext(sink);
 
-		stats[i].get()->ReportStats();
-	
-		std::cout << "(o)(o)" << std::endl;
-	}
+	//RunSimulation();
+	//
+	//std::cout << "\n--------------------------------------------------------\n"
+	//	<< "\t\tSIMULATION IS OVER." << "\n--------------------------------------------------------\n";
 
-	src->Test();
-	sink->Test();
+	//src->Test();
+	//server->Test();
+	//sink->Test();
 
-	//src->GetStatistics().get()->ReportStats();
+	//stats.push_back(src->GetStatistics());
+	//stats.push_back(sink->GetStatistics());
+	//stats.push_back(server->GetStatistics());
+	///*stats.push_back(server1->GetStatistics());
+	//stats.push_back(server2->GetStatistics());
+	//stats.push_back(server3->GetStatistics());
+	//stats.push_back(server4->GetStatistics());*/
 
-	return 0;
-}
+	//int size = stats.size();
+	//std::cout << "Stats container size: " << stats.size() << std::endl;
+
+	//// Which file to reset and write to
+	//auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
+
+	//// final parameter of write file is 1 for reset, 0 for append to current file
+	//// Reset the file data before new stats are written
+	//WriteFile(outputFile, "Simulation Statistics\n", 1);
+	//WriteFile(outputFile, "Simulation End Time: " + std::to_string(GetSimulationTime()) + '\n', 0);
+
+	//for (int i = 0; i < size; i++) {
+
+	//	stats[i].get()->ReportStats();
+	//	//stats[i].get()->DeleteStats();
+	//	//std::cout << "(o)(o)" << std::endl;
+	//}
+
+	//_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	//_CrtDumpMemoryLeaks();
+
+	////delete arrivalRate;
+	////delete serviceTime;
+	//delete src;
+	//delete server;
+	//delete sink;
+
+//	system("Pause");
+//}

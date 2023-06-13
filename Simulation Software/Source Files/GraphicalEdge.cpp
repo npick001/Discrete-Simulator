@@ -1,7 +1,5 @@
 #include "GraphicalEdge.h"
 
-#include "Canvas.h"
-
 GraphicalElement::Type GraphicalEdge::ms_type = GraphicalElement::EDGE;
 
 const wxColor GraphicalEdge::ms_labelColor = wxColor(64, 64, 64);
@@ -53,7 +51,7 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 	
 	m_source = source;
 	m_sourcePoint = source->GetOutputPoint();
-	m_source->m_outputEdge = this;
+	m_source->m_outputs.push_back(this);
 
 	if (m_destination)
 		return;
@@ -67,7 +65,7 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 	
 	m_destination = destination;
 	m_destinationPoint = destination->GetInputPoint();
-	m_destination->m_inputEdge = this;
+	m_destination->m_inputs.push_back(this);
 
 	if (m_source)
 		return;
@@ -77,12 +75,12 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 
 void GraphicalEdge::Disconnect() {
 	if (m_source) {
-		m_source->m_outputEdge = nullptr;
+		m_source->m_outputs.remove(this);
 		m_source = nullptr;
 	}
 
 	if (m_destination) {
-		m_destination->m_inputEdge = nullptr;
+		m_destination->m_inputs.remove(this);
 		m_destination = nullptr;
 	}
 }

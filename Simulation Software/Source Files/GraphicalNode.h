@@ -1,15 +1,17 @@
 #pragma once
 
+#include <list>
 #include <string>
 
-#include "wx/affinematrix2d.h"
 #include "wx/graphics.h"
 #include "wx/wx.h"
 
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
+#include "Action.h"
 
 class GraphicalEdge;
+class MoveNodeAction;
 
 class GraphicalNode : public GraphicalElement {
 private:
@@ -17,15 +19,20 @@ private:
 
 	static GraphicalElement::Type ms_type;
 
-	wxAffineMatrix2D m_transform;
+	wxPoint2DDouble m_position;
 
 	wxRect2DDouble m_rect;
 
 	wxRect2DDouble m_inputRect;
 	wxRect2DDouble m_outputRect;
 
-	GraphicalEdge* m_inputEdge;
-	GraphicalEdge* m_outputEdge;
+	std::list<GraphicalEdge*> m_inputs;
+	std::list<GraphicalEdge*> m_outputs;
+
+	// Returns the points at which an edge should be drawn between
+	// Points are in world coordinates
+	wxPoint2DDouble GetOutputPoint() const;
+	wxPoint2DDouble GetInputPoint() const;
 
 public:
 	GraphicalElement::Type GetType() const override
@@ -42,23 +49,16 @@ public:
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
 
-	// Return a copy of m_transform because outside code should not
-	// be able to change this variable directly
-	inline const wxAffineMatrix2D& GetTransform() const { return m_transform; }
+	inline wxPoint2DDouble GetPosition() { return m_position; }
+	inline void SetPosition(const wxPoint2DDouble& position) { m_position = position; }
+	wxAffineMatrix2D GetTransform() const;
 
-	// Returns the points at which an edge should be drawn between
-	// Points are in world coordinates
-	wxPoint2DDouble GetOutputPoint() const;
-	wxPoint2DDouble GetInputPoint() const;
+	// Check connection status before using
+	inline std::list<GraphicalEdge*> GetOutputs() const { return m_outputs; }
+	inline std::list<GraphicalEdge*> GetInputs() const { return m_inputs; }
 
-	inline GraphicalEdge* const& GetOutputEdge() { return m_outputEdge; }
-	inline GraphicalEdge* const& GetInputEdge() { return m_inputEdge; }
-
-	inline bool isOutputConnected() const { return m_outputEdge != nullptr; }
-	inline bool isInputConnected() const { return m_inputEdge != nullptr; }
-
-	void DisconnectOutput();
-	void DisconnectInput();
+	void DisconnectOutputs();
+	void DisconnectInputs();
 
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
 
@@ -77,4 +77,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
-typedef SpecificElementContainer<GraphicalNode> NodeContainer;
+typedef SpecificElementContainer<GraphicalNode> NodeMap;

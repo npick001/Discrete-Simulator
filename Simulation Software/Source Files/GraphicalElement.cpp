@@ -31,8 +31,6 @@ GraphicalElement& GraphicalElement::operator=(const GraphicalElement& other) {
 	return *this;
 }
 
-GraphicalElement::~GraphicalElement() {}
-
 // Element Container
 
-ElementContainer::ElementContainer() : m_elements() {}
+ElementList::ElementList() : m_elements() {}

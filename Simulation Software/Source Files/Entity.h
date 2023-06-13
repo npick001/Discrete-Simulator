@@ -3,7 +3,7 @@
 
 #include "SimulationExecutive.h"
 //#include "FIFO.h"
-#include "FIFO_Queue.h"
+#include "FIFO.h"
 
 enum EntityType { entity, transport, batch };
 
@@ -11,6 +11,7 @@ class Entity
 {
 public:
 	Entity(Time creationTime);
+	~Entity() {};
 	virtual Entity *New() = 0;
 
 	// Getters
@@ -21,6 +22,7 @@ public:
 	// Setters
 	void SetSource(int id);
 	void SetType(EntityType myType);
+	void SetDeletionTime(Time timeNow);
 	
 	// Statistics time stamping functions
 	void EnterQueue(Time timeNow);
@@ -48,6 +50,7 @@ class MyEntity : public Entity
 {
 public:
 	MyEntity(Time creationTime) : Entity(creationTime) {};
+	~MyEntity() {};
 
 	Entity* New() override { return new MyEntity(GetSimulationTime()); }
 };

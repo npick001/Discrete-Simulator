@@ -1,9 +1,6 @@
 #include "GraphicalNode.h"
 
 #include "wx/graphics.h"
-#include "wx/dcbuffer.h"
-
-#include "Canvas.h"
 
 GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
 
@@ -17,14 +14,10 @@ const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
 
 const wxColor GraphicalNode::ms_labelColor = *wxWHITE;
 
-GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputEdge(), m_outputEdge() {}
+GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() {}
 
-GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputEdge(), m_outputEdge() {
-
+GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs() {
 	m_label = "Node " + std::to_string(m_id);
-
-	m_inputEdge = nullptr;
-	m_outputEdge = nullptr;
 }
 
 GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center)
@@ -34,7 +27,7 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	wxSize ioSize = parent->FromDIP(ms_ioSize);
 
 	m_rect = wxRect2DDouble(-bodySize.GetWidth() / 2, -bodySize.GetHeight() / 2, bodySize.GetWidth(), bodySize.GetHeight());
-	m_transform.Translate(center.m_x, center.m_y);
+	m_position = center;
 
 	m_inputRect = wxRect2DDouble(-m_rect.m_width / 2 - ioSize.GetWidth() / 2, -ioSize.GetHeight() / 2, ioSize.GetWidth(), ioSize.GetHeight());
 	m_outputRect = wxRect2DDouble(m_rect.m_width / 2 - ioSize.GetWidth() / 2, -ioSize.GetHeight() / 2, ioSize.GetWidth(), ioSize.GetHeight());
@@ -60,16 +53,22 @@ GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
 	m_outputRect = other.m_outputRect;
 	m_inputRect = other.m_inputRect;
 
-	m_transform = other.m_transform;
-	m_outputEdge = other.m_outputEdge;
-	m_inputEdge = other.m_inputEdge;
+	m_position = other.m_position;
+	m_outputs = other.m_outputs;
+	m_inputs = other.m_inputs;
 
 	return (*this);
 }
 
 GraphicalNode::~GraphicalNode() {
-	DisconnectInput();
-	DisconnectOutput();
+	DisconnectInputs();
+	DisconnectOutputs();
+}
+
+wxAffineMatrix2D GraphicalNode::GetTransform() const {
+	wxAffineMatrix2D transform;
+	transform.Translate(m_position.m_x, m_position.m_y);
+	return transform;
 }
 
 wxPoint2DDouble GraphicalNode::GetOutputPoint() const {
@@ -78,7 +77,7 @@ wxPoint2DDouble GraphicalNode::GetOutputPoint() const {
 		m_outputRect.m_y + m_outputRect.m_height / 2
 	};
 
-	return m_transform.TransformPoint(outputPoint);
+	return GetTransform().TransformPoint(outputPoint);
 }
 
 wxPoint2DDouble GraphicalNode::GetInputPoint() const {
@@ -87,17 +86,17 @@ wxPoint2DDouble GraphicalNode::GetInputPoint() const {
 		m_inputRect.m_y + m_inputRect.m_height / 2
 	};
 
-	return m_transform.TransformPoint(inputPoint);
+	return GetTransform().TransformPoint(inputPoint);
 }
 
-void GraphicalNode::DisconnectOutput() {
-	if (m_outputEdge)
-		m_outputEdge->Disconnect();
+void GraphicalNode::DisconnectOutputs() {
+	for (auto output : m_outputs)
+		output->Disconnect();
 }
 
-void GraphicalNode::DisconnectInput() {
-	if (m_inputEdge)
-		m_inputEdge->Disconnect();
+void GraphicalNode::DisconnectInputs() {
+	for (auto input : m_inputs)
+		input->Disconnect();
 }
 
 // Draws the node to a wxGraphicsContext
@@ -105,10 +104,11 @@ void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 
 	// Transform coordinates according to camera and node transforms
 	wxAffineMatrix2D localToWindow = camera;
-	localToWindow.Concat(m_transform);
+	localToWindow.Concat(GetTransform());
 	gc->SetTransform(gc->CreateMatrix(localToWindow));
 
-	// Draw component, input, output, and text
+	gc->SetPen(*wxTRANSPARENT_PEN);
+
 	gc->SetBrush(wxBrush(ms_bodyColor));
 	gc->DrawRectangle(m_rect.m_x, m_rect.m_y, m_rect.m_width, m_rect.m_height);
 
@@ -129,7 +129,7 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 
 	// Transform click position from window coordinates to node's local coordinates
 	auto windowToLocal = camera;
-	windowToLocal.Concat(m_transform);
+	windowToLocal.Concat(GetTransform());
 	windowToLocal.Invert();
 	clickPosition = windowToLocal.TransformPoint(clickPosition);
 
@@ -145,11 +145,11 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 }
 
 void GraphicalNode::Move(wxPoint2DDouble displacement) {
-	m_transform.Translate(displacement.m_x, displacement.m_y);
+	m_position += displacement;
 	
-	if (m_inputEdge)
-		m_inputEdge->m_destinationPoint = GetInputPoint();
+	for (auto output : m_outputs)
+		output->m_sourcePoint = GetOutputPoint();
 
-	if (m_outputEdge)
-		m_outputEdge->m_sourcePoint = GetOutputPoint();
+	for (auto input : m_inputs)
+		input->m_destinationPoint = GetInputPoint();
 }

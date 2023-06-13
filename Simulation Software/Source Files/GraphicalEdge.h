@@ -1,7 +1,6 @@
 #pragma once
 
-#include "wx/dcbuffer.h"
-#include "wx/wx.h"
+#include "wx/graphics.h"
 
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
@@ -63,4 +62,4 @@ private:
 	static const wxColor ms_labelColor;
 };
 
-typedef SpecificElementContainer<GraphicalEdge> EdgeContainer;
+typedef SpecificElementContainer<GraphicalEdge> EdgeMap;

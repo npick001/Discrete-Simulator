@@ -1,68 +1,43 @@
-#ifndef FIFO_H
-#define FIFO_H
+#pragma once
+
+#include "SimulationExecutive.h"
 
 /*
-FIFO - First In/First Out
-Defined using a template so that can be used to hold anything.  Type supplied when object is instantiated.
-Template structure requires implementation to be provided in the header.
+FIFO Queue - First In/First Out
+This class only handles entities for a FIFO Queue scheme.
+This data structure provides built in functions for statistics collection. 
 */
-template <class T>
+class Entity;
 class FIFO
 {
 public:
-	FIFO()
-	{
-		_head = 0;
-		_tail = 0;
-		_size = 0;
-	}
+	FIFO();
 
-	void AddEntity(T *t)
-	{
-		Node *node = new Node(t);
-		if (_head == 0) {	//empty list
-			_head = _tail = node;
-		}
-		else {
-			_tail = _tail->next = node;
-		}
-		_size++;
-	}
+	void AddEntity(Entity* e);
+	Entity* GetEntity();
+	Entity* ViewEntity();
 
-	T *GetEntity()
-	{
-		if (_head == 0) return 0;
-		else {
-			Node *n = _head;
-			T *t = _head->t;
-			_head = _head->next;
-//			delete n;
-			_size--;
-			return t;
-		}
-	}
+	double GetAverageWaitTime();
+	double GetAverageQueueSize();
+	double GetMinimumQueueSize();
+	double GetMaximumQueueSize();
 
-	T *ViewEntity()
-	{
-		return(_head->t);
-	}
-
-	bool IsEmpty() { return (_size == 0); }
-	int GetSize() { return _size; }
+	bool IsEmpty() { return (m_size == 0); }
+	int GetSize() { return m_size; }
 private:
 	struct Node
 	{
-		Node(T *t) {
-			this->t = t;
+		Node(Entity* e) {
+			m_entity = e;
 			next = 0;
 		}
-		T *t;
+		Entity* m_entity;
 		Node *next;
 	};
 
-	Node *_head;
-	Node *_tail;
-	int _size;
+	Node *m_head;
+	Node *m_tail;
+	int m_size, m_queueSizeMax, m_queueSizeMin, m_count, m_queueSizeSum;
+	double m_total;
+	Time m_cdfWaits;
 };
-
-#endif
