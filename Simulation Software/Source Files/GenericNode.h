@@ -8,6 +8,11 @@
 class GenericNode
 {
 public:
+    enum Type {
+        SOURCE,
+        SINK
+    };
+
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
     void SetImagePath(const std::string& imagePath);

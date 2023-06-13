@@ -106,4 +106,3 @@ private:
 	// Key events for handling shortcuts
 	void OnCharHook(wxKeyEvent& event);
 };
-

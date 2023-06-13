@@ -6,6 +6,7 @@
 #include "wx/graphics.h"
 #include "wx/wx.h"
 
+#include "GenericNode.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 #include "Action.h"
@@ -14,32 +15,12 @@ class GraphicalEdge;
 class MoveNodeAction;
 
 class GraphicalNode : public GraphicalElement {
-<<<<<<< Updated upstream
-private:
-	friend class GraphicalEdge;
-
-	static GraphicalElement::Type ms_type;
-
-	wxPoint2DDouble m_position;
-
-	wxRect2DDouble m_rect;
-
-	wxRect2DDouble m_inputRect;
-	wxRect2DDouble m_outputRect;
-
-	std::list<GraphicalEdge*> m_inputs;
-	std::list<GraphicalEdge*> m_outputs;
-
-	// Returns the points at which an edge should be drawn between
-	// Points are in world coordinates
-	wxPoint2DDouble GetOutputPoint() const;
-	wxPoint2DDouble GetInputPoint() const;
-
-=======
->>>>>>> Stashed changes
 public:
 	GraphicalElement::Type GetType() const override
-		{ return ms_type; }
+		{ return m_type; }
+
+	GenericNode::Type GetNodeType() const
+		{ return m_nodeType; }
 
 	GraphicalNode();
 	GraphicalNode(ElementKey id);
@@ -77,7 +58,8 @@ public:
 
 protected:
 	friend class GraphicalEdge;
-	GenericNode::Type m_type;
+	GraphicalElement::Type m_type;
+	GenericNode::Type m_nodeType;
 
 	// graphical characteristics
 	wxColor m_bodyColor;
@@ -100,18 +82,7 @@ protected:
 	wxPoint2DDouble GetInputPoint() const;
 
 private:
-<<<<<<< Updated upstream
-	static const wxSize ms_bodySize;
-	static const wxColor ms_bodyColor;
 
-	static const wxSize ms_ioSize;
-	static const wxColor ms_ioColor;
-
-	static const wxColor ms_labelColor;
-};
-
-typedef SpecificElementContainer<GraphicalNode> NodeMap;
-=======
 };
 
 typedef SpecificElementContainer<GraphicalNode> NodeMap;
@@ -180,4 +151,3 @@ public:
 private:
 
 };
->>>>>>> Stashed changes

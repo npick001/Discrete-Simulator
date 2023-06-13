@@ -2,21 +2,6 @@
 
 #include "wx/graphics.h"
 
-<<<<<<< Updated upstream
-GraphicalElement::Type GraphicalNode::ms_type = GraphicalElement::NODE;
-
-// Default component dimensions and colors
-// High pixel density displays are accounted for in the GraphicalNode constructor
-const wxSize GraphicalNode::ms_bodySize = wxSize(100, 75);
-const wxColor GraphicalNode::ms_bodyColor = wxColor(64, 64, 64);
-
-const wxSize GraphicalNode::ms_ioSize = wxSize(15, 15);
-const wxColor GraphicalNode::ms_ioColor = wxColor(128, 128, 128);
-
-const wxColor GraphicalNode::ms_labelColor = *wxWHITE;
-
-=======
->>>>>>> Stashed changes
 GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() {}
 
 GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs() {
@@ -137,14 +122,9 @@ void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) 
 
 	//gc->SetPen(*wxTRANSPARENT_PEN);
 
-<<<<<<< Updated upstream
-	gc->SetBrush(wxBrush(ms_bodyColor));
-	gc->DrawRectangle(m_rect.m_x, m_rect.m_y, m_rect.m_width, m_rect.m_height);
-=======
 	//// draw the rectangle 
 	//gc->SetBrush(wxBrush(m_bodyColor));
 	//gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
->>>>>>> Stashed changes
 
 	//// draw input and output rectangles
 	//gc->SetBrush(wxBrush(m_ioColor));
@@ -187,9 +167,6 @@ void GraphicalNode::Move(wxPoint2DDouble displacement) {
 
 	for (auto input : m_inputs)
 		input->m_destinationPoint = GetInputPoint();
-<<<<<<< Updated upstream
-}
-=======
 }
 
 void GraphicalNode::SetBodyColor(const wxColor& color)
@@ -324,4 +301,3 @@ GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDoubl
 void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
 {
 }
->>>>>>> Stashed changes
