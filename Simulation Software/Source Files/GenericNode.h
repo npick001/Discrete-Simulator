@@ -1,6 +1,6 @@
 #pragma once
-#include <wx/wx.h>
-#include <wx/graphics.h>
+//#include <wx/wx.h>
+//#include <wx/graphics.h>
 
 #include "Directives.h"
 #include "Entity.h"
@@ -13,16 +13,17 @@ public:
         SINK
     };
 
+    // WORK ON MAKING THESE GETTERS / SETTERS MORE COHESIVE
+    // EITHER MAKE ALL INLINE OR NONE
+    // PREFERABLY NONE
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
-    void SetImagePath(const wxString& imagePath);
-    wxString GetName();
-    wxString GetImagePath();    
+    void SetImagePath(const std::string& imagePath);
+    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
+    std::string GetName();
+    std::string GetImagePath();
     inline int GetID() { return m_id; }
     inline Type GetType() { return m_nodeType; }
-
-    // At (x, y) instantiate a node of specified size
-    //void InstantiateNode(int x, int y, wxSize size);
 
     void Arrive(Entity* entity);
 
@@ -30,6 +31,7 @@ public:
     public:
         StatisticsWrapper(int id) : m_id(id) {}
         virtual void ReportStats() = 0;
+        virtual void DeleteStats() = 0;
 
     protected:
         int m_id;
@@ -39,7 +41,7 @@ public:
     virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
-    GenericNode(const wxString& name);
+    GenericNode(const std::string& name);
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
@@ -56,7 +58,6 @@ protected:
     // Node process handler
     virtual void NodeProcess(Entity* entity) = 0;
 
-
     class Statistics {
     public: 
         virtual void Report(std::string header) = 0;
@@ -67,29 +68,8 @@ protected:
 private:
     int m_id;
     static int m_nextID;
-    wxString m_name;
-    wxString m_imagePath;
-    wxPoint m_position;
-    wxSize m_size;
+    std::string m_name;
+    std::string m_imagePath;
 
     GenericNode* m_prev;
-    //GraphicalNode* m_graphics;
 };
-
-class Connection : public GenericNode
-{
-public:
-    Connection(GenericNode* startBlock, GenericNode* endBlock)
-        : GenericNode("Connection") {};
-
-   // void Draw(wxGraphicsContext* gc) override {
-   ///*     wxPoint startPoint = _startNode->GetPosition() + wxSize(_startNode->GetSize().x, _startNode->GetSize().y / 2);
-   //     wxPoint endPoint = _endNode->GetPosition() + wxSize(0, _endNode->GetSize().y / 2);
-
-   //     gc->SetPen(wxPen(*wxBLACK, 2));
-   //     gc->StrokeLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-   //*/ }
-
-private:
-};
-
