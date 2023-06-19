@@ -50,6 +50,10 @@ private:
 	NodeMap m_nodes;
 	EdgeMap m_edges;
 
+	/*std::vector<GraphicalNode> m_nodes;
+	std::vector<GraphicalEdge> m_edges;*/
+
+
 	// History of actions
 	History m_history;
 	MoveNodeAction m_moveNodeAction;
@@ -74,7 +78,7 @@ private:
 	// Given a click position, returns a SelectionInfo object describing the action
 	Selection Select(wxPoint2DDouble clickPosition);
 
-	void AddNode(const GraphicalNode& obj);
+	void AddNode(GraphicalNode* obj);
 	void DeleteNode();
 
 	// Displacement is based on clickPosition and m_previousPosition which is

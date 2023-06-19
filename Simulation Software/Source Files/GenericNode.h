@@ -10,6 +10,7 @@ class GenericNode
 public:
     enum Type {
         SOURCE,
+        SERVER,
         SINK
     };
 

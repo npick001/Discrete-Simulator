@@ -141,10 +141,10 @@ public:
 	inline bool empty()
 		{ return m_elements.empty(); }
 
-	inline void push_back(GraphicalElement* const& element)
+	inline void push_back(GraphicalElement* element)
 		{ m_elements.push_back(element); }
 
-	inline void remove(GraphicalElement* const& element)
+	inline void remove(GraphicalElement* element)
 		{ m_elements.remove(element); }
 
 	template <class _Pr>
@@ -157,7 +157,7 @@ public:
 template <typename T>
 class SpecificElementContainer {
 private:
-	std::unordered_map<ElementKey, T> m_elements;
+	std::unordered_map<ElementKey, T*> m_elements;
 	ElementList* m_link;
 	T* m_recent;
 
@@ -165,16 +165,16 @@ public:
 	SpecificElementContainer(ElementList* const& link)
 		: m_link(link), m_recent(nullptr) {}
 
-	inline void add_new(const T& element) {
-		m_elements[element.GetID()] = element;
-		m_recent = &m_elements[element.GetID()];
+	inline void add_new(T* element) {
+		m_elements[element->GetID()] = element;
+		m_recent = m_elements[element->GetID()];
 		m_link->push_back(m_recent);
 	}
 
-	inline T& operator[](const ElementKey& key)
+	inline T* operator[](const ElementKey& key)
 		{ return m_elements[key]; }
 
-	inline T& operator[](const Selection& selection) {
+	inline T* operator[](const Selection& selection) {
 		return m_elements[selection->GetID()];
 	}
 
@@ -191,7 +191,7 @@ public:
 		if (!contains(key))
 			return 0;
 
-		m_link->remove(&m_elements[key]);
+		m_link->remove(m_elements[key]);
 		return m_elements.erase(key);
 	}
 
