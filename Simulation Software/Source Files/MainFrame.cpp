@@ -10,8 +10,6 @@ MainFrame::MainFrame(const wxString& title)
     m_notebook_style = wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER;
     m_notebook_theme = 0;
 
-    //_mainSizer = new wxBoxSizer(wxHORIZONTAL);
-    //
     //Create menus
     auto* menu_bar = new wxMenuBar();
     auto* file_menu = new wxMenu();
@@ -58,9 +56,6 @@ MainFrame::MainFrame(const wxString& title)
     // Create status bar
     CreateStatusBar();
     SetStatusText("Welcome to the Dynamic GUI Application!");
-
-    //int minPaneSize = 150;
-    //wxSize window_size = this->GetClientSize();
 
     // Prepare a few custom overflow elements for the toolbars overflow buttons.
     wxAuiToolBarItemArray prepend_items;
@@ -113,11 +108,20 @@ MainFrame::MainFrame(const wxString& title)
         Dockable(true).Left());
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
         Dockable(true).CenterPane());
-    m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Name("Example Grid").
+
+    auto propWidth = GetSize().x * 0.2;
+    auto propSize = new wxSize(propWidth, GetSize().y);
+    m_properties = new PropertiesViewer(this);
+    m_properties->ShowProperties();
+    //m_properties->SetSize(*propSize);
+
+    // PLUG IN PROPERTIES VIEWER HERE
+    m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right());
 
     // Commit the changes with the AUI manager
     m_manager.Update();
+    this->Layout();
 
     // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);

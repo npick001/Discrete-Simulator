@@ -14,15 +14,25 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	// Default component dimensions and colors
 	// High pixel density displays are accounted for in the GraphicalNode constructor
 
-	// graphical characteristics
-	m_bodyShape = wxRect2DDouble(-m_bodySize.GetWidth() / 2, -m_bodySize.GetHeight() / 2, m_bodySize.GetWidth(), m_bodySize.GetHeight());
-	m_position = center;
-	m_inputRect = wxRect2DDouble(-m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
-	m_outputRect = wxRect2DDouble(m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
+	/// graphical characteristics
+	// size
 	m_bodySize = parent->FromDIP(wxSize(100, 75));
 	m_ioSize = parent->FromDIP(wxSize(15, 15));
+
+	// color
 	m_ioColor = *wxBLUE;
 	m_labelColor = *wxWHITE;
+	m_bodyColor = *wxBLACK;
+
+	// shape
+	m_bodyShape = wxRect2DDouble(-m_bodySize.GetWidth() / 2, -m_bodySize.GetHeight() / 2, m_bodySize.GetWidth(), m_bodySize.GetHeight());
+
+	// position
+	m_position = center;
+
+	// IO nodes
+	m_inputRect = wxRect2DDouble(-m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
+	m_outputRect = wxRect2DDouble(m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
 }
 
 GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center, const std::string& label)
@@ -112,30 +122,7 @@ void GraphicalNode::DisconnectInputs() {
 }
 
 // Draws the node to a wxGraphicsContext
-// this will become the Server drawing
 void GraphicalNode::Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) {
-
-	//// Transform coordinates according to camera and node transforms
-	//wxAffineMatrix2D localToWindow = camera;
-	//localToWindow.Concat(GetTransform());
-	//gc->SetTransform(gc->CreateMatrix(localToWindow));
-
-	//gc->SetPen(*wxTRANSPARENT_PEN);
-
-	//// draw the rectangle 
-	//gc->SetBrush(wxBrush(m_bodyColor));
-	//gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
-
-	//// draw input and output rectangles
-	//gc->SetBrush(wxBrush(m_ioColor));
-	//gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
-	//gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
-
-	//// draw the text on the object
-	//gc->SetFont(*wxNORMAL_FONT, m_labelColor);
-	//double textWidth, textHeight;
-	//gc->GetTextExtent(m_label, &textWidth, &textHeight);
-	//gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
 	MyDraw(camera, gc);
 }
 
@@ -209,10 +196,46 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 }
 
+// Graphical Server
+GraphicalServer::GraphicalServer()
+{
+}
+
+GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center)
+	: GraphicalNode(id, window, center, "Server")
+{
+}
+
+void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
+{
+	// Transform coordinates according to camera and node transforms
+	wxAffineMatrix2D localToWindow = camera;
+	localToWindow.Concat(GetTransform());
+	gc->SetTransform(gc->CreateMatrix(localToWindow));
+
+	gc->SetPen(*wxTRANSPARENT_PEN);
+
+	// draw the rectangle 
+	gc->SetBrush(wxBrush(m_bodyColor));
+	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
+
+	// draw input and output rectangles
+	gc->SetBrush(wxBrush(m_ioColor));
+	gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
+	gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
+
+	// draw the text on the object
+	gc->SetFont(*wxNORMAL_FONT, m_labelColor);
+	double textWidth, textHeight;
+	gc->GetTextExtent(m_label, &textWidth, &textHeight);
+	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
+
+}
+
 // GraphicalSink
 GraphicalSink::GraphicalSink() : GraphicalNode() 
 {
-	m_bodyColor = *wxLIGHT_GREY;
+	//m_bodyColor = *wxLIGHT_GREY;
 }
 
 GraphicalSink::GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center)
@@ -230,6 +253,8 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 
 	gc->SetPen(*wxTRANSPARENT_PEN);
 
+	m_bodyColor = *wxBLACK;
+
 	// draw the rectangle 
 	gc->SetBrush(wxBrush(m_bodyColor));
 	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
@@ -246,6 +271,7 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
 
 }
+
 
 GraphicalNode* NodeFactory::CreateNodeOfType(GenericNode::Type type)
 {
@@ -287,39 +313,4 @@ GraphicalNode* NodeFactory::CreateNodeOfType(GenericNode::Type type, ElementKey 
 	}
 
 	return createdNode;
-}
-
-GraphicalServer::GraphicalServer()
-{
-}
-
-GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center)
-	: GraphicalNode(id, window, center, "Server")
-{
-}
-
-void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
-{
-	// Transform coordinates according to camera and node transforms
-	wxAffineMatrix2D localToWindow = camera;
-	localToWindow.Concat(GetTransform());
-	gc->SetTransform(gc->CreateMatrix(localToWindow));
-
-	gc->SetPen(*wxTRANSPARENT_PEN);
-
-	// draw the rectangle 
-	gc->SetBrush(wxBrush(m_bodyColor));
-	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
-
-	// draw input and output rectangles
-	gc->SetBrush(wxBrush(m_ioColor));
-	gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
-	gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
-
-	// draw the text on the object
-	gc->SetFont(*wxNORMAL_FONT, m_labelColor);
-	double textWidth, textHeight;
-	gc->GetTextExtent(m_label, &textWidth, &textHeight);
-	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
-
 }

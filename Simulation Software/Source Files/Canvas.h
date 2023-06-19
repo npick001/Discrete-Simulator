@@ -32,6 +32,9 @@ private:
 	// IDs used for popup menu options
 	enum {
 		ID_ADD_NODE = 200,
+		ID_ADD_SOURCE,
+		ID_ADD_SERVER,
+		ID_ADD_SINK,
 		ID_RENAME_NODE,
 		ID_DELETE_NODE,
 		ID_REMOVE_EDGE
@@ -43,6 +46,7 @@ private:
 	// Popup menus
 	wxMenu* m_canvasMenu;
 	wxMenu* m_nodeMenu;
+	wxMenu* m_nodeSubMenu;
 	wxMenu* m_ioMenu;
 	
 	// Element containers
@@ -88,6 +92,9 @@ private:
 
 	// Popup menu event handlers
 	void OnMenuAddNode(wxCommandEvent& event);
+	void OnMenuAddSource(wxCommandEvent& event);
+	void OnMenuAddServer(wxCommandEvent& event);
+	void OnMenuAddSink(wxCommandEvent& event);
 	void OnMenuDeleteNode(wxCommandEvent& event);
 
 	// Draws custom graphical elements to the canvas such as graphical nodes and connections

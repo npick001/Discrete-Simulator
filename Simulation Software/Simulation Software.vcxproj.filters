@@ -69,6 +69,12 @@
     <ClInclude Include="Source Files\MainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source Files\PropertiesViewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\SimProject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Statistics.cpp">
@@ -120,6 +126,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MainFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\PropertiesViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\SimProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

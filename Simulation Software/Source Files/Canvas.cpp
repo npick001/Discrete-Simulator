@@ -25,8 +25,17 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_debugStatusBar = statusBar;
 	m_debugStatusBar->SetFieldsCount(DebugField::FIELDS_MAX);
 
+	m_nodeSubMenu = new wxMenu("Specific Nodes");
+	m_nodeSubMenu->Append(ID_ADD_SOURCE, "Source", "Add a source node to the canvas");
+	m_nodeSubMenu->Append(ID_ADD_SERVER, "Server", "Add a server node to the canvas");
+	m_nodeSubMenu->Append(ID_ADD_SINK, "Sink", "Add a sink node to the canvas");
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddSource, this, ID_ADD_SOURCE);
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddServer, this, ID_ADD_SERVER);
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddSink, this, ID_ADD_SINK);
+
 	m_canvasMenu = new wxMenu("Canvas");
 	m_canvasMenu->Append(ID_ADD_NODE, "Add node", "Add a node to the canvas");
+	m_canvasMenu->Append(wxID_ANY, "Specific Nodes", m_nodeSubMenu);
 	m_canvasMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddNode, this, ID_ADD_NODE);
 
 	m_nodeMenu = new wxMenu("");
@@ -184,6 +193,30 @@ void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 	inverse.Invert();
 
 	//AddNode(inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddSource(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SOURCE, inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddServer(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SERVER, inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddSink(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SINK, inverse.TransformPoint(m_previousMousePosition));
 }
 
 // Called upon user selecting delete node in popup node menu
