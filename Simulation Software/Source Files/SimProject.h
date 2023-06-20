@@ -35,7 +35,11 @@ public:
 	void Build();
 	void Run();
 
+	void SetTimeUnit(TimeUnit newUnit);
+
 private:
+
+	TimeUnit m_modelTimeUnit;
 
 	// Model 
 	std::vector<GenericNode*> m_instantiatedNodes;

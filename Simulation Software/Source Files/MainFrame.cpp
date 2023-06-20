@@ -121,7 +121,7 @@ MainFrame::MainFrame(const wxString& title)
     m_properties->SetSize(*propSize);
 
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
-        Dockable(true).Right());
+        Dockable(true).Right().Resizable(true));
 
 
 
@@ -147,6 +147,9 @@ MainFrame::MainFrame(const wxString& title)
 
     // Statistics menu Events
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
+
+    // Bind the size event of the main frame
+    this->Bind(wxEVT_SIZE, &MainFrame::OnResize, this);
 }
 MainFrame::~MainFrame()
 {
@@ -159,13 +162,25 @@ void MainFrame::DoUpdate()
 
 void MainFrame::RegisterNewSelection(GraphicalNode* selection)
 {
+    // reset properties but dont populate again
     m_properties->Reset();
+    
+    auto selectionProps = selection->GetProperties();
+    auto numProps = selectionProps.GetSize();
 
-    while (selection->GetProperties().GetSize() > 0) {
-
-        auto currentProperty = selection->GetProperties().GetFirst();
-        m_properties->AddProperty(currentProperty);
+    // populate properties
+    while (selectionProps.GetSize() > 0) {
+        m_properties->AddProperty(selectionProps.GetFirst());
     }
+
+    m_properties->Refresh();
+
+    //while (numProps > 0) {
+
+    //    auto currentProperty = selectionProps.GetFirst();
+    //    numProps--;
+    //    m_properties->AddProperty(currentProperty);
+    //}
 }
 
 MainFrame* MainFrame::GetInstance()
@@ -404,4 +419,19 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
     catch (...) {
         wxLogError("Unknown exception caught in OnOpen");
     }
+}
+
+void MainFrame::OnResize(wxSizeEvent& event)
+{
+    // Get the new size of the frame
+    wxSize newSize = event.GetSize();
+
+    // Calculate the new width of the PropertiesViewer (20% of the frame width)
+    int propWidth = newSize.GetWidth() * 0.2;
+
+    // Set the new size of the PropertiesViewer
+    m_properties->SetSize(wxSize(propWidth, newSize.GetHeight()));
+
+    // Continue the event propagation
+    event.Skip();
 }

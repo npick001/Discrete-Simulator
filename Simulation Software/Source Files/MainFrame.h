@@ -15,6 +15,7 @@
 #include <wx/grid.h>
 #include <wx/dir.h>
 
+#include "SimulationExecutive.h"
 #include "Statistics.h"
 #include "Canvas.h"
 #include "SimObjectLibrary.h"
@@ -90,6 +91,8 @@ private:
 
     // Statistics menu events
     void OnClickAnalyzer(wxCommandEvent& event);
+
+    void OnResize(wxSizeEvent& event);
 };
 
 

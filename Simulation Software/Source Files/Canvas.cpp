@@ -292,7 +292,7 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
 		m_history.LogAction(m_moveNodeAction);
 
-		//MainFrame::GetInstance()->RegisterNewSelection((GraphicalNode*)endSelection.element);
+		MainFrame::GetInstance()->RegisterNewSelection((GraphicalNode*)endSelection.element);
 		break;
 
 	// Check that user selected an input to pair with the output and then connect

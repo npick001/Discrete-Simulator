@@ -13,3 +13,8 @@ void SimProject::Run()
 {
 	RunSimulation();
 }
+
+void SimProject::SetTimeUnit(TimeUnit newUnit)
+{
+	m_modelTimeUnit = newUnit;
+}

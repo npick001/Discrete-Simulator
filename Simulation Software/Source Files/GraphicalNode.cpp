@@ -19,6 +19,9 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	// Default component dimensions and colors
 	// High pixel density displays are accounted for in the GraphicalNode constructor
 
+	auto headerProp = new wxStringProperty("Property_GNODE_CTOR", wxPG_LABEL, "Value");
+	m_properties.Add(headerProp);
+
 	/// graphical characteristics
 	// size
 	m_bodySize = parent->FromDIP(wxSize(100, 75));
@@ -174,15 +177,12 @@ void GraphicalNode::SetBodyColor(const wxColor& color)
 // GraphicalSource
 GraphicalSource::GraphicalSource() : GraphicalNode()
 {
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-	m_properties.Add(headerProp);
+
 }
 
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Source")
 {
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-	m_properties.Add(headerProp);
 	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
 }
 
@@ -215,15 +215,23 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 // Graphical Server
 GraphicalServer::GraphicalServer()
 {
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-	m_properties.Add(headerProp);
+
 }
 
 GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Server")
 {
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-	m_properties.Add(headerProp);
+	m_serviceTime = 1.0;
+	m_timeUnit = MINUTES;
+	m_numResources = 1;
+
+	auto stProp = new wxFloatProperty("Service Time", wxPG_LABEL, m_serviceTime);
+	auto timeUnitProp = new wxStringProperty("Time Unit", wxPG_LABEL, TimeToString.at(m_timeUnit));
+	auto resourceNumProp = new wxUIntProperty("Number of Resources", wxPG_LABEL, m_numResources);
+
+	m_properties.Add(stProp);
+	m_properties.Add(timeUnitProp);
+	m_properties.Add(resourceNumProp);
 }
 
 void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)

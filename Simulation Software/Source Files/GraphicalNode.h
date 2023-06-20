@@ -7,6 +7,7 @@
 #include "wx/graphics.h"
 #include "wx/propgrid/propgrid.h"
 
+#include "SimulationExecutive.h"
 #include "Set.h"
 #include "GenericNode.h"
 #include "GraphicalElement.h"
@@ -130,10 +131,8 @@ private:
 	double m_serviceTime;
 
 	// will be replaced with a time unit later (second, minute, hour, day, year)
-	double m_timeUnit;
-
+	TimeUnit m_timeUnit;
 	int m_numResources;
-
 };
 
 /*****************************************/
