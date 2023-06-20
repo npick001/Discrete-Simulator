@@ -14,6 +14,7 @@ class PropertiesViewer : public wxPanel
 public:
 	PropertiesViewer(wxWindow* parent);
 
+	void Reset();
 	void SetSize(wxSize newSize);
 
 	void AddProperty(wxPGProperty* propToAdd);

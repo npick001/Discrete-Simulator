@@ -4,6 +4,7 @@
 
 #include "wx/wx.h"
 
+#include "MainFrame.h"
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
@@ -54,9 +55,12 @@ private:
 	NodeMap m_nodes;
 	EdgeMap m_edges;
 
+	// Grid things
+	// "variable grid size in world space" approach
+	std::vector<double> m_gridSizes;
+
 	/*std::vector<GraphicalNode> m_nodes;
 	std::vector<GraphicalEdge> m_edges;*/
-
 
 	// History of actions
 	History m_history;
@@ -74,6 +78,7 @@ private:
 	bool m_isPanning = false;
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
+	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
 

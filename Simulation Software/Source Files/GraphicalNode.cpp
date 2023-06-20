@@ -2,10 +2,15 @@
 
 #include "wx/graphics.h"
 
-GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() {}
+GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() 
+{
 
-GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs() {
+}
+
+GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs()
+{
 	m_label = "Node " + std::to_string(m_id);
+
 }
 
 GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble center)
@@ -111,6 +116,11 @@ wxPoint2DDouble GraphicalNode::GetInputPoint() const {
 	return GetTransform().TransformPoint(inputPoint);
 }
 
+Set<wxPGProperty> GraphicalNode::GetProperties()
+{
+	return m_properties;
+}
+
 void GraphicalNode::DisconnectOutputs() {
 	for (auto output : m_outputs)
 		output->Disconnect();
@@ -162,12 +172,18 @@ void GraphicalNode::SetBodyColor(const wxColor& color)
 }
 
 // GraphicalSource
-GraphicalSource::GraphicalSource() : GraphicalNode() {}
+GraphicalSource::GraphicalSource() : GraphicalNode()
+{
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	m_properties.Add(headerProp);
+}
 
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Source")
 {
-	
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	m_properties.Add(headerProp);
+	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
 }
 
 void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
@@ -199,11 +215,15 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 // Graphical Server
 GraphicalServer::GraphicalServer()
 {
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	m_properties.Add(headerProp);
 }
 
 GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Server")
 {
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	m_properties.Add(headerProp);
 }
 
 void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)

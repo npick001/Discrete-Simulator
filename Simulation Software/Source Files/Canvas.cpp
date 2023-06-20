@@ -7,17 +7,16 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	: wxPanel(parent, wxID_ANY), m_nextID(0), m_elements(), m_nodes(&m_elements),
 	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
 {
+	m_gridSizes = { 1.0, 10.0, 100.0, 1000.0 };
+
 	// Canvas
 	AddNode(GenericNode::SOURCE, FromDIP(wxPoint(-150, 0)));
 	AddNode(GenericNode::SERVER, FromDIP(wxPoint(0, 0)));
 	AddNode(GenericNode::SINK, FromDIP(wxPoint(150, 0)));
 
-	//AddNode(FromDIP(wxPoint(-150, 0)));
-	//AddNode(FromDIP(wxPoint(   0, 0)));
-	//AddNode(FromDIP(wxPoint( 150, 0)));
-
+	// center camera at (0, 0)
 	wxSize size = parent->GetSize();
-	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
+	m_cameraZoom.Translate(size.GetWidth() * 0.35 , size.GetHeight() * 0.35);
 
 	// UI
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -292,6 +291,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 	case Selection::State::NODE:
 		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
 		m_history.LogAction(m_moveNodeAction);
+
+		//MainFrame::GetInstance()->RegisterNewSelection((GraphicalNode*)endSelection.element);
 		break;
 
 	// Check that user selected an input to pair with the output and then connect
@@ -392,8 +393,22 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 
 // Capture mouse scrolling in order to zoom the camera
 void Canvas::OnMouseWheel(wxMouseEvent& event) {
+	//double scaleFactor = pow(2, 0.1 * event.GetWheelRotation() / event.GetWheelDelta());
+	//m_cameraZoom.Scale(scaleFactor, scaleFactor);
+
+	// Convert mouse position from screen to world coordinates
+	wxPoint2DDouble mousePosition = event.GetPosition();
+	wxAffineMatrix2D inverse = GetCameraTransform();
+	inverse.Invert();
+	wxPoint2DDouble worldMousePosition = inverse.TransformPoint(mousePosition);
+
+	// Determine the zoom scale factor
 	double scaleFactor = pow(2, 0.1 * event.GetWheelRotation() / event.GetWheelDelta());
+
+	// Adjust the zoom and translation of the camera
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
+	m_zoomLevel = scaleFactor;
+	m_cameraPan.Translate((1 - scaleFactor) * (worldMousePosition.m_x), (1 - scaleFactor) * (worldMousePosition.m_y));
 
 	Refresh();
 }
@@ -458,6 +473,13 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 
 	if (!gc)
 		return;
+
+	for (auto gridSize = m_gridSizes.rbegin(); gridSize != m_gridSizes.rend(); gridSize++) {
+		double distanceOnScreen = (*gridSize) * m_zoomLevel;
+		if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
+			break;
+	}
+
 
 	for (GraphicalElement* const& element : m_elements)
 		element->Draw(GetCameraTransform(), gc);

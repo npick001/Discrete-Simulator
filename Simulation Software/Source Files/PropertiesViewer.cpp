@@ -10,13 +10,19 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 	m_propGrid = new wxPropertyGrid(this, wxID_ANY, wxDefaultPosition, *panelSize,
 		wxPG_DEFAULT_STYLE);
 
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	//auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
 
-	m_propGrid->Append(headerProp);
-	ShowProperties();
+	/*m_propGrid->Append(headerProp);
+	ShowProperties();*/
 
 	// Event bindings
 	this->Bind(wxEVT_SIZE, &PropertiesViewer::OnResize, this);
+}
+
+void PropertiesViewer::Reset()
+{
+	m_propGrid->Clear();
+	m_props.Empty();
 }
 
 void PropertiesViewer::SetSize(wxSize newSize)

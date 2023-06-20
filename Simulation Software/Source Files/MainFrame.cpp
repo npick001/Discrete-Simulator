@@ -1,6 +1,8 @@
 #include "MainFrame.h"
 #include "Canvas.h"
 
+MainFrame* MainFrame::m_instance = 0;
+
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
@@ -37,7 +39,7 @@ MainFrame::MainFrame(const wxString& title)
     view_menu->Append(ID_CreateNotebook, _("Create Notebook"));
     view_menu->Append(ID_CreateGrid, _("Create Grid"));
     view_menu->Append(ID_CreateCanvas, _("Create Canvas"));
-    view_menu->Append(ID_CreateLeftToolbar, _("Create Left Toolbar"));
+    view_menu->Append(ID_CreateSimLibrary, _("Create Left Toolbar"));
 
     // SETTINGS MENU
     settings_menu->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
@@ -109,15 +111,20 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
         Dockable(true).CenterPane());
 
+
+    // PROPERTIES VIEWER
+
     auto propWidth = GetSize().x * 0.2;
     auto propSize = new wxSize(propWidth, GetSize().y);
     m_properties = new PropertiesViewer(this);
     m_properties->ShowProperties();
-    //m_properties->SetSize(*propSize);
+    m_properties->SetSize(*propSize);
 
-    // PLUG IN PROPERTIES VIEWER HERE
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right());
+
+
+
 
     // Commit the changes with the AUI manager
     m_manager.Update();
@@ -136,18 +143,40 @@ MainFrame::MainFrame(const wxString& title)
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateTree, this, ID_CreateTree);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateGrid, this, ID_CreateGrid);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateCanvas, this, ID_CreateCanvas);
-    this->Bind(wxEVT_MENU, &MainFrame::OnCreateLeftToolbar, this, ID_CreateLeftToolbar);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateSimLibrary, this, ID_CreateSimLibrary);
 
     // Statistics menu Events
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
 }
-MainFrame::~MainFrame() {
+MainFrame::~MainFrame()
+{
     Destroy();
 }
 void MainFrame::DoUpdate()
 {
     m_manager.Update();
 }
+
+void MainFrame::RegisterNewSelection(GraphicalNode* selection)
+{
+    m_properties->Reset();
+
+    while (selection->GetProperties().GetSize() > 0) {
+
+        auto currentProperty = selection->GetProperties().GetFirst();
+        m_properties->AddProperty(currentProperty);
+    }
+}
+
+MainFrame* MainFrame::GetInstance()
+{
+    if (m_instance == 0) {
+        m_instance = new MainFrame("C++ GUI");
+    }
+
+    return m_instance;
+}
+
 wxAuiNotebook* MainFrame::CreateNotebook()
 {
     wxSize client_size = GetClientSize();
@@ -215,7 +244,7 @@ Canvas* MainFrame::CreateCanvas()
     return newCanvas;
 }
 
-SimObjectLibrary* MainFrame::CreateLeftToolbar()
+SimObjectLibrary* MainFrame::CreateSimLibrary()
 {
     SimObjectLibrary* simLibrary = new SimObjectLibrary(this);
     return simLibrary;
@@ -357,9 +386,9 @@ void MainFrame::OnCreateCanvas(wxCommandEvent& event)
     m_mainCanvas->Update();
 }
 
-void MainFrame::OnCreateLeftToolbar(wxCommandEvent& event)
+void MainFrame::OnCreateSimLibrary(wxCommandEvent& event)
 {
-    m_manager.AddPane(CreateLeftToolbar(), wxAuiPaneInfo().Dockable(true).
+    m_manager.AddPane(CreateSimLibrary(), wxAuiPaneInfo().Dockable(true).
         Caption("Simulation Library").Left());
     m_manager.Update();
 }

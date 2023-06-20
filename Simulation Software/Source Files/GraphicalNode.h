@@ -3,9 +3,11 @@
 #include <list>
 #include <string>
 
-#include "wx/graphics.h"
 #include "wx/wx.h"
+#include "wx/graphics.h"
+#include "wx/propgrid/propgrid.h"
 
+#include "Set.h"
 #include "GenericNode.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
@@ -46,6 +48,9 @@ public:
 	std::list<GraphicalEdge*> GetOutputs() const;
 	std::list<GraphicalEdge*> GetInputs() const;
 
+	// for property viewer
+	Set<wxPGProperty> GetProperties();
+
 	void DisconnectOutputs();
 	void DisconnectInputs();
 
@@ -60,6 +65,9 @@ protected:
 	friend class GraphicalEdge;
 	GraphicalElement::Type m_type;
 	GenericNode::Type m_nodeType;
+
+	// list of wxProperties that can be used and displayed (hopefully)
+	Set<wxPGProperty> m_properties;
 
 	// graphical characteristics
 	wxColor m_bodyColor;
@@ -100,7 +108,8 @@ public:
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
 private:
-
+	// will be replaced with a distribution later
+	int m_arrivalTime;
 };
 
 /****************************************************************/
@@ -117,7 +126,13 @@ public:
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
 private:
+	// will be replaced with a distribution later
+	double m_serviceTime;
 
+	// will be replaced with a time unit later (second, minute, hour, day, year)
+	double m_timeUnit;
+
+	int m_numResources;
 
 };
 
