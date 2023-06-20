@@ -1,10 +1,15 @@
 #pragma once
 
+/*
+Set - First In/First Out
+This class handles objects for a FIFO LL scheme.
+Mainly used for easy search and removal of object
+*/
 template <class T>
 class Set
 {
 public:
-	Set()
+	inline Set()
 	{
 		_head = 0;
 		_tail = 0;
@@ -12,7 +17,7 @@ public:
 	}
 
 	// Adds item to the end of the list
-	void AddEntity(T* t)
+	inline void Add(T* t)
 	{
 		Node* node = new Node(t);
 		if (_head == NULL) {	//empty list
@@ -24,24 +29,24 @@ public:
 		_size++;
 	}
 
-	// Get the first item from the set
-	T* GetEntity()
+	// Remove the first item from the set
+	inline T* GetFirst()
 	{
 		if (_head == 0) return 0;
 		else {
 			Node* n = _head;
-			T* t = _head->t;
+			T* data = _head->data;
 			_head = _head->next;
 			_size--;
-			return t;
+			return data;
 		}
 	}
 
 	// get the specific item from the set
-	T* GetEntity(T* toFind)
+	inline T* Get(T* toFind)
 	{
 		if (_head == 0) return 0;
-		else if (_head->t == toFind) {
+		else if (_head->data == toFind) {
 			Node* n = _head;
 			_head = _head->next;
 			delete n;
@@ -51,22 +56,24 @@ public:
 
 			Node* prev = _head;
 			Node* n = _head->next;
-			T* t = _head->data;
+			T* data = _head->data;
 
 			while (n != nullptr) {
 				if (n->data == toFind) {
-					t = n->data;
+					data = n->data;
 					prev->next = n->next;
 					delete n;
 					_size--;
-					return t;
+					return data;
 				}
 				n = n->next;
 			}
 		}
+		return nullptr; // if not found
 	}
 
-	bool HasEntity(T* toFind) {
+	inline bool Has(T* toFind)
+	{
 		if (_head == 0) return false;
 		else {
 
@@ -82,19 +89,47 @@ public:
 		}
 	}
 
+	// Delete all members in the Set
+	inline void Empty()
+	{
+		while (_head != nullptr) {
+			Node* n = _head;
+			_head = _head->next;
+			delete n;
+		}
+		_size = 0;
+	}
+
 	// view the first item in the set
-	T* ViewEntity()
+	inline T* View()
 	{
 		return(_head->t);
 	}
 
-	bool IsEmpty() { return (_size == 0); }
-	int GetSize() { return _size; }
+	inline bool IsEmpty() { return (_size == 0); }
+	inline int GetSize() { return _size; }
+
+	// Do a deep copy of the passed Set to this one
+	inline Set<T>& operator=(const Set<T>& other)
+	{
+		if (this != &other) {
+			Empty();
+			Node* n = other._head;
+
+			// traverse the set and copy all members to this
+			while (n != nullptr) {
+				Add(n->data);
+				n = n->next;
+			}
+		}
+		return *this;
+	}
+
 private:
 	struct Node
 	{
-		Node(T* t) {
-			this->data = t;
+		Node(T* data) {
+			this->data = data;
 			next = 0;
 		}
 		T* data;

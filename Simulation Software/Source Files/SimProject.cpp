@@ -5,6 +5,11 @@ SimProject::SimProject(Canvas* canvas)
 
 void SimProject::Build() {
 	// Generate digraph describing what nodes connect to what other nodes
-	// Use digraph to instatiate and set connections between specific nodes such as source, server, sink, etc.
+	// Use digraph to instantiate and set connections between specific nodes such as source, server, sink, etc.
 
+}
+
+void SimProject::Run()
+{
+	RunSimulation();
 }

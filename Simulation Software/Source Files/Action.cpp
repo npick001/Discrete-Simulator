@@ -40,9 +40,9 @@ MoveNodeAction::MoveNodeAction(ElementKey id, SpecificElementContainer<Graphical
 	: Action(id), m_link(link) {}
 
 void MoveNodeAction::Redo() {
-	(*m_link)[m_elementID].SetPosition(m_nextPosition);
+	(*m_link)[m_elementID]->SetPosition(m_nextPosition);
 }
 
 void MoveNodeAction::Undo() {
-	(*m_link)[m_elementID].SetPosition(m_previousPosition);
+	(*m_link)[m_elementID]->SetPosition(m_previousPosition);
 }

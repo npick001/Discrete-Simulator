@@ -15,8 +15,8 @@ public:
 	~Canvas();
 
 	// Adds a new graphical node to the canvas at a certain location with a given label
-	void AddNode(wxPoint2DDouble center, const std::string& label);
-	void AddNode(wxPoint2DDouble center);
+	void AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label);
+	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
 private:
 	ElementKey m_nextID;
@@ -32,6 +32,9 @@ private:
 	// IDs used for popup menu options
 	enum {
 		ID_ADD_NODE = 200,
+		ID_ADD_SOURCE,
+		ID_ADD_SERVER,
+		ID_ADD_SINK,
 		ID_RENAME_NODE,
 		ID_DELETE_NODE,
 		ID_REMOVE_EDGE
@@ -43,12 +46,17 @@ private:
 	// Popup menus
 	wxMenu* m_canvasMenu;
 	wxMenu* m_nodeMenu;
+	wxMenu* m_nodeSubMenu;
 	wxMenu* m_ioMenu;
 	
 	// Element containers
 	ElementList m_elements;
 	NodeMap m_nodes;
 	EdgeMap m_edges;
+
+	/*std::vector<GraphicalNode> m_nodes;
+	std::vector<GraphicalEdge> m_edges;*/
+
 
 	// History of actions
 	History m_history;
@@ -69,12 +77,12 @@ private:
 
 	wxAffineMatrix2D GetCameraTransform() const;
 
-	// SelectionInfo contains the graphical node which was selected, if any, and the
+	// Selection contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
 	// Given a click position, returns a SelectionInfo object describing the action
 	Selection Select(wxPoint2DDouble clickPosition);
 
-	void AddNode(const GraphicalNode& obj);
+	void AddNode(GraphicalNode* obj);
 	void DeleteNode();
 
 	// Displacement is based on clickPosition and m_previousPosition which is
@@ -84,6 +92,9 @@ private:
 
 	// Popup menu event handlers
 	void OnMenuAddNode(wxCommandEvent& event);
+	void OnMenuAddSource(wxCommandEvent& event);
+	void OnMenuAddServer(wxCommandEvent& event);
+	void OnMenuAddSink(wxCommandEvent& event);
 	void OnMenuDeleteNode(wxCommandEvent& event);
 
 	// Draws custom graphical elements to the canvas such as graphical nodes and connections
@@ -106,4 +117,3 @@ private:
 	// Key events for handling shortcuts
 	void OnCharHook(wxKeyEvent& event);
 };
-

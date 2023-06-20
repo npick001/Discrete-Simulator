@@ -41,7 +41,7 @@ public:
 	inline void SetDestinationPoint(wxPoint2DDouble destinationPoint)
 		{ m_destinationPoint = destinationPoint; }
 
-	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) const override;
+	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
 	Selection Select(const wxAffineMatrix2D& camera,
 		wxPoint2DDouble clickPosition) override;

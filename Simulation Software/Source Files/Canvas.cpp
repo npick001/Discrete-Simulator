@@ -8,9 +8,13 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
 {
 	// Canvas
-	AddNode(FromDIP(wxPoint(-150, 0)));
-	AddNode(FromDIP(wxPoint(   0, 0)));
-	AddNode(FromDIP(wxPoint( 150, 0)));
+	AddNode(GenericNode::SOURCE, FromDIP(wxPoint(-150, 0)));
+	AddNode(GenericNode::SERVER, FromDIP(wxPoint(0, 0)));
+	AddNode(GenericNode::SINK, FromDIP(wxPoint(150, 0)));
+
+	//AddNode(FromDIP(wxPoint(-150, 0)));
+	//AddNode(FromDIP(wxPoint(   0, 0)));
+	//AddNode(FromDIP(wxPoint( 150, 0)));
 
 	wxSize size = parent->GetSize();
 	m_cameraZoom.Translate(size.GetWidth() / 2, size.GetHeight() / 2);
@@ -21,8 +25,17 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_debugStatusBar = statusBar;
 	m_debugStatusBar->SetFieldsCount(DebugField::FIELDS_MAX);
 
+	m_nodeSubMenu = new wxMenu("Specific Nodes");
+	m_nodeSubMenu->Append(ID_ADD_SOURCE, "Source", "Add a source node to the canvas");
+	m_nodeSubMenu->Append(ID_ADD_SERVER, "Server", "Add a server node to the canvas");
+	m_nodeSubMenu->Append(ID_ADD_SINK, "Sink", "Add a sink node to the canvas");
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddSource, this, ID_ADD_SOURCE);
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddServer, this, ID_ADD_SERVER);
+	m_nodeSubMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddSink, this, ID_ADD_SINK);
+
 	m_canvasMenu = new wxMenu("Canvas");
 	m_canvasMenu->Append(ID_ADD_NODE, "Add node", "Add a node to the canvas");
+	m_canvasMenu->Append(wxID_ANY, "Specific Nodes", m_nodeSubMenu);
 	m_canvasMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddNode, this, ID_ADD_NODE);
 
 	m_nodeMenu = new wxMenu("");
@@ -60,13 +73,16 @@ Canvas::~Canvas() {
 	delete m_nodeMenu;
 }
 
-void Canvas::AddNode(const GraphicalNode& obj) {
+void Canvas::AddNode(GraphicalNode* obj) {
 	m_nodes.add_new(obj);
+	//m_nodes.push_back(obj);
 }
 
 // Adds a graphical node to the canvas
-void Canvas::AddNode(wxPoint2DDouble center, const std::string& label) {
-	GraphicalNode obj(m_nextID, this, center, label);
+void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label) {
+	
+	// generate the specified graphical node based on the type given
+	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
 	m_nextID++;
 	
 	AddNode(obj);
@@ -75,8 +91,10 @@ void Canvas::AddNode(wxPoint2DDouble center, const std::string& label) {
 }
 
 // Adds a graphical node to the canvas, name is auto populated with id number
-void Canvas::AddNode(wxPoint2DDouble center) {
-	GraphicalNode obj(m_nextID, this, center);
+void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center) {
+
+	// generate the specified graphical node based on the type given
+	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
 	m_nextID++;
 	
 	AddNode(obj);
@@ -90,10 +108,10 @@ void Canvas::DeleteNode() {
 		return;
 
 	// Edges are disconnected and deleted
-	for (auto output : m_nodes[m_selection].GetOutputs())
+	for (auto output : m_nodes[m_selection]->GetOutputs())
 		m_edges.erase(output->GetID());
 
-	for (auto input : m_nodes[m_selection].GetInputs())
+	for (auto input : m_nodes[m_selection]->GetInputs())
 		m_edges.erase(input->GetID());
 
 	// Node is then deleted
@@ -156,11 +174,11 @@ void Canvas::MoveNode(wxPoint2DDouble clickPosition) {
 	auto dragVector = clickPosition - m_previousMousePosition;
 
 	auto inv = GetCameraTransform();
-	inv.Concat(m_nodes[m_selection].GetTransform());
+	inv.Concat(m_nodes[m_selection]->GetTransform());
 	inv.Invert();
 	dragVector = inv.TransformDistance(dragVector);
 
-	m_nodes[m_selection].Move(dragVector);
+	m_nodes[m_selection]->Move(dragVector);
 
 	m_previousMousePosition = clickPosition;
 
@@ -174,7 +192,31 @@ void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 	auto inverse = GetCameraTransform();
 	inverse.Invert();
 
-	AddNode(inverse.TransformPoint(m_previousMousePosition));
+	//AddNode(inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddSource(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SOURCE, inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddServer(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SERVER, inverse.TransformPoint(m_previousMousePosition));
+}
+
+void Canvas::OnMenuAddSink(wxCommandEvent& event)
+{
+	auto inverse = GetCameraTransform();
+	inverse.Invert();
+
+	AddNode(GenericNode::SINK, inverse.TransformPoint(m_previousMousePosition));
 }
 
 // Called upon user selecting delete node in popup node menu
@@ -202,29 +244,30 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// Prepare to drag selected node
 	case Selection::State::NODE:
+
 		m_moveNodeAction = MoveNodeAction(m_selection->GetID(), &m_nodes);
-		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection].GetPosition());
+		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection]->GetPosition());
 		m_previousMousePosition = event.GetPosition();
 		break;
 
 	// Instatiate an edge and connect source to node's output
 	case Selection::State::NODE_OUTPUT:
-		m_edges.add_new(GraphicalEdge(m_nextID));
+		m_edges.add_new(new GraphicalEdge(m_nextID));
 		m_nextID++;
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
-		m_incompleteEdge->ConnectSource(&m_nodes[m_selection]);
+		m_incompleteEdge->ConnectSource(m_nodes[m_selection]);
 		break;
 
 	// Instatiate an edge and connect destination to node's input
 	case Selection::State::NODE_INPUT:
-		m_edges.add_new(GraphicalEdge(m_nextID));
+		m_edges.add_new(new GraphicalEdge(m_nextID));
 		m_nextID++;
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
-		m_incompleteEdge->ConnectDestination(&m_nodes[m_selection]);
+		m_incompleteEdge->ConnectDestination(m_nodes[m_selection]);
 		break;
 
 	// Panning also works with left click
@@ -247,7 +290,7 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 
 	// Finish move action
 	case Selection::State::NODE:
-		m_moveNodeAction.SetNextPosition(m_nodes[m_selection].GetPosition());
+		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
 		m_history.LogAction(m_moveNodeAction);
 		break;
 
@@ -256,10 +299,10 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == Selection::State::NODE_INPUT
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
-			m_incompleteEdge->ConnectDestination(&m_nodes[endSelection]);
+			m_incompleteEdge->ConnectDestination(m_nodes[endSelection]);
 
-			m_debugStatusBar->SetStatusText("Connected " + m_nodes[m_selection].GetLabel() + " to "
-				+ m_nodes[endSelection].GetLabel(), DebugField::COMPONENTS_CONNECTED);
+			m_debugStatusBar->SetStatusText("Connected " + m_nodes[m_selection]->GetLabel() + " to "
+				+ m_nodes[endSelection]->GetLabel(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else
 			m_edges.erase(m_incompleteEdge->GetID());
@@ -271,10 +314,10 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == Selection::State::NODE_OUTPUT
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
-			m_incompleteEdge->ConnectSource(&m_nodes[endSelection]);
+			m_incompleteEdge->ConnectSource(m_nodes[endSelection]);
 
-			m_debugStatusBar->SetStatusText("Connected " + m_nodes[endSelection].GetLabel() + " to "
-				+ m_nodes[m_selection].GetLabel(), DebugField::COMPONENTS_CONNECTED);
+			m_debugStatusBar->SetStatusText("Connected " + m_nodes[endSelection]->GetLabel() + " to "
+				+ m_nodes[m_selection]->GetLabel(), DebugField::COMPONENTS_CONNECTED);
 		}
 		else
 			m_edges.erase(m_incompleteEdge->GetID());
@@ -393,7 +436,7 @@ void Canvas::OnRightUp(wxMouseEvent& event) {
 // Unable to track mouse position outside of window; therefore, panning and dragging is disabled when the mouse leaves
 void Canvas::OnLeaveWindow(wxMouseEvent& event) {
 	if (m_selection.state == Selection::State::NODE) {
-		m_moveNodeAction.SetNextPosition(m_nodes[m_selection].GetPosition());
+		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
 		m_history.LogAction(m_moveNodeAction);
 	}
 

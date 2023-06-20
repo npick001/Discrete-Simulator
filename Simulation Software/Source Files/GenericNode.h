@@ -10,20 +10,18 @@ class GenericNode
 public:
     enum Type {
         SOURCE,
+        SERVER,
         SINK
     };
 
-    // WORK ON MAKING THESE GETTERS / SETTERS MORE COHESIVE
-    // EITHER MAKE ALL INLINE OR NONE
-    // PREFERABLY NONE
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
     void SetImagePath(const std::string& imagePath);
-    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
+    inline void SetNodeType(std::string nodetype) { m_nodeType = nodetype; }
     std::string GetName();
     std::string GetImagePath();
     inline int GetID() { return m_id; }
-    inline Type GetType() { return m_nodeType; }
+    inline std::string GetType() { return m_nodeType; }
 
     void Arrive(Entity* entity);
 
@@ -45,7 +43,6 @@ protected:
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
-    Type m_nodeType;
     GenericNode* m_next;
 
     /*
@@ -67,9 +64,31 @@ protected:
 
 private:
     int m_id;
+    std::string m_nodeType;
     static int m_nextID;
     std::string m_name;
     std::string m_imagePath;
+    //wxPoint m_position;
+    //wxSize m_size;
 
     GenericNode* m_prev;
+    //GraphicalNode* m_graphics;
 };
+
+class Connection : public GenericNode
+{
+public:
+    Connection(GenericNode* startBlock, GenericNode* endBlock)
+        : GenericNode("Connection") {};
+
+   // void Draw(wxGraphicsContext* gc) override {
+   ///*     wxPoint startPoint = _startNode->GetPosition() + wxSize(_startNode->GetSize().x, _startNode->GetSize().y / 2);
+   //     wxPoint endPoint = _endNode->GetPosition() + wxSize(0, _endNode->GetSize().y / 2);
+
+   //     gc->SetPen(wxPen(*wxBLACK, 2));
+   //     gc->StrokeLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+   //*/ }
+
+private:
+};
+

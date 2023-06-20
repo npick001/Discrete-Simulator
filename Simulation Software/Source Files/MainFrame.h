@@ -14,9 +14,11 @@
 #include <wx/treectrl.h>
 #include <wx/grid.h>
 #include <wx/dir.h>
+
 #include "Statistics.h"
 #include "Canvas.h"
 #include "SimObjectLibrary.h"
+#include "PropertiesViewer.h"
 
 enum {
     ID_Exit = 1,
@@ -45,7 +47,9 @@ public:
 private:
     wxAuiManager m_manager;
     wxAuiNotebook* m_mainCanvas;
+    PropertiesViewer* m_properties;
     wxArrayString m_perspectives;
+    wxBoxSizer* m_sizer;
     long m_notebook_style;
     long m_notebook_theme;
 
