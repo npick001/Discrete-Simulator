@@ -3,20 +3,13 @@
 #include "wx/graphics.h"
 #include "wx/dcbuffer.h"
 
+#include "SimProject.h"
+
 Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	: wxPanel(parent, wxID_ANY), m_nextID(0), m_elements(), m_nodes(&m_elements),
 	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
 {
 	m_gridSizes = { 1.0, 10.0, 100.0, 1000.0 };
-
-	// Canvas
-	AddNode(GenericNode::SOURCE, FromDIP(wxPoint(-150, 0)));
-	AddNode(GenericNode::SERVER, FromDIP(wxPoint(0, 0)));
-	AddNode(GenericNode::SINK, FromDIP(wxPoint(150, 0)));
-
-	// center camera at (0, 0)
-	wxSize size = parent->GetSize();
-	m_cameraZoom.Translate(size.GetWidth() * 0.35 , size.GetHeight() * 0.35);
 
 	// UI
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -74,7 +67,6 @@ Canvas::~Canvas() {
 
 void Canvas::AddNode(GraphicalNode* obj) {
 	m_nodes.add_new(obj);
-	//m_nodes.push_back(obj);
 }
 
 // Adds a graphical node to the canvas
@@ -126,6 +118,29 @@ wxAffineMatrix2D Canvas::GetCameraTransform() const {
 	return cameraTransform;
 }
 
+void Canvas::DrawGrid()
+{
+}
+
+void Canvas::TransformOriginLocation(wxSize canvasSize)
+{
+	// set canvas coordinate system origin
+	int width, height;
+	GetClientSize(&width, &height);
+	m_origin = wxPoint(width / 2, height / 2);
+	m_cameraPan.Translate(m_origin.x, m_origin.y);
+
+	// transform drawing location to local
+	wxAffineMatrix2D cTransform = GetCameraTransform();
+	cTransform.Invert();
+	wxPoint2DDouble originPosition = cTransform.TransformPoint(m_origin);
+
+	// Canvas
+	AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
+	AddNode(GenericNode::SERVER, wxPoint2DDouble(originPosition.m_x, originPosition.m_y));
+	AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
+}
+
 // Return selection information containing which graphical node, if any, was selected and the state of the selection
 Selection Canvas::Select(wxPoint2DDouble clickPosition) {
 
@@ -162,7 +177,6 @@ void Canvas::PanCamera(wxPoint2DDouble clickPosition) {
 	dragVector = inv.TransformDistance(dragVector);
 
 	m_cameraPan.Translate(dragVector.m_x, dragVector.m_y);
-
 	m_previousMousePosition = clickPosition;
 
 	Refresh();
@@ -393,8 +407,6 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 
 // Capture mouse scrolling in order to zoom the camera
 void Canvas::OnMouseWheel(wxMouseEvent& event) {
-	//double scaleFactor = pow(2, 0.1 * event.GetWheelRotation() / event.GetWheelDelta());
-	//m_cameraZoom.Scale(scaleFactor, scaleFactor);
 
 	// Convert mouse position from screen to world coordinates
 	wxPoint2DDouble mousePosition = event.GetPosition();
@@ -474,11 +486,22 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	if (!gc)
 		return;
 
-	for (auto gridSize = m_gridSizes.rbegin(); gridSize != m_gridSizes.rend(); gridSize++) {
-		double distanceOnScreen = (*gridSize) * m_zoomLevel;
-		if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
-			break;
-	}
+	int width, height;
+	GetSize(&width, &height);
+
+	// Translate the origin to the center of the canvas
+	dc.SetDeviceOrigin(width / 2, height / 2);
+
+	// Draw a rectangle centered at (0,0) in the new coordinate system
+	int rectWidth = wxWindow::FromDIP(100);
+	int rectHeight = wxWindow::FromDIP(50);
+	dc.DrawRectangle(-rectWidth / 2, -rectHeight / 2, rectWidth, rectHeight);
+
+	//for (auto gridSize = m_gridSizes.rbegin(); gridSize != m_gridSizes.rend(); gridSize++) {
+	//	double distanceOnScreen = (*gridSize) * m_zoomLevel;
+	//	if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
+	//		break;
+	//}
 
 
 	for (GraphicalElement* const& element : m_elements)

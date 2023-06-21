@@ -2,6 +2,8 @@
 
 #include "wx/graphics.h"
 
+#include "SimProject.h"
+
 GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() 
 {
 

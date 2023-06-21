@@ -118,17 +118,19 @@ MainFrame::MainFrame(const wxString& title)
     auto propSize = new wxSize(propWidth, GetSize().y);
     m_properties = new PropertiesViewer(this);
     m_properties->ShowProperties();
-    m_properties->SetSize(*propSize);
 
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
-        Dockable(true).Right().Resizable(true));
-
-
+        Dockable(true).Right().BestSize(*propSize));
 
 
     // Commit the changes with the AUI manager
     m_manager.Update();
     this->Layout();
+
+    // transform the origin to middle of the canvas
+    wxSize canvasSize = m_mainCanvas->GetSize();
+    auto canvas = (Canvas*)m_mainCanvas->GetCurrentPage();
+    canvas->TransformOriginLocation(canvasSize);
 
     // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
@@ -174,13 +176,6 @@ void MainFrame::RegisterNewSelection(GraphicalNode* selection)
     }
 
     m_properties->Refresh();
-
-    //while (numProps > 0) {
-
-    //    auto currentProperty = selectionProps.GetFirst();
-    //    numProps--;
-    //    m_properties->AddProperty(currentProperty);
-    //}
 }
 
 MainFrame* MainFrame::GetInstance()

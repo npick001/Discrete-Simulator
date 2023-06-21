@@ -101,7 +101,7 @@ public:
 	// view the first item in the set
 	inline T* View()
 	{
-		return(_head->t);
+		return(_head->data);
 	}
 
 	// Do a deep copy of the passed Set to this one

@@ -16,6 +16,7 @@
 
 class GraphicalEdge;
 class MoveNodeAction;
+class NodeFactory;
 
 class GraphicalNode : public GraphicalElement {
 public:
@@ -147,21 +148,6 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-private:
-
-};
-
-/*******************************************/
-/* Node Factory:                           */
-/* defines an node creation object         */
-/* the factory's whole job is to generate  */
-/* the specified node and return a pointer */
-/*******************************************/
-class NodeFactory
-{
-public:
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type);
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
 private:
 
 };

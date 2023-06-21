@@ -19,6 +19,8 @@ public:
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label);
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
+	void TransformOriginLocation(wxSize canvasSize);
+
 private:
 	ElementKey m_nextID;
 
@@ -78,9 +80,11 @@ private:
 	bool m_isPanning = false;
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
+	wxPoint m_origin;
 	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
+	void DrawGrid();
 
 	// Selection contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none
