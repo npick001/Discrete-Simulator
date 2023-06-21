@@ -253,6 +253,12 @@ void Canvas::OnMiddleUp(wxMouseEvent& event) {
 void Canvas::OnLeftDown(wxMouseEvent& event) {
 	m_selection = Select(event.GetPosition());
 
+	// coordinate transformation
+	wxAffineMatrix2D cTransform = GetCameraTransform();
+	cTransform.Invert();
+
+	wxPoint2DDouble transformedPos;
+
 	switch (m_selection.state) {
 
 	// Prepare to drag selected node
@@ -261,6 +267,10 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		m_moveNodeAction = MoveNodeAction(m_selection->GetID(), &m_nodes);
 		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection]->GetPosition());
 		m_previousMousePosition = event.GetPosition();
+
+		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
+		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
+			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Instatiate an edge and connect source to node's output
@@ -271,6 +281,11 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
 		m_incompleteEdge->ConnectSource(m_nodes[m_selection]);
+
+		m_previousMousePosition = event.GetPosition();
+		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
+		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
+			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Instatiate an edge and connect destination to node's input
@@ -281,12 +296,22 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
 		m_incompleteEdge->ConnectDestination(m_nodes[m_selection]);
+
+		m_previousMousePosition = event.GetPosition();
+		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
+		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
+			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Panning also works with left click
 	case Selection::State::NONE:
 		m_isPanning = true;
 		m_previousMousePosition = event.GetPosition();
+
+		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
+		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
+			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
+
 		break;
 	}
 
