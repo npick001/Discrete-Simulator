@@ -118,12 +118,20 @@ wxAffineMatrix2D Canvas::GetCameraTransform() const {
 	return cameraTransform;
 }
 
-void Canvas::DrawGrid()
+void Canvas::DrawGrid(wxGraphicsContext* gc)
 {
+
+
+
+
+
+
 }
 
 void Canvas::TransformOriginLocation(wxSize canvasSize)
 {
+	m_canvasSize = canvasSize;
+
 	// set canvas coordinate system origin
 	int width, height;
 	GetClientSize(&width, &height);
@@ -135,7 +143,7 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 	cTransform.Invert();
 	wxPoint2DDouble originPosition = cTransform.TransformPoint(m_origin);
 
-	// Canvas
+	// draw a few basic nodes
 	AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
 	AddNode(GenericNode::SERVER, wxPoint2DDouble(originPosition.m_x, originPosition.m_y));
 	AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
@@ -511,23 +519,26 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	if (!gc)
 		return;
 
-	int width, height;
-	GetSize(&width, &height);
+	//int gridSize = m_canvasSize.GetHeight() / 50;
+	//int width = m_canvasSize.GetWidth() / 2;
+	//int height = m_canvasSize.GetHeight() / 2;
 
-	// Translate the origin to the center of the canvas
-	dc.SetDeviceOrigin(width / 2, height / 2);
-
-	// Draw a rectangle centered at (0,0) in the new coordinate system
-	int rectWidth = wxWindow::FromDIP(100);
-	int rectHeight = wxWindow::FromDIP(50);
-	dc.DrawRectangle(-rectWidth / 2, -rectHeight / 2, rectWidth, rectHeight);
+	//// x grid lines
+	//for (wxPoint x = wxPoint(-width, 0); x.x < m_origin.x + width; x.x += gridSize) {
+	//	//auto transformedX = cTransform.TransformPoint(x);
+	//	dc.DrawLine(x.x, height + m_origin.y, x.x, -height + m_origin.y);
+	//}
+	//
+	//// y grid lines
+	//for (wxPoint y = wxPoint(-height, 0); y.y < m_origin.x + height; y.y += gridSize) {
+	//	dc.DrawLine(width + m_origin.x, y.y, -width  + m_origin.x, y.y);
+	//}
 
 	//for (auto gridSize = m_gridSizes.rbegin(); gridSize != m_gridSizes.rend(); gridSize++) {
 	//	double distanceOnScreen = (*gridSize) * m_zoomLevel;
 	//	if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
 	//		break;
 	//}
-
 
 	for (GraphicalElement* const& element : m_elements)
 		element->Draw(GetCameraTransform(), gc);

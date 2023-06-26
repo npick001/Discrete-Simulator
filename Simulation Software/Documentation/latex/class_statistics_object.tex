@@ -1,0 +1,729 @@
+\hypertarget{class_statistics_object}{}\section{Statistics\+Object Class Reference}
+\label{class_statistics_object}\index{Statistics\+Object@{Statistics\+Object}}
+
+
+{\ttfamily \#include $<$Statistics.\+h$>$}
+
+
+
+Collaboration diagram for Statistics\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{class_statistics_object__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_statistics_object_ad4893d12c42f2bfdcab96f4246750556}{Statistics\+Object} (int histogram\+Intervals)
+\item 
+void \hyperlink{class_statistics_object_a693fe5171d536953cc5545048716dcca}{Read\+Stat\+File} (std\+::string filename)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_a8177bcf97b01750d125852b888e11323}{Create\+Dummy\+Data} (int data\+Size, \hyperlink{class_distribution}{Distribution} $\ast$distribution)
+\item 
+void \hyperlink{class_statistics_object_aafceb8d5caaffc3482e5f9be760fc953}{Reset\+Statistics} ()
+\item 
+void \hyperlink{class_statistics_object_a7954e7f69391099bbc33c139149ebb15}{Compute\+File\+P\+DF} ()
+\item 
+void \hyperlink{class_statistics_object_a9545eace92c4a478cf20dba20f8e51bf}{Stat\+Testing} ()
+\item 
+\hyperlink{class_distribution}{Distribution} $\ast$ \hyperlink{class_statistics_object_a88d8c8b8fd57da4a08cf1d02d363abf1}{Generate\+Best\+Fit\+Distribution} (std\+::string file\+Name)
+\item 
+void \hyperlink{class_statistics_object_a7efac97d5d339216bb81bd361419799d}{Generate\+Test\+Distributions} (std\+::vector$<$ double $>$ data)
+\item 
+\hyperlink{class_exponential}{Exponential} $\ast$ \hyperlink{class_statistics_object_a850dc5ba25d9017f5a586ba2ffd64d94}{Generate\+Exponential\+From\+Params} (std\+::vector$<$ double $>$ params)
+\item 
+\hyperlink{class_normal}{Normal} $\ast$ \hyperlink{class_statistics_object_a59cffa517dbb293e1f8fe72f2e6dd34f}{Generate\+Normal\+From\+Params} (std\+::vector$<$ double $>$ params)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_ad89d69d36051851fe876b1ec28967c1e}{Compute\+P\+DF} (std\+::vector$<$ double $>$ data, int num\+Bins)
+\item 
+\hyperlink{class_distribution}{Distribution} $\ast$ \hyperlink{class_statistics_object_a13305945c9536243f926b61d554c2dd4}{Determine\+Best\+Fit} ()
+\item 
+double \hyperlink{class_statistics_object_a5f516a6f544714694efc0ba0f925f38c}{Chi\+Square\+Test} (std\+::vector$<$ double $>$ data, std\+::vector$<$ double $>$ probabilities, bool i\+Wrote)
+\item 
+double \hyperlink{class_statistics_object_a6b3b58d412c68407195df629e2343c6d}{Chi\+Square\+Test} (std\+::vector$<$ double $>$ observed, std\+::vector$<$ double $>$ expected)
+\item 
+double \hyperlink{class_statistics_object_a7ad5fc88ce637ed421f4fccf92a8b5e0}{Chi\+Square\+C\+DF} (double dof, double x\+\_\+upper, int steps)
+\item 
+double \hyperlink{class_statistics_object_aec6848499139f4811fd4f2f60a252a9f}{P\+D\+F\+\_\+\+Chi\+\_\+\+Square} (double x, double dof)
+\item 
+double \hyperlink{class_statistics_object_aa4d91e7d45164eb8a3849c1c7df585e1}{Chi\+Square\+Critical\+Value} (double alpha, double dof)
+\item 
+void \hyperlink{class_statistics_object_aedec675916379850f8d53897cf5386b1}{Kolmogorov\+Smirnov\+Test} ()
+\item 
+void \hyperlink{class_statistics_object_a14eb03b68eaa7a26769390ff81915a25}{Least\+Squares\+Estimate} ()
+\item 
+void \hyperlink{class_statistics_object_ae820e4df3a29f2627a4ba5c3ac0b7862}{Set\+Iterative\+Tolerance} (double tolerance)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_a38f772ec93c2e0631cb101aff8296b54}{Get\+Dataset} ()
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_a983e11b6d3562ae303f5cc925be448e2}{Get\+\_\+\+L\+C\+G\+\_\+\+Stream} (int x0, int a, int c, int m, int N)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_a2bdaa3f298838c3f83bf17189c832623}{Chi\+\_\+\+Square\+\_\+\+Distribution} (int dof, int num\+Points)
+\item 
+double \hyperlink{class_statistics_object_ade153b4af992cc1df2c515cde8e01ef9}{Newtons\+Method} (double alpha, double initial\+Guess)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_a39d960b11bc70f9d402b4f2fb8c31296}{M\+L\+E\+\_\+\+Exponential} (std\+::vector$<$ double $>$ \&data)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_ab81aca627b51bbe20e71ac8ded5cf666}{M\+L\+E\+\_\+\+Normal} (std\+::vector$<$ double $>$ \&data)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_aecf3e116092cfcfd2a44e1a1936f7b9d}{M\+L\+E\+\_\+\+Triangular} (std\+::vector$<$ double $>$ \&data)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_af0888138520ad6df0c1c84cd3862c6c2}{M\+L\+E\+\_\+\+Poisson} (std\+::vector$<$ double $>$ \&data)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_ad4af7e6da209156c12ee1a5d2c9071bb}{M\+L\+E\+\_\+\+Weibull} (std\+::vector$<$ double $>$ \&data)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{class_statistics_object_af9e2fe4fdb940206e96af126d60a75c1}{M\+L\+E\+\_\+\+Erlang} (std\+::vector$<$ double $>$ \&data)
+\item 
+unsigned long long \hyperlink{class_statistics_object_a033c5346639a0dd44b68838a49bdd926}{factorial} (unsigned int n)
+\item 
+double \hyperlink{class_statistics_object_a0d9dc9480288e61b3e98134deb18d2d4}{Gamma\+Function} (unsigned int n)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 20 of file Statistics.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_statistics_object_ad4893d12c42f2bfdcab96f4246750556}\label{class_statistics_object_ad4893d12c42f2bfdcab96f4246750556}} 
+\index{Statistics\+Object@{Statistics\+Object}!Statistics\+Object@{Statistics\+Object}}
+\index{Statistics\+Object@{Statistics\+Object}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Statistics\+Object()}{StatisticsObject()}}
+{\footnotesize\ttfamily Statistics\+Object\+::\+Statistics\+Object (\begin{DoxyParamCaption}\item[{int}]{histogram\+Intervals }\end{DoxyParamCaption})}
+
+
+
+Definition at line 8 of file Statistics.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_statistics_object_a2bdaa3f298838c3f83bf17189c832623}\label{class_statistics_object_a2bdaa3f298838c3f83bf17189c832623}} 
+\index{Statistics\+Object@{Statistics\+Object}!Chi\+\_\+\+Square\+\_\+\+Distribution@{Chi\+\_\+\+Square\+\_\+\+Distribution}}
+\index{Chi\+\_\+\+Square\+\_\+\+Distribution@{Chi\+\_\+\+Square\+\_\+\+Distribution}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Chi\+\_\+\+Square\+\_\+\+Distribution()}{Chi\_Square\_Distribution()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+Chi\+\_\+\+Square\+\_\+\+Distribution (\begin{DoxyParamCaption}\item[{int}]{dof,  }\item[{int}]{num\+Points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 596 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a2bdaa3f298838c3f83bf17189c832623_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a2bdaa3f298838c3f83bf17189c832623_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a7ad5fc88ce637ed421f4fccf92a8b5e0}\label{class_statistics_object_a7ad5fc88ce637ed421f4fccf92a8b5e0}} 
+\index{Statistics\+Object@{Statistics\+Object}!Chi\+Square\+C\+DF@{Chi\+Square\+C\+DF}}
+\index{Chi\+Square\+C\+DF@{Chi\+Square\+C\+DF}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Chi\+Square\+C\+D\+F()}{ChiSquareCDF()}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Chi\+Square\+C\+DF (\begin{DoxyParamCaption}\item[{double}]{dof,  }\item[{double}]{x\+\_\+upper,  }\item[{int}]{steps }\end{DoxyParamCaption})}
+
+
+
+Definition at line 625 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a7ad5fc88ce637ed421f4fccf92a8b5e0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a7ad5fc88ce637ed421f4fccf92a8b5e0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_aa4d91e7d45164eb8a3849c1c7df585e1}\label{class_statistics_object_aa4d91e7d45164eb8a3849c1c7df585e1}} 
+\index{Statistics\+Object@{Statistics\+Object}!Chi\+Square\+Critical\+Value@{Chi\+Square\+Critical\+Value}}
+\index{Chi\+Square\+Critical\+Value@{Chi\+Square\+Critical\+Value}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Chi\+Square\+Critical\+Value()}{ChiSquareCriticalValue()}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Chi\+Square\+Critical\+Value (\begin{DoxyParamCaption}\item[{double}]{alpha,  }\item[{double}]{dof }\end{DoxyParamCaption})}
+
+
+
+Definition at line 250 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_aa4d91e7d45164eb8a3849c1c7df585e1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a5f516a6f544714694efc0ba0f925f38c}\label{class_statistics_object_a5f516a6f544714694efc0ba0f925f38c}} 
+\index{Statistics\+Object@{Statistics\+Object}!Chi\+Square\+Test@{Chi\+Square\+Test}}
+\index{Chi\+Square\+Test@{Chi\+Square\+Test}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Chi\+Square\+Test()}{ChiSquareTest()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Chi\+Square\+Test (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{data,  }\item[{std\+::vector$<$ double $>$}]{probabilities,  }\item[{bool}]{i\+Wrote }\end{DoxyParamCaption})}
+
+
+
+Definition at line 183 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a5f516a6f544714694efc0ba0f925f38c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a5f516a6f544714694efc0ba0f925f38c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a6b3b58d412c68407195df629e2343c6d}\label{class_statistics_object_a6b3b58d412c68407195df629e2343c6d}} 
+\index{Statistics\+Object@{Statistics\+Object}!Chi\+Square\+Test@{Chi\+Square\+Test}}
+\index{Chi\+Square\+Test@{Chi\+Square\+Test}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Chi\+Square\+Test()}{ChiSquareTest()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Chi\+Square\+Test (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{observed,  }\item[{std\+::vector$<$ double $>$}]{expected }\end{DoxyParamCaption})}
+
+
+
+Definition at line 219 of file Statistics.\+cpp.
+
+\mbox{\Hypertarget{class_statistics_object_a7954e7f69391099bbc33c139149ebb15}\label{class_statistics_object_a7954e7f69391099bbc33c139149ebb15}} 
+\index{Statistics\+Object@{Statistics\+Object}!Compute\+File\+P\+DF@{Compute\+File\+P\+DF}}
+\index{Compute\+File\+P\+DF@{Compute\+File\+P\+DF}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Compute\+File\+P\+D\+F()}{ComputeFilePDF()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Compute\+File\+P\+DF (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 112 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{class_statistics_object_a7954e7f69391099bbc33c139149ebb15_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a7954e7f69391099bbc33c139149ebb15_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_ad89d69d36051851fe876b1ec28967c1e}\label{class_statistics_object_ad89d69d36051851fe876b1ec28967c1e}} 
+\index{Statistics\+Object@{Statistics\+Object}!Compute\+P\+DF@{Compute\+P\+DF}}
+\index{Compute\+P\+DF@{Compute\+P\+DF}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Compute\+P\+D\+F()}{ComputePDF()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+Compute\+P\+DF (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{data,  }\item[{int}]{num\+Bins }\end{DoxyParamCaption})}
+
+
+
+Definition at line 339 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{class_statistics_object_ad89d69d36051851fe876b1ec28967c1e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_ad89d69d36051851fe876b1ec28967c1e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a8177bcf97b01750d125852b888e11323}\label{class_statistics_object_a8177bcf97b01750d125852b888e11323}} 
+\index{Statistics\+Object@{Statistics\+Object}!Create\+Dummy\+Data@{Create\+Dummy\+Data}}
+\index{Create\+Dummy\+Data@{Create\+Dummy\+Data}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Create\+Dummy\+Data()}{CreateDummyData()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+Create\+Dummy\+Data (\begin{DoxyParamCaption}\item[{int}]{data\+Size,  }\item[{\hyperlink{class_distribution}{Distribution} $\ast$}]{distribution }\end{DoxyParamCaption})}
+
+
+
+Definition at line 77 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{class_statistics_object_a8177bcf97b01750d125852b888e11323_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a8177bcf97b01750d125852b888e11323_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a13305945c9536243f926b61d554c2dd4}\label{class_statistics_object_a13305945c9536243f926b61d554c2dd4}} 
+\index{Statistics\+Object@{Statistics\+Object}!Determine\+Best\+Fit@{Determine\+Best\+Fit}}
+\index{Determine\+Best\+Fit@{Determine\+Best\+Fit}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Determine\+Best\+Fit()}{DetermineBestFit()}}
+{\footnotesize\ttfamily \hyperlink{class_distribution}{Distribution} $\ast$ Statistics\+Object\+::\+Determine\+Best\+Fit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 439 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a13305945c9536243f926b61d554c2dd4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a13305945c9536243f926b61d554c2dd4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a033c5346639a0dd44b68838a49bdd926}\label{class_statistics_object_a033c5346639a0dd44b68838a49bdd926}} 
+\index{Statistics\+Object@{Statistics\+Object}!factorial@{factorial}}
+\index{factorial@{factorial}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{factorial()}{factorial()}}
+{\footnotesize\ttfamily unsigned long long Statistics\+Object\+::factorial (\begin{DoxyParamCaption}\item[{unsigned int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 546 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a033c5346639a0dd44b68838a49bdd926_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a0d9dc9480288e61b3e98134deb18d2d4}\label{class_statistics_object_a0d9dc9480288e61b3e98134deb18d2d4}} 
+\index{Statistics\+Object@{Statistics\+Object}!Gamma\+Function@{Gamma\+Function}}
+\index{Gamma\+Function@{Gamma\+Function}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Gamma\+Function()}{GammaFunction()}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Gamma\+Function (\begin{DoxyParamCaption}\item[{unsigned int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 561 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a0d9dc9480288e61b3e98134deb18d2d4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a0d9dc9480288e61b3e98134deb18d2d4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a88d8c8b8fd57da4a08cf1d02d363abf1}\label{class_statistics_object_a88d8c8b8fd57da4a08cf1d02d363abf1}} 
+\index{Statistics\+Object@{Statistics\+Object}!Generate\+Best\+Fit\+Distribution@{Generate\+Best\+Fit\+Distribution}}
+\index{Generate\+Best\+Fit\+Distribution@{Generate\+Best\+Fit\+Distribution}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Generate\+Best\+Fit\+Distribution()}{GenerateBestFitDistribution()}}
+{\footnotesize\ttfamily \hyperlink{class_distribution}{Distribution} $\ast$ Statistics\+Object\+::\+Generate\+Best\+Fit\+Distribution (\begin{DoxyParamCaption}\item[{std\+::string}]{file\+Name }\end{DoxyParamCaption})}
+
+
+
+Definition at line 469 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a88d8c8b8fd57da4a08cf1d02d363abf1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a850dc5ba25d9017f5a586ba2ffd64d94}\label{class_statistics_object_a850dc5ba25d9017f5a586ba2ffd64d94}} 
+\index{Statistics\+Object@{Statistics\+Object}!Generate\+Exponential\+From\+Params@{Generate\+Exponential\+From\+Params}}
+\index{Generate\+Exponential\+From\+Params@{Generate\+Exponential\+From\+Params}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Generate\+Exponential\+From\+Params()}{GenerateExponentialFromParams()}}
+{\footnotesize\ttfamily \hyperlink{class_exponential}{Exponential} $\ast$ Statistics\+Object\+::\+Generate\+Exponential\+From\+Params (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{params }\end{DoxyParamCaption})}
+
+
+
+Definition at line 427 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a850dc5ba25d9017f5a586ba2ffd64d94_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a59cffa517dbb293e1f8fe72f2e6dd34f}\label{class_statistics_object_a59cffa517dbb293e1f8fe72f2e6dd34f}} 
+\index{Statistics\+Object@{Statistics\+Object}!Generate\+Normal\+From\+Params@{Generate\+Normal\+From\+Params}}
+\index{Generate\+Normal\+From\+Params@{Generate\+Normal\+From\+Params}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Generate\+Normal\+From\+Params()}{GenerateNormalFromParams()}}
+{\footnotesize\ttfamily \hyperlink{class_normal}{Normal} $\ast$ Statistics\+Object\+::\+Generate\+Normal\+From\+Params (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{params }\end{DoxyParamCaption})}
+
+
+
+Definition at line 433 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a59cffa517dbb293e1f8fe72f2e6dd34f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a7efac97d5d339216bb81bd361419799d}\label{class_statistics_object_a7efac97d5d339216bb81bd361419799d}} 
+\index{Statistics\+Object@{Statistics\+Object}!Generate\+Test\+Distributions@{Generate\+Test\+Distributions}}
+\index{Generate\+Test\+Distributions@{Generate\+Test\+Distributions}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Generate\+Test\+Distributions()}{GenerateTestDistributions()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Generate\+Test\+Distributions (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line 328 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a7efac97d5d339216bb81bd361419799d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a7efac97d5d339216bb81bd361419799d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a983e11b6d3562ae303f5cc925be448e2}\label{class_statistics_object_a983e11b6d3562ae303f5cc925be448e2}} 
+\index{Statistics\+Object@{Statistics\+Object}!Get\+\_\+\+L\+C\+G\+\_\+\+Stream@{Get\+\_\+\+L\+C\+G\+\_\+\+Stream}}
+\index{Get\+\_\+\+L\+C\+G\+\_\+\+Stream@{Get\+\_\+\+L\+C\+G\+\_\+\+Stream}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Get\+\_\+\+L\+C\+G\+\_\+\+Stream()}{Get\_LCG\_Stream()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+Get\+\_\+\+L\+C\+G\+\_\+\+Stream (\begin{DoxyParamCaption}\item[{int}]{x0,  }\item[{int}]{a,  }\item[{int}]{c,  }\item[{int}]{m,  }\item[{int}]{N }\end{DoxyParamCaption})}
+
+
+
+Definition at line 574 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a983e11b6d3562ae303f5cc925be448e2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a38f772ec93c2e0631cb101aff8296b54}\label{class_statistics_object_a38f772ec93c2e0631cb101aff8296b54}} 
+\index{Statistics\+Object@{Statistics\+Object}!Get\+Dataset@{Get\+Dataset}}
+\index{Get\+Dataset@{Get\+Dataset}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Get\+Dataset()}{GetDataset()}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Statistics\+Object\+::\+Get\+Dataset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 81 of file Statistics.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a38f772ec93c2e0631cb101aff8296b54_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_aedec675916379850f8d53897cf5386b1}\label{class_statistics_object_aedec675916379850f8d53897cf5386b1}} 
+\index{Statistics\+Object@{Statistics\+Object}!Kolmogorov\+Smirnov\+Test@{Kolmogorov\+Smirnov\+Test}}
+\index{Kolmogorov\+Smirnov\+Test@{Kolmogorov\+Smirnov\+Test}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Kolmogorov\+Smirnov\+Test()}{KolmogorovSmirnovTest()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Kolmogorov\+Smirnov\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 275 of file Statistics.\+cpp.
+
+\mbox{\Hypertarget{class_statistics_object_a14eb03b68eaa7a26769390ff81915a25}\label{class_statistics_object_a14eb03b68eaa7a26769390ff81915a25}} 
+\index{Statistics\+Object@{Statistics\+Object}!Least\+Squares\+Estimate@{Least\+Squares\+Estimate}}
+\index{Least\+Squares\+Estimate@{Least\+Squares\+Estimate}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Least\+Squares\+Estimate()}{LeastSquaresEstimate()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Least\+Squares\+Estimate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 279 of file Statistics.\+cpp.
+
+\mbox{\Hypertarget{class_statistics_object_af9e2fe4fdb940206e96af126d60a75c1}\label{class_statistics_object_af9e2fe4fdb940206e96af126d60a75c1}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Erlang@{M\+L\+E\+\_\+\+Erlang}}
+\index{M\+L\+E\+\_\+\+Erlang@{M\+L\+E\+\_\+\+Erlang}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Erlang()}{MLE\_Erlang()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Erlang (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 541 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_af9e2fe4fdb940206e96af126d60a75c1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a39d960b11bc70f9d402b4f2fb8c31296}\label{class_statistics_object_a39d960b11bc70f9d402b4f2fb8c31296}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Exponential@{M\+L\+E\+\_\+\+Exponential}}
+\index{M\+L\+E\+\_\+\+Exponential@{M\+L\+E\+\_\+\+Exponential}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Exponential()}{MLE\_Exponential()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Exponential (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 480 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a39d960b11bc70f9d402b4f2fb8c31296_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_ab81aca627b51bbe20e71ac8ded5cf666}\label{class_statistics_object_ab81aca627b51bbe20e71ac8ded5cf666}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Normal@{M\+L\+E\+\_\+\+Normal}}
+\index{M\+L\+E\+\_\+\+Normal@{M\+L\+E\+\_\+\+Normal}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Normal()}{MLE\_Normal()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Normal (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 497 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_ab81aca627b51bbe20e71ac8ded5cf666_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_af0888138520ad6df0c1c84cd3862c6c2}\label{class_statistics_object_af0888138520ad6df0c1c84cd3862c6c2}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Poisson@{M\+L\+E\+\_\+\+Poisson}}
+\index{M\+L\+E\+\_\+\+Poisson@{M\+L\+E\+\_\+\+Poisson}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Poisson()}{MLE\_Poisson()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Poisson (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 531 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_af0888138520ad6df0c1c84cd3862c6c2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_aecf3e116092cfcfd2a44e1a1936f7b9d}\label{class_statistics_object_aecf3e116092cfcfd2a44e1a1936f7b9d}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Triangular@{M\+L\+E\+\_\+\+Triangular}}
+\index{M\+L\+E\+\_\+\+Triangular@{M\+L\+E\+\_\+\+Triangular}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Triangular()}{MLE\_Triangular()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Triangular (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 526 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_aecf3e116092cfcfd2a44e1a1936f7b9d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_ad4af7e6da209156c12ee1a5d2c9071bb}\label{class_statistics_object_ad4af7e6da209156c12ee1a5d2c9071bb}} 
+\index{Statistics\+Object@{Statistics\+Object}!M\+L\+E\+\_\+\+Weibull@{M\+L\+E\+\_\+\+Weibull}}
+\index{M\+L\+E\+\_\+\+Weibull@{M\+L\+E\+\_\+\+Weibull}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{M\+L\+E\+\_\+\+Weibull()}{MLE\_Weibull()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Statistics\+Object\+::\+M\+L\+E\+\_\+\+Weibull (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 536 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_ad4af7e6da209156c12ee1a5d2c9071bb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_ade153b4af992cc1df2c515cde8e01ef9}\label{class_statistics_object_ade153b4af992cc1df2c515cde8e01ef9}} 
+\index{Statistics\+Object@{Statistics\+Object}!Newtons\+Method@{Newtons\+Method}}
+\index{Newtons\+Method@{Newtons\+Method}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Newtons\+Method()}{NewtonsMethod()}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+Newtons\+Method (\begin{DoxyParamCaption}\item[{double}]{alpha,  }\item[{double}]{initial\+Guess }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 228 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_ade153b4af992cc1df2c515cde8e01ef9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_aec6848499139f4811fd4f2f60a252a9f}\label{class_statistics_object_aec6848499139f4811fd4f2f60a252a9f}} 
+\index{Statistics\+Object@{Statistics\+Object}!P\+D\+F\+\_\+\+Chi\+\_\+\+Square@{P\+D\+F\+\_\+\+Chi\+\_\+\+Square}}
+\index{P\+D\+F\+\_\+\+Chi\+\_\+\+Square@{P\+D\+F\+\_\+\+Chi\+\_\+\+Square}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{P\+D\+F\+\_\+\+Chi\+\_\+\+Square()}{PDF\_Chi\_Square()}}
+{\footnotesize\ttfamily double Statistics\+Object\+::\+P\+D\+F\+\_\+\+Chi\+\_\+\+Square (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{dof }\end{DoxyParamCaption})}
+
+
+
+Definition at line 664 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_aec6848499139f4811fd4f2f60a252a9f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_aec6848499139f4811fd4f2f60a252a9f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_a693fe5171d536953cc5545048716dcca}\label{class_statistics_object_a693fe5171d536953cc5545048716dcca}} 
+\index{Statistics\+Object@{Statistics\+Object}!Read\+Stat\+File@{Read\+Stat\+File}}
+\index{Read\+Stat\+File@{Read\+Stat\+File}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Read\+Stat\+File()}{ReadStatFile()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Read\+Stat\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line 30 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a693fe5171d536953cc5545048716dcca_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a693fe5171d536953cc5545048716dcca_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_aafceb8d5caaffc3482e5f9be760fc953}\label{class_statistics_object_aafceb8d5caaffc3482e5f9be760fc953}} 
+\index{Statistics\+Object@{Statistics\+Object}!Reset\+Statistics@{Reset\+Statistics}}
+\index{Reset\+Statistics@{Reset\+Statistics}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Reset\+Statistics()}{ResetStatistics()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Reset\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 98 of file Statistics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_aafceb8d5caaffc3482e5f9be760fc953_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_statistics_object_ae820e4df3a29f2627a4ba5c3ac0b7862}\label{class_statistics_object_ae820e4df3a29f2627a4ba5c3ac0b7862}} 
+\index{Statistics\+Object@{Statistics\+Object}!Set\+Iterative\+Tolerance@{Set\+Iterative\+Tolerance}}
+\index{Set\+Iterative\+Tolerance@{Set\+Iterative\+Tolerance}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Set\+Iterative\+Tolerance()}{SetIterativeTolerance()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Set\+Iterative\+Tolerance (\begin{DoxyParamCaption}\item[{double}]{tolerance }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 80 of file Statistics.\+h.
+
+\mbox{\Hypertarget{class_statistics_object_a9545eace92c4a478cf20dba20f8e51bf}\label{class_statistics_object_a9545eace92c4a478cf20dba20f8e51bf}} 
+\index{Statistics\+Object@{Statistics\+Object}!Stat\+Testing@{Stat\+Testing}}
+\index{Stat\+Testing@{Stat\+Testing}!Statistics\+Object@{Statistics\+Object}}
+\subsubsection{\texorpdfstring{Stat\+Testing()}{StatTesting()}}
+{\footnotesize\ttfamily void Statistics\+Object\+::\+Stat\+Testing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 283 of file Statistics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_statistics_object_a9545eace92c4a478cf20dba20f8e51bf_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_statistics_8h}{Statistics.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_statistics_8cpp}{Statistics.\+cpp}\end{DoxyCompactItemize}

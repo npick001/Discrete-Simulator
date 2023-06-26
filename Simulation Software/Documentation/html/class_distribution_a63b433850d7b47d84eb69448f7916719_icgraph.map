@@ -1,0 +1,7 @@
+<map id="Distribution::GetRV" name="Distribution::GetRV">
+<area shape="rect" id="node2" href="$class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="213,5,325,32"/>
+<area shape="rect" id="node3" href="$class_statistics_object.html#a8177bcf97b01750d125852b888e11323" title="StatisticsObject::Create\lDummyData" alt="" coords="188,57,349,98"/>
+<area shape="rect" id="node4" href="$class_statistics_object.html#a9545eace92c4a478cf20dba20f8e51bf" title="StatisticsObject::StatTesting" alt="" coords="397,35,587,61"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#a13305945c9536243f926b61d554c2dd4" title="StatisticsObject::Determine\lBestFit" alt="" coords="401,86,583,127"/>
+<area shape="rect" id="node6" href="$class_statistics_object.html#a88d8c8b8fd57da4a08cf1d02d363abf1" title="StatisticsObject::Generate\lBestFitDistribution" alt="" coords="635,86,811,127"/>
+</map>

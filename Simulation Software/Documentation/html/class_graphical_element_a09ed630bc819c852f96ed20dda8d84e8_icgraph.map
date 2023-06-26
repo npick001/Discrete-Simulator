@@ -1,0 +1,5 @@
+<map id="GraphicalElement::GetID" name="GraphicalElement::GetID">
+<area shape="rect" id="node2" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="220,5,432,32"/>
+<area shape="rect" id="node3" href="$class_specific_element_container.html#a6a024841f2b43dc4e3c467d401434d28" title="SpecificElementContainer\l\&lt; GraphicalEdge \&gt;::operator[]" alt="" coords="229,57,423,98"/>
+<area shape="rect" id="node4" href="$class_specific_element_container.html#a2d5e472917fc500714586e9c115f8da6" title="SpecificElementContainer\l\&lt; GraphicalEdge \&gt;::erase" alt="" coords="241,122,411,163"/>
+</map>

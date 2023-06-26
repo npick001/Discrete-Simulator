@@ -1,0 +1,5 @@
+<map id="GenericNode::GetName" name="GenericNode::GetName">
+<area shape="rect" id="node2" href="$class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2" title="GenericNode::SetNodeType" alt="" coords="213,31,396,57"/>
+<area shape="rect" id="node3" href="$class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="444,5,616,32"/>
+<area shape="rect" id="node4" href="$class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="459,56,601,83"/>
+</map>

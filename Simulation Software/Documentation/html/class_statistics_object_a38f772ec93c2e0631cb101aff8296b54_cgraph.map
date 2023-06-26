@@ -1,0 +1,14 @@
+<map id="StatisticsObject::GetDataset" name="StatisticsObject::GetDataset">
+<area shape="rect" id="node2" href="$class_statistics_object.html#a983e11b6d3562ae303f5cc925be448e2" title="StatisticsObject::Get\l_LCG_Stream" alt="" coords="257,5,401,47"/>
+<area shape="rect" id="node3" href="$class_statistics_object.html#a2bdaa3f298838c3f83bf17189c832623" title="StatisticsObject::Chi\l_Square_Distribution" alt="" coords="258,71,401,112"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#a0d9dc9480288e61b3e98134deb18d2d4" title="StatisticsObject::GammaFunction" alt="" coords="464,137,683,163"/>
+<area shape="rect" id="node6" href="$class_statistics_object.html#a033c5346639a0dd44b68838a49bdd926" title="StatisticsObject::factorial" alt="" coords="731,162,899,189"/>
+<area shape="rect" id="node7" href="$class_statistics_object.html#ade153b4af992cc1df2c515cde8e01ef9" title="StatisticsObject::Newtons\lMethod" alt="" coords="243,239,416,280"/>
+<area shape="rect" id="node8" href="$class_statistics_object.html#a39d960b11bc70f9d402b4f2fb8c31296" title="StatisticsObject::MLE\l_Exponential" alt="" coords="254,304,405,345"/>
+<area shape="rect" id="node9" href="$class_statistics_object.html#ab81aca627b51bbe20e71ac8ded5cf666" title="StatisticsObject::MLE\l_Normal" alt="" coords="254,369,405,411"/>
+<area shape="rect" id="node10" href="$class_statistics_object.html#aecf3e116092cfcfd2a44e1a1936f7b9d" title="StatisticsObject::MLE\l_Triangular" alt="" coords="254,435,405,476"/>
+<area shape="rect" id="node11" href="$class_statistics_object.html#af0888138520ad6df0c1c84cd3862c6c2" title="StatisticsObject::MLE\l_Poisson" alt="" coords="254,500,405,541"/>
+<area shape="rect" id="node12" href="$class_statistics_object.html#ad4af7e6da209156c12ee1a5d2c9071bb" title="StatisticsObject::MLE\l_Weibull" alt="" coords="254,565,405,607"/>
+<area shape="rect" id="node13" href="$class_statistics_object.html#af9e2fe4fdb940206e96af126d60a75c1" title="StatisticsObject::MLE\l_Erlang" alt="" coords="254,631,405,672"/>
+<area shape="rect" id="node4" href="$_utility_8h.html#a53972ecec648f185c909fb20d30efc6a" title="WriteToFile" alt="" coords="529,78,617,105"/>
+</map>

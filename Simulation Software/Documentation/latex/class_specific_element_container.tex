@@ -1,0 +1,181 @@
+\hypertarget{class_specific_element_container}{}\section{Specific\+Element\+Container$<$ T $>$ Class Template Reference}
+\label{class_specific_element_container}\index{Specific\+Element\+Container$<$ T $>$@{Specific\+Element\+Container$<$ T $>$}}
+
+
+{\ttfamily \#include $<$Graphical\+Element.\+h$>$}
+
+
+
+Collaboration diagram for Specific\+Element\+Container$<$ T $>$\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{class_specific_element_container__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_specific_element_container_a3455c240bf203136bf88cfbb56d5ed2c}{Specific\+Element\+Container} (\hyperlink{class_element_list}{Element\+List} $\ast$const \&link)
+\item 
+void \hyperlink{class_specific_element_container_a6a3c2ba0b46445d1504489d5c2ef3530}{add\+\_\+new} (T $\ast$element)
+\item 
+T $\ast$ \hyperlink{class_specific_element_container_ae61c1d81ff22ca1bb4d37f0917710a4b}{operator\mbox{[}$\,$\mbox{]}} (const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&key)
+\item 
+T $\ast$ \hyperlink{class_specific_element_container_a6a024841f2b43dc4e3c467d401434d28}{operator\mbox{[}$\,$\mbox{]}} (const \hyperlink{struct_selection}{Selection} \&selection)
+\item 
+bool \hyperlink{class_specific_element_container_aead401f8325d8f15b5d63896f146d46b}{empty} () const
+\item 
+bool \hyperlink{class_specific_element_container_a55f9c50b8520d9e89aa11a31be58a0f0}{contains} (const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&key) const
+\item 
+T $\ast$ \hyperlink{class_specific_element_container_a700ee4826baf3ab9735c2ae5c52bcaf3}{recent} () const
+\item 
+std\+::size\+\_\+t \hyperlink{class_specific_element_container_ae08e116cb7638a4d4d10a830185f502e}{erase} (const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&key)
+\item 
+std\+::size\+\_\+t \hyperlink{class_specific_element_container_a2d5e472917fc500714586e9c115f8da6}{erase} (const \hyperlink{struct_selection}{Selection} \&selection)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Specific\+Element\+Container$<$ T $>$}
+
+
+
+Definition at line 158 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_specific_element_container_a3455c240bf203136bf88cfbb56d5ed2c}\label{class_specific_element_container_a3455c240bf203136bf88cfbb56d5ed2c}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{Specific\+Element\+Container()}{SpecificElementContainer()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+\hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::\hyperlink{class_specific_element_container}{Specific\+Element\+Container} (\begin{DoxyParamCaption}\item[{\hyperlink{class_element_list}{Element\+List} $\ast$const \&}]{link }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 165 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_specific_element_container_a6a3c2ba0b46445d1504489d5c2ef3530}\label{class_specific_element_container_a6a3c2ba0b46445d1504489d5c2ef3530}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!add\+\_\+new@{add\+\_\+new}}
+\index{add\+\_\+new@{add\+\_\+new}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{add\+\_\+new()}{add\_new()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+void \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::add\+\_\+new (\begin{DoxyParamCaption}\item[{T $\ast$}]{element }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 168 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_specific_element_container_a6a3c2ba0b46445d1504489d5c2ef3530_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_specific_element_container_a55f9c50b8520d9e89aa11a31be58a0f0}\label{class_specific_element_container_a55f9c50b8520d9e89aa11a31be58a0f0}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!contains@{contains}}
+\index{contains@{contains}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+bool \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::contains (\begin{DoxyParamCaption}\item[{const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&}]{key }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 184 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_specific_element_container_aead401f8325d8f15b5d63896f146d46b}\label{class_specific_element_container_aead401f8325d8f15b5d63896f146d46b}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!empty@{empty}}
+\index{empty@{empty}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+bool \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 181 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_specific_element_container_ae08e116cb7638a4d4d10a830185f502e}\label{class_specific_element_container_ae08e116cb7638a4d4d10a830185f502e}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!erase@{erase}}
+\index{erase@{erase}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{erase()}{erase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+std\+::size\+\_\+t \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::erase (\begin{DoxyParamCaption}\item[{const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 190 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_specific_element_container_ae08e116cb7638a4d4d10a830185f502e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_specific_element_container_a2d5e472917fc500714586e9c115f8da6}\label{class_specific_element_container_a2d5e472917fc500714586e9c115f8da6}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!erase@{erase}}
+\index{erase@{erase}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{erase()}{erase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+std\+::size\+\_\+t \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::erase (\begin{DoxyParamCaption}\item[{const \hyperlink{struct_selection}{Selection} \&}]{selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 198 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_specific_element_container_ae61c1d81ff22ca1bb4d37f0917710a4b}\label{class_specific_element_container_ae61c1d81ff22ca1bb4d37f0917710a4b}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+T$\ast$ \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \&}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 174 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_specific_element_container_a6a024841f2b43dc4e3c467d401434d28}\label{class_specific_element_container_a6a024841f2b43dc4e3c467d401434d28}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+T$\ast$ \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const \hyperlink{struct_selection}{Selection} \&}]{selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 177 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_specific_element_container_a700ee4826baf3ab9735c2ae5c52bcaf3}\label{class_specific_element_container_a700ee4826baf3ab9735c2ae5c52bcaf3}} 
+\index{Specific\+Element\+Container@{Specific\+Element\+Container}!recent@{recent}}
+\index{recent@{recent}!Specific\+Element\+Container@{Specific\+Element\+Container}}
+\subsubsection{\texorpdfstring{recent()}{recent()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+T$\ast$ \hyperlink{class_specific_element_container}{Specific\+Element\+Container}$<$ T $>$\+::recent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 187 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_specific_element_container_a700ee4826baf3ab9735c2ae5c52bcaf3_icgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_element_8h}{Graphical\+Element.\+h}\end{DoxyCompactItemize}

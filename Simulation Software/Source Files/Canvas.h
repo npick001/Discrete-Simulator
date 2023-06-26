@@ -61,6 +61,7 @@ private:
 	// Grid things
 	// "variable grid size in world space" approach
 	std::vector<double> m_gridSizes;
+	wxSize m_canvasSize;
 
 	/*std::vector<GraphicalNode> m_nodes;
 	std::vector<GraphicalEdge> m_edges;*/
@@ -85,7 +86,7 @@ private:
 	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
-	void DrawGrid();
+	void DrawGrid(wxGraphicsContext* gc);
 
 	// Selection contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none

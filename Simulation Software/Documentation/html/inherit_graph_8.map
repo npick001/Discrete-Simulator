@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_generic_node.html" title="GenericNode" alt="" coords="5,107,103,133"/>
+<area shape="rect" id="node2" href="$class_connection.html" title="Connection" alt="" coords="160,5,247,32"/>
+<area shape="rect" id="node3" href="$class_server_n_queue.html" title="ServerNQueue" alt="" coords="151,56,256,83"/>
+<area shape="rect" id="node4" href="$class_sink_node.html" title="SinkNode" alt="" coords="164,107,243,133"/>
+<area shape="rect" id="node5" href="$class_source_node.html" title="SourceNode" alt="" coords="157,157,250,184"/>
+<area shape="rect" id="node6" href="$class_s_s_s_q.html" title="SSSQ" alt="" coords="174,208,233,235"/>
+</map>

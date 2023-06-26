@@ -1,0 +1,8 @@
+<map id="MainApp::OnInit" name="MainApp::OnInit">
+<area shape="rect" id="node2" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="168,56,333,83"/>
+<area shape="rect" id="node3" href="$class_main_frame.html#a00c85521dad6b24000967206bcc53688" title="MainFrame::MainFrame" alt="" coords="389,31,549,57"/>
+<area shape="rect" id="node7" href="$class_properties_viewer.html#a584378c78158525069fccc64ba446821" title="PropertiesViewer::SetSize" alt="" coords="381,81,556,108"/>
+<area shape="rect" id="node4" href="$class_properties_viewer.html#a728c21d8325941bfcee2599ea9edd9bc" title="PropertiesViewer::ShowProperties" alt="" coords="604,31,823,57"/>
+<area shape="rect" id="node5" href="$class_set.html#a3638f81fb2a7b08e6f0e2ecd5543f85c" title="Set::GetSize" alt="" coords="871,5,968,32"/>
+<area shape="rect" id="node6" href="$class_set.html#ad9d6a75a557bc4db0578f18675f7517b" title="Set::GetFirst" alt="" coords="871,56,968,83"/>
+</map>

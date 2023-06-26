@@ -1,0 +1,7 @@
+<map id="GraphicalElement" name="GraphicalElement">
+<area shape="rect" id="node2" href="$class_graphical_edge.html" title="{GraphicalEdge\n||+ GetType()\l+ GraphicalEdge()\l+ GraphicalEdge()\l+ GraphicalEdge()\l+ GraphicalEdge()\l+ operator=()\l+ ~GraphicalEdge()\l+ ConnectSource()\l+ ConnectDestination()\l+ Disconnect()\land 7 more...\l}" alt="" coords="5,461,160,685"/>
+<area shape="rect" id="node3" href="$class_graphical_node.html" title="{GraphicalNode\n|# m_type\l# m_nodeType\l# m_properties\l# m_bodyColor\l# m_bodyShape\l# m_inputRect\l# m_outputRect\l# m_position\l# m_bodySize\l# m_ioSize\l# m_labelColor\l# m_ioColor\l# m_inputs\l# m_outputs\l|+ GetType()\l+ GetNodeType()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ ~GraphicalNode()\l+ Draw()\l+ MyDraw()\land 12 more...\l# GetOutputPoint()\l# GetInputPoint()\l}" alt="" coords="185,351,319,795"/>
+<area shape="rect" id="node4" href="$class_graphical_server.html" title="{GraphicalServer\n||+ GraphicalServer()\l+ GraphicalServer()\l+ MyDraw()\l}" alt="" coords="33,843,167,949"/>
+<area shape="rect" id="node5" href="$class_graphical_sink.html" title="{GraphicalSink\n||+ GraphicalSink()\l+ GraphicalSink()\l+ MyDraw()\l}" alt="" coords="191,843,313,949"/>
+<area shape="rect" id="node6" href="$class_graphical_source.html" title="{GraphicalSource\n||+ GraphicalSource()\l+ GraphicalSource()\l+ MyDraw()\l}" alt="" coords="337,843,476,949"/>
+</map>

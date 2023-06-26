@@ -1,0 +1,6 @@
+<map id="GraphicalElement::operator=" name="GraphicalElement::operator=">
+<area shape="rect" id="node2" href="$class_graphical_edge.html#ad590b20ea1c1cb30a15850a36f82a2c9" title="GraphicalEdge::operator=" alt="" coords="241,5,412,32"/>
+<area shape="rect" id="node4" href="$class_graphical_node.html#a9c5dc1b7f344e2785531318167c2826b" title="GraphicalNode::operator=" alt="" coords="241,56,412,83"/>
+<area shape="rect" id="node3" href="$class_graphical_edge.html#ad2db5ea6f28e2e572583909ff1f68088" title="GraphicalEdge::GetType" alt="" coords="475,5,639,32"/>
+<area shape="rect" id="node5" href="$class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a" title="GraphicalNode::GetNodeType" alt="" coords="460,56,655,83"/>
+</map>

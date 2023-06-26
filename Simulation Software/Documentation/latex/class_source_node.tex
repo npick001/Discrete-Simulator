@@ -1,0 +1,170 @@
+\hypertarget{class_source_node}{}\section{Source\+Node Class Reference}
+\label{class_source_node}\index{Source\+Node@{Source\+Node}}
+
+
+{\ttfamily \#include $<$Specific\+Nodes.\+h$>$}
+
+
+
+Inheritance diagram for Source\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{class_source_node__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Source\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{class_source_node__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_source_node_1_1_arrive_e_a}{Arrive\+EA}
+\item 
+class \hyperlink{class_source_node_1_1_my_statistics}{My\+Statistics}
+\item 
+class \hyperlink{class_source_node_1_1_source_statistics}{Source\+Statistics}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_source_node_acb96be478aebf6c2badd1c5d1164e24c}{Test} ()
+\item 
+\hyperlink{class_source_node_aad28db9c905ffdccd8013bc1e4481848}{Source\+Node} (std\+::string name, int num\+Gen, \hyperlink{class_entity}{Entity} $\ast$\hyperlink{_entity_8h_ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e}{entity}, \hyperlink{class_distribution}{Distribution} $\ast$dist)
+\item 
+\hyperlink{class_source_node_ab287553b2a359c578f4579bd467806a2}{Source\+Node} (std\+::string name, \hyperlink{class_entity}{Entity} $\ast$\hyperlink{_entity_8h_ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e}{entity}, \hyperlink{class_distribution}{Distribution} $\ast$dist)
+\item 
+void \hyperlink{class_source_node_a666a65bd2424a8f56d8f08260c09c0b4}{Node\+Process} (\hyperlink{class_entity}{Entity} $\ast$e) override
+\item 
+void \hyperlink{class_source_node_a6c5037fd886362d56b7ce04094433510}{Update\+Statistics} ()
+\item 
+std\+::unique\+\_\+ptr$<$ \hyperlink{class_generic_node_1_1_statistics_wrapper}{Statistics\+Wrapper} $>$ \hyperlink{class_source_node_a0aea882fe808d9da6d506653be166e73}{Get\+Statistics} () override
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 31 of file Specific\+Nodes.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_source_node_aad28db9c905ffdccd8013bc1e4481848}\label{class_source_node_aad28db9c905ffdccd8013bc1e4481848}} 
+\index{Source\+Node@{Source\+Node}!Source\+Node@{Source\+Node}}
+\index{Source\+Node@{Source\+Node}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Source\+Node()}{SourceNode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Source\+Node\+::\+Source\+Node (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{int}]{num\+Gen,  }\item[{\hyperlink{class_entity}{Entity} $\ast$}]{entity,  }\item[{\hyperlink{class_distribution}{Distribution} $\ast$}]{dist }\end{DoxyParamCaption})}
+
+
+
+Definition at line 102 of file Specific\+Nodes.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_source_node_aad28db9c905ffdccd8013bc1e4481848_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_source_node_ab287553b2a359c578f4579bd467806a2}\label{class_source_node_ab287553b2a359c578f4579bd467806a2}} 
+\index{Source\+Node@{Source\+Node}!Source\+Node@{Source\+Node}}
+\index{Source\+Node@{Source\+Node}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Source\+Node()}{SourceNode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Source\+Node\+::\+Source\+Node (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{\hyperlink{class_entity}{Entity} $\ast$}]{entity,  }\item[{\hyperlink{class_distribution}{Distribution} $\ast$}]{dist }\end{DoxyParamCaption})}
+
+
+
+Definition at line 118 of file Specific\+Nodes.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_source_node_ab287553b2a359c578f4579bd467806a2_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_source_node_a0aea882fe808d9da6d506653be166e73}\label{class_source_node_a0aea882fe808d9da6d506653be166e73}} 
+\index{Source\+Node@{Source\+Node}!Get\+Statistics@{Get\+Statistics}}
+\index{Get\+Statistics@{Get\+Statistics}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Get\+Statistics()}{GetStatistics()}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$ \hyperlink{class_generic_node_1_1_statistics_wrapper}{Generic\+Node\+::\+Statistics\+Wrapper} $>$ Source\+Node\+::\+Get\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_generic_node_ae7c8424c8c14fd3de993c902d78deb67}{Generic\+Node}.
+
+
+
+Definition at line 156 of file Specific\+Nodes.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_source_node_a0aea882fe808d9da6d506653be166e73_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_source_node_a666a65bd2424a8f56d8f08260c09c0b4}\label{class_source_node_a666a65bd2424a8f56d8f08260c09c0b4}} 
+\index{Source\+Node@{Source\+Node}!Node\+Process@{Node\+Process}}
+\index{Node\+Process@{Node\+Process}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Node\+Process()}{NodeProcess()}}
+{\footnotesize\ttfamily void Source\+Node\+::\+Node\+Process (\begin{DoxyParamCaption}\item[{\hyperlink{class_entity}{Entity} $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_generic_node_ae942258a57f211072d179da470579add}{Generic\+Node}.
+
+
+
+Definition at line 142 of file Specific\+Nodes.\+cpp.
+
+\mbox{\Hypertarget{class_source_node_acb96be478aebf6c2badd1c5d1164e24c}\label{class_source_node_acb96be478aebf6c2badd1c5d1164e24c}} 
+\index{Source\+Node@{Source\+Node}!Test@{Test}}
+\index{Test@{Test}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Test()}{Test()}}
+{\footnotesize\ttfamily void Source\+Node\+::\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 34 of file Specific\+Nodes.\+h.
+
+\mbox{\Hypertarget{class_source_node_a6c5037fd886362d56b7ce04094433510}\label{class_source_node_a6c5037fd886362d56b7ce04094433510}} 
+\index{Source\+Node@{Source\+Node}!Update\+Statistics@{Update\+Statistics}}
+\index{Update\+Statistics@{Update\+Statistics}!Source\+Node@{Source\+Node}}
+\subsubsection{\texorpdfstring{Update\+Statistics()}{UpdateStatistics()}}
+{\footnotesize\ttfamily void Source\+Node\+::\+Update\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 150 of file Specific\+Nodes.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_source_node_a6c5037fd886362d56b7ce04094433510_icgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_specific_nodes_8h}{Specific\+Nodes.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_specific_nodes_8cpp}{Specific\+Nodes.\+cpp}\end{DoxyCompactItemize}

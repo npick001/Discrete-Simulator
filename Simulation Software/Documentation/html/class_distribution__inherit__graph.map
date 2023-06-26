@@ -1,0 +1,10 @@
+<map id="Distribution" name="Distribution">
+<area shape="rect" id="node2" href="$class_constant.html" title="{Constant\n||+ Constant()\l+ GetRV()\l}" alt="" coords="5,160,100,252"/>
+<area shape="rect" id="node3" href="$class_erlang.html" title="{Erlang\n||+ Erlang()\l+ GetRV()\l}" alt="" coords="124,160,205,252"/>
+<area shape="rect" id="node4" href="$class_exponential.html" title="{Exponential\n||+ Exponential()\l+ GetRV()\l}" alt="" coords="229,160,340,252"/>
+<area shape="rect" id="node5" href="$class_normal.html" title="{Normal\n||+ Normal()\l+ GetRV()\l}" alt="" coords="365,160,447,252"/>
+<area shape="rect" id="node6" href="$class_poisson.html" title="{Poisson\n||+ Poisson()\l+ GetRV()\l}" alt="" coords="472,160,561,252"/>
+<area shape="rect" id="node7" href="$class_triangular.html" title="{Triangular\n||+ Triangular()\l+ GetRV()\l}" alt="" coords="586,160,685,252"/>
+<area shape="rect" id="node8" href="$class_uniform.html" title="{Uniform\n||+ Uniform()\l+ GetRV()\l}" alt="" coords="709,160,796,252"/>
+<area shape="rect" id="node9" href="$class_weibull.html" title="{Weibull\n||+ Weibull()\l+ GetRV()\l}" alt="" coords="821,160,906,252"/>
+</map>

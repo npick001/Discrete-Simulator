@@ -1,0 +1,379 @@
+\hypertarget{class_generic_node}{}\section{Generic\+Node Class Reference}
+\label{class_generic_node}\index{Generic\+Node@{Generic\+Node}}
+
+
+{\ttfamily \#include $<$Generic\+Node.\+h$>$}
+
+
+
+Inheritance diagram for Generic\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Generic\+Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{class_generic_node__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_generic_node_1_1_statistics}{Statistics}
+\item 
+class \hyperlink{class_generic_node_1_1_statistics_wrapper}{Statistics\+Wrapper}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Type} \{ \hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a4bbea859e46a6b70d8ede4c1c496b208}{S\+O\+U\+R\+CE}, 
+\hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a163157213f82876880a7c38556d690b0}{S\+E\+R\+V\+ER}, 
+\hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a21098ba9c0d34b59299b2424c9d29998}{S\+I\+NK}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_generic_node_ab627bbdbaaef832b9b79199bac113422}{Set\+Next} (\hyperlink{class_generic_node}{Generic\+Node} $\ast$next)
+\item 
+void \hyperlink{class_generic_node_a3b03496c103efe7e504f77e22abf851d}{Set\+Previous} (\hyperlink{class_generic_node}{Generic\+Node} $\ast$prev)
+\item 
+void \hyperlink{class_generic_node_ad309248ab0074f07f329418c0fa996ed}{Set\+Image\+Path} (const std\+::string \&image\+Path)
+\item 
+void \hyperlink{class_generic_node_ad05137b18cf33caa12d6c0d1293205c2}{Set\+Node\+Type} (std\+::string nodetype)
+\item 
+std\+::string \hyperlink{class_generic_node_aaf9d163658172370e01ef5da113b66e0}{Get\+Name} ()
+\item 
+std\+::string \hyperlink{class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f}{Get\+Image\+Path} ()
+\item 
+int \hyperlink{class_generic_node_aa73c27d677012efdcda65f7908c77758}{Get\+ID} ()
+\item 
+std\+::string \hyperlink{class_generic_node_a8bee56c218e7d322401a37374acab36a}{Get\+Type} ()
+\item 
+void \hyperlink{class_generic_node_a923a359d019dc5a97a3da74aa33e2761}{Arrive} (\hyperlink{class_entity}{Entity} $\ast$\hyperlink{_entity_8h_ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e}{entity})
+\item 
+virtual std\+::unique\+\_\+ptr$<$ \hyperlink{class_generic_node_1_1_statistics_wrapper}{Statistics\+Wrapper} $>$ \hyperlink{class_generic_node_ae7c8424c8c14fd3de993c902d78deb67}{Get\+Statistics} ()=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_generic_node_acf8f931dab598c16e00255257fee132d}{Generic\+Node} (const std\+::string \&name)
+\item 
+\hyperlink{class_generic_node_a9b0f3cb66385b487944d4f28069546f3}{Generic\+Node} (const \hyperlink{class_generic_node}{Generic\+Node} \&other)
+\item 
+\hyperlink{class_generic_node_ae97c1f46c781cbf09bfa7054097baa2a}{$\sim$\+Generic\+Node} ()
+\item 
+void \hyperlink{class_generic_node_a2d573208cd3bc049c7068a331c6cd294}{Depart} (\hyperlink{class_entity}{Entity} $\ast$\hyperlink{_entity_8h_ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e}{entity})
+\item 
+virtual void \hyperlink{class_generic_node_ae942258a57f211072d179da470579add}{Node\+Process} (\hyperlink{class_entity}{Entity} $\ast$\hyperlink{_entity_8h_ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e}{entity})=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_generic_node}{Generic\+Node} $\ast$ \hyperlink{class_generic_node_af1d326d888b277b40d55b3c67be446d7}{m\+\_\+next}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 8 of file Generic\+Node.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}\label{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}} 
+\index{Generic\+Node@{Generic\+Node}!Type@{Type}}
+\index{Type@{Type}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily enum \hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Generic\+Node\+::\+Type}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+O\+U\+R\+CE@{S\+O\+U\+R\+CE}!Generic\+Node@{Generic\+Node}}\index{Generic\+Node@{Generic\+Node}!S\+O\+U\+R\+CE@{S\+O\+U\+R\+CE}}}\mbox{\Hypertarget{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a4bbea859e46a6b70d8ede4c1c496b208}\label{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a4bbea859e46a6b70d8ede4c1c496b208}} 
+S\+O\+U\+R\+CE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+E\+R\+V\+ER@{S\+E\+R\+V\+ER}!Generic\+Node@{Generic\+Node}}\index{Generic\+Node@{Generic\+Node}!S\+E\+R\+V\+ER@{S\+E\+R\+V\+ER}}}\mbox{\Hypertarget{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a163157213f82876880a7c38556d690b0}\label{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a163157213f82876880a7c38556d690b0}} 
+S\+E\+R\+V\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+I\+NK@{S\+I\+NK}!Generic\+Node@{Generic\+Node}}\index{Generic\+Node@{Generic\+Node}!S\+I\+NK@{S\+I\+NK}}}\mbox{\Hypertarget{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a21098ba9c0d34b59299b2424c9d29998}\label{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6a21098ba9c0d34b59299b2424c9d29998}} 
+S\+I\+NK&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 11 of file Generic\+Node.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_generic_node_acf8f931dab598c16e00255257fee132d}\label{class_generic_node_acf8f931dab598c16e00255257fee132d}} 
+\index{Generic\+Node@{Generic\+Node}!Generic\+Node@{Generic\+Node}}
+\index{Generic\+Node@{Generic\+Node}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Generic\+Node()}{GenericNode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Generic\+Node\+::\+Generic\+Node (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 49 of file Generic\+Node.\+cpp.
+
+\mbox{\Hypertarget{class_generic_node_a9b0f3cb66385b487944d4f28069546f3}\label{class_generic_node_a9b0f3cb66385b487944d4f28069546f3}} 
+\index{Generic\+Node@{Generic\+Node}!Generic\+Node@{Generic\+Node}}
+\index{Generic\+Node@{Generic\+Node}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Generic\+Node()}{GenericNode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Generic\+Node\+::\+Generic\+Node (\begin{DoxyParamCaption}\item[{const \hyperlink{class_generic_node}{Generic\+Node} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 61 of file Generic\+Node.\+cpp.
+
+\mbox{\Hypertarget{class_generic_node_ae97c1f46c781cbf09bfa7054097baa2a}\label{class_generic_node_ae97c1f46c781cbf09bfa7054097baa2a}} 
+\index{Generic\+Node@{Generic\+Node}!````~Generic\+Node@{$\sim$\+Generic\+Node}}
+\index{````~Generic\+Node@{$\sim$\+Generic\+Node}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{$\sim$\+Generic\+Node()}{~GenericNode()}}
+{\footnotesize\ttfamily Generic\+Node\+::$\sim$\+Generic\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 66 of file Generic\+Node.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_generic_node_a923a359d019dc5a97a3da74aa33e2761}\label{class_generic_node_a923a359d019dc5a97a3da74aa33e2761}} 
+\index{Generic\+Node@{Generic\+Node}!Arrive@{Arrive}}
+\index{Arrive@{Arrive}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Arrive()}{Arrive()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Arrive (\begin{DoxyParamCaption}\item[{\hyperlink{class_entity}{Entity} $\ast$}]{entity }\end{DoxyParamCaption})}
+
+
+
+Definition at line 32 of file Generic\+Node.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_a923a359d019dc5a97a3da74aa33e2761_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_a923a359d019dc5a97a3da74aa33e2761_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_a2d573208cd3bc049c7068a331c6cd294}\label{class_generic_node_a2d573208cd3bc049c7068a331c6cd294}} 
+\index{Generic\+Node@{Generic\+Node}!Depart@{Depart}}
+\index{Depart@{Depart}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Depart()}{Depart()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Depart (\begin{DoxyParamCaption}\item[{\hyperlink{class_entity}{Entity} $\ast$}]{entity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 40 of file Generic\+Node.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_a2d573208cd3bc049c7068a331c6cd294_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_generic_node_a2d573208cd3bc049c7068a331c6cd294_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_aa73c27d677012efdcda65f7908c77758}\label{class_generic_node_aa73c27d677012efdcda65f7908c77758}} 
+\index{Generic\+Node@{Generic\+Node}!Get\+ID@{Get\+ID}}
+\index{Get\+ID@{Get\+ID}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Get\+I\+D()}{GetID()}}
+{\footnotesize\ttfamily int Generic\+Node\+::\+Get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 23 of file Generic\+Node.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_aa73c27d677012efdcda65f7908c77758_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f}\label{class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f}} 
+\index{Generic\+Node@{Generic\+Node}!Get\+Image\+Path@{Get\+Image\+Path}}
+\index{Get\+Image\+Path@{Get\+Image\+Path}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Get\+Image\+Path()}{GetImagePath()}}
+{\footnotesize\ttfamily std\+::string Generic\+Node\+::\+Get\+Image\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 22 of file Generic\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_aaf9d163658172370e01ef5da113b66e0}\label{class_generic_node_aaf9d163658172370e01ef5da113b66e0}} 
+\index{Generic\+Node@{Generic\+Node}!Get\+Name@{Get\+Name}}
+\index{Get\+Name@{Get\+Name}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Get\+Name()}{GetName()}}
+{\footnotesize\ttfamily std\+::string Generic\+Node\+::\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 18 of file Generic\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_aaf9d163658172370e01ef5da113b66e0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_ae7c8424c8c14fd3de993c902d78deb67}\label{class_generic_node_ae7c8424c8c14fd3de993c902d78deb67}} 
+\index{Generic\+Node@{Generic\+Node}!Get\+Statistics@{Get\+Statistics}}
+\index{Get\+Statistics@{Get\+Statistics}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Get\+Statistics()}{GetStatistics()}}
+{\footnotesize\ttfamily virtual std\+::unique\+\_\+ptr$<$\hyperlink{class_generic_node_1_1_statistics_wrapper}{Statistics\+Wrapper}$>$ Generic\+Node\+::\+Get\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_server_n_queue_a18718f3796f33fa0f9d9100c34a6a7dc}{Server\+N\+Queue}, \hyperlink{class_s_s_s_q_ad8f307b8a4609d28efcc122dddfe5120}{S\+S\+SQ}, \hyperlink{class_sink_node_ad6aeb0857d3ddd9511cd5d24974e1fac}{Sink\+Node}, and \hyperlink{class_source_node_a0aea882fe808d9da6d506653be166e73}{Source\+Node}.
+
+\mbox{\Hypertarget{class_generic_node_a8bee56c218e7d322401a37374acab36a}\label{class_generic_node_a8bee56c218e7d322401a37374acab36a}} 
+\index{Generic\+Node@{Generic\+Node}!Get\+Type@{Get\+Type}}
+\index{Get\+Type@{Get\+Type}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Get\+Type()}{GetType()}}
+{\footnotesize\ttfamily std\+::string Generic\+Node\+::\+Get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 24 of file Generic\+Node.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_a8bee56c218e7d322401a37374acab36a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_ae942258a57f211072d179da470579add}\label{class_generic_node_ae942258a57f211072d179da470579add}} 
+\index{Generic\+Node@{Generic\+Node}!Node\+Process@{Node\+Process}}
+\index{Node\+Process@{Node\+Process}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Node\+Process()}{NodeProcess()}}
+{\footnotesize\ttfamily virtual void Generic\+Node\+::\+Node\+Process (\begin{DoxyParamCaption}\item[{\hyperlink{class_entity}{Entity} $\ast$}]{entity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_server_n_queue_adbc0e634171f6dc0785f2e49659663f7}{Server\+N\+Queue}, \hyperlink{class_s_s_s_q_a21ff1a4817052985747b6df51bf5d643}{S\+S\+SQ}, \hyperlink{class_sink_node_a5f3fe2c195c3bb154f27bdf3ae27dd27}{Sink\+Node}, and \hyperlink{class_source_node_a666a65bd2424a8f56d8f08260c09c0b4}{Source\+Node}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_ae942258a57f211072d179da470579add_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_ad309248ab0074f07f329418c0fa996ed}\label{class_generic_node_ad309248ab0074f07f329418c0fa996ed}} 
+\index{Generic\+Node@{Generic\+Node}!Set\+Image\+Path@{Set\+Image\+Path}}
+\index{Set\+Image\+Path@{Set\+Image\+Path}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Set\+Image\+Path()}{SetImagePath()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Set\+Image\+Path (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{image\+Path }\end{DoxyParamCaption})}
+
+
+
+Definition at line 14 of file Generic\+Node.\+cpp.
+
+\mbox{\Hypertarget{class_generic_node_ab627bbdbaaef832b9b79199bac113422}\label{class_generic_node_ab627bbdbaaef832b9b79199bac113422}} 
+\index{Generic\+Node@{Generic\+Node}!Set\+Next@{Set\+Next}}
+\index{Set\+Next@{Set\+Next}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Set\+Next()}{SetNext()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Set\+Next (\begin{DoxyParamCaption}\item[{\hyperlink{class_generic_node}{Generic\+Node} $\ast$}]{next }\end{DoxyParamCaption})}
+
+
+
+Definition at line 6 of file Generic\+Node.\+cpp.
+
+\mbox{\Hypertarget{class_generic_node_ad05137b18cf33caa12d6c0d1293205c2}\label{class_generic_node_ad05137b18cf33caa12d6c0d1293205c2}} 
+\index{Generic\+Node@{Generic\+Node}!Set\+Node\+Type@{Set\+Node\+Type}}
+\index{Set\+Node\+Type@{Set\+Node\+Type}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Set\+Node\+Type()}{SetNodeType()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Set\+Node\+Type (\begin{DoxyParamCaption}\item[{std\+::string}]{nodetype }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 20 of file Generic\+Node.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_generic_node_a3b03496c103efe7e504f77e22abf851d}\label{class_generic_node_a3b03496c103efe7e504f77e22abf851d}} 
+\index{Generic\+Node@{Generic\+Node}!Set\+Previous@{Set\+Previous}}
+\index{Set\+Previous@{Set\+Previous}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{Set\+Previous()}{SetPrevious()}}
+{\footnotesize\ttfamily void Generic\+Node\+::\+Set\+Previous (\begin{DoxyParamCaption}\item[{\hyperlink{class_generic_node}{Generic\+Node} $\ast$}]{prev }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file Generic\+Node.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_generic_node_af1d326d888b277b40d55b3c67be446d7}\label{class_generic_node_af1d326d888b277b40d55b3c67be446d7}} 
+\index{Generic\+Node@{Generic\+Node}!m\+\_\+next@{m\+\_\+next}}
+\index{m\+\_\+next@{m\+\_\+next}!Generic\+Node@{Generic\+Node}}
+\subsubsection{\texorpdfstring{m\+\_\+next}{m\_next}}
+{\footnotesize\ttfamily \hyperlink{class_generic_node}{Generic\+Node}$\ast$ Generic\+Node\+::m\+\_\+next\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 46 of file Generic\+Node.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_generic_node_8h}{Generic\+Node.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_generic_node_8cpp}{Generic\+Node.\+cpp}\end{DoxyCompactItemize}

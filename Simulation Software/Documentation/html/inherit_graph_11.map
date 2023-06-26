@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_graphical_element.html" title="GraphicalElement" alt="" coords="5,31,131,57"/>
+<area shape="rect" id="node2" href="$class_graphical_edge.html" title="GraphicalEdge" alt="" coords="179,5,285,32"/>
+<area shape="rect" id="node3" href="$class_graphical_node.html" title="GraphicalNode" alt="" coords="179,56,285,83"/>
+<area shape="rect" id="node4" href="$class_graphical_server.html" title="GraphicalServer" alt="" coords="336,5,449,32"/>
+<area shape="rect" id="node5" href="$class_graphical_sink.html" title="GraphicalSink" alt="" coords="341,56,444,83"/>
+<area shape="rect" id="node6" href="$class_graphical_source.html" title="GraphicalSource" alt="" coords="333,107,452,133"/>
+</map>

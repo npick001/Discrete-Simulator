@@ -1,0 +1,6 @@
+<map id="StatisticsObject::GenerateTestDistributions" name="StatisticsObject::GenerateTestDistributions">
+<area shape="rect" id="node2" href="$class_statistics_object.html#a39d960b11bc70f9d402b4f2fb8c31296" title="StatisticsObject::MLE\l_Exponential" alt="" coords="242,5,393,47"/>
+<area shape="rect" id="node3" href="$class_statistics_object.html#a850dc5ba25d9017f5a586ba2ffd64d94" title="StatisticsObject::Generate\lExponentialFromParams" alt="" coords="229,71,405,112"/>
+<area shape="rect" id="node4" href="$class_statistics_object.html#ab81aca627b51bbe20e71ac8ded5cf666" title="StatisticsObject::MLE\l_Normal" alt="" coords="242,136,393,177"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#a59cffa517dbb293e1f8fe72f2e6dd34f" title="StatisticsObject::Generate\lNormalFromParams" alt="" coords="229,201,405,243"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="StatisticsObject::PDF_Chi_Square" name="StatisticsObject::PDF_Chi_Square">
+<area shape="rect" id="node2" href="$class_statistics_object.html#aa4d91e7d45164eb8a3849c1c7df585e1" title="StatisticsObject::ChiSquare\lCriticalValue" alt="" coords="473,5,655,47"/>
+<area shape="rect" id="node3" href="$class_statistics_object.html#a7ad5fc88ce637ed421f4fccf92a8b5e0" title="StatisticsObject::ChiSquareCDF" alt="" coords="203,63,412,90"/>
+<area shape="rect" id="node4" href="$class_statistics_object.html#a5f516a6f544714694efc0ba0f925f38c" title="StatisticsObject::ChiSquareTest" alt="" coords="460,71,668,98"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#a13305945c9536243f926b61d554c2dd4" title="StatisticsObject::Determine\lBestFit" alt="" coords="716,64,899,105"/>
+<area shape="rect" id="node6" href="$class_statistics_object.html#a88d8c8b8fd57da4a08cf1d02d363abf1" title="StatisticsObject::Generate\lBestFitDistribution" alt="" coords="947,64,1123,105"/>
+</map>

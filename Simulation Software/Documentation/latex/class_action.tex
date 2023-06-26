@@ -1,0 +1,148 @@
+\hypertarget{class_action}{}\section{Action Class Reference}
+\label{class_action}\index{Action@{Action}}
+
+
+{\ttfamily \#include $<$Action.\+h$>$}
+
+
+
+Inheritance diagram for Action\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{class_action__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Action\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{class_action__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_action_a4f457ccfc8336b565cadca56b36e0271}{Action} ()
+\item 
+\hyperlink{class_action_ab361b73e8653f33eee6b13b76d77bc62}{Action} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id)
+\item 
+virtual void \hyperlink{class_action_a69864cea344385ee84a5120eaab5d82a}{Redo} ()=0
+\item 
+virtual void \hyperlink{class_action_aab28a6693a01e51712ccbf4d24b6015e}{Undo} ()=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \hyperlink{class_action_aa7b19bcb67e58c39675df7204d593b89}{m\+\_\+element\+ID}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_action_a12790c6b4f2fb95ff77fbfec4dd07867}{History}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 13 of file Action.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_action_a4f457ccfc8336b565cadca56b36e0271}\label{class_action_a4f457ccfc8336b565cadca56b36e0271}} 
+\index{Action@{Action}!Action@{Action}}
+\index{Action@{Action}!Action@{Action}}
+\subsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Action\+::\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 5 of file Action.\+cpp.
+
+\mbox{\Hypertarget{class_action_ab361b73e8653f33eee6b13b76d77bc62}\label{class_action_ab361b73e8653f33eee6b13b76d77bc62}} 
+\index{Action@{Action}!Action@{Action}}
+\index{Action@{Action}!Action@{Action}}
+\subsubsection{\texorpdfstring{Action()}{Action()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Action\+::\+Action (\begin{DoxyParamCaption}\item[{\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key}}]{id }\end{DoxyParamCaption})}
+
+
+
+Definition at line 7 of file Action.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_action_a69864cea344385ee84a5120eaab5d82a}\label{class_action_a69864cea344385ee84a5120eaab5d82a}} 
+\index{Action@{Action}!Redo@{Redo}}
+\index{Redo@{Redo}!Action@{Action}}
+\subsubsection{\texorpdfstring{Redo()}{Redo()}}
+{\footnotesize\ttfamily virtual void Action\+::\+Redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_move_node_action_ae73d7a16920641dcc5b83f671e287223}{Move\+Node\+Action}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_action_a69864cea344385ee84a5120eaab5d82a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_action_aab28a6693a01e51712ccbf4d24b6015e}\label{class_action_aab28a6693a01e51712ccbf4d24b6015e}} 
+\index{Action@{Action}!Undo@{Undo}}
+\index{Undo@{Undo}!Action@{Action}}
+\subsubsection{\texorpdfstring{Undo()}{Undo()}}
+{\footnotesize\ttfamily virtual void Action\+::\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_move_node_action_ad2136c2037da52ba1417c0c44b28d579}{Move\+Node\+Action}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_action_aab28a6693a01e51712ccbf4d24b6015e_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_action_a12790c6b4f2fb95ff77fbfec4dd07867}\label{class_action_a12790c6b4f2fb95ff77fbfec4dd07867}} 
+\index{Action@{Action}!History@{History}}
+\index{History@{History}!Action@{Action}}
+\subsubsection{\texorpdfstring{History}{History}}
+{\footnotesize\ttfamily friend class \hyperlink{class_history}{History}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 15 of file Action.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_action_aa7b19bcb67e58c39675df7204d593b89}\label{class_action_aa7b19bcb67e58c39675df7204d593b89}} 
+\index{Action@{Action}!m\+\_\+element\+ID@{m\+\_\+element\+ID}}
+\index{m\+\_\+element\+ID@{m\+\_\+element\+ID}!Action@{Action}}
+\subsubsection{\texorpdfstring{m\+\_\+element\+ID}{m\_elementID}}
+{\footnotesize\ttfamily \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} Action\+::m\+\_\+element\+ID\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 18 of file Action.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_action_8h}{Action.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_action_8cpp}{Action.\+cpp}\end{DoxyCompactItemize}

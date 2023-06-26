@@ -1,0 +1,5 @@
+<map id="Action::Undo" name="Action::Undo">
+<area shape="rect" id="node2" href="$class_history.html#ae2286b5c19bc1a5947caf33bdc5a39b0" title="History::LogAction" alt="" coords="197,5,326,32"/>
+<area shape="rect" id="node4" href="$class_move_node_action.html#a84fd47d3f670edfc79c089d5efb6daca" title="MoveNodeAction::SetNextPosition" alt="" coords="151,56,372,83"/>
+<area shape="rect" id="node3" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="420,31,632,57"/>
+</map>
