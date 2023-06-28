@@ -1,0 +1,9 @@
+<map id="MainFrame::RegisterNewSelection" name="MainFrame::RegisterNewSelection">
+<area shape="rect" id="node2" href="$class_properties_viewer.html#a610dc708815ecdc748c2898551f086c0" title="PropertiesViewer::Reset" alt="" coords="295,56,457,83"/>
+<area shape="rect" id="node3" href="$class_set.html#a3638f81fb2a7b08e6f0e2ecd5543f85c" title="Set::GetSize" alt="" coords="524,5,621,32"/>
+<area shape="rect" id="node5" href="$class_graphical_node.html#a9d89885db9553820d3557a801a83b9de" title="GraphicalNode::GetProperties" alt="" coords="279,107,473,133"/>
+<area shape="rect" id="node6" href="$class_properties_viewer.html#ae8fe6d69893153aa755656e9db880bfd" title="PropertiesViewer::AddProperty" alt="" coords="276,157,476,184"/>
+<area shape="rect" id="node8" href="$class_properties_viewer.html#aac1a5924495246147e465375a686d938" title="PropertiesViewer::Refresh" alt="" coords="290,208,462,235"/>
+<area shape="rect" id="node4" href="$class_set.html#ad9d6a75a557bc4db0578f18675f7517b" title="Set::GetFirst" alt="" coords="524,56,621,83"/>
+<area shape="rect" id="node7" href="$class_set.html#afc630403d8cd371e244ff4c425b40edf" title="Set::Add" alt="" coords="536,157,609,184"/>
+</map>

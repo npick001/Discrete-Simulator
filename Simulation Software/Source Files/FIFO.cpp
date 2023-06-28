@@ -9,8 +9,8 @@ FIFO::FIFO()
 	m_size = 0;
 
 	m_total = 0;
-	m_queueSizeMin = LONG_MAX;
-	m_queueSizeMax = LONG_MIN;
+	m_queueSizeMin = 0;
+	m_queueSizeMax = 0;
 	m_queueSizeSum = 0;
 	m_count = 0;
 	m_cdfWaits = 0;
@@ -27,6 +27,10 @@ void FIFO::AddEntity(Entity* e)
 	}
 	m_size++;
 
+	if (m_queueSizeMax < m_size) {
+		m_queueSizeMax = m_size;
+	}
+
 	e->EnterQueue(GetSimulationTime());
 }
 
@@ -38,6 +42,10 @@ Entity* FIFO::GetEntity()
 		Entity* e = m_head->m_entity;
 		m_head = m_head->next;
 		m_size--;
+
+		if (m_queueSizeMin > m_size) {
+			m_queueSizeMin = m_size;
+		}
 
 		m_cdfWaits += e->LeaveQueue(GetSimulationTime());
 		m_queueSizeSum += m_size;

@@ -93,16 +93,33 @@ void SourceNode::ArriveEM() {
 	if (m_numberToGenerate > 0 || m_infiniteGeneration) {
 		Time arrivalDelta = m_arrivalDistribution->GetRV();
 
-		std::cout << "Scheduling source arrival event in " << arrivalDelta << std::endl;
+		std::string message = "Scheduling source arrival event in " + std::to_string(arrivalDelta);
+		wxLogMessage("%s", message.c_str());
+		
 		ScheduleEventIn(arrivalDelta, new ArriveEA(this));
 	}
+}
+
+SourceNode::SourceNode() : GenericNode("Default Source")
+{
+	SetNodeType(SOURCE);
+
+	m_infiniteGeneration = false;
+	m_numberToGenerate = 10;
+	m_arrivalDistribution = new Exponential(0.25);
+	m_entity = new MyEntity(GetSimulationTime());
+
+	sm_entitiesCreated = 0;
+	m_myStats = new MyStatistics(sm_entitiesCreated, sm_totalEntitiesCreated);
+
+	ScheduleEventIn(0.0, new ArriveEA(this));
 }
 
 // For finite entity generation
 SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distribution* dist) : GenericNode(name) {
 
-	SetNodeType(GenericNode::SOURCE);
-
+	SetNodeType(SOURCE);
+  
 	m_infiniteGeneration = false;
 	m_numberToGenerate = numGen;
 	m_arrivalDistribution = dist;
@@ -117,7 +134,7 @@ SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distributio
 // For infinite entity generation => NOT COMPLETED
 SourceNode::SourceNode(std::string name, Entity* entity, Distribution* dist) : GenericNode(name) {
 
-	SetNodeType(GenericNode::SOURCE);
+	SetNodeType(SOURCE);
 
 	m_infiniteGeneration = true;
 	m_numberToGenerate = -1;
@@ -141,7 +158,8 @@ SourceNode::SourceNode(std::string name, Entity* entity, Distribution* dist) : G
 
 void SourceNode::NodeProcess(Entity* e)
 {
-	std::cout << "ERROR -> SourceNode.Arrive() SHOULD NOT BE CALLED";
+	std::string message = "ERROR -> SourceNode.Arrive() SHOULD NOT BE CALLED\n";
+	wxLogMessage("%s", message.c_str());
 }
 
 // commit changes to statistics
@@ -215,14 +233,23 @@ private:
 	Statistics* m_stats;
 };
 
+SinkNode::SinkNode() : GenericNode("Default Sink")
+{
+	SetNodeType(SINK);
+	sm_entitiesDestroyed = 0;
+	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
+}
+
 SinkNode::SinkNode(string name) : GenericNode(name) {
-	SetNodeType(GenericNode::SINK);
+	SetNodeType(SINK);
 	sm_entitiesDestroyed = 0;
 	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
 };
 
 void SinkNode::NodeProcess(Entity* entity) {
-	cout << "Deleting " << entity->GetID() << endl;
+
+	std::string message = "Deleting " + std::to_string(entity->GetID()) + '\n';
+	wxLogMessage("%s", message.c_str());
 
 	entity->SetDeletionTime(GetSimulationTime());
 
@@ -363,7 +390,28 @@ private:
 	Entity* _e;
 };
 
+SSSQ::SSSQ() : GenericNode("Default Server")
+{
+	SetNodeType(SERVER);
+
+	m_state = idle;
+	sm_states.push_back(1.0);
+	sm_stateChangeTimes.push_back(GetSimulationTime());
+
+	m_serviceTime = new Triangular(1.0, 2.0, 3.0);
+	m_queue = new FIFO();
+
+	m_myStats = new MyStatistics();
+	sm_processed = 0;
+	sm_waitTime = 0;
+	sm_totalServiceTime = 0;
+	sm_idleTime = 0;
+	sm_utilization = 0;
+}
+
 SSSQ::SSSQ(std::string name, Distribution* serviceTime) : GenericNode(name) {
+	SetNodeType(SERVER);
+
 	m_state = idle;
 	sm_states.push_back(1.0);
 	sm_stateChangeTimes.push_back(GetSimulationTime());
@@ -401,6 +449,11 @@ void SSSQ::StartProcessingEM() {
 	Time serviceTime = m_serviceTime->GetRV();
 	sm_totalServiceTime += serviceTime;
 
+	std::string message = "Time: " + std::to_string(GetSimulationTime()) +
+						  "\tSSSQ " + std::to_string(GetID()) +
+						  "\tStart Processing\n";
+	wxLogMessage("%s", message.c_str());
+
 	ScheduleEventIn(serviceTime, new EndProcessingEA(this, e));
 }
 
@@ -416,6 +469,11 @@ void SSSQ::EndProcessingEM(Entity* e) {
 	if (!m_queue->IsEmpty()) {
 		ScheduleEventIn(0.0, new StartProcessingEA(this));
 	}
+
+	std::string message = "Time: " + std::to_string(GetSimulationTime()) +
+		"\tSSSQ " + std::to_string(GetID()) +
+		"\tEnd Processing\n";
+
 	Depart(e);
 }
 

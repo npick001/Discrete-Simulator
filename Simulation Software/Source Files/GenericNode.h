@@ -1,6 +1,6 @@
 #pragma once
-//#include <wx/wx.h>
-//#include <wx/graphics.h>
+#include <wx/wx.h>
+#include <wx/log.h>
 
 #include "Directives.h"
 #include "Entity.h"
@@ -16,12 +16,10 @@ public:
 
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
-    void SetImagePath(const std::string& imagePath);
-    inline void SetNodeType(std::string nodetype) { m_nodeType = nodetype; }
+    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
     std::string GetName();
-    std::string GetImagePath();
     inline int GetID() { return m_id; }
-    inline std::string GetType() { return m_nodeType; }
+    inline Type GetType() { return m_nodeType; }
 
     void Arrive(Entity* entity);
 
@@ -35,7 +33,6 @@ public:
         int m_id;
     };
 
-    // Virtual function returning a wrapper
     virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
@@ -64,31 +61,9 @@ protected:
 
 private:
     int m_id;
-    std::string m_nodeType;
+    Type m_nodeType;
     static int m_nextID;
     std::string m_name;
-    std::string m_imagePath;
-    //wxPoint m_position;
-    //wxSize m_size;
 
     GenericNode* m_prev;
-    //GraphicalNode* m_graphics;
 };
-
-class Connection : public GenericNode
-{
-public:
-    Connection(GenericNode* startBlock, GenericNode* endBlock)
-        : GenericNode("Connection") {};
-
-   // void Draw(wxGraphicsContext* gc) override {
-   ///*     wxPoint startPoint = _startNode->GetPosition() + wxSize(_startNode->GetSize().x, _startNode->GetSize().y / 2);
-   //     wxPoint endPoint = _endNode->GetPosition() + wxSize(0, _endNode->GetSize().y / 2);
-
-   //     gc->SetPen(wxPen(*wxBLACK, 2));
-   //     gc->StrokeLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-   //*/ }
-
-private:
-};
-

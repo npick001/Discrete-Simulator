@@ -1,8 +1,11 @@
 #pragma once
+#include <vector>
 
 #include "Canvas.h"
 #include "SimulationExecutive.h"
 #include "SpecificNodes.h"
+
+class Canvas;
 
 /***************************************
 
@@ -32,14 +35,43 @@ class SimProject {
 public:
 	SimProject(Canvas* canvas);
 
+	void SetCanvas(Canvas* canvas);
+	const Canvas& ViewCanvas();
+
+	/// <Build>
+	/// Take graphical nodes and generate 
+	/// simulation code
 	void Build();
 	void Run();
+	void WriteStatistics();
+
+	void SetTimeUnit(TimeUnit newUnit);
 
 private:
+	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+
+	TimeUnit m_modelTimeUnit;
 
 	// Model 
 	std::vector<GenericNode*> m_instantiatedNodes;
 
 	// View
 	Canvas* m_canvas;
+};
+
+/*******************************************/
+/* Node Factory:                           */
+/* defines an node creation object         */
+/* the factory's whole job is to generate  */
+/* the specified node and return a pointer */
+/*******************************************/
+class NodeFactory
+{
+public:
+	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type);
+	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
+
+	static GenericNode* CreateSimObject(GenericNode::Type type);
+private:
+
 };

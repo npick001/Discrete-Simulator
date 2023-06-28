@@ -93,9 +93,7 @@ public:
 	inline void Empty()
 	{
 		while (_head != nullptr) {
-			Node* n = _head;
-			_head = _head->next;
-			delete n;
+			auto temp = GetFirst();
 		}
 		_size = 0;
 	}
@@ -103,11 +101,8 @@ public:
 	// view the first item in the set
 	inline T* View()
 	{
-		return(_head->t);
+		return(_head->data);
 	}
-
-	inline bool IsEmpty() { return (_size == 0); }
-	inline int GetSize() { return _size; }
 
 	// Do a deep copy of the passed Set to this one
 	inline Set<T>& operator=(const Set<T>& other)
@@ -125,6 +120,8 @@ public:
 		return *this;
 	}
 
+	inline bool IsEmpty() { return (_size == 0); }
+	inline int GetSize() { return _size; }
 private:
 	struct Node
 	{

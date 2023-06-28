@@ -1,0 +1,223 @@
+\hypertarget{struct_selection}{}\section{Selection Struct Reference}
+\label{struct_selection}\index{Selection@{Selection}}
+
+
+{\ttfamily \#include $<$Graphical\+Element.\+h$>$}
+
+
+
+Collaboration diagram for Selection\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{struct_selection__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{State} \+: unsigned int \{ \newline
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68a67245bf00491dcf87035dc283aee8fdb}{N\+O\+NE}, 
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68a6fd16b9ae948aca852cf05b41412fcc6}{N\+O\+DE}, 
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68a22035ec22ebdf482f99716adff773973}{N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT}, 
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68ad14d85b376ec221132c0641a7e184c04}{N\+O\+D\+E\+\_\+\+I\+N\+P\+UT}, 
+\newline
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68a568db5d6d95ce590f2c1469ae848197d}{E\+D\+GE}, 
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68a7facd456725b2ae61a8804ea8e9f96e4}{S\+T\+A\+T\+E\+S\+\_\+\+M\+AX}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_selection_a53d1bd270d6d257d34d5bc8d50028049}{Selection} ()
+\item 
+\hyperlink{struct_selection_a4f2f14073708ac849fae48b8beac678c}{Selection} (\hyperlink{class_graphical_element}{Graphical\+Element} $\ast$\+\_\+element, \hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{State} \+\_\+state)
+\item 
+\hyperlink{struct_selection_aa48cbe228a7a072f22a80e5c412c772b}{Selection} (const \hyperlink{struct_selection}{Selection} \&other)
+\item 
+\hyperlink{struct_selection}{Selection} \& \hyperlink{struct_selection_a83565714b5bc3062d9504ad235a42143}{operator=} (const \hyperlink{struct_selection}{Selection} \&other)
+\item 
+\hyperlink{struct_selection_a1860ec524d11c03de8c10a9354319839}{$\sim$\+Selection} ()
+\item 
+void \hyperlink{struct_selection_a15280d931dd5c83c2ab2554254f5248d}{reset} ()
+\item 
+\hyperlink{class_graphical_element}{Graphical\+Element} $\ast$ \hyperlink{struct_selection_a73967a05efebc0e6fe55dd04b0d07fe0}{operator-\/$>$} () const
+\item 
+\hyperlink{struct_selection_a9cb09f5188184533a125351105990a0a}{operator bool} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_graphical_element}{Graphical\+Element} $\ast$ \hyperlink{struct_selection_a8bae551e7526d98cd9305069e38e8b18}{element}
+\item 
+\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{State} \hyperlink{struct_selection_aac75790db0cfc1c96d3652999ccb3091}{state}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 13 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68}\label{struct_selection_a908531395e550b540712fe90c8f6fe68}} 
+\index{Selection@{Selection}!State@{State}}
+\index{State@{State}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily enum \hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{Selection\+::\+State} \+: unsigned int}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+NE@{N\+O\+NE}!Selection@{Selection}}\index{Selection@{Selection}!N\+O\+NE@{N\+O\+NE}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68a67245bf00491dcf87035dc283aee8fdb}\label{struct_selection_a908531395e550b540712fe90c8f6fe68a67245bf00491dcf87035dc283aee8fdb}} 
+N\+O\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+DE@{N\+O\+DE}!Selection@{Selection}}\index{Selection@{Selection}!N\+O\+DE@{N\+O\+DE}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68a6fd16b9ae948aca852cf05b41412fcc6}\label{struct_selection_a908531395e550b540712fe90c8f6fe68a6fd16b9ae948aca852cf05b41412fcc6}} 
+N\+O\+DE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT@{N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT}!Selection@{Selection}}\index{Selection@{Selection}!N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT@{N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68a22035ec22ebdf482f99716adff773973}\label{struct_selection_a908531395e550b540712fe90c8f6fe68a22035ec22ebdf482f99716adff773973}} 
+N\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+D\+E\+\_\+\+I\+N\+P\+UT@{N\+O\+D\+E\+\_\+\+I\+N\+P\+UT}!Selection@{Selection}}\index{Selection@{Selection}!N\+O\+D\+E\+\_\+\+I\+N\+P\+UT@{N\+O\+D\+E\+\_\+\+I\+N\+P\+UT}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68ad14d85b376ec221132c0641a7e184c04}\label{struct_selection_a908531395e550b540712fe90c8f6fe68ad14d85b376ec221132c0641a7e184c04}} 
+N\+O\+D\+E\+\_\+\+I\+N\+P\+UT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\+D\+GE@{E\+D\+GE}!Selection@{Selection}}\index{Selection@{Selection}!E\+D\+GE@{E\+D\+GE}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68a568db5d6d95ce590f2c1469ae848197d}\label{struct_selection_a908531395e550b540712fe90c8f6fe68a568db5d6d95ce590f2c1469ae848197d}} 
+E\+D\+GE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+T\+A\+T\+E\+S\+\_\+\+M\+AX@{S\+T\+A\+T\+E\+S\+\_\+\+M\+AX}!Selection@{Selection}}\index{Selection@{Selection}!S\+T\+A\+T\+E\+S\+\_\+\+M\+AX@{S\+T\+A\+T\+E\+S\+\_\+\+M\+AX}}}\mbox{\Hypertarget{struct_selection_a908531395e550b540712fe90c8f6fe68a7facd456725b2ae61a8804ea8e9f96e4}\label{struct_selection_a908531395e550b540712fe90c8f6fe68a7facd456725b2ae61a8804ea8e9f96e4}} 
+S\+T\+A\+T\+E\+S\+\_\+\+M\+AX&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 14 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_selection_a53d1bd270d6d257d34d5bc8d50028049}\label{struct_selection_a53d1bd270d6d257d34d5bc8d50028049}} 
+\index{Selection@{Selection}!Selection@{Selection}}
+\index{Selection@{Selection}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{Selection()}{Selection()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Selection\+::\+Selection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 26 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_a4f2f14073708ac849fae48b8beac678c}\label{struct_selection_a4f2f14073708ac849fae48b8beac678c}} 
+\index{Selection@{Selection}!Selection@{Selection}}
+\index{Selection@{Selection}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{Selection()}{Selection()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Selection\+::\+Selection (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_element}{Graphical\+Element} $\ast$}]{\+\_\+element,  }\item[{\hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{State}}]{\+\_\+state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 31 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_aa48cbe228a7a072f22a80e5c412c772b}\label{struct_selection_aa48cbe228a7a072f22a80e5c412c772b}} 
+\index{Selection@{Selection}!Selection@{Selection}}
+\index{Selection@{Selection}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{Selection()}{Selection()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Selection\+::\+Selection (\begin{DoxyParamCaption}\item[{const \hyperlink{struct_selection}{Selection} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 36 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_a1860ec524d11c03de8c10a9354319839}\label{struct_selection_a1860ec524d11c03de8c10a9354319839}} 
+\index{Selection@{Selection}!````~Selection@{$\sim$\+Selection}}
+\index{````~Selection@{$\sim$\+Selection}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{$\sim$\+Selection()}{~Selection()}}
+{\footnotesize\ttfamily Selection\+::$\sim$\+Selection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 49 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_selection_a9cb09f5188184533a125351105990a0a}\label{struct_selection_a9cb09f5188184533a125351105990a0a}} 
+\index{Selection@{Selection}!operator bool@{operator bool}}
+\index{operator bool@{operator bool}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{operator bool()}{operator bool()}}
+{\footnotesize\ttfamily Selection\+::operator bool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 63 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_a73967a05efebc0e6fe55dd04b0d07fe0}\label{struct_selection_a73967a05efebc0e6fe55dd04b0d07fe0}} 
+\index{Selection@{Selection}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_element}{Graphical\+Element}$\ast$ Selection\+::operator-\/$>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 60 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_a83565714b5bc3062d9504ad235a42143}\label{struct_selection_a83565714b5bc3062d9504ad235a42143}} 
+\index{Selection@{Selection}!operator=@{operator=}}
+\index{operator=@{operator=}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \hyperlink{struct_selection}{Selection}\& Selection\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{struct_selection}{Selection} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 39 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_a15280d931dd5c83c2ab2554254f5248d}\label{struct_selection_a15280d931dd5c83c2ab2554254f5248d}} 
+\index{Selection@{Selection}!reset@{reset}}
+\index{reset@{reset}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Selection\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 55 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_selection_a15280d931dd5c83c2ab2554254f5248d_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_selection_a8bae551e7526d98cd9305069e38e8b18}\label{struct_selection_a8bae551e7526d98cd9305069e38e8b18}} 
+\index{Selection@{Selection}!element@{element}}
+\index{element@{element}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{element}{element}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_element}{Graphical\+Element}$\ast$ Selection\+::element}
+
+
+
+Definition at line 23 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{struct_selection_aac75790db0cfc1c96d3652999ccb3091}\label{struct_selection_aac75790db0cfc1c96d3652999ccb3091}} 
+\index{Selection@{Selection}!state@{state}}
+\index{state@{state}!Selection@{Selection}}
+\subsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \hyperlink{struct_selection_a908531395e550b540712fe90c8f6fe68}{State} Selection\+::state}
+
+
+
+Definition at line 24 of file Graphical\+Element.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_element_8h}{Graphical\+Element.\+h}\end{DoxyCompactItemize}

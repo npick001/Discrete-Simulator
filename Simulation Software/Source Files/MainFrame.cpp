@@ -1,6 +1,8 @@
 #include "MainFrame.h"
 #include "Canvas.h"
 
+MainFrame* MainFrame::m_instance = 0;
+
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
@@ -17,6 +19,7 @@ MainFrame::MainFrame(const wxString& title)
     auto* view_menu = new wxMenu();
     auto* settings_menu = new wxMenu();
     auto* stat_menu = new wxMenu();
+    auto* project_menu = new wxMenu();
     
     // FILE MENU
     file_menu->Append(wxID_OPEN);
@@ -37,7 +40,7 @@ MainFrame::MainFrame(const wxString& title)
     view_menu->Append(ID_CreateNotebook, _("Create Notebook"));
     view_menu->Append(ID_CreateGrid, _("Create Grid"));
     view_menu->Append(ID_CreateCanvas, _("Create Canvas"));
-    view_menu->Append(ID_CreateLeftToolbar, _("Create Left Toolbar"));
+    view_menu->Append(ID_CreateSimLibrary, _("Create Left Toolbar"));
 
     // SETTINGS MENU
     settings_menu->Append(ID_Model_Settings, "&Model Settings", "Change Model Settings");
@@ -45,11 +48,17 @@ MainFrame::MainFrame(const wxString& title)
     // STAT MENU
     stat_menu->Append(ID_Input_Analyzer, "&Input Analyzer", "Shows up in bottom left when clicked and hovered over");
 
+    // PROJECT MENU
+    project_menu->Append(ID_Build_SimCode, _("&Build"));
+    project_menu->Append(ID_Run_Sim, _("&Run Simulation"));
+    project_menu->Append(ID_Build_And_Run, _("&Build and Run"));
+
     // Use menus in menu bar
     menu_bar->Append(file_menu, _("&File"));
     menu_bar->Append(edit_menu, _("&Edit"));
     menu_bar->Append(view_menu, _("&View"));
     menu_bar->Append(settings_menu, _("&Settings"));
+    menu_bar->Append(project_menu, _("&Project"));
     menu_bar->Append(stat_menu, _("&Statistics"));
     SetMenuBar(menu_bar);
 
@@ -96,9 +105,13 @@ MainFrame::MainFrame(const wxString& title)
     m_mainCanvas = CreateNotebook();
     wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
 
-    // Add a second page to the canvas
-    m_mainCanvas->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
-    m_mainCanvas->GetPage(1)->SetFocus();
+    // Add a canvas to the notebook
+    Canvas* mainCanvas = new Canvas(this, GetStatusBar());
+    m_mainCanvas->AddPage(mainCanvas, "Canvas notebook", true, page_bmp);
+
+    // Initialize the project with the main canvas
+    // WILL NEED TO ADD CAPABILITY TO CHANGE WHICH CANVAS IS BEING BUILT
+    m_simProject = new SimProject(mainCanvas);
 
     // display the toolbar 
     m_manager.AddPane(tb1, wxAuiPaneInfo().Name("Tb1").
@@ -110,19 +123,25 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
         Dockable(true).CenterPane());
 
+
+    // PROPERTIES VIEWER
     auto propWidth = GetSize().x * 0.2;
     auto propSize = new wxSize(propWidth, GetSize().y);
     m_properties = new PropertiesViewer(this);
     m_properties->ShowProperties();
-    //m_properties->SetSize(*propSize);
 
-    // PLUG IN PROPERTIES VIEWER HERE
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
-        Dockable(true).Right());
+        Dockable(true).Right().BestSize(*propSize));
+
 
     // Commit the changes with the AUI manager
     m_manager.Update();
     this->Layout();
+
+    // transform the origin to middle of the canvas
+    wxSize canvasSize = m_mainCanvas->GetSize();
+    auto canvas = (Canvas*)m_mainCanvas->GetCurrentPage();
+    canvas->TransformOriginLocation(canvasSize);
 
     // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
@@ -137,18 +156,53 @@ MainFrame::MainFrame(const wxString& title)
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateTree, this, ID_CreateTree);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateGrid, this, ID_CreateGrid);
     this->Bind(wxEVT_MENU, &MainFrame::OnCreateCanvas, this, ID_CreateCanvas);
-    this->Bind(wxEVT_MENU, &MainFrame::OnCreateLeftToolbar, this, ID_CreateLeftToolbar);
+    this->Bind(wxEVT_MENU, &MainFrame::OnCreateSimLibrary, this, ID_CreateSimLibrary);
 
     // Statistics menu Events
     this->Bind(wxEVT_MENU, &MainFrame::OnClickAnalyzer, this, ID_Input_Analyzer);
+
+    // Project Menu Events
+    this->Bind(wxEVT_MENU, &MainFrame::OnBuild, this, ID_Build_SimCode);
+    this->Bind(wxEVT_MENU, &MainFrame::OnRun, this, ID_Run_Sim);
+    this->Bind(wxEVT_MENU, &MainFrame::OnBuildAndRun, this, ID_Build_And_Run);
+
+    // Bind the size event of the main frame
+    this->Bind(wxEVT_SIZE, &MainFrame::OnResize, this);
 }
-MainFrame::~MainFrame() {
+MainFrame::~MainFrame()
+{
     Destroy();
 }
 void MainFrame::DoUpdate()
 {
     m_manager.Update();
 }
+
+void MainFrame::RegisterNewSelection(GraphicalNode* selection)
+{
+    // reset properties but dont populate again
+    m_properties->Reset();
+    
+    auto selectionProps = selection->GetProperties();
+    auto numProps = selectionProps.GetSize();
+
+    // populate properties
+    while (selectionProps.GetSize() > 0) {
+        m_properties->AddProperty(selectionProps.GetFirst());
+    }
+
+    m_properties->Refresh();
+}
+
+MainFrame* MainFrame::GetInstance()
+{
+    if (m_instance == 0) {
+        m_instance = new MainFrame("C++ GUI");
+    }
+
+    return m_instance;
+}
+
 wxAuiNotebook* MainFrame::CreateNotebook()
 {
     wxSize client_size = GetClientSize();
@@ -161,7 +215,8 @@ wxAuiNotebook* MainFrame::CreateNotebook()
     wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
 
     // Write the code for adding models in here.
-    notebook->AddPage(new Canvas(notebook, GetStatusBar()), "Canvas notebook", true, page_bmp);
+    //notebook->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
+
 
     notebook->Thaw();
 
@@ -216,7 +271,7 @@ Canvas* MainFrame::CreateCanvas()
     return newCanvas;
 }
 
-SimObjectLibrary* MainFrame::CreateLeftToolbar()
+SimObjectLibrary* MainFrame::CreateSimLibrary()
 {
     SimObjectLibrary* simLibrary = new SimObjectLibrary(this);
     return simLibrary;
@@ -358,9 +413,9 @@ void MainFrame::OnCreateCanvas(wxCommandEvent& event)
     m_mainCanvas->Update();
 }
 
-void MainFrame::OnCreateLeftToolbar(wxCommandEvent& event)
+void MainFrame::OnCreateSimLibrary(wxCommandEvent& event)
 {
-    m_manager.AddPane(CreateLeftToolbar(), wxAuiPaneInfo().Dockable(true).
+    m_manager.AddPane(CreateSimLibrary(), wxAuiPaneInfo().Dockable(true).
         Caption("Simulation Library").Left());
     m_manager.Update();
 }
@@ -376,4 +431,37 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
     catch (...) {
         wxLogError("Unknown exception caught in OnOpen");
     }
+}
+
+void MainFrame::OnBuild(wxCommandEvent& event)
+{
+    m_simProject->Build();
+}
+
+void MainFrame::OnRun(wxCommandEvent& event)
+{
+    m_simProject->Run();
+    m_simProject->WriteStatistics();
+}
+
+void MainFrame::OnBuildAndRun(wxCommandEvent& event)
+{
+    m_simProject->Build();
+    m_simProject->Run();
+    m_simProject->WriteStatistics();
+}
+
+void MainFrame::OnResize(wxSizeEvent& event)
+{
+    // Get the new size of the frame
+    wxSize newSize = event.GetSize();
+
+    // Calculate the new width of the PropertiesViewer (20% of the frame width)
+    int propWidth = newSize.GetWidth() * 0.2;
+
+    // Set the new size of the PropertiesViewer
+    m_properties->SetSize(wxSize(propWidth, newSize.GetHeight()));
+
+    // Continue the event propagation
+    event.Skip();
 }

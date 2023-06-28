@@ -1,0 +1,7 @@
+<map id="GraphicalSink::GraphicalSink" name="GraphicalSink::GraphicalSink">
+<area shape="rect" id="node2" href="$class_node_factory.html#ae55ad09e7b24522328a979fce9ac5e2a" title="NodeFactory::CreateNodeOfType" alt="" coords="245,56,459,83"/>
+<area shape="rect" id="node3" href="$class_canvas.html#aec9038762b17b62ff6126bd6277a9cd8" title="Canvas::AddNode" alt="" coords="507,56,632,83"/>
+<area shape="rect" id="node4" href="$class_canvas.html#a237c4549ad2e27c729cd1f71e89f0fd9" title="Canvas::~Canvas" alt="" coords="725,5,847,32"/>
+<area shape="rect" id="node5" href="$class_canvas.html#aaec53b68c7b24704e399b565731ed545" title="Canvas::AddNode" alt="" coords="723,56,849,83"/>
+<area shape="rect" id="node6" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="680,107,892,133"/>
+</map>

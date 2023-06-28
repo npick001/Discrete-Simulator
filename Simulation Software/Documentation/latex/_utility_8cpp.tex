@@ -1,0 +1,105 @@
+\hypertarget{_utility_8cpp}{}\section{Simulation Software/\+Source Files/\+Utility.cpp File Reference}
+\label{_utility_8cpp}\index{Simulation Software/\+Source Files/\+Utility.\+cpp@{Simulation Software/\+Source Files/\+Utility.\+cpp}}
+{\ttfamily \#include \char`\"{}Utility.\+h\char`\"{}}\newline
+Include dependency graph for Utility.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{_utility_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ double $>$ \hyperlink{_utility_8cpp_a409122432f958ab0af02ecf709d8bc29}{Runge\+Kutta4} (\hyperlink{_utility_8h_a1235f0c97aba55a9cd0ed7ca83b77bdd}{callback\+\_\+function\+\_\+\+D\+BL} pdf, double x\+\_\+init, double upperbound, int steps)
+\item 
+unsigned long long \hyperlink{_utility_8cpp_ac9b043ec7db173357bc4ff34be8d754d}{factorial} (unsigned int n)
+\item 
+double \hyperlink{_utility_8cpp_aea8241054a328b30ec5c99437ebeac44}{Gamma\+Function} (unsigned int n)
+\item 
+std\+::vector$<$ double $>$ \hyperlink{_utility_8cpp_a6fe34490a3bf33593b26633a0abc70ab}{Chi\+\_\+\+Square\+\_\+\+Distribution} (int dof, int num\+Points, bool write\+To\+File)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_utility_8cpp_a6fe34490a3bf33593b26633a0abc70ab}\label{_utility_8cpp_a6fe34490a3bf33593b26633a0abc70ab}} 
+\index{Utility.\+cpp@{Utility.\+cpp}!Chi\+\_\+\+Square\+\_\+\+Distribution@{Chi\+\_\+\+Square\+\_\+\+Distribution}}
+\index{Chi\+\_\+\+Square\+\_\+\+Distribution@{Chi\+\_\+\+Square\+\_\+\+Distribution}!Utility.\+cpp@{Utility.\+cpp}}
+\subsubsection{\texorpdfstring{Chi\+\_\+\+Square\+\_\+\+Distribution()}{Chi\_Square\_Distribution()}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chi\+\_\+\+Square\+\_\+\+Distribution (\begin{DoxyParamCaption}\item[{int}]{dof,  }\item[{int}]{num\+Points,  }\item[{bool}]{write\+To\+File }\end{DoxyParamCaption})}
+
+
+
+Definition at line 97 of file Utility.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_utility_8cpp_a6fe34490a3bf33593b26633a0abc70ab_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_utility_8cpp_ac9b043ec7db173357bc4ff34be8d754d}\label{_utility_8cpp_ac9b043ec7db173357bc4ff34be8d754d}} 
+\index{Utility.\+cpp@{Utility.\+cpp}!factorial@{factorial}}
+\index{factorial@{factorial}!Utility.\+cpp@{Utility.\+cpp}}
+\subsubsection{\texorpdfstring{factorial()}{factorial()}}
+{\footnotesize\ttfamily unsigned long long factorial (\begin{DoxyParamCaption}\item[{unsigned int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line 77 of file Utility.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_utility_8cpp_ac9b043ec7db173357bc4ff34be8d754d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_utility_8cpp_aea8241054a328b30ec5c99437ebeac44}\label{_utility_8cpp_aea8241054a328b30ec5c99437ebeac44}} 
+\index{Utility.\+cpp@{Utility.\+cpp}!Gamma\+Function@{Gamma\+Function}}
+\index{Gamma\+Function@{Gamma\+Function}!Utility.\+cpp@{Utility.\+cpp}}
+\subsubsection{\texorpdfstring{Gamma\+Function()}{GammaFunction()}}
+{\footnotesize\ttfamily double Gamma\+Function (\begin{DoxyParamCaption}\item[{unsigned int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line 88 of file Utility.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{_utility_8cpp_aea8241054a328b30ec5c99437ebeac44_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{_utility_8cpp_aea8241054a328b30ec5c99437ebeac44_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_utility_8cpp_a409122432f958ab0af02ecf709d8bc29}\label{_utility_8cpp_a409122432f958ab0af02ecf709d8bc29}} 
+\index{Utility.\+cpp@{Utility.\+cpp}!Runge\+Kutta4@{Runge\+Kutta4}}
+\index{Runge\+Kutta4@{Runge\+Kutta4}!Utility.\+cpp@{Utility.\+cpp}}
+\subsubsection{\texorpdfstring{Runge\+Kutta4()}{RungeKutta4()}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Runge\+Kutta4 (\begin{DoxyParamCaption}\item[{\hyperlink{_utility_8h_a1235f0c97aba55a9cd0ed7ca83b77bdd}{callback\+\_\+function\+\_\+\+D\+BL}}]{pdf,  }\item[{double}]{x\+\_\+init,  }\item[{double}]{upperbound,  }\item[{int}]{steps }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Utility.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{_utility_8cpp_a409122432f958ab0af02ecf709d8bc29_cgraph}
+\end{center}
+\end{figure}

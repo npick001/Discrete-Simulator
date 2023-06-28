@@ -1,0 +1,136 @@
+\hypertarget{class_server_n_queue}{}\section{Server\+N\+Queue Class Reference}
+\label{class_server_n_queue}\index{Server\+N\+Queue@{Server\+N\+Queue}}
+
+
+{\ttfamily \#include $<$Specific\+Nodes.\+h$>$}
+
+
+
+Inheritance diagram for Server\+N\+Queue\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{class_server_n_queue__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Server\+N\+Queue\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{class_server_n_queue__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_server_n_queue_1_1_end_processing_e_a}{End\+Processing\+EA}
+\item 
+class \hyperlink{class_server_n_queue_1_1_my_statistics}{My\+Statistics}
+\item 
+class \hyperlink{class_server_n_queue_1_1_server_n_queue_statistics}{Server\+N\+Queue\+Statistics}
+\item 
+class \hyperlink{class_server_n_queue_1_1_start_processing_e_a}{Start\+Processing\+EA}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_server_n_queue_a7d669a398b47382358b2cd7b28e6012a}{Server\+N\+Queue} (std\+::string name, int resources, int queues, \hyperlink{class_distribution}{Distribution} $\ast$service\+Time)
+\item 
+\hyperlink{class_server_n_queue_ab13c0aee5829a612bf6bda12c82ad6b7}{$\sim$\+Server\+N\+Queue} ()
+\item 
+void \hyperlink{class_server_n_queue_adbc0e634171f6dc0785f2e49659663f7}{Node\+Process} (\hyperlink{class_entity}{Entity} $\ast$e)
+\item 
+void \hyperlink{class_server_n_queue_a08260b431df7adc0495f2e6c1d3ff33f}{Update\+Statistics} ()
+\item 
+std\+::unique\+\_\+ptr$<$ \hyperlink{class_generic_node_1_1_statistics_wrapper}{Statistics\+Wrapper} $>$ \hyperlink{class_server_n_queue_a18718f3796f33fa0f9d9100c34a6a7dc}{Get\+Statistics} () override
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 164 of file Specific\+Nodes.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_server_n_queue_a7d669a398b47382358b2cd7b28e6012a}\label{class_server_n_queue_a7d669a398b47382358b2cd7b28e6012a}} 
+\index{Server\+N\+Queue@{Server\+N\+Queue}!Server\+N\+Queue@{Server\+N\+Queue}}
+\index{Server\+N\+Queue@{Server\+N\+Queue}!Server\+N\+Queue@{Server\+N\+Queue}}
+\subsubsection{\texorpdfstring{Server\+N\+Queue()}{ServerNQueue()}}
+{\footnotesize\ttfamily Server\+N\+Queue\+::\+Server\+N\+Queue (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{int}]{resources,  }\item[{int}]{queues,  }\item[{\hyperlink{class_distribution}{Distribution} $\ast$}]{service\+Time }\end{DoxyParamCaption})}
+
+
+
+Definition at line 575 of file Specific\+Nodes.\+cpp.
+
+\mbox{\Hypertarget{class_server_n_queue_ab13c0aee5829a612bf6bda12c82ad6b7}\label{class_server_n_queue_ab13c0aee5829a612bf6bda12c82ad6b7}} 
+\index{Server\+N\+Queue@{Server\+N\+Queue}!````~Server\+N\+Queue@{$\sim$\+Server\+N\+Queue}}
+\index{````~Server\+N\+Queue@{$\sim$\+Server\+N\+Queue}!Server\+N\+Queue@{Server\+N\+Queue}}
+\subsubsection{\texorpdfstring{$\sim$\+Server\+N\+Queue()}{~ServerNQueue()}}
+{\footnotesize\ttfamily Server\+N\+Queue\+::$\sim$\+Server\+N\+Queue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 595 of file Specific\+Nodes.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_n_queue_ab13c0aee5829a612bf6bda12c82ad6b7_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_server_n_queue_a18718f3796f33fa0f9d9100c34a6a7dc}\label{class_server_n_queue_a18718f3796f33fa0f9d9100c34a6a7dc}} 
+\index{Server\+N\+Queue@{Server\+N\+Queue}!Get\+Statistics@{Get\+Statistics}}
+\index{Get\+Statistics@{Get\+Statistics}!Server\+N\+Queue@{Server\+N\+Queue}}
+\subsubsection{\texorpdfstring{Get\+Statistics()}{GetStatistics()}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$ \hyperlink{class_generic_node_1_1_statistics_wrapper}{Generic\+Node\+::\+Statistics\+Wrapper} $>$ Server\+N\+Queue\+::\+Get\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_generic_node_ae7c8424c8c14fd3de993c902d78deb67}{Generic\+Node}.
+
+
+
+Definition at line 610 of file Specific\+Nodes.\+cpp.
+
+\mbox{\Hypertarget{class_server_n_queue_adbc0e634171f6dc0785f2e49659663f7}\label{class_server_n_queue_adbc0e634171f6dc0785f2e49659663f7}} 
+\index{Server\+N\+Queue@{Server\+N\+Queue}!Node\+Process@{Node\+Process}}
+\index{Node\+Process@{Node\+Process}!Server\+N\+Queue@{Server\+N\+Queue}}
+\subsubsection{\texorpdfstring{Node\+Process()}{NodeProcess()}}
+{\footnotesize\ttfamily void Server\+N\+Queue\+::\+Node\+Process (\begin{DoxyParamCaption}\item[{\hyperlink{class_entity}{Entity} $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_generic_node_ae942258a57f211072d179da470579add}{Generic\+Node}.
+
+
+
+Definition at line 602 of file Specific\+Nodes.\+cpp.
+
+\mbox{\Hypertarget{class_server_n_queue_a08260b431df7adc0495f2e6c1d3ff33f}\label{class_server_n_queue_a08260b431df7adc0495f2e6c1d3ff33f}} 
+\index{Server\+N\+Queue@{Server\+N\+Queue}!Update\+Statistics@{Update\+Statistics}}
+\index{Update\+Statistics@{Update\+Statistics}!Server\+N\+Queue@{Server\+N\+Queue}}
+\subsubsection{\texorpdfstring{Update\+Statistics()}{UpdateStatistics()}}
+{\footnotesize\ttfamily void Server\+N\+Queue\+::\+Update\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 606 of file Specific\+Nodes.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_specific_nodes_8h}{Specific\+Nodes.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_specific_nodes_8cpp}{Specific\+Nodes.\+cpp}\end{DoxyCompactItemize}

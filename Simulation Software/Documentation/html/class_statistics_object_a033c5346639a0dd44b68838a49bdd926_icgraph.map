@@ -1,0 +1,11 @@
+<map id="StatisticsObject::factorial" name="StatisticsObject::factorial">
+<area shape="rect" id="node2" href="$class_statistics_object.html#a0d9dc9480288e61b3e98134deb18d2d4" title="StatisticsObject::GammaFunction" alt="" coords="221,141,440,167"/>
+<area shape="rect" id="node4" href="$class_statistics_object.html#a38f772ec93c2e0631cb101aff8296b54" title="StatisticsObject::GetDataset" alt="" coords="695,170,885,197"/>
+<area shape="rect" id="node3" href="$class_statistics_object.html#a2bdaa3f298838c3f83bf17189c832623" title="StatisticsObject::Chi\l_Square_Distribution" alt="" coords="491,104,634,145"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#aec6848499139f4811fd4f2f60a252a9f" title="StatisticsObject::PDF\l_Chi_Square" alt="" coords="488,39,637,80"/>
+<area shape="rect" id="node6" href="$class_statistics_object.html#aa4d91e7d45164eb8a3849c1c7df585e1" title="StatisticsObject::ChiSquare\lCriticalValue" alt="" coords="955,64,1138,105"/>
+<area shape="rect" id="node7" href="$class_statistics_object.html#a7ad5fc88ce637ed421f4fccf92a8b5e0" title="StatisticsObject::ChiSquareCDF" alt="" coords="685,21,895,47"/>
+<area shape="rect" id="node8" href="$class_statistics_object.html#a5f516a6f544714694efc0ba0f925f38c" title="StatisticsObject::ChiSquareTest" alt="" coords="943,13,1151,39"/>
+<area shape="rect" id="node9" href="$class_statistics_object.html#a13305945c9536243f926b61d554c2dd4" title="StatisticsObject::Determine\lBestFit" alt="" coords="1199,5,1381,47"/>
+<area shape="rect" id="node10" href="$class_statistics_object.html#a88d8c8b8fd57da4a08cf1d02d363abf1" title="StatisticsObject::Generate\lBestFitDistribution" alt="" coords="1429,5,1605,47"/>
+</map>

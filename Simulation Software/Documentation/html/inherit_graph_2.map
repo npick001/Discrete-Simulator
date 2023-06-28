@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_distribution.html" title="Distribution" alt="" coords="5,183,92,209"/>
+<area shape="rect" id="node2" href="$class_constant.html" title="Constant" alt="" coords="148,5,223,32"/>
+<area shape="rect" id="node3" href="$class_erlang.html" title="Erlang" alt="" coords="156,56,215,83"/>
+<area shape="rect" id="node4" href="$class_exponential.html" title="Exponential" alt="" coords="140,107,231,133"/>
+<area shape="rect" id="node5" href="$class_normal.html" title="Normal" alt="" coords="154,157,217,184"/>
+<area shape="rect" id="node6" href="$class_poisson.html" title="Poisson" alt="" coords="151,208,220,235"/>
+<area shape="rect" id="node7" href="$class_triangular.html" title="Triangular" alt="" coords="146,259,225,285"/>
+<area shape="rect" id="node8" href="$class_uniform.html" title="Uniform" alt="" coords="152,309,219,336"/>
+<area shape="rect" id="node9" href="$class_weibull.html" title="Weibull" alt="" coords="153,360,218,387"/>
+</map>

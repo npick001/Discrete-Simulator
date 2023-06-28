@@ -11,23 +11,10 @@ void GenericNode::SetPrevious(GenericNode* prev) {
     m_prev = prev;
 }
 
-void GenericNode::SetImagePath(const std::string& imagePath) {
-    m_imagePath = imagePath;
-}
 
 std::string GenericNode::GetName() {
     return m_name;
 }
-
-std::string GenericNode::GetImagePath() {
-    return m_imagePath;
-}
-
-//void GenericNode::InstantiateNode(int x, int y, wxSize size) {
-//    m_position.x = x;
-//    m_position.y = y;
-//    m_size = size;
-//}
 
 void GenericNode::Arrive(Entity* entity) {
 #if SIM_OUTPUT
@@ -48,7 +35,6 @@ void GenericNode::Depart(Entity* entity) {
 
 GenericNode::GenericNode(const std::string& name) {
     m_name = name;
-    m_imagePath = "";
     m_id = m_nextID++;
 
     m_next = 0;
@@ -60,7 +46,6 @@ GenericNode::GenericNode(const std::string& name) {
 // Copy constructor
 GenericNode::GenericNode(const GenericNode& other) {
     m_name = other.m_name;
-    m_imagePath = other.m_imagePath;
 }
 
 GenericNode::~GenericNode() {

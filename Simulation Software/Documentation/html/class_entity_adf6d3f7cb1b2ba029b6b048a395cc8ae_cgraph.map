@@ -1,0 +1,11 @@
+<map id="Entity::~Entity" name="Entity::~Entity">
+<area shape="rect" id="node2" href="$class_entity.html#ab8dc894a31d5c72219fa070345d7c383" title="Entity::New" alt="" coords="195,5,284,32"/>
+<area shape="rect" id="node3" href="$class_entity.html#a8ed56bc59a6c2b0bd01eda3d274a1fac" title="Entity::GetID" alt="" coords="191,56,288,83"/>
+<area shape="rect" id="node4" href="$class_entity.html#a22d4fe26b229f7720f5204eeadffb1b2" title="Entity::GetSource" alt="" coords="176,107,303,133"/>
+<area shape="rect" id="node5" href="$class_entity.html#a6618c119290b237bd6f9e903d029405d" title="Entity::GetType" alt="" coords="183,157,296,184"/>
+<area shape="rect" id="node6" href="$class_entity.html#ad08cf1231dbd8127e086bb803bdb3d5a" title="Entity::SetSource" alt="" coords="177,208,302,235"/>
+<area shape="rect" id="node7" href="$class_entity.html#a91d4a101d4de57229710334b738bda29" title="Entity::SetType" alt="" coords="183,259,295,285"/>
+<area shape="rect" id="node8" href="$class_entity.html#a5c0dc393f667e2af24cd11d7b4bbd82c" title="Entity::SetDeletionTime" alt="" coords="160,309,319,336"/>
+<area shape="rect" id="node9" href="$class_entity.html#a957592ba81c76d59f622a887fee36e8d" title="Entity::EnterQueue" alt="" coords="173,360,306,387"/>
+<area shape="rect" id="node10" href="$class_entity.html#ae05b43362e61b48a4a2ec5f629730029" title="Entity::LeaveQueue" alt="" coords="172,411,307,437"/>
+</map>

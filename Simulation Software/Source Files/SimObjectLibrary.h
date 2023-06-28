@@ -1,7 +1,7 @@
 #pragma once
 #include <wx/wx.h>
 #include <wx/dnd.h>
-#include "GenericNode.h"
+#include "GraphicalNode.h"
 #include "NodeDataObject.h"
 
 enum {
@@ -12,13 +12,13 @@ class SimObjectLibrary : public wxPanel {
 public:
     SimObjectLibrary(wxWindow* parent);
     ~SimObjectLibrary();
-    void AddNode(GenericNode* node);
+    void AddNode(GraphicalNode* node);
 
     inline wxSize GetSize() { return m_size; }
 
 private:
     wxBoxSizer* m_sizer;
-    std::vector<GenericNode*> _nodes;
+    std::vector<GraphicalNode*> _nodes;
 
     wxSize m_size;
 

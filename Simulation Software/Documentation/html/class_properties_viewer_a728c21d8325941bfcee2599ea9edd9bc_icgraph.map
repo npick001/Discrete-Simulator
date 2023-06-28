@@ -1,0 +1,6 @@
+<map id="PropertiesViewer::ShowProperties" name="PropertiesViewer::ShowProperties">
+<area shape="rect" id="node2" href="$class_main_frame.html#a00c85521dad6b24000967206bcc53688" title="MainFrame::MainFrame" alt="" coords="272,31,432,57"/>
+<area shape="rect" id="node3" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="480,31,645,57"/>
+<area shape="rect" id="node4" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="693,5,905,32"/>
+<area shape="rect" id="node5" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="742,56,857,83"/>
+</map>

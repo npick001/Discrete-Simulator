@@ -15,21 +15,26 @@
 #include <wx/grid.h>
 #include <wx/dir.h>
 
+#include "SimulationExecutive.h"
 #include "Statistics.h"
 #include "Canvas.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
+#include "GraphicalNode.h"
+#include "SimProject.h"
 
 enum {
     ID_Exit = 1,
     ID_Input_Analyzer,
     ID_Run_Sim,
+    ID_Build_SimCode,
+    ID_Build_And_Run,
     ID_Model_Settings,
     ID_CreateNotebook,
     ID_CreateTree,
     ID_CreateGrid,
     ID_CreateCanvas,
-    ID_CreateLeftToolbar,
+    ID_CreateSimLibrary,
     ID_DropDownToolbarItem,
     ID_CustomizeToolbar,
 
@@ -37,6 +42,8 @@ enum {
 };
 
 class Canvas;
+class Selection;
+class SimProject;
 
 class MainFrame : public wxFrame {
 public:
@@ -44,12 +51,22 @@ public:
     ~MainFrame();
 
     void DoUpdate();
+
+    void RegisterNewSelection(GraphicalNode* selection);
+
+    static MainFrame* GetInstance();
+
 private:
+
+
+    static MainFrame* m_instance;
+    SimProject* m_simProject;
+
     wxAuiManager m_manager;
-    wxAuiNotebook* m_mainCanvas;
     PropertiesViewer* m_properties;
-    wxArrayString m_perspectives;
-    wxBoxSizer* m_sizer;
+    wxArrayString m_perspectives; // not used yet
+    wxAuiNotebook* m_mainCanvas;
+
     long m_notebook_style;
     long m_notebook_theme;
 
@@ -57,7 +74,7 @@ private:
     wxTreeCtrl* CreateTreeCtrl();
     wxGrid* CreateGrid();
     Canvas* CreateCanvas();
-    SimObjectLibrary* CreateLeftToolbar();
+    SimObjectLibrary* CreateSimLibrary();
 
     // Loads the .\Source Files directory into the passed tree.
     void LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory);
@@ -68,7 +85,7 @@ private:
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);\
+    void OnExit(wxCommandEvent& event);
 
     // Edit menu events
     
@@ -77,10 +94,17 @@ private:
     void OnCreateTree(wxCommandEvent& event);
     void OnCreateGrid(wxCommandEvent& event);  
     void OnCreateCanvas(wxCommandEvent& event);
-    void OnCreateLeftToolbar(wxCommandEvent& event);
+    void OnCreateSimLibrary(wxCommandEvent& event);
 
     // Statistics menu events
     void OnClickAnalyzer(wxCommandEvent& event);
+
+    // Project Menu Events
+    void OnBuild(wxCommandEvent& event);
+    void OnRun(wxCommandEvent& event);
+    void OnBuildAndRun(wxCommandEvent& event);
+
+    void OnResize(wxSizeEvent& event);
 };
 
 

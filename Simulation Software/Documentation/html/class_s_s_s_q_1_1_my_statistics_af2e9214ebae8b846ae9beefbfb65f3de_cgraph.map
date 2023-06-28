@@ -1,0 +1,6 @@
+<map id="SSSQ::MyStatistics::MyStatistics" name="SSSQ::MyStatistics::MyStatistics">
+<area shape="rect" id="node2" href="$class_f_i_f_o.html#abf4a95cb154b2bb4eb6bb3750a6fce3d" title="FIFO::GetAverageWaitTime" alt="" coords="203,5,385,32"/>
+<area shape="rect" id="node3" href="$class_f_i_f_o.html#a739f5e90efc37fcea0f66e5548132d5f" title="FIFO::GetAverageQueueSize" alt="" coords="199,56,389,83"/>
+<area shape="rect" id="node4" href="$class_f_i_f_o.html#ad28e880c6365098995f45fc9f14121ef" title="FIFO::GetMinimumQueueSize" alt="" coords="195,107,393,133"/>
+<area shape="rect" id="node5" href="$class_f_i_f_o.html#a77a83086bafa4145487dd2918ed36aa4" title="FIFO::GetMaximumQueueSize" alt="" coords="193,157,395,184"/>
+</map>

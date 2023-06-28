@@ -1,0 +1,427 @@
+\hypertarget{class_graphical_edge}{}\section{Graphical\+Edge Class Reference}
+\label{class_graphical_edge}\index{Graphical\+Edge@{Graphical\+Edge}}
+
+
+{\ttfamily \#include $<$Graphical\+Edge.\+h$>$}
+
+
+
+Inheritance diagram for Graphical\+Edge\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{class_graphical_edge__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Graphical\+Edge\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{class_graphical_edge__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} \hyperlink{class_graphical_edge_ad2db5ea6f28e2e572583909ff1f68088}{Get\+Type} () const override
+\item 
+\hyperlink{class_graphical_edge_a9325712366dcec2f70457f66b19bb04d}{Graphical\+Edge} ()
+\item 
+\hyperlink{class_graphical_edge_a5031d58d1096dbeef7f1c1c2e0cdb1f6}{Graphical\+Edge} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id)
+\item 
+\hyperlink{class_graphical_edge_af8c31162129b7c33427de769beaed38d}{Graphical\+Edge} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id, \hyperlink{class_graphical_node}{Graphical\+Node} $\ast$source, \hyperlink{class_graphical_node}{Graphical\+Node} $\ast$destination)
+\item 
+\hyperlink{class_graphical_edge_a50ac3c64f7c8d259d5905802a1808aa6}{Graphical\+Edge} (const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&other)
+\item 
+\hyperlink{class_graphical_edge}{Graphical\+Edge} \& \hyperlink{class_graphical_edge_ad590b20ea1c1cb30a15850a36f82a2c9}{operator=} (const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&other)
+\item 
+\hyperlink{class_graphical_edge_ac19b4561ff4274f8fbbc6700a86b2f27}{$\sim$\+Graphical\+Edge} ()
+\item 
+void \hyperlink{class_graphical_edge_a9f2e7f370705c390ad67f5b18ed80a00}{Connect\+Source} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$source)
+\item 
+void \hyperlink{class_graphical_edge_a41868fd50c413744e61a549f1cef6a79}{Connect\+Destination} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$destination)
+\item 
+void \hyperlink{class_graphical_edge_acc50ad4ea639802ce7d700d17f28f0e3}{Disconnect} ()
+\item 
+void \hyperlink{class_graphical_edge_a02acb6e42ac2d6def8a662006db2b1ff}{Set\+Source\+Point} (wx\+Point2\+D\+Double source\+Point)
+\item 
+void \hyperlink{class_graphical_edge_af6eedeeadcd9abc368b1c0725617f5c9}{Set\+Destination\+Point} (wx\+Point2\+D\+Double destination\+Point)
+\item 
+void \hyperlink{class_graphical_edge_a48170a7fc9e86d92985d694addca8837}{Draw} (const wx\+Affine\+Matrix2D \&camera, wx\+Graphics\+Context $\ast$gc) override
+\item 
+\hyperlink{struct_selection}{Selection} \hyperlink{class_graphical_edge_aa2dbc33d5177ce3aad84f39ba97921de}{Select} (const wx\+Affine\+Matrix2D \&camera, wx\+Point2\+D\+Double click\+Position) override
+\item 
+const wx\+Point2\+D\+Double \& \hyperlink{class_graphical_edge_af8738fa9de63d51bec94fae3bebbe4ac}{Get\+Source\+Point} () const
+\item 
+const wx\+Point2\+D\+Double \& \hyperlink{class_graphical_edge_aaf19f4b4688b5eb5df39be7af1d09b4b}{Get\+Destination\+Point} () const
+\item 
+bool \hyperlink{class_graphical_edge_aa03597dca35cc2f08c8a1894657546d8}{operator==} (const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&other) const
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_graphical_edge_adc7790177f80355fce81568dcdbf561e}{Graphical\+Node}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10 of file Graphical\+Edge.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_graphical_edge_a9325712366dcec2f70457f66b19bb04d}\label{class_graphical_edge_a9325712366dcec2f70457f66b19bb04d}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Graphical\+Edge()}{GraphicalEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Graphical\+Edge\+::\+Graphical\+Edge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 7 of file Graphical\+Edge.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a9325712366dcec2f70457f66b19bb04d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_a5031d58d1096dbeef7f1c1c2e0cdb1f6}\label{class_graphical_edge_a5031d58d1096dbeef7f1c1c2e0cdb1f6}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Graphical\+Edge()}{GraphicalEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Graphical\+Edge\+::\+Graphical\+Edge (\begin{DoxyParamCaption}\item[{\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key}}]{id }\end{DoxyParamCaption})}
+
+
+
+Definition at line 9 of file Graphical\+Edge.\+cpp.
+
+\mbox{\Hypertarget{class_graphical_edge_af8c31162129b7c33427de769beaed38d}\label{class_graphical_edge_af8c31162129b7c33427de769beaed38d}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Graphical\+Edge()}{GraphicalEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Graphical\+Edge\+::\+Graphical\+Edge (\begin{DoxyParamCaption}\item[{\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key}}]{id,  }\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{source,  }\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Definition at line 18 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_af8c31162129b7c33427de769beaed38d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_a50ac3c64f7c8d259d5905802a1808aa6}\label{class_graphical_edge_a50ac3c64f7c8d259d5905802a1808aa6}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Graphical\+Edge()}{GraphicalEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Graphical\+Edge\+::\+Graphical\+Edge (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 25 of file Graphical\+Edge.\+cpp.
+
+\mbox{\Hypertarget{class_graphical_edge_ac19b4561ff4274f8fbbc6700a86b2f27}\label{class_graphical_edge_ac19b4561ff4274f8fbbc6700a86b2f27}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!````~Graphical\+Edge@{$\sim$\+Graphical\+Edge}}
+\index{````~Graphical\+Edge@{$\sim$\+Graphical\+Edge}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{$\sim$\+Graphical\+Edge()}{~GraphicalEdge()}}
+{\footnotesize\ttfamily Graphical\+Edge\+::$\sim$\+Graphical\+Edge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 44 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_ac19b4561ff4274f8fbbc6700a86b2f27_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_ac19b4561ff4274f8fbbc6700a86b2f27_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graphical_edge_a41868fd50c413744e61a549f1cef6a79}\label{class_graphical_edge_a41868fd50c413744e61a549f1cef6a79}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Connect\+Destination@{Connect\+Destination}}
+\index{Connect\+Destination@{Connect\+Destination}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Connect\+Destination()}{ConnectDestination()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Connect\+Destination (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Definition at line 62 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a41868fd50c413744e61a549f1cef6a79_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a41868fd50c413744e61a549f1cef6a79_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_a9f2e7f370705c390ad67f5b18ed80a00}\label{class_graphical_edge_a9f2e7f370705c390ad67f5b18ed80a00}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Connect\+Source@{Connect\+Source}}
+\index{Connect\+Source@{Connect\+Source}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Connect\+Source()}{ConnectSource()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Connect\+Source (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{source }\end{DoxyParamCaption})}
+
+
+
+Definition at line 48 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a9f2e7f370705c390ad67f5b18ed80a00_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a9f2e7f370705c390ad67f5b18ed80a00_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_acc50ad4ea639802ce7d700d17f28f0e3}\label{class_graphical_edge_acc50ad4ea639802ce7d700d17f28f0e3}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Disconnect@{Disconnect}}
+\index{Disconnect@{Disconnect}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Disconnect()}{Disconnect()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Disconnect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 76 of file Graphical\+Edge.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_acc50ad4ea639802ce7d700d17f28f0e3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_a48170a7fc9e86d92985d694addca8837}\label{class_graphical_edge_a48170a7fc9e86d92985d694addca8837}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Draw@{Draw}}
+\index{Draw@{Draw}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Draw (\begin{DoxyParamCaption}\item[{const wx\+Affine\+Matrix2D \&}]{camera,  }\item[{wx\+Graphics\+Context $\ast$}]{gc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_graphical_element_ab137d6d3ad82fd08b5610519dda0c600}{Graphical\+Element}.
+
+
+
+Definition at line 89 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{class_graphical_edge_a48170a7fc9e86d92985d694addca8837_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a48170a7fc9e86d92985d694addca8837_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_aaf19f4b4688b5eb5df39be7af1d09b4b}\label{class_graphical_edge_aaf19f4b4688b5eb5df39be7af1d09b4b}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Get\+Destination\+Point@{Get\+Destination\+Point}}
+\index{Get\+Destination\+Point@{Get\+Destination\+Point}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Get\+Destination\+Point()}{GetDestinationPoint()}}
+{\footnotesize\ttfamily const wx\+Point2\+D\+Double\& Graphical\+Edge\+::\+Get\+Destination\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 55 of file Graphical\+Edge.\+h.
+
+\mbox{\Hypertarget{class_graphical_edge_af8738fa9de63d51bec94fae3bebbe4ac}\label{class_graphical_edge_af8738fa9de63d51bec94fae3bebbe4ac}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Get\+Source\+Point@{Get\+Source\+Point}}
+\index{Get\+Source\+Point@{Get\+Source\+Point}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Get\+Source\+Point()}{GetSourcePoint()}}
+{\footnotesize\ttfamily const wx\+Point2\+D\+Double\& Graphical\+Edge\+::\+Get\+Source\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 54 of file Graphical\+Edge.\+h.
+
+\mbox{\Hypertarget{class_graphical_edge_ad2db5ea6f28e2e572583909ff1f68088}\label{class_graphical_edge_ad2db5ea6f28e2e572583909ff1f68088}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Get\+Type@{Get\+Type}}
+\index{Get\+Type@{Get\+Type}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Get\+Type()}{GetType()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} Graphical\+Edge\+::\+Get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_graphical_element_a28c3cdbdfa3f295f6afaf463ba3e6157}{Graphical\+Element}.
+
+
+
+Definition at line 23 of file Graphical\+Edge.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_ad2db5ea6f28e2e572583909ff1f68088_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_ad590b20ea1c1cb30a15850a36f82a2c9}\label{class_graphical_edge_ad590b20ea1c1cb30a15850a36f82a2c9}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!operator=@{operator=}}
+\index{operator=@{operator=}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_edge}{Graphical\+Edge} \& Graphical\+Edge\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 29 of file Graphical\+Edge.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_ad590b20ea1c1cb30a15850a36f82a2c9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_ad590b20ea1c1cb30a15850a36f82a2c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_aa03597dca35cc2f08c8a1894657546d8}\label{class_graphical_edge_aa03597dca35cc2f08c8a1894657546d8}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!operator==@{operator==}}
+\index{operator==@{operator==}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Graphical\+Edge\+::operator== (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_edge}{Graphical\+Edge} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 57 of file Graphical\+Edge.\+h.
+
+\mbox{\Hypertarget{class_graphical_edge_aa2dbc33d5177ce3aad84f39ba97921de}\label{class_graphical_edge_aa2dbc33d5177ce3aad84f39ba97921de}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Select@{Select}}
+\index{Select@{Select}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Select()}{Select()}}
+{\footnotesize\ttfamily \hyperlink{struct_selection}{Selection} Graphical\+Edge\+::\+Select (\begin{DoxyParamCaption}\item[{const wx\+Affine\+Matrix2D \&}]{camera,  }\item[{wx\+Point2\+D\+Double}]{click\+Position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46}{Graphical\+Element}.
+
+
+
+Definition at line 111 of file Graphical\+Edge.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_aa2dbc33d5177ce3aad84f39ba97921de_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_af6eedeeadcd9abc368b1c0725617f5c9}\label{class_graphical_edge_af6eedeeadcd9abc368b1c0725617f5c9}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Set\+Destination\+Point@{Set\+Destination\+Point}}
+\index{Set\+Destination\+Point@{Set\+Destination\+Point}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Set\+Destination\+Point()}{SetDestinationPoint()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Set\+Destination\+Point (\begin{DoxyParamCaption}\item[{wx\+Point2\+D\+Double}]{destination\+Point }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 46 of file Graphical\+Edge.\+h.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_af6eedeeadcd9abc368b1c0725617f5c9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_af6eedeeadcd9abc368b1c0725617f5c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_edge_a02acb6e42ac2d6def8a662006db2b1ff}\label{class_graphical_edge_a02acb6e42ac2d6def8a662006db2b1ff}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Set\+Source\+Point@{Set\+Source\+Point}}
+\index{Set\+Source\+Point@{Set\+Source\+Point}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Set\+Source\+Point()}{SetSourcePoint()}}
+{\footnotesize\ttfamily void Graphical\+Edge\+::\+Set\+Source\+Point (\begin{DoxyParamCaption}\item[{wx\+Point2\+D\+Double}]{source\+Point }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 44 of file Graphical\+Edge.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_edge_a02acb6e42ac2d6def8a662006db2b1ff_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_graphical_edge_adc7790177f80355fce81568dcdbf561e}\label{class_graphical_edge_adc7790177f80355fce81568dcdbf561e}} 
+\index{Graphical\+Edge@{Graphical\+Edge}!Graphical\+Node@{Graphical\+Node}}
+\index{Graphical\+Node@{Graphical\+Node}!Graphical\+Edge@{Graphical\+Edge}}
+\subsubsection{\texorpdfstring{Graphical\+Node}{GraphicalNode}}
+{\footnotesize\ttfamily friend class \hyperlink{class_graphical_node}{Graphical\+Node}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 12 of file Graphical\+Edge.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_edge_8h}{Graphical\+Edge.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_edge_8cpp}{Graphical\+Edge.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,6 @@
+<map id="Canvas::~Canvas" name="Canvas::~Canvas">
+<area shape="rect" id="node2" href="$class_canvas.html#aec9038762b17b62ff6126bd6277a9cd8" title="Canvas::AddNode" alt="" coords="199,5,324,32"/>
+<area shape="rect" id="node5" href="$class_specific_element_container.html#a6a3c2ba0b46445d1504489d5c2ef3530" title="SpecificElementContainer\l::add_new" alt="" coords="176,57,347,98"/>
+<area shape="rect" id="node3" href="$class_node_factory.html#ae55ad09e7b24522328a979fce9ac5e2a" title="NodeFactory::CreateNodeOfType" alt="" coords="395,5,608,32"/>
+<area shape="rect" id="node4" href="$class_graphical_sink.html#ab59d3cff17a43fac7fc1f364681cd35f" title="GraphicalSink::GraphicalSink" alt="" coords="656,5,848,32"/>
+</map>

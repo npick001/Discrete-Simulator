@@ -4,6 +4,7 @@
 
 #include "wx/wx.h"
 
+#include "MainFrame.h"
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
@@ -18,6 +19,10 @@ public:
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label);
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
+	// Set the origin location to be 0, 0 at the center of the canvas on creation
+	void TransformOriginLocation(wxSize canvasSize);
+	Set<GraphicalNode> GetSimObjects();
+
 private:
 	ElementKey m_nextID;
 
@@ -26,6 +31,7 @@ private:
 		SELECTION_STATE,
 		COMPONENT_SELECTED,
 		COMPONENTS_CONNECTED,
+		MOUSE_POSITION,
 		FIELDS_MAX
 	};
 
@@ -53,10 +59,15 @@ private:
 	ElementList m_elements;
 	NodeMap m_nodes;
 	EdgeMap m_edges;
+	Set<GraphicalNode> m_gnodes;
+
+	// Grid things
+	// "variable grid size in world space" approach
+	std::vector<double> m_gridSizes;
+	wxSize m_canvasSize;
 
 	/*std::vector<GraphicalNode> m_nodes;
 	std::vector<GraphicalEdge> m_edges;*/
-
 
 	// History of actions
 	History m_history;
@@ -74,8 +85,11 @@ private:
 	bool m_isPanning = false;
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
+	wxPoint m_origin;
+	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
+	void DrawGrid(wxGraphicsContext* gc);
 
 	// Selection contains the graphical node which was selected, if any, and the
 	// state of the selection, i.e. graphical node, input, output, or none

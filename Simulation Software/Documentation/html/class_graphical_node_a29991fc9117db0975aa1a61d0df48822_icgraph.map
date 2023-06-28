@@ -1,0 +1,8 @@
+<map id="GraphicalNode::GetInputPoint" name="GraphicalNode::GetInputPoint">
+<area shape="rect" id="node2" href="$class_graphical_edge.html#a41868fd50c413744e61a549f1cef6a79" title="GraphicalEdge::ConnectDestination" alt="" coords="248,69,476,96"/>
+<area shape="rect" id="node6" href="$class_graphical_node.html#a430fbd68a5d907ed9e73981ab3c499fb" title="GraphicalNode::Move" alt="" coords="289,132,435,159"/>
+<area shape="rect" id="node3" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="524,5,736,32"/>
+<area shape="rect" id="node4" href="$class_graphical_edge.html#af8c31162129b7c33427de769beaed38d" title="GraphicalEdge::GraphicalEdge" alt="" coords="530,56,730,83"/>
+<area shape="rect" id="node5" href="$class_graphical_edge.html#ad2db5ea6f28e2e572583909ff1f68088" title="GraphicalEdge::GetType" alt="" coords="548,107,712,133"/>
+<area shape="rect" id="node7" href="$class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a" title="GraphicalNode::GetNodeType" alt="" coords="533,157,727,184"/>
+</map>

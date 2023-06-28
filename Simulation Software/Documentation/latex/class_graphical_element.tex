@@ -1,0 +1,329 @@
+\hypertarget{class_graphical_element}{}\section{Graphical\+Element Class Reference}
+\label{class_graphical_element}\index{Graphical\+Element@{Graphical\+Element}}
+
+
+{\ttfamily \#include $<$Graphical\+Element.\+h$>$}
+
+
+
+Inheritance diagram for Graphical\+Element\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_graphical_element__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Graphical\+Element\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{class_graphical_element__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Type} \+: unsigned int \{ \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ead7107fc1a13076e7d37baa5bcab76515}{N\+O\+DE}, 
+\hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ea3d2a2290806febda78ebe8200e43e4d8}{E\+D\+GE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_graphical_element_a9f116ee2cd16dd099c2579864415d7b8}{Graphical\+Element} ()
+\item 
+\hyperlink{class_graphical_element_a1ff046ba61906c1c7caa49c09de58c9c}{Graphical\+Element} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id)
+\item 
+\hyperlink{class_graphical_element_a04282c63cee46ebc0f3f7c46fc871a40}{Graphical\+Element} (const \hyperlink{class_graphical_element}{Graphical\+Element} \&other)
+\item 
+\hyperlink{class_graphical_element}{Graphical\+Element} \& \hyperlink{class_graphical_element_add7f7f8fe319b3d966ffe3e756ef7b2e}{operator=} (const \hyperlink{class_graphical_element}{Graphical\+Element} \&other)
+\item 
+virtual \hyperlink{class_graphical_element_ad96eef4506d4680b10507ab563552b48}{$\sim$\+Graphical\+Element} ()=default
+\item 
+const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \& \hyperlink{class_graphical_element_a09ed630bc819c852f96ed20dda8d84e8}{Get\+ID} () const
+\item 
+std\+::string \hyperlink{class_graphical_element_a82ab7426dc354b2a91bf0ccc0a34b0b3}{Get\+Label} () const
+\item 
+void \hyperlink{class_graphical_element_a43627056bafcd65a43eb424dff889e99}{Set\+Label} (const std\+::string \&new\+\_\+label)
+\item 
+virtual void \hyperlink{class_graphical_element_ab137d6d3ad82fd08b5610519dda0c600}{Draw} (const wx\+Affine\+Matrix2D \&camera, wx\+Graphics\+Context $\ast$gc)=0
+\item 
+virtual \hyperlink{struct_selection}{Selection} \hyperlink{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46}{Select} (const wx\+Affine\+Matrix2D \&camera, wx\+Point2\+D\+Double click\+Position)=0
+\item 
+virtual \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Type} \hyperlink{class_graphical_element_a28c3cdbdfa3f295f6afaf463ba3e6157}{Get\+Type} () const =0
+\item 
+bool \hyperlink{class_graphical_element_a4bbe253b3e4455a4084de813cf2235a8}{operator==} (const \hyperlink{class_graphical_element}{Graphical\+Element} \&other) const
+\item 
+bool \hyperlink{class_graphical_element_a23d2d7494818f017ca0f0ea4f36f54b5}{operator!=} (const \hyperlink{class_graphical_element}{Graphical\+Element} \&other) const
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::string \hyperlink{class_graphical_element_afac661e0e1c8a699c8f8264dc99437cc}{ms\+\_\+selection\+State\+Names} \mbox{[}Selection\+::\+State\+::\+S\+T\+A\+T\+E\+S\+\_\+\+M\+AX\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} \hyperlink{class_graphical_element_a03d7e29a10d456a4944ce06c6964d15a}{m\+\_\+id}
+\item 
+std\+::string \hyperlink{class_graphical_element_ae7f90a74fb05130a8bb97617b433c918}{m\+\_\+label}
+\item 
+wx\+Point2\+D\+Double \hyperlink{class_graphical_element_acc200c4f7baf224cc972021d0c66cf35}{m\+\_\+label\+Pos}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 67 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}\label{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}} 
+\index{Graphical\+Element@{Graphical\+Element}!Type@{Type}}
+\index{Type@{Type}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily enum \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} \+: unsigned int}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+O\+DE@{N\+O\+DE}!Graphical\+Element@{Graphical\+Element}}\index{Graphical\+Element@{Graphical\+Element}!N\+O\+DE@{N\+O\+DE}}}\mbox{\Hypertarget{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ead7107fc1a13076e7d37baa5bcab76515}\label{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ead7107fc1a13076e7d37baa5bcab76515}} 
+N\+O\+DE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E\+D\+GE@{E\+D\+GE}!Graphical\+Element@{Graphical\+Element}}\index{Graphical\+Element@{Graphical\+Element}!E\+D\+GE@{E\+D\+GE}}}\mbox{\Hypertarget{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ea3d2a2290806febda78ebe8200e43e4d8}\label{class_graphical_element_aa485be48b901d85de97b3bd86f381d9ea3d2a2290806febda78ebe8200e43e4d8}} 
+E\+D\+GE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 78 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_graphical_element_a9f116ee2cd16dd099c2579864415d7b8}\label{class_graphical_element_a9f116ee2cd16dd099c2579864415d7b8}} 
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Graphical\+Element()}{GraphicalElement()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Graphical\+Element\+::\+Graphical\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 13 of file Graphical\+Element.\+cpp.
+
+\mbox{\Hypertarget{class_graphical_element_a1ff046ba61906c1c7caa49c09de58c9c}\label{class_graphical_element_a1ff046ba61906c1c7caa49c09de58c9c}} 
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Graphical\+Element()}{GraphicalElement()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Graphical\+Element\+::\+Graphical\+Element (\begin{DoxyParamCaption}\item[{\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key}}]{id }\end{DoxyParamCaption})}
+
+
+
+Definition at line 16 of file Graphical\+Element.\+cpp.
+
+\mbox{\Hypertarget{class_graphical_element_a04282c63cee46ebc0f3f7c46fc871a40}\label{class_graphical_element_a04282c63cee46ebc0f3f7c46fc871a40}} 
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\index{Graphical\+Element@{Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Graphical\+Element()}{GraphicalElement()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Graphical\+Element\+::\+Graphical\+Element (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_element}{Graphical\+Element} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 19 of file Graphical\+Element.\+cpp.
+
+\mbox{\Hypertarget{class_graphical_element_ad96eef4506d4680b10507ab563552b48}\label{class_graphical_element_ad96eef4506d4680b10507ab563552b48}} 
+\index{Graphical\+Element@{Graphical\+Element}!````~Graphical\+Element@{$\sim$\+Graphical\+Element}}
+\index{````~Graphical\+Element@{$\sim$\+Graphical\+Element}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{$\sim$\+Graphical\+Element()}{~GraphicalElement()}}
+{\footnotesize\ttfamily virtual Graphical\+Element\+::$\sim$\+Graphical\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graphical_element_ab137d6d3ad82fd08b5610519dda0c600}\label{class_graphical_element_ab137d6d3ad82fd08b5610519dda0c600}} 
+\index{Graphical\+Element@{Graphical\+Element}!Draw@{Draw}}
+\index{Draw@{Draw}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily virtual void Graphical\+Element\+::\+Draw (\begin{DoxyParamCaption}\item[{const wx\+Affine\+Matrix2D \&}]{camera,  }\item[{wx\+Graphics\+Context $\ast$}]{gc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_graphical_edge_a48170a7fc9e86d92985d694addca8837}{Graphical\+Edge}, and \hyperlink{class_graphical_node_a5675edef9951820c61973cd8fb242287}{Graphical\+Node}.
+
+\mbox{\Hypertarget{class_graphical_element_a09ed630bc819c852f96ed20dda8d84e8}\label{class_graphical_element_a09ed630bc819c852f96ed20dda8d84e8}} 
+\index{Graphical\+Element@{Graphical\+Element}!Get\+ID@{Get\+ID}}
+\index{Get\+ID@{Get\+ID}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Get\+I\+D()}{GetID()}}
+{\footnotesize\ttfamily const \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key}\& Graphical\+Element\+::\+Get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 92 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_element_a09ed630bc819c852f96ed20dda8d84e8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_element_a82ab7426dc354b2a91bf0ccc0a34b0b3}\label{class_graphical_element_a82ab7426dc354b2a91bf0ccc0a34b0b3}} 
+\index{Graphical\+Element@{Graphical\+Element}!Get\+Label@{Get\+Label}}
+\index{Get\+Label@{Get\+Label}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Get\+Label()}{GetLabel()}}
+{\footnotesize\ttfamily std\+::string Graphical\+Element\+::\+Get\+Label (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 94 of file Graphical\+Element.\+h.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_element_a82ab7426dc354b2a91bf0ccc0a34b0b3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_element_a28c3cdbdfa3f295f6afaf463ba3e6157}\label{class_graphical_element_a28c3cdbdfa3f295f6afaf463ba3e6157}} 
+\index{Graphical\+Element@{Graphical\+Element}!Get\+Type@{Get\+Type}}
+\index{Get\+Type@{Get\+Type}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Get\+Type()}{GetType()}}
+{\footnotesize\ttfamily virtual \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Type} Graphical\+Element\+::\+Get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_graphical_edge_ad2db5ea6f28e2e572583909ff1f68088}{Graphical\+Edge}, and \hyperlink{class_graphical_node_a6bfbcb9a6b85dd3093a8f6541252ebfe}{Graphical\+Node}.
+
+\mbox{\Hypertarget{class_graphical_element_a23d2d7494818f017ca0f0ea4f36f54b5}\label{class_graphical_element_a23d2d7494818f017ca0f0ea4f36f54b5}} 
+\index{Graphical\+Element@{Graphical\+Element}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool Graphical\+Element\+::operator!= (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_element}{Graphical\+Element} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 108 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_graphical_element_add7f7f8fe319b3d966ffe3e756ef7b2e}\label{class_graphical_element_add7f7f8fe319b3d966ffe3e756ef7b2e}} 
+\index{Graphical\+Element@{Graphical\+Element}!operator=@{operator=}}
+\index{operator=@{operator=}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_element}{Graphical\+Element} \& Graphical\+Element\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_element}{Graphical\+Element} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 23 of file Graphical\+Element.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_element_add7f7f8fe319b3d966ffe3e756ef7b2e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_element_a4bbe253b3e4455a4084de813cf2235a8}\label{class_graphical_element_a4bbe253b3e4455a4084de813cf2235a8}} 
+\index{Graphical\+Element@{Graphical\+Element}!operator==@{operator==}}
+\index{operator==@{operator==}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Graphical\+Element\+::operator== (\begin{DoxyParamCaption}\item[{const \hyperlink{class_graphical_element}{Graphical\+Element} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 105 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46}\label{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46}} 
+\index{Graphical\+Element@{Graphical\+Element}!Select@{Select}}
+\index{Select@{Select}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Select()}{Select()}}
+{\footnotesize\ttfamily virtual \hyperlink{struct_selection}{Selection} Graphical\+Element\+::\+Select (\begin{DoxyParamCaption}\item[{const wx\+Affine\+Matrix2D \&}]{camera,  }\item[{wx\+Point2\+D\+Double}]{click\+Position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_graphical_node_ac73e20f3d4c5cca556e0140ef558f6a4}{Graphical\+Node}, and \hyperlink{class_graphical_edge_aa2dbc33d5177ce3aad84f39ba97921de}{Graphical\+Edge}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_element_a43627056bafcd65a43eb424dff889e99}\label{class_graphical_element_a43627056bafcd65a43eb424dff889e99}} 
+\index{Graphical\+Element@{Graphical\+Element}!Set\+Label@{Set\+Label}}
+\index{Set\+Label@{Set\+Label}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{Set\+Label()}{SetLabel()}}
+{\footnotesize\ttfamily void Graphical\+Element\+::\+Set\+Label (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{new\+\_\+label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 95 of file Graphical\+Element.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_graphical_element_a03d7e29a10d456a4944ce06c6964d15a}\label{class_graphical_element_a03d7e29a10d456a4944ce06c6964d15a}} 
+\index{Graphical\+Element@{Graphical\+Element}!m\+\_\+id@{m\+\_\+id}}
+\index{m\+\_\+id@{m\+\_\+id}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{m\+\_\+id}{m\_id}}
+{\footnotesize\ttfamily \hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} Graphical\+Element\+::m\+\_\+id\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 69 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_graphical_element_ae7f90a74fb05130a8bb97617b433c918}\label{class_graphical_element_ae7f90a74fb05130a8bb97617b433c918}} 
+\index{Graphical\+Element@{Graphical\+Element}!m\+\_\+label@{m\+\_\+label}}
+\index{m\+\_\+label@{m\+\_\+label}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{m\+\_\+label}{m\_label}}
+{\footnotesize\ttfamily std\+::string Graphical\+Element\+::m\+\_\+label\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 71 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_graphical_element_acc200c4f7baf224cc972021d0c66cf35}\label{class_graphical_element_acc200c4f7baf224cc972021d0c66cf35}} 
+\index{Graphical\+Element@{Graphical\+Element}!m\+\_\+label\+Pos@{m\+\_\+label\+Pos}}
+\index{m\+\_\+label\+Pos@{m\+\_\+label\+Pos}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{m\+\_\+label\+Pos}{m\_labelPos}}
+{\footnotesize\ttfamily wx\+Point2\+D\+Double Graphical\+Element\+::m\+\_\+label\+Pos\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 72 of file Graphical\+Element.\+h.
+
+\mbox{\Hypertarget{class_graphical_element_afac661e0e1c8a699c8f8264dc99437cc}\label{class_graphical_element_afac661e0e1c8a699c8f8264dc99437cc}} 
+\index{Graphical\+Element@{Graphical\+Element}!ms\+\_\+selection\+State\+Names@{ms\+\_\+selection\+State\+Names}}
+\index{ms\+\_\+selection\+State\+Names@{ms\+\_\+selection\+State\+Names}!Graphical\+Element@{Graphical\+Element}}
+\subsubsection{\texorpdfstring{ms\+\_\+selection\+State\+Names}{ms\_selectionStateNames}}
+{\footnotesize\ttfamily const std\+::string Graphical\+Element\+::ms\+\_\+selection\+State\+Names\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    \textcolor{stringliteral}{"NONE"},
+    \textcolor{stringliteral}{"NODE"},
+    \textcolor{stringliteral}{"NODE\_OUTPUT"},
+    \textcolor{stringliteral}{"NODE\_INPUT"},
+    \textcolor{stringliteral}{"EDGE"}
+\}
+\end{DoxyCode}
+
+
+Definition at line 83 of file Graphical\+Element.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_element_8h}{Graphical\+Element.\+h}\item 
+Simulation Software/\+Source Files/\hyperlink{_graphical_element_8cpp}{Graphical\+Element.\+cpp}\end{DoxyCompactItemize}

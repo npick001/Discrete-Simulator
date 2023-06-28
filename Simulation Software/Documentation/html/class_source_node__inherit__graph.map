@@ -1,0 +1,3 @@
+<map id="SourceNode" name="SourceNode">
+<area shape="rect" id="node2" href="$class_generic_node.html" title="{GenericNode\n|# m_next\l|+ SetNext()\l+ SetPrevious()\l+ SetImagePath()\l+ SetNodeType()\l+ GetName()\l+ GetImagePath()\l+ GetID()\l+ GetType()\l+ Arrive()\l+ GetStatistics()\l# GenericNode()\l# GenericNode()\l# ~GenericNode()\l# Depart()\l# NodeProcess()\l}" alt="" coords="12,5,137,288"/>
+</map>

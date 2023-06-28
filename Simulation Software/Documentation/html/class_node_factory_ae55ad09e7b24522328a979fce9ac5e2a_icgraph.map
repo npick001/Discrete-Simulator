@@ -1,0 +1,6 @@
+<map id="NodeFactory::CreateNodeOfType" name="NodeFactory::CreateNodeOfType">
+<area shape="rect" id="node2" href="$class_canvas.html#aec9038762b17b62ff6126bd6277a9cd8" title="Canvas::AddNode" alt="" coords="267,56,392,83"/>
+<area shape="rect" id="node3" href="$class_canvas.html#a237c4549ad2e27c729cd1f71e89f0fd9" title="Canvas::~Canvas" alt="" coords="485,5,607,32"/>
+<area shape="rect" id="node4" href="$class_canvas.html#aaec53b68c7b24704e399b565731ed545" title="Canvas::AddNode" alt="" coords="483,56,609,83"/>
+<area shape="rect" id="node5" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="440,107,652,133"/>
+</map>

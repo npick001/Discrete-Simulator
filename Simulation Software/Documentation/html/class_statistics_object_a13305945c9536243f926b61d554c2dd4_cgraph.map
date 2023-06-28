@@ -1,0 +1,11 @@
+<map id="StatisticsObject::DetermineBestFit" name="StatisticsObject::DetermineBestFit">
+<area shape="rect" id="node2" href="$class_statistics_object.html#a8177bcf97b01750d125852b888e11323" title="StatisticsObject::Create\lDummyData" alt="" coords="259,57,421,98"/>
+<area shape="rect" id="node5" href="$class_statistics_object.html#ad89d69d36051851fe876b1ec28967c1e" title="StatisticsObject::ComputePDF" alt="" coords="239,5,441,32"/>
+<area shape="rect" id="node6" href="$class_statistics_object.html#a5f516a6f544714694efc0ba0f925f38c" title="StatisticsObject::ChiSquareTest" alt="" coords="236,123,444,149"/>
+<area shape="rect" id="node3" href="$_utility_8h.html#a53972ecec648f185c909fb20d30efc6a" title="WriteToFile" alt="" coords="553,9,641,36"/>
+<area shape="rect" id="node4" href="$class_distribution.html#a63b433850d7b47d84eb69448f7916719" title="Distribution::GetRV" alt="" coords="529,64,664,91"/>
+<area shape="rect" id="node7" href="$class_statistics_object.html#a7ad5fc88ce637ed421f4fccf92a8b5e0" title="StatisticsObject::ChiSquareCDF" alt="" coords="492,123,701,149"/>
+<area shape="rect" id="node8" href="$class_statistics_object.html#aec6848499139f4811fd4f2f60a252a9f" title="StatisticsObject::PDF\l_Chi_Square" alt="" coords="749,115,899,157"/>
+<area shape="rect" id="node9" href="$class_statistics_object.html#a0d9dc9480288e61b3e98134deb18d2d4" title="StatisticsObject::GammaFunction" alt="" coords="947,123,1165,149"/>
+<area shape="rect" id="node10" href="$class_statistics_object.html#a033c5346639a0dd44b68838a49bdd926" title="StatisticsObject::factorial" alt="" coords="1213,123,1381,149"/>
+</map>

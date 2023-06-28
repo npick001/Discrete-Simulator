@@ -1,25 +1,63 @@
-Simulation Statistics
-
-Simulation End Time: 206.735706
-
 SOURCE 0
 
-	- Entities Created: 100
-	- Total Entities Created: 100
-
-SINK 2
-
-	- Entities Created: 100
-	- Total Entities Created: 100
+	- Entities Created: 10
+	- Total Entities Created: 10
 
 SSSQ 1
 
-	- Entities Processed: 100
-	- Time Waiting: 5.059435
-	- Time in Service: 143.209044
-	- Time Idle: 63.526662
-	- Percent Utilization: 0.692716
-	- Average Queue Wait Time: 0.050594
-	- Average Queue Size: 0.000000
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 2147483647.000000
+	- Maximum Queue Size: -2147483648.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 2147483647.000000
+	- Maximum Queue Size: -2147483648.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
 	- Minimum Queue Size: 0.000000
-	- Maximum Queue Size: 1.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+

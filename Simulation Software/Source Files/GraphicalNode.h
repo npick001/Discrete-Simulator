@@ -3,16 +3,21 @@
 #include <list>
 #include <string>
 
-#include "wx/graphics.h"
 #include "wx/wx.h"
+#include "wx/graphics.h"
+#include "wx/propgrid/propgrid.h"
 
+#include "SimulationExecutive.h"
+#include "Set.h"
 #include "GenericNode.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 #include "Action.h"
 
 class GraphicalEdge;
-class MoveNodeAction;
+//class MoveNodeAction;
+class NodeFactory;
+class SimProperties;
 
 class GraphicalNode : public GraphicalElement {
 public:
@@ -46,6 +51,9 @@ public:
 	std::list<GraphicalEdge*> GetOutputs() const;
 	std::list<GraphicalEdge*> GetInputs() const;
 
+	// for property viewer
+	Set<wxPGProperty> GetProperties();
+
 	void DisconnectOutputs();
 	void DisconnectInputs();
 
@@ -55,11 +63,38 @@ public:
 	void Move(wxPoint2DDouble displacement);
 
 	void SetBodyColor(const wxColor& color);
+	void SetNodeType(GenericNode::Type type);
+
+	// PROPERTY REPORTING DESIGN PATTERN
+	class PropertiesWrapper {
+	public:
+		PropertiesWrapper(int id) : m_id(id) {}
+		virtual void ReportProperties() = 0;
+
+	private:
+		int m_id;
+	};
+
+	virtual std::unique_ptr<PropertiesWrapper> GetSimProperties() = 0;
 
 protected:
 	friend class GraphicalEdge;
 	GraphicalElement::Type m_type;
 	GenericNode::Type m_nodeType;
+
+	/// <SimProperties>
+	/// This is the same design pattern as Statistics from the simulation code.
+	/// Idea is that the parent class defines a properties object that is populated by the
+	/// instances of this object. Any handlers using the parent class
+	/// can thus access instantiated object properties
+	class SimProperties
+	{
+	protected:
+		inline SimProperties() {}
+	};
+
+	// list of wxProperties that can be used and displayed (hopefully)
+	Set<wxPGProperty> m_properties;
 
 	// graphical characteristics
 	wxColor m_bodyColor;
@@ -99,8 +134,17 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-private:
+	class SourceProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
 
+protected:
+	class MyProperties;
+
+private:
+	// will be replaced with a distribution later
+	int m_arrivalTime;
+
+	SimProperties* m_myProps;
 };
 
 /****************************************************************/
@@ -116,9 +160,21 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
+	class ServerProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+
+protected:
+	class MyProperties;
+
 private:
+	// will be replaced with a distribution later
+	double m_serviceTime;
 
+	// will be replaced with a time unit later (second, minute, hour, day, year)
+	TimeUnit m_timeUnit;
+	int m_numResources;
 
+	SimProperties* m_myProps;
 };
 
 /*****************************************/
@@ -133,21 +189,12 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
+	class SinkProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+
+protected:
+	class MyProperties;
+
 private:
-
-};
-
-/*******************************************/
-/* Node Factory:                           */
-/* defines an node creation object         */
-/* the factory's whole job is to generate  */
-/* the specified node and return a pointer */
-/*******************************************/
-class NodeFactory
-{
-public:
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type);
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
-private:
-
+	SimProperties* m_myProps;
 };

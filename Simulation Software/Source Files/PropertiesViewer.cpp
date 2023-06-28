@@ -5,27 +5,36 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 {
 	auto width = GetParent()->GetSize().x * 0.2;
 	auto height = GetParent()->GetSize().y;
-	wxSize* panelSize = new wxSize(width, height);
+	wxSize panelSize(width, height);
 
-	m_propGrid = new wxPropertyGrid(this, wxID_ANY, wxDefaultPosition, *panelSize,
-		wxPG_DEFAULT_STYLE);
-
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-
-	m_propGrid->Append(headerProp);
-	ShowProperties();
+	m_propGrid = new wxPropertyGrid(this, wxID_ANY, wxDefaultPosition, panelSize,
+		wxPG_SPLITTER_AUTO_CENTER);
 
 	// Event bindings
 	this->Bind(wxEVT_SIZE, &PropertiesViewer::OnResize, this);
+	this->Bind(wxEVT_PG_CHANGED, &PropertiesViewer::OnPropertyGridChange, this);
+}
+
+void PropertiesViewer::Reset()
+{
+	while (m_props.GetSize() > 0) {
+		m_propGrid->RemoveProperty(m_props.GetFirst());
+	}
+}
+
+void PropertiesViewer::Refresh()
+{
+	m_propGrid->Refresh();
+	m_propGrid->Update();
 }
 
 void PropertiesViewer::SetSize(wxSize newSize)
 {
 	auto width = newSize.x;
 	auto height = newSize.y;
-	wxSize* panelSize = new wxSize(width, height);
+	wxSize panelSize(width, height);
 
-	m_propGrid->SetSize(*panelSize);
+	m_propGrid->SetSize(panelSize);
 	m_propGrid->Refresh();
 }
 
@@ -38,7 +47,7 @@ void PropertiesViewer::AddProperty(wxPGProperty* propToAdd)
 	m_props.Add(propToAdd);
 }
 
-void PropertiesViewer::EditProperty(wxPGProperty* propToEdit, wxAny* newValue)
+void PropertiesViewer::EditProperty(wxPGProperty* propToEdit, wxVariant* newValue)
 {
 	// Throw error and exit if property to edit is not there
 	// should always be in the Set for this operation
@@ -127,4 +136,14 @@ void PropertiesViewer::OnResize(wxSizeEvent& event)
 	m_propGrid->Refresh();
 
 	event.Skip();
+}
+
+void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
+{
+	auto changedProp = event.GetProperty();
+	if (!changedProp) return;
+
+	auto value = event.GetValue();
+
+	changedProp->SetValueInEvent(value);
 }

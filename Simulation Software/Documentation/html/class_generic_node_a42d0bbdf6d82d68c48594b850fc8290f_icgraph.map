@@ -1,0 +1,6 @@
+<map id="GenericNode::GetImagePath" name="GenericNode::GetImagePath">
+<area shape="rect" id="node2" href="$class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2" title="GenericNode::SetNodeType" alt="" coords="241,31,424,57"/>
+<area shape="rect" id="node5" href="$class_sim_object_library.html#a52aa03db97b37434b94bbecf73c74e1c" title="SimObjectLibrary::AddNode" alt="" coords="241,81,424,108"/>
+<area shape="rect" id="node3" href="$class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="472,5,644,32"/>
+<area shape="rect" id="node4" href="$class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="487,56,629,83"/>
+</map>
