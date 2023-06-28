@@ -21,11 +21,14 @@
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
 #include "GraphicalNode.h"
+#include "SimProject.h"
 
 enum {
     ID_Exit = 1,
     ID_Input_Analyzer,
     ID_Run_Sim,
+    ID_Build_SimCode,
+    ID_Build_And_Run,
     ID_Model_Settings,
     ID_CreateNotebook,
     ID_CreateTree,
@@ -40,6 +43,7 @@ enum {
 
 class Canvas;
 class Selection;
+class SimProject;
 
 class MainFrame : public wxFrame {
 public:
@@ -53,7 +57,10 @@ public:
     static MainFrame* GetInstance();
 
 private:
+
+
     static MainFrame* m_instance;
+    SimProject* m_simProject;
 
     wxAuiManager m_manager;
     PropertiesViewer* m_properties;
@@ -91,6 +98,11 @@ private:
 
     // Statistics menu events
     void OnClickAnalyzer(wxCommandEvent& event);
+
+    // Project Menu Events
+    void OnBuild(wxCommandEvent& event);
+    void OnRun(wxCommandEvent& event);
+    void OnBuildAndRun(wxCommandEvent& event);
 
     void OnResize(wxSizeEvent& event);
 };

@@ -63,6 +63,7 @@ public:
 	void Move(wxPoint2DDouble displacement);
 
 	void SetBodyColor(const wxColor& color);
+	void SetNodeType(GenericNode::Type type);
 
 	// PROPERTY REPORTING DESIGN PATTERN
 	class PropertiesWrapper {
@@ -135,6 +136,7 @@ public:
 
 	class SourceProperties;
 	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+
 protected:
 	class MyProperties;
 

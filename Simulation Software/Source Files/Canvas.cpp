@@ -67,6 +67,7 @@ Canvas::~Canvas() {
 
 void Canvas::AddNode(GraphicalNode* obj) {
 	m_nodes.add_new(obj);
+	m_gnodes.Add(obj);
 }
 
 // Adds a graphical node to the canvas
@@ -149,9 +150,9 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 	AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
 }
 
-NodeMap Canvas::GetSimObjects()
+Set<GraphicalNode> Canvas::GetSimObjects()
 {
-	return m_nodes;
+	return m_gnodes;
 }
 
 // Return selection information containing which graphical node, if any, was selected and the state of the selection

@@ -1,4 +1,6 @@
 #pragma once
+#include <wx/wx.h>
+#include <wx/log.h>
 
 #include "Directives.h"
 #include "Entity.h"

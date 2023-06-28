@@ -176,10 +176,10 @@ void GraphicalNode::SetBodyColor(const wxColor& color)
 	m_bodyColor = color;
 }
 
-//class GraphicalNode::SimProperties
-//{
-//
-//};
+void GraphicalNode::SetNodeType(GenericNode::Type type)
+{
+	m_nodeType = type;
+}
 
 
 /********************************************/
@@ -222,12 +222,13 @@ private:
 
 GraphicalSource::GraphicalSource() : GraphicalNode()
 {
-
+	SetNodeType(GenericNode::SOURCE);
 }
 
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Source")
 {
+	SetNodeType(GenericNode::SOURCE);
 	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
 }
 
@@ -307,12 +308,14 @@ private:
 
 GraphicalServer::GraphicalServer()
 {
-
+	SetNodeType(GenericNode::SERVER);
 }
 
 GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Server")
 {
+	SetNodeType(GenericNode::SERVER);
+
 	m_serviceTime = 1.0;
 	m_timeUnit = MINUTES;
 	m_numResources = 1;
@@ -393,12 +396,13 @@ private:
 GraphicalSink::GraphicalSink() : GraphicalNode() 
 {
 	//m_bodyColor = *wxLIGHT_GREY;
+	SetNodeType(GenericNode::SINK);
 }
 
 GraphicalSink::GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Sink")
 {
-	
+	SetNodeType(GenericNode::SINK);
 }
 
 void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)

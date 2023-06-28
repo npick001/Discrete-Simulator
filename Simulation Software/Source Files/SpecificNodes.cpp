@@ -93,7 +93,9 @@ void SourceNode::ArriveEM() {
 	if (m_numberToGenerate > 0 || m_infiniteGeneration) {
 		Time arrivalDelta = m_arrivalDistribution->GetRV();
 
-		std::cout << "Scheduling source arrival event in " << arrivalDelta << std::endl;
+		std::string message = "Scheduling source arrival event in " + std::to_string(arrivalDelta);
+		wxLogMessage("%s", message.c_str());
+		
 		ScheduleEventIn(arrivalDelta, new ArriveEA(this));
 	}
 }
@@ -156,7 +158,8 @@ SourceNode::SourceNode(std::string name, Entity* entity, Distribution* dist) : G
 
 void SourceNode::NodeProcess(Entity* e)
 {
-	std::cout << "ERROR -> SourceNode.Arrive() SHOULD NOT BE CALLED";
+	std::string message = "ERROR -> SourceNode.Arrive() SHOULD NOT BE CALLED\n";
+	wxLogMessage("%s", message.c_str());
 }
 
 // commit changes to statistics
@@ -244,7 +247,9 @@ SinkNode::SinkNode(string name) : GenericNode(name) {
 };
 
 void SinkNode::NodeProcess(Entity* entity) {
-	cout << "Deleting " << entity->GetID() << endl;
+
+	std::string message = "Deleting " + std::to_string(entity->GetID()) + '\n';
+	wxLogMessage("%s", message.c_str());
 
 	entity->SetDeletionTime(GetSimulationTime());
 
@@ -444,6 +449,11 @@ void SSSQ::StartProcessingEM() {
 	Time serviceTime = m_serviceTime->GetRV();
 	sm_totalServiceTime += serviceTime;
 
+	std::string message = "Time: " + std::to_string(GetSimulationTime()) +
+						  "\tSSSQ " + std::to_string(GetID()) +
+						  "\tStart Processing\n";
+	wxLogMessage("%s", message.c_str());
+
 	ScheduleEventIn(serviceTime, new EndProcessingEA(this, e));
 }
 
@@ -459,6 +469,11 @@ void SSSQ::EndProcessingEM(Entity* e) {
 	if (!m_queue->IsEmpty()) {
 		ScheduleEventIn(0.0, new StartProcessingEA(this));
 	}
+
+	std::string message = "Time: " + std::to_string(GetSimulationTime()) +
+		"\tSSSQ " + std::to_string(GetID()) +
+		"\tEnd Processing\n";
+
 	Depart(e);
 }
 

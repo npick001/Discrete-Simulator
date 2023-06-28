@@ -21,7 +21,7 @@ public:
 
 	// Set the origin location to be 0, 0 at the center of the canvas on creation
 	void TransformOriginLocation(wxSize canvasSize);
-	NodeMap GetSimObjects();
+	Set<GraphicalNode> GetSimObjects();
 
 private:
 	ElementKey m_nextID;
@@ -59,6 +59,7 @@ private:
 	ElementList m_elements;
 	NodeMap m_nodes;
 	EdgeMap m_edges;
+	Set<GraphicalNode> m_gnodes;
 
 	// Grid things
 	// "variable grid size in world space" approach

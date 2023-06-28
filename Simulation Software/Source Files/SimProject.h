@@ -1,8 +1,11 @@
 #pragma once
+#include <vector>
 
 #include "Canvas.h"
 #include "SimulationExecutive.h"
 #include "SpecificNodes.h"
+
+class Canvas;
 
 /***************************************
 
@@ -32,20 +35,25 @@ class SimProject {
 public:
 	SimProject(Canvas* canvas);
 
+	void SetCanvas(Canvas* canvas);
+	const Canvas& ViewCanvas();
+
 	/// <Build>
 	/// Take graphical nodes and generate 
 	/// simulation code
 	void Build();
 	void Run();
+	void WriteStatistics();
 
 	void SetTimeUnit(TimeUnit newUnit);
 
 private:
+	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 
 	TimeUnit m_modelTimeUnit;
 
 	// Model 
-	Set<GenericNode*> m_instantiatedNodes;
+	std::vector<GenericNode*> m_instantiatedNodes;
 
 	// View
 	Canvas* m_canvas;
