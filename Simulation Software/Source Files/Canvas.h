@@ -19,7 +19,9 @@ public:
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label);
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
+	// Set the origin location to be 0, 0 at the center of the canvas on creation
 	void TransformOriginLocation(wxSize canvasSize);
+	NodeMap GetSimObjects();
 
 private:
 	ElementKey m_nextID;

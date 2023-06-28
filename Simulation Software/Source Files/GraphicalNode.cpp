@@ -176,7 +176,50 @@ void GraphicalNode::SetBodyColor(const wxColor& color)
 	m_bodyColor = color;
 }
 
-// GraphicalSource
+//class GraphicalNode::SimProperties
+//{
+//
+//};
+
+
+/********************************************/
+/* GraphicalSource:                         */
+/* defines an entity generating object      */
+/* provides basic entity creation			*/
+/********************************************/
+class GraphicalSource::MyProperties : public SimProperties {
+
+public:
+	MyProperties() {
+		m_IA_Time = new Exponential(0.25);
+		m_numToGen = 10;
+	}
+
+	MyProperties(Distribution* ia_time, int numGen) {
+		m_IA_Time = ia_time;
+		m_numToGen = numGen;
+	}
+
+private:
+	Distribution* m_IA_Time;
+	int m_numToGen;
+};
+
+class GraphicalSource::SourceProperties : public PropertiesWrapper {
+
+public:
+	SourceProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
+		m_props = props;
+	}
+
+	void ReportProperties() override {
+
+	}
+
+private:
+	SimProperties* m_props;
+};
+
 GraphicalSource::GraphicalSource() : GraphicalNode()
 {
 
@@ -214,7 +257,54 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 }
 
-// Graphical Server
+std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSource::GetSimProperties()
+{
+	return std::make_unique<SourceProperties>(m_myProps, GetID());
+}
+
+/****************************************************************/
+/* GraphicalServer:                                             */
+/* defines a single server single queue object                  */
+/* provides basic server functionality							*/
+/****************************************************************/
+
+class GraphicalServer::MyProperties : public SimProperties {
+
+public:
+	MyProperties() {
+		m_serviceTime = 1.0;
+		m_st_timeUnit = MINUTES;
+		m_numResources = 1;
+	}
+
+	// getting lazy, this works
+	MyProperties(double st, TimeUnit tu, int nr) {
+		m_serviceTime = st;
+		m_st_timeUnit = tu;
+		m_numResources = nr;		
+	}
+
+private:
+	double m_serviceTime;
+	TimeUnit m_st_timeUnit;
+	int m_numResources;
+};
+
+class GraphicalServer::ServerProperties : public PropertiesWrapper {
+
+public:
+	ServerProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
+		m_props = props;
+	}
+
+	void ReportProperties() override {
+			
+	}
+
+private:
+	SimProperties* m_props;
+};
+
 GraphicalServer::GraphicalServer()
 {
 
@@ -262,7 +352,44 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 }
 
-// GraphicalSink
+std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalServer::GetSimProperties()
+{
+	return std::make_unique<ServerProperties>(m_myProps, GetID());
+}
+
+/****************************************/
+/* GraphicalSink                        */  
+/* This is essentially useless          */
+/* for sink specifically.				*/
+/* this is here for the design pattern. */
+/****************************************/
+
+class GraphicalSink::MyProperties : public SimProperties {
+
+public:
+	MyProperties() {
+
+	}
+
+private:
+
+};
+
+class GraphicalSink::SinkProperties : public PropertiesWrapper {
+
+public:
+	SinkProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
+		m_props = props;
+	}
+
+	void ReportProperties() override {
+
+	}
+
+private:
+	SimProperties* m_props;
+};
+
 GraphicalSink::GraphicalSink() : GraphicalNode() 
 {
 	//m_bodyColor = *wxLIGHT_GREY;
@@ -302,45 +429,8 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 
 }
 
-
-GraphicalNode* NodeFactory::CreateNodeOfType(GenericNode::Type type)
+std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSink::GetSimProperties()
 {
-	GraphicalNode* createdNode = new GraphicalServer();
-
-	switch (type) {
-
-	case GenericNode::SOURCE:
-
-		delete createdNode;
-		createdNode = new GraphicalSource();
-		break;
-	case GenericNode::SINK:
-
-		delete createdNode;
-		createdNode = new GraphicalSink();
-		break;
-	}
-
-	return createdNode;
+	return std::make_unique<SinkProperties>(m_myProps, GetID());
 }
 
-GraphicalNode* NodeFactory::CreateNodeOfType(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center)
-{
-	GraphicalNode* createdNode = new GraphicalServer(id, window, center);
-
-	switch (type) {
-
-	case GenericNode::SOURCE:
-
-		delete createdNode;
-		createdNode = new GraphicalSource(id, window, center);
-		break;
-	case GenericNode::SINK:
-
-		delete createdNode;
-		createdNode = new GraphicalSink(id, window, center);
-		break;
-	}
-
-	return createdNode;
-}

@@ -73,7 +73,7 @@ void Canvas::AddNode(GraphicalNode* obj) {
 void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::string& label) {
 	
 	// generate the specified graphical node based on the type given
-	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
+	GraphicalNode* obj = NodeFactory::CreateGraphicalNode(type, m_nextID, this, center);
 	m_nextID++;
 	
 	AddNode(obj);
@@ -85,7 +85,7 @@ void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center, const std::
 void Canvas::AddNode(GenericNode::Type type, wxPoint2DDouble center) {
 
 	// generate the specified graphical node based on the type given
-	GraphicalNode* obj = NodeFactory::CreateNodeOfType(type, m_nextID, this, center);
+	GraphicalNode* obj = NodeFactory::CreateGraphicalNode(type, m_nextID, this, center);
 	m_nextID++;
 	
 	AddNode(obj);
@@ -147,6 +147,11 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 	AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
 	AddNode(GenericNode::SERVER, wxPoint2DDouble(originPosition.m_x, originPosition.m_y));
 	AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
+}
+
+NodeMap Canvas::GetSimObjects()
+{
+	return m_nodes;
 }
 
 // Return selection information containing which graphical node, if any, was selected and the state of the selection

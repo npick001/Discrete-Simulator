@@ -33,6 +33,8 @@ class SourceNode : public GenericNode
 public:
 	void Test() { std::cout << "SOURCE NODE EXISTS" << std::endl; }
 
+	SourceNode();
+
 	// For finite entity generation
 	SourceNode(std::string name, int numGen, Entity* entity, Distribution* dist);
 
@@ -81,6 +83,7 @@ class SinkNode : public GenericNode
 public:
 	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
 
+	SinkNode();
 	SinkNode(string name);
 	//~SinkNode() {}
 	void NodeProcess(Entity* e);
@@ -113,6 +116,7 @@ class SSSQ : public GenericNode {
 public:
 	void Test() { std::cout << "SSSQ NODE EXISTS" << std::endl; }
 
+	SSSQ();
 	SSSQ(std::string name, Distribution* serviceTime);
 	~SSSQ();
 	void NodeProcess(Entity* e);

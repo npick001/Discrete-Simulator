@@ -15,8 +15,9 @@
 #include "Action.h"
 
 class GraphicalEdge;
-class MoveNodeAction;
+//class MoveNodeAction;
 class NodeFactory;
+class SimProperties;
 
 class GraphicalNode : public GraphicalElement {
 public:
@@ -63,10 +64,33 @@ public:
 
 	void SetBodyColor(const wxColor& color);
 
+	// PROPERTY REPORTING DESIGN PATTERN
+	class PropertiesWrapper {
+	public:
+		PropertiesWrapper(int id) : m_id(id) {}
+		virtual void ReportProperties() = 0;
+
+	private:
+		int m_id;
+	};
+
+	virtual std::unique_ptr<PropertiesWrapper> GetSimProperties() = 0;
+
 protected:
 	friend class GraphicalEdge;
 	GraphicalElement::Type m_type;
 	GenericNode::Type m_nodeType;
+
+	/// <SimProperties>
+	/// This is the same design pattern as Statistics from the simulation code.
+	/// Idea is that the parent class defines a properties object that is populated by the
+	/// instances of this object. Any handlers using the parent class
+	/// can thus access instantiated object properties
+	class SimProperties
+	{
+	protected:
+		inline SimProperties() {}
+	};
 
 	// list of wxProperties that can be used and displayed (hopefully)
 	Set<wxPGProperty> m_properties;
@@ -109,9 +133,16 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
+	class SourceProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+protected:
+	class MyProperties;
+
 private:
 	// will be replaced with a distribution later
 	int m_arrivalTime;
+
+	SimProperties* m_myProps;
 };
 
 /****************************************************************/
@@ -127,6 +158,12 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
+	class ServerProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+
+protected:
+	class MyProperties;
+
 private:
 	// will be replaced with a distribution later
 	double m_serviceTime;
@@ -134,6 +171,8 @@ private:
 	// will be replaced with a time unit later (second, minute, hour, day, year)
 	TimeUnit m_timeUnit;
 	int m_numResources;
+
+	SimProperties* m_myProps;
 };
 
 /*****************************************/
@@ -148,6 +187,12 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-private:
+	class SinkProperties;
+	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
 
+protected:
+	class MyProperties;
+
+private:
+	SimProperties* m_myProps;
 };

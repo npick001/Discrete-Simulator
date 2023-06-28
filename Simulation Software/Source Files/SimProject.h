@@ -32,6 +32,9 @@ class SimProject {
 public:
 	SimProject(Canvas* canvas);
 
+	/// <Build>
+	/// Take graphical nodes and generate 
+	/// simulation code
 	void Build();
 	void Run();
 
@@ -42,7 +45,7 @@ private:
 	TimeUnit m_modelTimeUnit;
 
 	// Model 
-	std::vector<GenericNode*> m_instantiatedNodes;
+	Set<GenericNode*> m_instantiatedNodes;
 
 	// View
 	Canvas* m_canvas;
@@ -57,8 +60,10 @@ private:
 class NodeFactory
 {
 public:
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type);
-	static GraphicalNode* CreateNodeOfType(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type);
+	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
+
+	static GenericNode* CreateSimObject(GenericNode::Type type);
 private:
 
 };
