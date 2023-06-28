@@ -72,14 +72,6 @@ protected:
 	wxPoint2DDouble m_labelPos;
 
 public:
-
-	// Derivative elements should have a static member called ms_type that
-	// is returned by overriding the GetType function
-	enum Type : unsigned int {
-		NODE,
-		EDGE
-	};
-
 	static const std::string ms_selectionStateNames[Selection::State::STATES_MAX];
 
 	GraphicalElement();
@@ -98,8 +90,6 @@ public:
 
 	virtual Selection Select(const wxAffineMatrix2D& camera,
 		wxPoint2DDouble clickPosition) = 0;
-
-	virtual Type GetType() const = 0;
 
 	// Elements are guarenteed to be the same if they share the same day
 	inline bool operator==(const GraphicalElement& other) const

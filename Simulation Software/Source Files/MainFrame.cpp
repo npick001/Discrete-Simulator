@@ -217,6 +217,7 @@ wxAuiNotebook* MainFrame::CreateNotebook()
     // Write the code for adding models in here.
     //notebook->AddPage(new Canvas(this, GetStatusBar()), "Canvas notebook", true, page_bmp);
 
+
     notebook->Thaw();
 
     return notebook;

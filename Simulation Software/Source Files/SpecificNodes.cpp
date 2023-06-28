@@ -119,7 +119,7 @@ SourceNode::SourceNode() : GenericNode("Default Source")
 SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distribution* dist) : GenericNode(name) {
 
 	SetNodeType(SOURCE);
-
+  
 	m_infiniteGeneration = false;
 	m_numberToGenerate = numGen;
 	m_arrivalDistribution = dist;
