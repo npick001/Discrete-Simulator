@@ -61,3 +61,45 @@ SINK 2
 	- Entities Created: 10
 	- Total Entities Created: 10
 
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 18.532060
+	- Time Idle: 1.844191
+	- Percent Utilization: 0.909493
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 6.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SOURCE 3
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 4
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 20.376252
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 9.000000
+SINK 5
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
