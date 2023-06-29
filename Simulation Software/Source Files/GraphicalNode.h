@@ -21,9 +21,6 @@ class SimProperties;
 
 class GraphicalNode : public GraphicalElement {
 public:
-	GraphicalElement::Type GetType() const override
-		{ return m_type; }
-
 	GenericNode::Type GetNodeType() const
 		{ return m_nodeType; }
 
@@ -79,7 +76,6 @@ public:
 
 protected:
 	friend class GraphicalEdge;
-	GraphicalElement::Type m_type;
 	GenericNode::Type m_nodeType;
 
 	/// <SimProperties>
