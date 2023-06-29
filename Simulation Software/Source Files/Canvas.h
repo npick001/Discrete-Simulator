@@ -9,6 +9,7 @@
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
 #include "Action.h"
+#include "SimProject.h"
 
 class Canvas : public wxPanel {
 public:
@@ -23,8 +24,13 @@ public:
 	void TransformOriginLocation(wxSize canvasSize);
 	Set<GraphicalNode> GetSimObjects();
 
+	void SetSimulationProject(SimProject* parentProject);
+
 private:
 	ElementKey m_nextID;
+
+	// canvas is the visual controller, need to let project know of a change user made
+	SimProject* m_myProject; 
 
 	// Used to identify and write to specific fields in the debug status bar
 	enum DebugField : unsigned int {

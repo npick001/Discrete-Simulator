@@ -6,6 +6,7 @@ MainFrame* MainFrame::m_instance = 0;
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
+    this->Maximize(true);
     m_manager.SetManagedWindow(this);
 
     // set up default notebook style
@@ -436,17 +437,25 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 void MainFrame::OnBuild(wxCommandEvent& event)
 {
     m_simProject->Build();
+    m_simProject->CheckBuildViability();
 }
 
 void MainFrame::OnRun(wxCommandEvent& event)
 {
-    m_simProject->Run();
-    m_simProject->WriteStatistics();
+    if (m_simProject->HasBeenBuilt()) {
+        m_simProject->Run();
+        m_simProject->WriteStatistics();
+    }
+    else {
+        wxLogWarning("No simulation code has been generated.\nProject has not been built yet.");
+    }
 }
 
 void MainFrame::OnBuildAndRun(wxCommandEvent& event)
 {
     m_simProject->Build();
+    m_simProject->CheckBuildViability();
+
     m_simProject->Run();
     m_simProject->WriteStatistics();
 }

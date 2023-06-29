@@ -42,13 +42,19 @@ public:
 	/// Take graphical nodes and generate 
 	/// simulation code
 	void Build();
+	bool CheckBuildViability();
 	void Run();
 	void WriteStatistics();
 
 	void SetTimeUnit(TimeUnit newUnit);
+	bool HasBeenBuilt();
+
+	void RegisterNewConnection(GraphicalNode* from, GraphicalNode* to);
 
 private:
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+	std::unordered_map<GraphicalNode*, GenericNode*> m_nodeMap;
+	bool m_hasBeenBuilt;
 
 	TimeUnit m_modelTimeUnit;
 
@@ -73,5 +79,6 @@ public:
 
 	static GenericNode* CreateSimObject(GenericNode::Type type);
 private:
+
 
 };

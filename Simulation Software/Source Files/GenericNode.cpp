@@ -8,7 +8,17 @@ void GenericNode::SetNext(GenericNode* next) {
 }
 
 void GenericNode::SetPrevious(GenericNode* prev) {
-    m_prev = prev;
+    m_previous = prev;
+}
+
+GenericNode* GenericNode::GetNext()
+{
+    return m_next;
+}
+
+GenericNode* GenericNode::GetPrevious()
+{
+    return m_previous;
 }
 
 
@@ -38,7 +48,7 @@ GenericNode::GenericNode(const std::string& name) {
     m_id = m_nextID++;
 
     m_next = 0;
-    m_prev = 0;
+    m_previous = 0;
 
     //m_size = wxSize(100, 50);
 }

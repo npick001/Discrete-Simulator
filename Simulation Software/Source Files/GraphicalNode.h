@@ -21,6 +21,7 @@ class SimProperties;
 
 class GraphicalNode : public GraphicalElement {
 public:
+	void SetNodeType(GenericNode::Type type);
 	GenericNode::Type GetNodeType() const
 		{ return m_nodeType; }
 
@@ -32,6 +33,11 @@ public:
 
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
+
+	void SetNext(GraphicalNode* next);
+	void SetPrevious(GraphicalNode* previous);
+	GraphicalNode* GetNext();
+	GraphicalNode* GetPrevious();
 
 	// all specific nodes should implement their own drawing for different pictures
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc);
@@ -60,7 +66,6 @@ public:
 	void Move(wxPoint2DDouble displacement);
 
 	void SetBodyColor(const wxColor& color);
-	void SetNodeType(GenericNode::Type type);
 
 	// PROPERTY REPORTING DESIGN PATTERN
 	class PropertiesWrapper {
@@ -77,6 +82,9 @@ public:
 protected:
 	friend class GraphicalEdge;
 	GenericNode::Type m_nodeType;
+
+	GraphicalNode* m_next;
+	GraphicalNode* m_previous;
 
 	/// <SimProperties>
 	/// This is the same design pattern as Statistics from the simulation code.

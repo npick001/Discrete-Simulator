@@ -16,6 +16,8 @@ public:
 
     void SetNext(GenericNode* next);
     void SetPrevious(GenericNode* prev);
+    GenericNode* GetNext();
+    GenericNode* GetPrevious();
     inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
     std::string GetName();
     inline int GetID() { return m_id; }
@@ -65,5 +67,5 @@ private:
     static int m_nextID;
     std::string m_name;
 
-    GenericNode* m_prev;
+    GenericNode* m_previous;
 };

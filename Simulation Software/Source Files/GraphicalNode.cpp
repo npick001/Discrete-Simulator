@@ -24,6 +24,9 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	auto headerProp = new wxStringProperty("Property_GNODE_CTOR", wxPG_LABEL, "Value");
 	m_properties.Add(headerProp);
 
+	m_next = nullptr;
+	m_previous = nullptr;
+
 	/// graphical characteristics
 	// size
 	m_bodySize = parent->FromDIP(wxSize(100, 75));
@@ -134,6 +137,26 @@ void GraphicalNode::DisconnectOutputs() {
 void GraphicalNode::DisconnectInputs() {
 	for (auto input : m_inputs)
 		input->Disconnect();
+}
+
+void GraphicalNode::SetNext(GraphicalNode* next)
+{
+	m_next = next;
+}
+
+void GraphicalNode::SetPrevious(GraphicalNode* previous)
+{
+	m_previous = previous;
+}
+
+GraphicalNode* GraphicalNode::GetNext()
+{
+	return m_next;
+}
+
+GraphicalNode* GraphicalNode::GetPrevious()
+{
+	return m_previous;
 }
 
 // Draws the node to a wxGraphicsContext

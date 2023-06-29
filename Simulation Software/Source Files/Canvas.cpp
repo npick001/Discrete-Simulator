@@ -155,6 +155,11 @@ Set<GraphicalNode> Canvas::GetSimObjects()
 	return m_gnodes;
 }
 
+void Canvas::SetSimulationProject(SimProject* parentProject)
+{
+	m_myProject = parentProject;
+}
+
 // Return selection information containing which graphical node, if any, was selected and the state of the selection
 Selection Canvas::Select(wxPoint2DDouble clickPosition) {
 
@@ -354,7 +359,11 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
 			m_incompleteEdge->ConnectDestination(m_nodes[endSelection]);
-
+			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
+			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
+			if (m_myProject->HasBeenBuilt()) {
+				m_myProject->RegisterNewConnection(m_nodes[m_selection], m_nodes[endSelection]);
+			}
 			m_debugStatusBar->SetStatusText("Connected " + m_nodes[m_selection]->GetLabel() + " to "
 				+ m_nodes[endSelection]->GetLabel(), DebugField::COMPONENTS_CONNECTED);
 		}
@@ -369,6 +378,11 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
 			m_incompleteEdge->ConnectSource(m_nodes[endSelection]);
+			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
+			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
+			if (m_myProject->HasBeenBuilt()) {
+				m_myProject->RegisterNewConnection(m_nodes[m_selection], m_nodes[endSelection]);
+			}
 
 			m_debugStatusBar->SetStatusText("Connected " + m_nodes[endSelection]->GetLabel() + " to "
 				+ m_nodes[m_selection]->GetLabel(), DebugField::COMPONENTS_CONNECTED);
