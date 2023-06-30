@@ -50,6 +50,7 @@ public:
 	bool HasBeenBuilt();
 
 	void RegisterNewConnection(GraphicalNode* from, GraphicalNode* to);
+	void RegisterNodeDeletion(GraphicalNode* deleted);
 
 private:
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;

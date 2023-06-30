@@ -57,8 +57,6 @@ public:
     static MainFrame* GetInstance();
 
 private:
-
-
     static MainFrame* m_instance;
     SimProject* m_simProject;
 

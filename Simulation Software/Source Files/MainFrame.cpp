@@ -447,7 +447,7 @@ void MainFrame::OnRun(wxCommandEvent& event)
         m_simProject->WriteStatistics();
     }
     else {
-        wxLogWarning("No simulation code has been generated.\nProject has not been built yet.");
+        wxLogMessage("No simulation code has been generated.\nProject has not been built yet.");
     }
 }
 

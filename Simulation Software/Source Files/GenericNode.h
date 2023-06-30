@@ -38,6 +38,7 @@ public:
     virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
+    friend class SimProject;
     GenericNode(const std::string& name);
     GenericNode(const GenericNode& other);
     ~GenericNode();

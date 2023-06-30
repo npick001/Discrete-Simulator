@@ -13,9 +13,11 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 
 	// UI
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
+	m_zoomLevel = 1;
 
+	m_statusBarFields = 4;
 	m_debugStatusBar = statusBar;
-	m_debugStatusBar->SetFieldsCount(DebugField::FIELDS_MAX);
+	m_debugStatusBar->SetFieldsCount(m_statusBarFields);
 
 	m_nodeSubMenu = new wxMenu("Specific Nodes");
 	m_nodeSubMenu->Append(ID_ADD_SOURCE, "Source", "Add a source node to the canvas");
@@ -55,6 +57,7 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 
 	// Capture key events
 	this->Bind(wxEVT_CHAR_HOOK, &Canvas::OnCharHook, this);
+	this->Bind(wxEVT_KEY_UP, &Canvas::OnDeleteKey, this);
 }
 
 Canvas::~Canvas() {
@@ -108,6 +111,7 @@ void Canvas::DeleteNode() {
 
 	// Node is then deleted
 	m_nodes.erase(m_selection);
+	m_myProject->RegisterNodeDeletion(m_nodes[m_selection]);
 
 	Refresh();
 }
@@ -117,6 +121,15 @@ wxAffineMatrix2D Canvas::GetCameraTransform() const {
 	wxAffineMatrix2D cameraTransform = m_cameraZoom;
 	cameraTransform.Concat(m_cameraPan);
 	return cameraTransform;
+}
+
+wxPoint2DDouble Canvas::GetTransformedPoint(wxPoint2DDouble pointToTransform)
+{
+	// transform drawing location to local
+	wxAffineMatrix2D cTransform = GetCameraTransform();
+	cTransform.Invert();
+	wxPoint2DDouble transformedPoint = cTransform.TransformPoint(pointToTransform);
+	return transformedPoint;
 }
 
 void Canvas::DrawGrid(wxGraphicsContext* gc)
@@ -138,11 +151,11 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 	GetClientSize(&width, &height);
 	m_origin = wxPoint(width / 2, height / 2);
 	m_cameraPan.Translate(m_origin.x, m_origin.y);
+	m_zoomLevel = m_zoomLevel * 2.3;
+	m_cameraZoom.Scale(m_zoomLevel, m_zoomLevel);
 
 	// transform drawing location to local
-	wxAffineMatrix2D cTransform = GetCameraTransform();
-	cTransform.Invert();
-	wxPoint2DDouble originPosition = cTransform.TransformPoint(m_origin);
+	wxPoint2DDouble originPosition = GetTransformedPoint(m_origin);
 
 	// draw a few basic nodes
 	AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
@@ -220,6 +233,7 @@ void Canvas::MoveNode(wxPoint2DDouble clickPosition) {
 // Event Handlers
 
 // Called upon user selecting add node in popup canvas menu
+// deprecated
 void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 	auto inverse = GetCameraTransform();
 	inverse.Invert();
@@ -229,26 +243,17 @@ void Canvas::OnMenuAddNode(wxCommandEvent& event) {
 
 void Canvas::OnMenuAddSource(wxCommandEvent& event)
 {
-	auto inverse = GetCameraTransform();
-	inverse.Invert();
-
-	AddNode(GenericNode::SOURCE, inverse.TransformPoint(m_previousMousePosition));
+	AddNode(GenericNode::SOURCE, GetTransformedPoint(m_previousMousePosition));
 }
 
 void Canvas::OnMenuAddServer(wxCommandEvent& event)
 {
-	auto inverse = GetCameraTransform();
-	inverse.Invert();
-
-	AddNode(GenericNode::SERVER, inverse.TransformPoint(m_previousMousePosition));
+	AddNode(GenericNode::SERVER, GetTransformedPoint(m_previousMousePosition));
 }
 
 void Canvas::OnMenuAddSink(wxCommandEvent& event)
 {
-	auto inverse = GetCameraTransform();
-	inverse.Invert();
-
-	AddNode(GenericNode::SINK, inverse.TransformPoint(m_previousMousePosition));
+	AddNode(GenericNode::SINK, GetTransformedPoint(m_previousMousePosition));
 }
 
 // Called upon user selecting delete node in popup node menu
@@ -270,13 +275,17 @@ void Canvas::OnMiddleUp(wxMouseEvent& event) {
 // Capture when user holds down left mouse button in order to drag or connect nodes
 // Panning also occurs when selection state is none
 void Canvas::OnLeftDown(wxMouseEvent& event) {
+
+	// selections and position
 	m_selection = Select(event.GetPosition());
+	m_previousMousePosition = event.GetPosition();
 
-	// coordinate transformation
-	wxAffineMatrix2D cTransform = GetCameraTransform();
-	cTransform.Invert();
+	// world to local coord transform
+	wxPoint2DDouble transformedPos = GetTransformedPoint(m_previousMousePosition);
 
-	wxPoint2DDouble transformedPos;
+	m_debugStatusBar->SetStatusText("Zoom Level: " + std::to_string(m_zoomLevel), DebugField::ZOOM_LEVEL);
+	m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
+		std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 
 	switch (m_selection.state) {
 
@@ -285,11 +294,6 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		m_moveNodeAction = MoveNodeAction(m_selection->GetID(), &m_nodes);
 		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection]->GetPosition());
-		m_previousMousePosition = event.GetPosition();
-
-		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
-		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
-			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Instatiate an edge and connect source to node's output
@@ -300,11 +304,6 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
 		m_incompleteEdge->ConnectSource(m_nodes[m_selection]);
-
-		m_previousMousePosition = event.GetPosition();
-		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
-		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
-			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Instatiate an edge and connect destination to node's input
@@ -315,22 +314,11 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
 		m_incompleteEdge->ConnectDestination(m_nodes[m_selection]);
-
-		m_previousMousePosition = event.GetPosition();
-		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
-		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
-			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 		break;
 
 	// Panning also works with left click
 	case Selection::State::NONE:
 		m_isPanning = true;
-		m_previousMousePosition = event.GetPosition();
-
-		transformedPos = cTransform.TransformPoint(m_previousMousePosition);
-		m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
-			std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
-
 		break;
 	}
 
@@ -350,6 +338,7 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
 		m_history.LogAction(m_moveNodeAction);
 
+		// for showing properties window
 		MainFrame::GetInstance()->RegisterNewSelection((GraphicalNode*)endSelection.element);
 		break;
 
@@ -415,11 +404,6 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 	else if (!m_selection)
 		return;
 
-	// Defined before switch statement to avoid redefinition
-	// Used to convert from window to world coordinates
-	wxAffineMatrix2D inverse = GetCameraTransform();
-	inverse.Invert();
-
 	switch (m_selection.state) {
 
 	// Move node
@@ -432,7 +416,7 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 	case Selection::State::NODE_OUTPUT:
 
 		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
-			m_incompleteEdge->SetDestinationPoint(inverse.TransformPoint(mousePosition));
+			m_incompleteEdge->SetDestinationPoint(GetTransformedPoint(mousePosition));
 		else if (m_incompleteEdge) {
 			m_incompleteEdge->Disconnect();
 			m_edges.erase(m_incompleteEdge->GetID());
@@ -446,7 +430,7 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 	case Selection::State::NODE_INPUT:
 
 		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
-			m_incompleteEdge->SetSourcePoint(inverse.TransformPoint(mousePosition));
+			m_incompleteEdge->SetSourcePoint(GetTransformedPoint(mousePosition));
 		else if (m_incompleteEdge) {
 			m_incompleteEdge->Disconnect();
 			m_edges.erase(m_incompleteEdge->GetID());
@@ -461,19 +445,17 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 // Capture mouse scrolling in order to zoom the camera
 void Canvas::OnMouseWheel(wxMouseEvent& event) {
 
-	// Convert mouse position from screen to world coordinates
+	// Convert mouse position from screen to local coordinates
 	wxPoint2DDouble mousePosition = event.GetPosition();
-	wxAffineMatrix2D inverse = GetCameraTransform();
-	inverse.Invert();
-	wxPoint2DDouble worldMousePosition = inverse.TransformPoint(mousePosition);
+	wxPoint2DDouble localMousePosition = GetTransformedPoint(mousePosition);
 
 	// Determine the zoom scale factor
 	double scaleFactor = pow(2, 0.1 * event.GetWheelRotation() / event.GetWheelDelta());
 
 	// Adjust the zoom and translation of the camera
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
-	m_zoomLevel = scaleFactor;
-	m_cameraPan.Translate((1 - scaleFactor) * (worldMousePosition.m_x), (1 - scaleFactor) * (worldMousePosition.m_y));
+	m_zoomLevel = m_zoomLevel * scaleFactor;
+	m_cameraPan.Translate((1 - scaleFactor) * (localMousePosition.m_x), (1 - scaleFactor) * (localMousePosition.m_y));
 
 	Refresh();
 }
@@ -585,4 +567,14 @@ void Canvas::OnCharHook(wxKeyEvent& event) {
 	}
 
 	Refresh();
+}
+
+void Canvas::OnDeleteKey(wxKeyEvent& event)
+{
+	switch (event.GetKeyCode()) {
+	case WXK_DELETE:
+
+		DeleteNode();
+		break;
+	}
 }

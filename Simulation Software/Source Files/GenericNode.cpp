@@ -30,6 +30,9 @@ void GenericNode::Arrive(Entity* entity) {
 #if SIM_OUTPUT
     std::cout << "time = " << GetSimulationTime() << ", " << " " << m_name << ", arrive, entity: " << entity->GetID() << std::endl << std::flush;
 #endif
+    std::string message = "time = " + std::to_string(GetSimulationTime()) + "\t" + m_name + "\tArrive\tEntity: " + std::to_string(entity->GetID());
+    wxLogMessage("%s", message.c_str());
+
 
     NodeProcess(entity);
 }
@@ -38,6 +41,8 @@ void GenericNode::Depart(Entity* entity) {
 #if SIM_OUTPUT
     std::cout << "time = " << GetSimulationTime() << ", " << " " << m_name << ", depart, entity: " << entity->GetID() << std::endl << std::flush;
 #endif
+    std::string message = "time = " + std::to_string(GetSimulationTime()) + "\t" + m_name + "\Depart\tEntity: " + std::to_string(entity->GetID());
+    wxLogMessage("%s", message.c_str());
     
     entity->SetSource(m_id);
     m_next->Arrive(entity);

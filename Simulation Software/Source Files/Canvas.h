@@ -28,6 +28,7 @@ public:
 
 private:
 	ElementKey m_nextID;
+	int m_statusBarFields;
 
 	// canvas is the visual controller, need to let project know of a change user made
 	SimProject* m_myProject; 
@@ -37,8 +38,8 @@ private:
 		SELECTION_STATE,
 		COMPONENT_SELECTED,
 		COMPONENTS_CONNECTED,
-		MOUSE_POSITION,
-		FIELDS_MAX
+		ZOOM_LEVEL = 2,
+		MOUSE_POSITION = 3,
 	};
 
 	// IDs used for popup menu options
@@ -69,11 +70,9 @@ private:
 
 	// Grid things
 	// "variable grid size in world space" approach
+	// not implemented yet
 	std::vector<double> m_gridSizes;
 	wxSize m_canvasSize;
-
-	/*std::vector<GraphicalNode> m_nodes;
-	std::vector<GraphicalEdge> m_edges;*/
 
 	// History of actions
 	History m_history;
@@ -95,6 +94,7 @@ private:
 	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
+	wxPoint2DDouble GetTransformedPoint(wxPoint2DDouble pointToTransform);
 	void DrawGrid(wxGraphicsContext* gc);
 
 	// Selection contains the graphical node which was selected, if any, and the
@@ -136,4 +136,5 @@ private:
 
 	// Key events for handling shortcuts
 	void OnCharHook(wxKeyEvent& event);
+	void OnDeleteKey(wxKeyEvent& event);
 };

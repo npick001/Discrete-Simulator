@@ -11,6 +11,7 @@ SimProject::SimProject(Canvas* canvas)
 void SimProject::SetCanvas(Canvas* canvas)
 {
 	m_canvas = canvas;
+	m_canvas->SetSimulationProject(this);
 }
 
 const Canvas& SimProject::ViewCanvas()
@@ -26,6 +27,7 @@ void SimProject::Build() {
 	// CURRENTLY USES A LINEAR BUILD
 	// GRAPHICS OBJECTS MUST HAVE 1 INPUT AND 1 OUTPUT ONLY
 	m_instantiatedNodes.clear();
+	m_nodeMap.clear();
 
 	Set<GraphicalNode> gnodes = m_canvas->GetSimObjects();
 	GraphicalNode* currentNode = gnodes.GetFirst();
@@ -69,6 +71,7 @@ bool SimProject::CheckBuildViability()
 				wxLogError("SOURCE NODE NEEDS A DESTINATION FOR GENERATED ENTITIES.\n Consider checking connections.");
 				m_hasBeenBuilt = false;
 				m_instantiatedNodes.clear();
+				m_nodeMap.clear();
 
 				return false;
 			}
@@ -87,6 +90,7 @@ bool SimProject::CheckBuildViability()
 				wxLogError("SERVER NODE NEEDS BOTH INPUT AND OUTPUT CONNECTIONS.\n Consider checking connections.");
 				m_hasBeenBuilt = false;
 				m_instantiatedNodes.clear();
+				m_nodeMap.clear();
 
 				return false;
 			}
@@ -123,6 +127,13 @@ void SimProject::RegisterNewConnection(GraphicalNode* from, GraphicalNode* to)
 {
 	m_nodeMap[from]->SetNext(m_nodeMap[to]);
 	m_nodeMap[to]->SetPrevious(m_nodeMap[from]);
+}
+
+void SimProject::RegisterNodeDeletion(GraphicalNode* deleted)
+{
+	auto simNode = m_nodeMap[deleted];
+	delete simNode;
+	m_nodeMap.erase(deleted);
 }
 
 GraphicalNode* NodeFactory::CreateGraphicalNode(GenericNode::Type type)
