@@ -24,10 +24,17 @@ Collaboration diagram for Graphical\+Node\+:
 \includegraphics[height=550pt]{class_graphical_node__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_graphical_node_1_1_properties_wrapper}{Properties\+Wrapper}
+\item 
+class \hyperlink{class_graphical_node_1_1_sim_properties}{Sim\+Properties}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} \hyperlink{class_graphical_node_a6bfbcb9a6b85dd3093a8f6541252ebfe}{Get\+Type} () const override
+void \hyperlink{class_graphical_node_a2be01228b0d5b17f1d14038aeee25619}{Set\+Node\+Type} (\hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Generic\+Node\+::\+Type} type)
 \item 
 \hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Generic\+Node\+::\+Type} \hyperlink{class_graphical_node_a4c5493ddcfca4d433421ae06eac1b19a}{Get\+Node\+Type} () const
 \item 
@@ -42,6 +49,14 @@ Collaboration diagram for Graphical\+Node\+:
 \hyperlink{class_graphical_node_a63c2c7ac34c3f9b3a1383dd157cf731c}{Graphical\+Node} (const \hyperlink{class_graphical_node}{Graphical\+Node} \&other)
 \item 
 \hyperlink{class_graphical_node_a044a09111bb337580f2a40fcff42ef6f}{$\sim$\+Graphical\+Node} ()
+\item 
+void \hyperlink{class_graphical_node_a036c1cc48701511037e50bc74fd8d430}{Set\+Next} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$next)
+\item 
+void \hyperlink{class_graphical_node_ad165a0c444192d4c7ff6a07c62972dab}{Set\+Previous} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$previous)
+\item 
+\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ \hyperlink{class_graphical_node_a77ea0722141f7915424a8db83b72f8c8}{Get\+Next} ()
+\item 
+\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ \hyperlink{class_graphical_node_a2e097f9b7b10970e20c530176a5e50b2}{Get\+Previous} ()
 \item 
 void \hyperlink{class_graphical_node_a5675edef9951820c61973cd8fb242287}{Draw} (const wx\+Affine\+Matrix2D \&camera, wx\+Graphics\+Context $\ast$gc)
 \item 
@@ -70,6 +85,8 @@ void \hyperlink{class_graphical_node_adf7b68c28c70426681cef018d34f8988}{Disconne
 void \hyperlink{class_graphical_node_a430fbd68a5d907ed9e73981ab3c499fb}{Move} (wx\+Point2\+D\+Double displacement)
 \item 
 void \hyperlink{class_graphical_node_ae0cbf2cfe00306e2cfc610c5eb4cb89b}{Set\+Body\+Color} (const wx\+Color \&color)
+\item 
+virtual std\+::unique\+\_\+ptr$<$ \hyperlink{class_graphical_node_1_1_properties_wrapper}{Properties\+Wrapper} $>$ \hyperlink{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a}{Get\+Sim\+Properties} ()=0
 \end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -81,9 +98,11 @@ wx\+Point2\+D\+Double \hyperlink{class_graphical_node_a29991fc9117db0975aa1a61d0
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} \hyperlink{class_graphical_node_a1e660124c138a5394dc347cb3b523f9f}{m\+\_\+type}
-\item 
 \hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Generic\+Node\+::\+Type} \hyperlink{class_graphical_node_a8d2546ba2e20ff4eb546de82109e2ac8}{m\+\_\+node\+Type}
+\item 
+\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ \hyperlink{class_graphical_node_a96b667de782400463e9106af4eacb854}{m\+\_\+next}
+\item 
+\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ \hyperlink{class_graphical_node_a968283abe8cfcfd48900e7d6943cb435}{m\+\_\+previous}
 \item 
 \hyperlink{class_set}{Set}$<$ wx\+P\+G\+Property $>$ \hyperlink{class_graphical_node_a7f45ea17bdca2d822ef4d604effcca0e}{m\+\_\+properties}
 \item 
@@ -120,7 +139,7 @@ class \hyperlink{class_graphical_node_a2a860a1faf189243ba02f50ad8362bfa}{Graphic
 \subsection{Detailed Description}
 
 
-Definition at line 21 of file Graphical\+Node.\+h.
+Definition at line 22 of file Graphical\+Node.\+h.
 
 
 
@@ -179,7 +198,7 @@ Here is the call graph for this function\+:
 
 
 
-Definition at line 48 of file Graphical\+Node.\+cpp.
+Definition at line 51 of file Graphical\+Node.\+cpp.
 
 \mbox{\Hypertarget{class_graphical_node_a63c2c7ac34c3f9b3a1383dd157cf731c}\label{class_graphical_node_a63c2c7ac34c3f9b3a1383dd157cf731c}} 
 \index{Graphical\+Node@{Graphical\+Node}!Graphical\+Node@{Graphical\+Node}}
@@ -189,7 +208,7 @@ Definition at line 48 of file Graphical\+Node.\+cpp.
 
 
 
-Definition at line 54 of file Graphical\+Node.\+cpp.
+Definition at line 57 of file Graphical\+Node.\+cpp.
 
 \mbox{\Hypertarget{class_graphical_node_a044a09111bb337580f2a40fcff42ef6f}\label{class_graphical_node_a044a09111bb337580f2a40fcff42ef6f}} 
 \index{Graphical\+Node@{Graphical\+Node}!````~Graphical\+Node@{$\sim$\+Graphical\+Node}}
@@ -199,7 +218,7 @@ Definition at line 54 of file Graphical\+Node.\+cpp.
 
 
 
-Definition at line 75 of file Graphical\+Node.\+cpp.
+Definition at line 78 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -228,7 +247,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 134 of file Graphical\+Node.\+cpp.
+Definition at line 137 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -246,7 +265,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 129 of file Graphical\+Node.\+cpp.
+Definition at line 132 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -268,7 +287,7 @@ Implements \hyperlink{class_graphical_element_ab137d6d3ad82fd08b5610519dda0c600}
 
 
 
-Definition at line 140 of file Graphical\+Node.\+cpp.
+Definition at line 163 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -294,7 +313,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 115 of file Graphical\+Node.\+cpp.
+Definition at line 118 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -320,7 +339,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 101 of file Graphical\+Node.\+cpp.
+Definition at line 104 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -328,6 +347,24 @@ Here is the caller graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_a338a09b81d0be860210659f312fd5347_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_a77ea0722141f7915424a8db83b72f8c8}\label{class_graphical_node_a77ea0722141f7915424a8db83b72f8c8}} 
+\index{Graphical\+Node@{Graphical\+Node}!Get\+Next@{Get\+Next}}
+\index{Get\+Next@{Get\+Next}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Get\+Next()}{GetNext()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ Graphical\+Node\+::\+Get\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 152 of file Graphical\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a77ea0722141f7915424a8db83b72f8c8_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_graphical_node_a4c5493ddcfca4d433421ae06eac1b19a}\label{class_graphical_node_a4c5493ddcfca4d433421ae06eac1b19a}} 
@@ -338,7 +375,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 26 of file Graphical\+Node.\+h.
+Definition at line 25 of file Graphical\+Node.\+h.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -346,6 +383,14 @@ Here is the call graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_a4c5493ddcfca4d433421ae06eac1b19a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a4c5493ddcfca4d433421ae06eac1b19a_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_graphical_node_a5e0a98450d511bb024e1746ab42d34c4}\label{class_graphical_node_a5e0a98450d511bb024e1746ab42d34c4}} 
@@ -356,7 +401,7 @@ Here is the call graph for this function\+:
 
 
 
-Definition at line 106 of file Graphical\+Node.\+cpp.
+Definition at line 109 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -382,7 +427,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 96 of file Graphical\+Node.\+cpp.
+Definition at line 99 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -400,7 +445,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 80 of file Graphical\+Node.\+cpp.
+Definition at line 83 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -408,6 +453,24 @@ Here is the caller graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_a87de11aad81e7b4a3baf53d47034e5f5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_a2e097f9b7b10970e20c530176a5e50b2}\label{class_graphical_node_a2e097f9b7b10970e20c530176a5e50b2}} 
+\index{Graphical\+Node@{Graphical\+Node}!Get\+Previous@{Get\+Previous}}
+\index{Get\+Previous@{Get\+Previous}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Get\+Previous()}{GetPrevious()}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_node}{Graphical\+Node} $\ast$ Graphical\+Node\+::\+Get\+Previous (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 157 of file Graphical\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a2e097f9b7b10970e20c530176a5e50b2_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_graphical_node_a9d89885db9553820d3557a801a83b9de}\label{class_graphical_node_a9d89885db9553820d3557a801a83b9de}} 
@@ -418,7 +481,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 124 of file Graphical\+Node.\+cpp.
+Definition at line 127 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -426,6 +489,24 @@ Here is the caller graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_a9d89885db9553820d3557a801a83b9de_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a}\label{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a}} 
+\index{Graphical\+Node@{Graphical\+Node}!Get\+Sim\+Properties@{Get\+Sim\+Properties}}
+\index{Get\+Sim\+Properties@{Get\+Sim\+Properties}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Get\+Sim\+Properties()}{GetSimProperties()}}
+{\footnotesize\ttfamily virtual std\+::unique\+\_\+ptr$<$\hyperlink{class_graphical_node_1_1_properties_wrapper}{Properties\+Wrapper}$>$ Graphical\+Node\+::\+Get\+Sim\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_graphical_sink_a7e8f63afb0f7ddf14c77cac9e44d30d4}{Graphical\+Sink}, \hyperlink{class_graphical_server_a857655d34a7e3662100e7b86526e2855}{Graphical\+Server}, and \hyperlink{class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573}{Graphical\+Source}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_graphical_node_a3556bb1d323f16fd394211cf82239f01}\label{class_graphical_node_a3556bb1d323f16fd394211cf82239f01}} 
@@ -436,7 +517,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 90 of file Graphical\+Node.\+cpp.
+Definition at line 93 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -446,20 +527,6 @@ Here is the caller graph for this function\+:
 \includegraphics[width=350pt]{class_graphical_node_a3556bb1d323f16fd394211cf82239f01_icgraph}
 \end{center}
 \end{figure}
-\mbox{\Hypertarget{class_graphical_node_a6bfbcb9a6b85dd3093a8f6541252ebfe}\label{class_graphical_node_a6bfbcb9a6b85dd3093a8f6541252ebfe}} 
-\index{Graphical\+Node@{Graphical\+Node}!Get\+Type@{Get\+Type}}
-\index{Get\+Type@{Get\+Type}!Graphical\+Node@{Graphical\+Node}}
-\subsubsection{\texorpdfstring{Get\+Type()}{GetType()}}
-{\footnotesize\ttfamily \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} Graphical\+Node\+::\+Get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
-
-
-
-Implements \hyperlink{class_graphical_element_a28c3cdbdfa3f295f6afaf463ba3e6157}{Graphical\+Element}.
-
-
-
-Definition at line 23 of file Graphical\+Node.\+h.
-
 \mbox{\Hypertarget{class_graphical_node_a430fbd68a5d907ed9e73981ab3c499fb}\label{class_graphical_node_a430fbd68a5d907ed9e73981ab3c499fb}} 
 \index{Graphical\+Node@{Graphical\+Node}!Move@{Move}}
 \index{Move@{Move}!Graphical\+Node@{Graphical\+Node}}
@@ -468,7 +535,7 @@ Definition at line 23 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 164 of file Graphical\+Node.\+cpp.
+Definition at line 187 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -512,7 +579,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 58 of file Graphical\+Node.\+cpp.
+Definition at line 61 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -542,7 +609,7 @@ Implements \hyperlink{class_graphical_element_a2627b34e57829f942aa00720d9cc8b46}
 
 
 
-Definition at line 145 of file Graphical\+Node.\+cpp.
+Definition at line 168 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -568,7 +635,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 174 of file Graphical\+Node.\+cpp.
+Definition at line 197 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -576,6 +643,42 @@ Here is the caller graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_ae0cbf2cfe00306e2cfc610c5eb4cb89b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_a036c1cc48701511037e50bc74fd8d430}\label{class_graphical_node_a036c1cc48701511037e50bc74fd8d430}} 
+\index{Graphical\+Node@{Graphical\+Node}!Set\+Next@{Set\+Next}}
+\index{Set\+Next@{Set\+Next}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Set\+Next()}{SetNext()}}
+{\footnotesize\ttfamily void Graphical\+Node\+::\+Set\+Next (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{next }\end{DoxyParamCaption})}
+
+
+
+Definition at line 142 of file Graphical\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a036c1cc48701511037e50bc74fd8d430_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_a2be01228b0d5b17f1d14038aeee25619}\label{class_graphical_node_a2be01228b0d5b17f1d14038aeee25619}} 
+\index{Graphical\+Node@{Graphical\+Node}!Set\+Node\+Type@{Set\+Node\+Type}}
+\index{Set\+Node\+Type@{Set\+Node\+Type}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Set\+Node\+Type()}{SetNodeType()}}
+{\footnotesize\ttfamily void Graphical\+Node\+::\+Set\+Node\+Type (\begin{DoxyParamCaption}\item[{\hyperlink{class_generic_node_a9e7985ab9bbfa1c85091adc0ab71a6b6}{Generic\+Node\+::\+Type}}]{type }\end{DoxyParamCaption})}
+
+
+
+Definition at line 202 of file Graphical\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_a2be01228b0d5b17f1d14038aeee25619_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_graphical_node_a61cb6a7d32ae7db370336639d83fc2bd}\label{class_graphical_node_a61cb6a7d32ae7db370336639d83fc2bd}} 
@@ -586,7 +689,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 85 of file Graphical\+Node.\+cpp.
+Definition at line 88 of file Graphical\+Node.\+cpp.
 
 Here is the caller graph for this function\+:
 \nopagebreak
@@ -594,6 +697,24 @@ Here is the caller graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_graphical_node_a61cb6a7d32ae7db370336639d83fc2bd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_graphical_node_ad165a0c444192d4c7ff6a07c62972dab}\label{class_graphical_node_ad165a0c444192d4c7ff6a07c62972dab}} 
+\index{Graphical\+Node@{Graphical\+Node}!Set\+Previous@{Set\+Previous}}
+\index{Set\+Previous@{Set\+Previous}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{Set\+Previous()}{SetPrevious()}}
+{\footnotesize\ttfamily void Graphical\+Node\+::\+Set\+Previous (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{previous }\end{DoxyParamCaption})}
+
+
+
+Definition at line 147 of file Graphical\+Node.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_node_ad165a0c444192d4c7ff6a07c62972dab_icgraph}
 \end{center}
 \end{figure}
 
@@ -607,7 +728,7 @@ Here is the caller graph for this function\+:
 
 
 
-Definition at line 67 of file Graphical\+Node.\+h.
+Definition at line 83 of file Graphical\+Node.\+h.
 
 
 
@@ -620,7 +741,7 @@ Definition at line 67 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 75 of file Graphical\+Node.\+h.
+Definition at line 104 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a9a246386a855e540a97d7f905ad53ba0}\label{class_graphical_node_a9a246386a855e540a97d7f905ad53ba0}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+body\+Shape@{m\+\_\+body\+Shape}}
@@ -630,7 +751,7 @@ Definition at line 75 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 76 of file Graphical\+Node.\+h.
+Definition at line 105 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_ab91a1047e6b852fda6828e44d4af1929}\label{class_graphical_node_ab91a1047e6b852fda6828e44d4af1929}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+body\+Size@{m\+\_\+body\+Size}}
@@ -640,7 +761,7 @@ Definition at line 76 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 80 of file Graphical\+Node.\+h.
+Definition at line 109 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a83044c99e5ec1898790372dbd47eb612}\label{class_graphical_node_a83044c99e5ec1898790372dbd47eb612}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+input\+Rect@{m\+\_\+input\+Rect}}
@@ -650,7 +771,7 @@ Definition at line 80 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 77 of file Graphical\+Node.\+h.
+Definition at line 106 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a82784344a0531de4c11212a13dca28fe}\label{class_graphical_node_a82784344a0531de4c11212a13dca28fe}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+inputs@{m\+\_\+inputs}}
@@ -660,7 +781,7 @@ Definition at line 77 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 86 of file Graphical\+Node.\+h.
+Definition at line 115 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a2acac8a373e328b7fd9b627838e04315}\label{class_graphical_node_a2acac8a373e328b7fd9b627838e04315}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+io\+Color@{m\+\_\+io\+Color}}
@@ -670,7 +791,7 @@ Definition at line 86 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 83 of file Graphical\+Node.\+h.
+Definition at line 112 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a203b844a6782291e934550ebf9640223}\label{class_graphical_node_a203b844a6782291e934550ebf9640223}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+io\+Size@{m\+\_\+io\+Size}}
@@ -680,7 +801,7 @@ Definition at line 83 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 81 of file Graphical\+Node.\+h.
+Definition at line 110 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a11311bff2e360a7441382b1b74db85a8}\label{class_graphical_node_a11311bff2e360a7441382b1b74db85a8}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+label\+Color@{m\+\_\+label\+Color}}
@@ -690,7 +811,17 @@ Definition at line 81 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 82 of file Graphical\+Node.\+h.
+Definition at line 111 of file Graphical\+Node.\+h.
+
+\mbox{\Hypertarget{class_graphical_node_a96b667de782400463e9106af4eacb854}\label{class_graphical_node_a96b667de782400463e9106af4eacb854}} 
+\index{Graphical\+Node@{Graphical\+Node}!m\+\_\+next@{m\+\_\+next}}
+\index{m\+\_\+next@{m\+\_\+next}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{m\+\_\+next}{m\_next}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_node}{Graphical\+Node}$\ast$ Graphical\+Node\+::m\+\_\+next\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 86 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a8d2546ba2e20ff4eb546de82109e2ac8}\label{class_graphical_node_a8d2546ba2e20ff4eb546de82109e2ac8}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+node\+Type@{m\+\_\+node\+Type}}
@@ -700,7 +831,7 @@ Definition at line 82 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 69 of file Graphical\+Node.\+h.
+Definition at line 84 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a32936705d981530b574fc66d5553ab9a}\label{class_graphical_node_a32936705d981530b574fc66d5553ab9a}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+output\+Rect@{m\+\_\+output\+Rect}}
@@ -710,7 +841,7 @@ Definition at line 69 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 78 of file Graphical\+Node.\+h.
+Definition at line 107 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a4c1b0f83285d9425c4b5d8a1b0dc4649}\label{class_graphical_node_a4c1b0f83285d9425c4b5d8a1b0dc4649}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+outputs@{m\+\_\+outputs}}
@@ -720,7 +851,7 @@ Definition at line 78 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 87 of file Graphical\+Node.\+h.
+Definition at line 116 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_aa93feffd6ce9c9ea4b5063599927fbdc}\label{class_graphical_node_aa93feffd6ce9c9ea4b5063599927fbdc}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+position@{m\+\_\+position}}
@@ -730,7 +861,17 @@ Definition at line 87 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 79 of file Graphical\+Node.\+h.
+Definition at line 108 of file Graphical\+Node.\+h.
+
+\mbox{\Hypertarget{class_graphical_node_a968283abe8cfcfd48900e7d6943cb435}\label{class_graphical_node_a968283abe8cfcfd48900e7d6943cb435}} 
+\index{Graphical\+Node@{Graphical\+Node}!m\+\_\+previous@{m\+\_\+previous}}
+\index{m\+\_\+previous@{m\+\_\+previous}!Graphical\+Node@{Graphical\+Node}}
+\subsubsection{\texorpdfstring{m\+\_\+previous}{m\_previous}}
+{\footnotesize\ttfamily \hyperlink{class_graphical_node}{Graphical\+Node}$\ast$ Graphical\+Node\+::m\+\_\+previous\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 87 of file Graphical\+Node.\+h.
 
 \mbox{\Hypertarget{class_graphical_node_a7f45ea17bdca2d822ef4d604effcca0e}\label{class_graphical_node_a7f45ea17bdca2d822ef4d604effcca0e}} 
 \index{Graphical\+Node@{Graphical\+Node}!m\+\_\+properties@{m\+\_\+properties}}
@@ -740,17 +881,7 @@ Definition at line 79 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 72 of file Graphical\+Node.\+h.
-
-\mbox{\Hypertarget{class_graphical_node_a1e660124c138a5394dc347cb3b523f9f}\label{class_graphical_node_a1e660124c138a5394dc347cb3b523f9f}} 
-\index{Graphical\+Node@{Graphical\+Node}!m\+\_\+type@{m\+\_\+type}}
-\index{m\+\_\+type@{m\+\_\+type}!Graphical\+Node@{Graphical\+Node}}
-\subsubsection{\texorpdfstring{m\+\_\+type}{m\_type}}
-{\footnotesize\ttfamily \hyperlink{class_graphical_element_aa485be48b901d85de97b3bd86f381d9e}{Graphical\+Element\+::\+Type} Graphical\+Node\+::m\+\_\+type\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line 68 of file Graphical\+Node.\+h.
+Definition at line 101 of file Graphical\+Node.\+h.
 
 
 

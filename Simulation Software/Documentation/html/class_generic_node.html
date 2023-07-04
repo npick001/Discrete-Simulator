@@ -43,6 +43,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_generic_node-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GenericNode Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -55,11 +56,10 @@ Inheritance diagram for GenericNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_generic_node__inherit__graph.png" border="0" usemap="#_generic_node_inherit__map" alt="Inheritance graph"/></div>
 <map name="_generic_node_inherit__map" id="_generic_node_inherit__map">
-<area shape="rect" id="node2" href="class_connection.html" title="{Connection\n||+ Connection()\l}" alt="" coords="5,373,112,450"/>
-<area shape="rect" id="node3" href="class_server_n_queue.html" title="{ServerNQueue\n||+ ServerNQueue()\l+ ~ServerNQueue()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="136,343,275,479"/>
-<area shape="rect" id="node4" href="class_sink_node.html" title="{SinkNode\n||+ Test()\l+ SinkNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="299,343,437,479"/>
-<area shape="rect" id="node5" href="class_source_node.html" title="{SourceNode\n||+ Test()\l+ SourceNode()\l+ SourceNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="461,336,600,487"/>
-<area shape="rect" id="node6" href="class_s_s_s_q.html" title="{SSSQ\n||+ Test()\l+ SSSQ()\l+ ~SSSQ()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="624,336,763,487"/>
+<area shape="rect" id="node2" href="class_server_n_queue.html" title="{ServerNQueue\n||+ ServerNQueue()\l+ ~ServerNQueue()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="5,351,144,487"/>
+<area shape="rect" id="node3" href="class_sink_node.html" title="{SinkNode\n||+ Test()\l+ SinkNode()\l+ SinkNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="168,343,307,494"/>
+<area shape="rect" id="node4" href="class_source_node.html" title="{SourceNode\n||+ Test()\l+ SourceNode()\l+ SourceNode()\l+ SourceNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="331,336,469,501"/>
+<area shape="rect" id="node5" href="class_s_s_s_q.html" title="{SSSQ\n||+ Test()\l+ SSSQ()\l+ SSSQ()\l+ ~SSSQ()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="493,336,632,501"/>
 </map>
 </div>
 <div class="dynheader">
@@ -91,18 +91,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab627bbdbaaef832b9b79199bac113422"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b03496c103efe7e504f77e22abf851d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a3b03496c103efe7e504f77e22abf851d">SetPrevious</a> (<a class="el" href="class_generic_node.html">GenericNode</a> *prev)</td></tr>
 <tr class="separator:a3b03496c103efe7e504f77e22abf851d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad309248ab0074f07f329418c0fa996ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#ad309248ab0074f07f329418c0fa996ed">SetImagePath</a> (const std::string &amp;imagePath)</td></tr>
-<tr class="separator:ad309248ab0074f07f329418c0fa996ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad05137b18cf33caa12d6c0d1293205c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2">SetNodeType</a> (std::string nodetype)</td></tr>
-<tr class="separator:ad05137b18cf33caa12d6c0d1293205c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae0ee4c56b5478de7a6790cab2df7adb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html">GenericNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#aae0ee4c56b5478de7a6790cab2df7adb">GetNext</a> ()</td></tr>
+<tr class="separator:aae0ee4c56b5478de7a6790cab2df7adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58305c86cd4f8f46909ba022eb010587"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html">GenericNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a58305c86cd4f8f46909ba022eb010587">GetPrevious</a> ()</td></tr>
+<tr class="separator:a58305c86cd4f8f46909ba022eb010587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793b15e284a17095c013015049628a03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a793b15e284a17095c013015049628a03">SetNodeType</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">Type</a> nodetype)</td></tr>
+<tr class="separator:a793b15e284a17095c013015049628a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf9d163658172370e01ef5da113b66e0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#aaf9d163658172370e01ef5da113b66e0">GetName</a> ()</td></tr>
 <tr class="separator:aaf9d163658172370e01ef5da113b66e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42d0bbdf6d82d68c48594b850fc8290f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a42d0bbdf6d82d68c48594b850fc8290f">GetImagePath</a> ()</td></tr>
-<tr class="separator:a42d0bbdf6d82d68c48594b850fc8290f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa73c27d677012efdcda65f7908c77758"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#aa73c27d677012efdcda65f7908c77758">GetID</a> ()</td></tr>
 <tr class="separator:aa73c27d677012efdcda65f7908c77758"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bee56c218e7d322401a37374acab36a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a8bee56c218e7d322401a37374acab36a">GetType</a> ()</td></tr>
-<tr class="separator:a8bee56c218e7d322401a37374acab36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a270cafd4814f236ad503b02cd99339e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a270cafd4814f236ad503b02cd99339e0">GetType</a> ()</td></tr>
+<tr class="separator:a270cafd4814f236ad503b02cd99339e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a923a359d019dc5a97a3da74aa33e2761"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#a923a359d019dc5a97a3da74aa33e2761">Arrive</a> (<a class="el" href="class_entity.html">Entity</a> *<a class="el" href="_entity_8h.html#ad79a57ed3105eb60d991a1aeb4a9dc44a428e8fcd53019fa239fa3419261e499e">entity</a>)</td></tr>
 <tr class="separator:a923a359d019dc5a97a3da74aa33e2761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7c8424c8c14fd3de993c902d78deb67"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="class_generic_node_1_1_statistics_wrapper.html">StatisticsWrapper</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#ae7c8424c8c14fd3de993c902d78deb67">GetStatistics</a> ()=0</td></tr>
@@ -125,6 +125,11 @@ Protected Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:af1d326d888b277b40d55b3c67be446d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html">GenericNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#af1d326d888b277b40d55b3c67be446d7">m_next</a></td></tr>
 <tr class="separator:af1d326d888b277b40d55b3c67be446d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac000f31a1ff045f2add284ea5877f0b5"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_generic_node.html#ac000f31a1ff045f2add284ea5877f0b5">SimProject</a></td></tr>
+<tr class="separator:ac000f31a1ff045f2add284ea5877f0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -176,7 +181,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00049">49</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00051">51</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,7 +209,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00061">61</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00062">62</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 
 </div>
 </div>
@@ -252,7 +257,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00032">32</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00029">29</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -270,7 +275,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_generic_node_a923a359d019dc5a97a3da74aa33e2761_icgraph.png" border="0" usemap="#class_generic_node_a923a359d019dc5a97a3da74aa33e2761_icgraph" alt=""/></div>
 <map name="class_generic_node_a923a359d019dc5a97a3da74aa33e2761_icgraph" id="class_generic_node_a923a359d019dc5a97a3da74aa33e2761_icgraph">
 <area shape="rect" id="node2" href="class_generic_node.html#a2d573208cd3bc049c7068a331c6cd294" title="GenericNode::Depart" alt="" coords="197,42,339,69"/>
-<area shape="rect" id="node5" href="class_generic_node.html#a8bee56c218e7d322401a37374acab36a" title="GenericNode::GetType" alt="" coords="191,93,345,119"/>
+<area shape="rect" id="node5" href="class_generic_node.html#a270cafd4814f236ad503b02cd99339e0" title="GenericNode::GetType" alt="" coords="191,93,345,119"/>
 <area shape="rect" id="node3" href="class_source_node_1_1_arrive_e_a.html#a622b2282aae023818b26d39519143c15" title="SourceNode::ArriveEA\l::Execute" alt="" coords="393,5,544,47"/>
 <area shape="rect" id="node4" href="class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="413,71,525,98"/>
 </map>
@@ -359,37 +364,8 @@ Here is the caller graph for this function:</div>
 <map name="class_generic_node_aa73c27d677012efdcda65f7908c77758_icgraph" id="class_generic_node_aa73c27d677012efdcda65f7908c77758_icgraph">
 <area shape="rect" id="node2" href="class_source_node.html#a0aea882fe808d9da6d506653be166e73" title="SourceNode::GetStatistics" alt="" coords="192,5,369,32"/>
 <area shape="rect" id="node3" href="class_sink_node.html#ad6aeb0857d3ddd9511cd5d24974e1fac" title="SinkNode::GetStatistics" alt="" coords="199,56,362,83"/>
-<area shape="rect" id="node4" href="class_s_s_s_q.html#ad8f307b8a4609d28efcc122dddfe5120" title="SSSQ::GetStatistics" alt="" coords="209,107,352,133"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a42d0bbdf6d82d68c48594b850fc8290f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42d0bbdf6d82d68c48594b850fc8290f">&#9670;&nbsp;</a></span>GetImagePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string GenericNode::GetImagePath </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00022">22</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f_icgraph.png" border="0" usemap="#class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f_icgraph" alt=""/></div>
-<map name="class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f_icgraph" id="class_generic_node_a42d0bbdf6d82d68c48594b850fc8290f_icgraph">
-<area shape="rect" id="node2" href="class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2" title="GenericNode::SetNodeType" alt="" coords="241,31,424,57"/>
-<area shape="rect" id="node5" href="class_sim_object_library.html#a52aa03db97b37434b94bbecf73c74e1c" title="SimObjectLibrary::AddNode" alt="" coords="241,81,424,108"/>
-<area shape="rect" id="node3" href="class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="472,5,644,32"/>
-<area shape="rect" id="node4" href="class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="487,56,629,83"/>
+<area shape="rect" id="node4" href="class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="225,107,337,133"/>
+<area shape="rect" id="node5" href="class_s_s_s_q.html#ad8f307b8a4609d28efcc122dddfe5120" title="SSSQ::GetStatistics" alt="" coords="209,157,352,184"/>
 </map>
 </div>
 
@@ -410,17 +386,56 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00018">18</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00025">25</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_generic_node_aaf9d163658172370e01ef5da113b66e0_icgraph.png" border="0" usemap="#class_generic_node_aaf9d163658172370e01ef5da113b66e0_icgraph" alt=""/></div>
 <map name="class_generic_node_aaf9d163658172370e01ef5da113b66e0_icgraph" id="class_generic_node_aaf9d163658172370e01ef5da113b66e0_icgraph">
-<area shape="rect" id="node2" href="class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2" title="GenericNode::SetNodeType" alt="" coords="213,31,396,57"/>
-<area shape="rect" id="node3" href="class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="444,5,616,32"/>
-<area shape="rect" id="node4" href="class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="459,56,601,83"/>
+<area shape="rect" id="node2" href="class_generic_node.html#a793b15e284a17095c013015049628a03" title="GenericNode::SetNodeType" alt="" coords="213,56,396,83"/>
+<area shape="rect" id="node3" href="class_source_node.html#abb26d83cef2e50b0add1499a05e6905d" title="SourceNode::SourceNode" alt="" coords="444,5,616,32"/>
+<area shape="rect" id="node4" href="class_sink_node.html#a098ae3f4e358acdfe3e3aa0906b41c60" title="SinkNode::SinkNode" alt="" coords="459,56,601,83"/>
+<area shape="rect" id="node5" href="class_s_s_s_q.html#a03276f98400682df04d5a770f6615733" title="SSSQ::SSSQ" alt="" coords="478,107,582,133"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="aae0ee4c56b5478de7a6790cab2df7adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae0ee4c56b5478de7a6790cab2df7adb">&#9670;&nbsp;</a></span>GetNext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_generic_node.html">GenericNode</a> * GenericNode::GetNext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00014">14</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a58305c86cd4f8f46909ba022eb010587"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58305c86cd4f8f46909ba022eb010587">&#9670;&nbsp;</a></span>GetPrevious()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_generic_node.html">GenericNode</a> * GenericNode::GetPrevious </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00019">19</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 
 </div>
 </div>
@@ -451,8 +466,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a8bee56c218e7d322401a37374acab36a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bee56c218e7d322401a37374acab36a">&#9670;&nbsp;</a></span>GetType()</h2>
+<a id="a270cafd4814f236ad503b02cd99339e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a270cafd4814f236ad503b02cd99339e0">&#9670;&nbsp;</a></span>GetType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,7 +476,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string GenericNode::GetType </td>
+          <td class="memname"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">Type</a> GenericNode::GetType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -478,8 +493,8 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_generic_node_a8bee56c218e7d322401a37374acab36a_cgraph.png" border="0" usemap="#class_generic_node_a8bee56c218e7d322401a37374acab36a_cgraph" alt=""/></div>
-<map name="class_generic_node_a8bee56c218e7d322401a37374acab36a_cgraph" id="class_generic_node_a8bee56c218e7d322401a37374acab36a_cgraph">
+<div class="center"><img src="class_generic_node_a270cafd4814f236ad503b02cd99339e0_cgraph.png" border="0" usemap="#class_generic_node_a270cafd4814f236ad503b02cd99339e0_cgraph" alt=""/></div>
+<map name="class_generic_node_a270cafd4814f236ad503b02cd99339e0_cgraph" id="class_generic_node_a270cafd4814f236ad503b02cd99339e0_cgraph">
 <area shape="rect" id="node2" href="class_generic_node.html#a923a359d019dc5a97a3da74aa33e2761" title="GenericNode::Arrive" alt="" coords="208,63,345,90"/>
 <area shape="rect" id="node3" href="_simulation_executive_8cpp.html#a8f65076a6521c530023047d650703ceb" title="GetSimulationTime" alt="" coords="419,13,551,39"/>
 <area shape="rect" id="node5" href="class_entity.html#a8ed56bc59a6c2b0bd01eda3d274a1fac" title="Entity::GetID" alt="" coords="436,63,533,90"/>
@@ -522,31 +537,11 @@ Here is the caller graph for this function:</div>
 <map name="class_generic_node_ae942258a57f211072d179da470579add_icgraph" id="class_generic_node_ae942258a57f211072d179da470579add_icgraph">
 <area shape="rect" id="node2" href="class_generic_node.html#a923a359d019dc5a97a3da74aa33e2761" title="GenericNode::Arrive" alt="" coords="236,67,373,94"/>
 <area shape="rect" id="node3" href="class_generic_node.html#a2d573208cd3bc049c7068a331c6cd294" title="GenericNode::Depart" alt="" coords="427,42,570,69"/>
-<area shape="rect" id="node6" href="class_generic_node.html#a8bee56c218e7d322401a37374acab36a" title="GenericNode::GetType" alt="" coords="421,93,576,119"/>
+<area shape="rect" id="node6" href="class_generic_node.html#a270cafd4814f236ad503b02cd99339e0" title="GenericNode::GetType" alt="" coords="421,93,576,119"/>
 <area shape="rect" id="node4" href="class_source_node_1_1_arrive_e_a.html#a622b2282aae023818b26d39519143c15" title="SourceNode::ArriveEA\l::Execute" alt="" coords="624,5,775,47"/>
 <area shape="rect" id="node5" href="class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="643,71,755,98"/>
 </map>
 </div>
-
-</div>
-</div>
-<a id="ad309248ab0074f07f329418c0fa996ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad309248ab0074f07f329418c0fa996ed">&#9670;&nbsp;</a></span>SetImagePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GenericNode::SetImagePath </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>imagePath</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00014">14</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
 
 </div>
 </div>
@@ -567,11 +562,24 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00006">6</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_generic_node_ab627bbdbaaef832b9b79199bac113422_icgraph.png" border="0" usemap="#class_generic_node_ab627bbdbaaef832b9b79199bac113422_icgraph" alt=""/></div>
+<map name="class_generic_node_ab627bbdbaaef832b9b79199bac113422_icgraph" id="class_generic_node_ab627bbdbaaef832b9b79199bac113422_icgraph">
+<area shape="rect" id="node2" href="class_sim_project.html#afefd1eb6d63ea4e0c698084d51a29fcd" title="SimProject::Build" alt="" coords="205,56,328,83"/>
+<area shape="rect" id="node3" href="class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="376,56,541,83"/>
+<area shape="rect" id="node4" href="class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="589,31,784,57"/>
+<area shape="rect" id="node7" href="class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="629,81,744,108"/>
+<area shape="rect" id="node5" href="class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="832,5,991,32"/>
+<area shape="rect" id="node6" href="class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="833,56,989,83"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="ad05137b18cf33caa12d6c0d1293205c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad05137b18cf33caa12d6c0d1293205c2">&#9670;&nbsp;</a></span>SetNodeType()</h2>
+<a id="a793b15e284a17095c013015049628a03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a793b15e284a17095c013015049628a03">&#9670;&nbsp;</a></span>SetNodeType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -582,7 +590,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void GenericNode::SetNodeType </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">Type</a>&#160;</td>
           <td class="paramname"><em>nodetype</em></td><td>)</td>
           <td></td>
         </tr>
@@ -594,23 +602,23 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_generic_node_8h_source.html#l00020">20</a> of file <a class="el" href="_generic_node_8h_source.html">GenericNode.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_generic_node_8h_source.html#l00021">21</a> of file <a class="el" href="_generic_node_8h_source.html">GenericNode.h</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_cgraph.png" border="0" usemap="#class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_cgraph" alt=""/></div>
-<map name="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_cgraph" id="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_cgraph">
-<area shape="rect" id="node2" href="class_generic_node.html#aaf9d163658172370e01ef5da113b66e0" title="GenericNode::GetName" alt="" coords="250,5,410,32"/>
-<area shape="rect" id="node3" href="class_generic_node.html#a42d0bbdf6d82d68c48594b850fc8290f" title="GenericNode::GetImagePath" alt="" coords="236,56,424,83"/>
+<div class="center"><img src="class_generic_node_a793b15e284a17095c013015049628a03_cgraph.png" border="0" usemap="#class_generic_node_a793b15e284a17095c013015049628a03_cgraph" alt=""/></div>
+<map name="class_generic_node_a793b15e284a17095c013015049628a03_cgraph" id="class_generic_node_a793b15e284a17095c013015049628a03_cgraph">
+<area shape="rect" id="node2" href="class_generic_node.html#aaf9d163658172370e01ef5da113b66e0" title="GenericNode::GetName" alt="" coords="236,5,396,32"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_icgraph.png" border="0" usemap="#class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_icgraph" alt=""/></div>
-<map name="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_icgraph" id="class_generic_node_ad05137b18cf33caa12d6c0d1293205c2_icgraph">
-<area shape="rect" id="node2" href="class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="236,5,408,32"/>
-<area shape="rect" id="node3" href="class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="251,56,393,83"/>
+<div class="center"><img src="class_generic_node_a793b15e284a17095c013015049628a03_icgraph.png" border="0" usemap="#class_generic_node_a793b15e284a17095c013015049628a03_icgraph" alt=""/></div>
+<map name="class_generic_node_a793b15e284a17095c013015049628a03_icgraph" id="class_generic_node_a793b15e284a17095c013015049628a03_icgraph">
+<area shape="rect" id="node2" href="class_source_node.html#abb26d83cef2e50b0add1499a05e6905d" title="SourceNode::SourceNode" alt="" coords="236,5,408,32"/>
+<area shape="rect" id="node3" href="class_sink_node.html#a098ae3f4e358acdfe3e3aa0906b41c60" title="SinkNode::SinkNode" alt="" coords="251,56,393,83"/>
+<area shape="rect" id="node4" href="class_s_s_s_q.html#a03276f98400682df04d5a770f6615733" title="SSSQ::SSSQ" alt="" coords="270,107,374,133"/>
 </map>
 </div>
 
@@ -633,6 +641,31 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_generic_node_8cpp_source.html#l00010">10</a> of file <a class="el" href="_generic_node_8cpp_source.html">GenericNode.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ac000f31a1ff045f2add284ea5877f0b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac000f31a1ff045f2add284ea5877f0b5">&#9670;&nbsp;</a></span>SimProject</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_sim_project.html">SimProject</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_generic_node_8h_source.html#l00041">41</a> of file <a class="el" href="_generic_node_8h_source.html">GenericNode.h</a>.</p>
 
 </div>
 </div>

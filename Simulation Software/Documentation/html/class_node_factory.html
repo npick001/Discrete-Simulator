@@ -56,17 +56,19 @@ Collaboration diagram for NodeFactory:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae55ad09e7b24522328a979fce9ac5e2a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node_factory.html#ae55ad09e7b24522328a979fce9ac5e2a">CreateNodeOfType</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type)</td></tr>
-<tr class="separator:ae55ad09e7b24522328a979fce9ac5e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a152f41696a5206529e5c2981fefcdf55"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node_factory.html#a152f41696a5206529e5c2981fefcdf55">CreateNodeOfType</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type, <a class="el" href="_graphical_element_8h.html#ade5fd6c85839a416577ff9de1605141e">ElementKey</a> id, wxWindow *window, wxPoint2DDouble center)</td></tr>
-<tr class="separator:a152f41696a5206529e5c2981fefcdf55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad20f428dcd40cb7524d1269c456d1faa"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node_factory.html#ad20f428dcd40cb7524d1269c456d1faa">CreateGraphicalNode</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type)</td></tr>
+<tr class="separator:ad20f428dcd40cb7524d1269c456d1faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32fcc77826632e78f5e2d44b5174f16"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node_factory.html#af32fcc77826632e78f5e2d44b5174f16">CreateGraphicalNode</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type, <a class="el" href="_graphical_element_8h.html#ade5fd6c85839a416577ff9de1605141e">ElementKey</a> id, wxWindow *window, wxPoint2DDouble center)</td></tr>
+<tr class="separator:af32fcc77826632e78f5e2d44b5174f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b5ced21c265b1d028e98499945c341"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_generic_node.html">GenericNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node_factory.html#a95b5ced21c265b1d028e98499945c341">CreateSimObject</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type)</td></tr>
+<tr class="separator:a95b5ced21c265b1d028e98499945c341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_sim_project_8h_source.html#l00057">57</a> of file <a class="el" href="_sim_project_8h_source.html">SimProject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sim_project_8h_source.html#l00075">75</a> of file <a class="el" href="_sim_project_8h_source.html">SimProject.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae55ad09e7b24522328a979fce9ac5e2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae55ad09e7b24522328a979fce9ac5e2a">&#9670;&nbsp;</a></span>CreateNodeOfType() <span class="overload">[1/2]</span></h2>
+<a id="ad20f428dcd40cb7524d1269c456d1faa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad20f428dcd40cb7524d1269c456d1faa">&#9670;&nbsp;</a></span>CreateGraphicalNode() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -75,7 +77,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_graphical_node.html">GraphicalNode</a> * NodeFactory::CreateNodeOfType </td>
+          <td class="memname"><a class="el" href="class_graphical_node.html">GraphicalNode</a> * NodeFactory::CreateGraphicalNode </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a>&#160;</td>
           <td class="paramname"><em>type</em></td><td>)</td>
@@ -89,31 +91,26 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00306">306</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_cgraph.png" border="0" usemap="#class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_cgraph" alt=""/></div>
-<map name="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_cgraph" id="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_cgraph">
-<area shape="rect" id="node2" href="class_graphical_sink.html#ab59d3cff17a43fac7fc1f364681cd35f" title="GraphicalSink::GraphicalSink" alt="" coords="267,5,459,32"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_sim_project_8cpp_source.html#l00139">139</a> of file <a class="el" href="_sim_project_8cpp_source.html">SimProject.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_icgraph.png" border="0" usemap="#class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_icgraph" alt=""/></div>
-<map name="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_icgraph" id="class_node_factory_ae55ad09e7b24522328a979fce9ac5e2a_icgraph">
-<area shape="rect" id="node2" href="class_canvas.html#aec9038762b17b62ff6126bd6277a9cd8" title="Canvas::AddNode" alt="" coords="267,56,392,83"/>
-<area shape="rect" id="node3" href="class_canvas.html#a237c4549ad2e27c729cd1f71e89f0fd9" title="Canvas::~Canvas" alt="" coords="485,5,607,32"/>
-<area shape="rect" id="node4" href="class_canvas.html#aaec53b68c7b24704e399b565731ed545" title="Canvas::AddNode" alt="" coords="483,56,609,83"/>
-<area shape="rect" id="node5" href="class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="440,107,652,133"/>
+<div class="center"><img src="class_node_factory_ad20f428dcd40cb7524d1269c456d1faa_icgraph.png" border="0" usemap="#class_node_factory_ad20f428dcd40cb7524d1269c456d1faa_icgraph" alt=""/></div>
+<map name="class_node_factory_ad20f428dcd40cb7524d1269c456d1faa_icgraph" id="class_node_factory_ad20f428dcd40cb7524d1269c456d1faa_icgraph">
+<area shape="rect" id="node2" href="class_canvas.html#aec9038762b17b62ff6126bd6277a9cd8" title="Canvas::AddNode" alt="" coords="280,81,405,108"/>
+<area shape="rect" id="node3" href="class_canvas.html#a237c4549ad2e27c729cd1f71e89f0fd9" title="Canvas::~Canvas" alt="" coords="498,5,621,32"/>
+<area shape="rect" id="node4" href="class_canvas.html#aaec53b68c7b24704e399b565731ed545" title="Canvas::AddNode" alt="" coords="497,56,622,83"/>
+<area shape="rect" id="node5" href="class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="453,107,665,133"/>
+<area shape="rect" id="node6" href="class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="462,157,657,184"/>
+<area shape="rect" id="node7" href="class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="713,132,872,159"/>
+<area shape="rect" id="node8" href="class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="715,183,871,209"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a152f41696a5206529e5c2981fefcdf55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a152f41696a5206529e5c2981fefcdf55">&#9670;&nbsp;</a></span>CreateNodeOfType() <span class="overload">[2/2]</span></h2>
+<a id="af32fcc77826632e78f5e2d44b5174f16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af32fcc77826632e78f5e2d44b5174f16">&#9670;&nbsp;</a></span>CreateGraphicalNode() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,7 +119,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_graphical_node.html">GraphicalNode</a> * NodeFactory::CreateNodeOfType </td>
+          <td class="memname"><a class="el" href="class_graphical_node.html">GraphicalNode</a> * NodeFactory::CreateGraphicalNode </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a>&#160;</td>
           <td class="paramname"><em>type</em>, </td>
@@ -158,13 +155,46 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00327">327</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sim_project_8cpp_source.html#l00158">158</a> of file <a class="el" href="_sim_project_8cpp_source.html">SimProject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a95b5ced21c265b1d028e98499945c341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95b5ced21c265b1d028e98499945c341">&#9670;&nbsp;</a></span>CreateSimObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_generic_node.html">GenericNode</a> * NodeFactory::CreateSimObject </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a>&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_sim_project_8cpp_source.html#l00177">177</a> of file <a class="el" href="_sim_project_8cpp_source.html">SimProject.cpp</a>.</p>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_node_factory_a152f41696a5206529e5c2981fefcdf55_cgraph.png" border="0" usemap="#class_node_factory_a152f41696a5206529e5c2981fefcdf55_cgraph" alt=""/></div>
-<map name="class_node_factory_a152f41696a5206529e5c2981fefcdf55_cgraph" id="class_node_factory_a152f41696a5206529e5c2981fefcdf55_cgraph">
-<area shape="rect" id="node2" href="class_graphical_sink.html#ab59d3cff17a43fac7fc1f364681cd35f" title="GraphicalSink::GraphicalSink" alt="" coords="267,5,459,32"/>
+<div class="center"><img src="class_node_factory_a95b5ced21c265b1d028e98499945c341_icgraph.png" border="0" usemap="#class_node_factory_a95b5ced21c265b1d028e98499945c341_icgraph" alt=""/></div>
+<map name="class_node_factory_a95b5ced21c265b1d028e98499945c341_icgraph" id="class_node_factory_a95b5ced21c265b1d028e98499945c341_icgraph">
+<area shape="rect" id="node2" href="class_sim_project.html#afefd1eb6d63ea4e0c698084d51a29fcd" title="SimProject::Build" alt="" coords="256,56,379,83"/>
+<area shape="rect" id="node3" href="class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="427,56,592,83"/>
+<area shape="rect" id="node4" href="class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="640,31,835,57"/>
+<area shape="rect" id="node7" href="class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="680,81,795,108"/>
+<area shape="rect" id="node5" href="class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="883,5,1041,32"/>
+<area shape="rect" id="node6" href="class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="884,56,1040,83"/>
 </map>
 </div>
 
@@ -172,7 +202,7 @@ Here is the call graph for this function:</div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Simulation Software/Source Files/<a class="el" href="_sim_project_8h_source.html">SimProject.h</a></li>
-<li>Simulation Software/Source Files/<a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a></li>
+<li>Simulation Software/Source Files/<a class="el" href="_sim_project_8cpp_source.html">SimProject.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

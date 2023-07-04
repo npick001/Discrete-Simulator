@@ -1,0 +1,5 @@
+<map id="GraphicalNode::SetNodeType" name="GraphicalNode::SetNodeType">
+<area shape="rect" id="node2" href="$class_graphical_source.html#ad798712e86d821da957bbb7864d76c5a" title="GraphicalSource::Graphical\lSource" alt="" coords="252,5,433,47"/>
+<area shape="rect" id="node3" href="$class_graphical_server.html#a676ae0f9427d8dae12256c6203127541" title="GraphicalServer::Graphical\lServer" alt="" coords="255,71,431,112"/>
+<area shape="rect" id="node4" href="$class_graphical_sink.html#ab59d3cff17a43fac7fc1f364681cd35f" title="GraphicalSink::GraphicalSink" alt="" coords="247,137,439,163"/>
+</map>

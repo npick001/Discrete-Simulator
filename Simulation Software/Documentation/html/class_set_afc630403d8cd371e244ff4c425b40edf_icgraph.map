@@ -1,10 +1,13 @@
 <map id="Set::Add" name="Set::Add">
-<area shape="rect" id="node2" href="$class_graphical_node.html#a8b6df5a7f16ea432b12b54c13d893e36" title="GraphicalNode::GraphicalNode" alt="" coords="127,5,327,32"/>
-<area shape="rect" id="node3" href="$class_graphical_source.html#ad557a50f4519460a53e8f7b6f4b21f5b" title="GraphicalSource::Graphical\lSource" alt="" coords="136,57,317,98"/>
-<area shape="rect" id="node4" href="$class_properties_viewer.html#ae8fe6d69893153aa755656e9db880bfd" title="PropertiesViewer::AddProperty" alt="" coords="127,123,327,149"/>
-<area shape="rect" id="node7" href="$class_properties_viewer.html#ac726c244cf706ab9de1b2c3c6e55af2d" title="PropertiesViewer::EditProperty" alt="" coords="127,173,327,200"/>
-<area shape="rect" id="node8" href="$class_property_set.html#ae3ee2ada7aa02653e9f4da3e34640a1e" title="PropertySet::Add" alt="" coords="165,224,288,251"/>
-<area shape="rect" id="node9" href="$class_set.html#aebe57fae183aa83c69d36d24d26234b1" title="Set\&lt; wxPGProperty \&gt;\l::operator=" alt="" coords="151,275,302,317"/>
-<area shape="rect" id="node5" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="375,123,597,149"/>
-<area shape="rect" id="node6" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="645,123,857,149"/>
+<area shape="rect" id="node2" href="$class_canvas.html#a237c4549ad2e27c729cd1f71e89f0fd9" title="Canvas::~Canvas" alt="" coords="165,5,288,32"/>
+<area shape="rect" id="node3" href="$class_graphical_node.html#a8b6df5a7f16ea432b12b54c13d893e36" title="GraphicalNode::GraphicalNode" alt="" coords="127,56,327,83"/>
+<area shape="rect" id="node4" href="$class_graphical_source.html#ad557a50f4519460a53e8f7b6f4b21f5b" title="GraphicalSource::Graphical\lSource" alt="" coords="136,107,317,149"/>
+<area shape="rect" id="node5" href="$class_properties_viewer.html#ae8fe6d69893153aa755656e9db880bfd" title="PropertiesViewer::AddProperty" alt="" coords="127,173,327,200"/>
+<area shape="rect" id="node10" href="$class_properties_viewer.html#ac726c244cf706ab9de1b2c3c6e55af2d" title="PropertiesViewer::EditProperty" alt="" coords="127,224,327,251"/>
+<area shape="rect" id="node11" href="$class_property_set.html#ae3ee2ada7aa02653e9f4da3e34640a1e" title="PropertySet::Add" alt="" coords="165,275,288,301"/>
+<area shape="rect" id="node12" href="$class_set.html#aebe57fae183aa83c69d36d24d26234b1" title="Set\&lt; wxPGProperty \&gt;\l::operator=" alt="" coords="151,326,302,367"/>
+<area shape="rect" id="node6" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="375,173,597,200"/>
+<area shape="rect" id="node7" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="645,173,840,200"/>
+<area shape="rect" id="node8" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="888,148,1047,175"/>
+<area shape="rect" id="node9" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="889,199,1045,225"/>
 </map>

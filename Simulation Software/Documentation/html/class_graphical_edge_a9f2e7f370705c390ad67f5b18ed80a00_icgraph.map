@@ -1,5 +1,6 @@
 <map id="GraphicalEdge::ConnectSource" name="GraphicalEdge::ConnectSource">
-<area shape="rect" id="node2" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="257,5,469,32"/>
-<area shape="rect" id="node3" href="$class_graphical_edge.html#af8c31162129b7c33427de769beaed38d" title="GraphicalEdge::GraphicalEdge" alt="" coords="263,56,463,83"/>
-<area shape="rect" id="node4" href="$class_graphical_edge.html#ad2db5ea6f28e2e572583909ff1f68088" title="GraphicalEdge::GetType" alt="" coords="281,107,445,133"/>
+<area shape="rect" id="node2" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="260,31,455,57"/>
+<area shape="rect" id="node5" href="$class_graphical_edge.html#af8c31162129b7c33427de769beaed38d" title="GraphicalEdge::GraphicalEdge" alt="" coords="257,81,457,108"/>
+<area shape="rect" id="node3" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="505,5,664,32"/>
+<area shape="rect" id="node4" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="507,56,663,83"/>
 </map>

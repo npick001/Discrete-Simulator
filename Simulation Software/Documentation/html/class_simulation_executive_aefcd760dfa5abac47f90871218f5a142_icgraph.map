@@ -1,5 +1,10 @@
 <map id="SimulationExecutive::RunSimulation" name="SimulationExecutive::RunSimulation">
-<area shape="rect" id="node2" href="$_simulation_executive_8h.html#aaed1ba348d593ea29d4fb7f96f431da3" title="RunSimulation" alt="" coords="192,31,299,57"/>
-<area shape="rect" id="node3" href="$class_sim_project.html#a955725a364c7a26c2991a0013976fc73" title="SimProject::Run" alt="" coords="372,5,489,32"/>
-<area shape="rect" id="node4" href="$class_event_action.html#a9a8515b9069293b94b72a6863c48e6ba" title="EventAction::EventAction" alt="" coords="347,56,515,83"/>
+<area shape="rect" id="node2" href="$_simulation_executive_8h.html#aaed1ba348d593ea29d4fb7f96f431da3" title="RunSimulation" alt="" coords="192,81,299,108"/>
+<area shape="rect" id="node3" href="$class_sim_project.html#a955725a364c7a26c2991a0013976fc73" title="SimProject::Run" alt="" coords="372,56,489,83"/>
+<area shape="rect" id="node9" href="$class_event_action.html#a9a8515b9069293b94b72a6863c48e6ba" title="EventAction::EventAction" alt="" coords="347,107,515,133"/>
+<area shape="rect" id="node4" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="563,56,728,83"/>
+<area shape="rect" id="node5" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="776,31,971,57"/>
+<area shape="rect" id="node8" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="816,81,931,108"/>
+<area shape="rect" id="node6" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="1019,5,1177,32"/>
+<area shape="rect" id="node7" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="1020,56,1176,83"/>
 </map>

@@ -1,5 +1,7 @@
 <map id="MainFrame::MainFrame" name="MainFrame::MainFrame">
-<area shape="rect" id="node2" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="213,31,379,57"/>
-<area shape="rect" id="node3" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="427,5,639,32"/>
-<area shape="rect" id="node4" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="475,56,590,83"/>
+<area shape="rect" id="node2" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="213,56,379,83"/>
+<area shape="rect" id="node3" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="427,31,621,57"/>
+<area shape="rect" id="node6" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="467,81,581,108"/>
+<area shape="rect" id="node4" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="669,5,828,32"/>
+<area shape="rect" id="node5" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="671,56,827,83"/>
 </map>

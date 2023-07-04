@@ -11,7 +11,7 @@ Collaboration diagram for Sim\+Project\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=165pt]{class_sim_project__coll__graph}
+\includegraphics[width=215pt]{class_sim_project__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -19,18 +19,32 @@ Collaboration diagram for Sim\+Project\+:
 \item 
 \hyperlink{class_sim_project_a970fe219d4659b02bf5e870a69351399}{Sim\+Project} (\hyperlink{class_canvas}{Canvas} $\ast$canvas)
 \item 
+void \hyperlink{class_sim_project_aa0e8fbbc7a2307501e31601ac6e9d967}{Set\+Canvas} (\hyperlink{class_canvas}{Canvas} $\ast$canvas)
+\item 
+const \hyperlink{class_canvas}{Canvas} \& \hyperlink{class_sim_project_ac37baac3398294b75d77892397871cc9}{View\+Canvas} ()
+\item 
 void \hyperlink{class_sim_project_afefd1eb6d63ea4e0c698084d51a29fcd}{Build} ()
+\item 
+bool \hyperlink{class_sim_project_af638b9bd89328caf5c24f1189abe714b}{Check\+Build\+Viability} ()
 \item 
 void \hyperlink{class_sim_project_a955725a364c7a26c2991a0013976fc73}{Run} ()
 \item 
+void \hyperlink{class_sim_project_a1d85585bc3e52f1dc389612abc0f449e}{Write\+Statistics} ()
+\item 
 void \hyperlink{class_sim_project_aa54bb0c929580649657d667f4c19646c}{Set\+Time\+Unit} (\hyperlink{_simulation_executive_8h_add9fe45e09605eee3e4a39c8a5c4476d}{Time\+Unit} new\+Unit)
+\item 
+bool \hyperlink{class_sim_project_a10cc29463f55112602d57f763cbea558}{Has\+Been\+Built} ()
+\item 
+void \hyperlink{class_sim_project_a37b86538831e7d1e814971c70dce1a54}{Register\+New\+Connection} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$from, \hyperlink{class_graphical_node}{Graphical\+Node} $\ast$to)
+\item 
+void \hyperlink{class_sim_project_ab35e169ce5201aeaa7a251a0d043d7f6}{Register\+Node\+Deletion} (\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$deleted)
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 31 of file Sim\+Project.\+h.
+Definition at line 34 of file Sim\+Project.\+h.
 
 
 
@@ -45,6 +59,14 @@ Definition at line 31 of file Sim\+Project.\+h.
 
 Definition at line 3 of file Sim\+Project.\+cpp.
 
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_a970fe219d4659b02bf5e870a69351399_cgraph}
+\end{center}
+\end{figure}
 
 
 \subsection{Member Function Documentation}
@@ -54,10 +76,98 @@ Definition at line 3 of file Sim\+Project.\+cpp.
 \subsubsection{\texorpdfstring{Build()}{Build()}}
 {\footnotesize\ttfamily void Sim\+Project\+::\+Build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+$<$\+Build$>$ Take graphical nodes and generate simulation code 
+
+Definition at line 23 of file Sim\+Project.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_afefd1eb6d63ea4e0c698084d51a29fcd_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_afefd1eb6d63ea4e0c698084d51a29fcd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sim_project_af638b9bd89328caf5c24f1189abe714b}\label{class_sim_project_af638b9bd89328caf5c24f1189abe714b}} 
+\index{Sim\+Project@{Sim\+Project}!Check\+Build\+Viability@{Check\+Build\+Viability}}
+\index{Check\+Build\+Viability@{Check\+Build\+Viability}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Check\+Build\+Viability()}{CheckBuildViability()}}
+{\footnotesize\ttfamily bool Sim\+Project\+::\+Check\+Build\+Viability (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
-Definition at line 6 of file Sim\+Project.\+cpp.
 
+Definition at line 58 of file Sim\+Project.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_af638b9bd89328caf5c24f1189abe714b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sim_project_a10cc29463f55112602d57f763cbea558}\label{class_sim_project_a10cc29463f55112602d57f763cbea558}} 
+\index{Sim\+Project@{Sim\+Project}!Has\+Been\+Built@{Has\+Been\+Built}}
+\index{Has\+Been\+Built@{Has\+Been\+Built}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Has\+Been\+Built()}{HasBeenBuilt()}}
+{\footnotesize\ttfamily bool Sim\+Project\+::\+Has\+Been\+Built (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 121 of file Sim\+Project.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_a10cc29463f55112602d57f763cbea558_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sim_project_a37b86538831e7d1e814971c70dce1a54}\label{class_sim_project_a37b86538831e7d1e814971c70dce1a54}} 
+\index{Sim\+Project@{Sim\+Project}!Register\+New\+Connection@{Register\+New\+Connection}}
+\index{Register\+New\+Connection@{Register\+New\+Connection}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Register\+New\+Connection()}{RegisterNewConnection()}}
+{\footnotesize\ttfamily void Sim\+Project\+::\+Register\+New\+Connection (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{from,  }\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{to }\end{DoxyParamCaption})}
+
+
+
+Definition at line 126 of file Sim\+Project.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_a37b86538831e7d1e814971c70dce1a54_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sim_project_ab35e169ce5201aeaa7a251a0d043d7f6}\label{class_sim_project_ab35e169ce5201aeaa7a251a0d043d7f6}} 
+\index{Sim\+Project@{Sim\+Project}!Register\+Node\+Deletion@{Register\+Node\+Deletion}}
+\index{Register\+Node\+Deletion@{Register\+Node\+Deletion}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Register\+Node\+Deletion()}{RegisterNodeDeletion()}}
+{\footnotesize\ttfamily void Sim\+Project\+::\+Register\+Node\+Deletion (\begin{DoxyParamCaption}\item[{\hyperlink{class_graphical_node}{Graphical\+Node} $\ast$}]{deleted }\end{DoxyParamCaption})}
+
+
+
+Definition at line 132 of file Sim\+Project.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{class_sim_project_ab35e169ce5201aeaa7a251a0d043d7f6_icgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_sim_project_a955725a364c7a26c2991a0013976fc73}\label{class_sim_project_a955725a364c7a26c2991a0013976fc73}} 
 \index{Sim\+Project@{Sim\+Project}!Run@{Run}}
 \index{Run@{Run}!Sim\+Project@{Sim\+Project}}
@@ -66,7 +176,7 @@ Definition at line 6 of file Sim\+Project.\+cpp.
 
 
 
-Definition at line 12 of file Sim\+Project.\+cpp.
+Definition at line 103 of file Sim\+Project.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
@@ -74,6 +184,32 @@ Here is the call graph for this function\+:
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_sim_project_a955725a364c7a26c2991a0013976fc73_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_a955725a364c7a26c2991a0013976fc73_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sim_project_aa0e8fbbc7a2307501e31601ac6e9d967}\label{class_sim_project_aa0e8fbbc7a2307501e31601ac6e9d967}} 
+\index{Sim\+Project@{Sim\+Project}!Set\+Canvas@{Set\+Canvas}}
+\index{Set\+Canvas@{Set\+Canvas}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Set\+Canvas()}{SetCanvas()}}
+{\footnotesize\ttfamily void Sim\+Project\+::\+Set\+Canvas (\begin{DoxyParamCaption}\item[{\hyperlink{class_canvas}{Canvas} $\ast$}]{canvas }\end{DoxyParamCaption})}
+
+
+
+Definition at line 11 of file Sim\+Project.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_aa0e8fbbc7a2307501e31601ac6e9d967_cgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{class_sim_project_aa54bb0c929580649657d667f4c19646c}\label{class_sim_project_aa54bb0c929580649657d667f4c19646c}} 
@@ -84,8 +220,36 @@ Here is the call graph for this function\+:
 
 
 
+Definition at line 116 of file Sim\+Project.\+cpp.
+
+\mbox{\Hypertarget{class_sim_project_ac37baac3398294b75d77892397871cc9}\label{class_sim_project_ac37baac3398294b75d77892397871cc9}} 
+\index{Sim\+Project@{Sim\+Project}!View\+Canvas@{View\+Canvas}}
+\index{View\+Canvas@{View\+Canvas}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{View\+Canvas()}{ViewCanvas()}}
+{\footnotesize\ttfamily const \hyperlink{class_canvas}{Canvas} \& Sim\+Project\+::\+View\+Canvas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
 Definition at line 17 of file Sim\+Project.\+cpp.
 
+\mbox{\Hypertarget{class_sim_project_a1d85585bc3e52f1dc389612abc0f449e}\label{class_sim_project_a1d85585bc3e52f1dc389612abc0f449e}} 
+\index{Sim\+Project@{Sim\+Project}!Write\+Statistics@{Write\+Statistics}}
+\index{Write\+Statistics@{Write\+Statistics}!Sim\+Project@{Sim\+Project}}
+\subsubsection{\texorpdfstring{Write\+Statistics()}{WriteStatistics()}}
+{\footnotesize\ttfamily void Sim\+Project\+::\+Write\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 108 of file Sim\+Project.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sim_project_a1d85585bc3e52f1dc389612abc0f449e_icgraph}
+\end{center}
+\end{figure}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

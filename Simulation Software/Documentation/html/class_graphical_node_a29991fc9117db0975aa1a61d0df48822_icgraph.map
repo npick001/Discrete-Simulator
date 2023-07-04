@@ -1,8 +1,12 @@
 <map id="GraphicalNode::GetInputPoint" name="GraphicalNode::GetInputPoint">
-<area shape="rect" id="node2" href="$class_graphical_edge.html#a41868fd50c413744e61a549f1cef6a79" title="GraphicalEdge::ConnectDestination" alt="" coords="248,69,476,96"/>
-<area shape="rect" id="node6" href="$class_graphical_node.html#a430fbd68a5d907ed9e73981ab3c499fb" title="GraphicalNode::Move" alt="" coords="289,132,435,159"/>
-<area shape="rect" id="node3" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="524,5,736,32"/>
-<area shape="rect" id="node4" href="$class_graphical_edge.html#af8c31162129b7c33427de769beaed38d" title="GraphicalEdge::GraphicalEdge" alt="" coords="530,56,730,83"/>
-<area shape="rect" id="node5" href="$class_graphical_edge.html#ad2db5ea6f28e2e572583909ff1f68088" title="GraphicalEdge::GetType" alt="" coords="548,107,712,133"/>
-<area shape="rect" id="node7" href="$class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a" title="GraphicalNode::GetNodeType" alt="" coords="533,157,727,184"/>
+<area shape="rect" id="node2" href="$class_graphical_edge.html#a41868fd50c413744e61a549f1cef6a79" title="GraphicalEdge::ConnectDestination" alt="" coords="248,68,476,95"/>
+<area shape="rect" id="node7" href="$class_graphical_node.html#a430fbd68a5d907ed9e73981ab3c499fb" title="GraphicalNode::Move" alt="" coords="289,119,435,145"/>
+<area shape="rect" id="node3" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="1156,31,1351,57"/>
+<area shape="rect" id="node6" href="$class_graphical_edge.html#af8c31162129b7c33427de769beaed38d" title="GraphicalEdge::GraphicalEdge" alt="" coords="524,68,724,95"/>
+<area shape="rect" id="node4" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="1399,5,1557,32"/>
+<area shape="rect" id="node5" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="1400,56,1556,83"/>
+<area shape="rect" id="node8" href="$class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a" title="GraphicalNode::GetNodeType" alt="" coords="527,119,721,145"/>
+<area shape="rect" id="node9" href="$class_sim_project.html#afefd1eb6d63ea4e0c698084d51a29fcd" title="SimProject::Build" alt="" coords="772,105,895,132"/>
+<area shape="rect" id="node10" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="943,93,1108,120"/>
+<area shape="rect" id="node11" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="1196,93,1311,120"/>
 </map>

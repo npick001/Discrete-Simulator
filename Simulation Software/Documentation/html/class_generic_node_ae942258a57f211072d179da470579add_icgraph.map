@@ -1,7 +1,7 @@
 <map id="GenericNode::NodeProcess" name="GenericNode::NodeProcess">
 <area shape="rect" id="node2" href="$class_generic_node.html#a923a359d019dc5a97a3da74aa33e2761" title="GenericNode::Arrive" alt="" coords="236,67,373,94"/>
 <area shape="rect" id="node3" href="$class_generic_node.html#a2d573208cd3bc049c7068a331c6cd294" title="GenericNode::Depart" alt="" coords="427,42,570,69"/>
-<area shape="rect" id="node6" href="$class_generic_node.html#a8bee56c218e7d322401a37374acab36a" title="GenericNode::GetType" alt="" coords="421,93,576,119"/>
+<area shape="rect" id="node6" href="$class_generic_node.html#a270cafd4814f236ad503b02cd99339e0" title="GenericNode::GetType" alt="" coords="421,93,576,119"/>
 <area shape="rect" id="node4" href="$class_source_node_1_1_arrive_e_a.html#a622b2282aae023818b26d39519143c15" title="SourceNode::ArriveEA\l::Execute" alt="" coords="624,5,775,47"/>
 <area shape="rect" id="node5" href="$class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="643,71,755,98"/>
 </map>

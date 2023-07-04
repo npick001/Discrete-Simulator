@@ -1,5 +1,6 @@
 <map id="GenericNode::GetID" name="GenericNode::GetID">
 <area shape="rect" id="node2" href="$class_source_node.html#a0aea882fe808d9da6d506653be166e73" title="SourceNode::GetStatistics" alt="" coords="192,5,369,32"/>
 <area shape="rect" id="node3" href="$class_sink_node.html#ad6aeb0857d3ddd9511cd5d24974e1fac" title="SinkNode::GetStatistics" alt="" coords="199,56,362,83"/>
-<area shape="rect" id="node4" href="$class_s_s_s_q.html#ad8f307b8a4609d28efcc122dddfe5120" title="SSSQ::GetStatistics" alt="" coords="209,107,352,133"/>
+<area shape="rect" id="node4" href="$class_s_s_s_q.html#a6316b4f5b481609f244022cd83ef67bb" title="SSSQ::~SSSQ" alt="" coords="225,107,337,133"/>
+<area shape="rect" id="node5" href="$class_s_s_s_q.html#ad8f307b8a4609d28efcc122dddfe5120" title="SSSQ::GetStatistics" alt="" coords="209,157,352,184"/>
 </map>

@@ -19,6 +19,7 @@
 {\ttfamily \#include \char`\"{}Sim\+Object\+Library.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}Properties\+Viewer.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}Graphical\+Node.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Sim\+Project.\+h\char`\"{}}\newline
 Include dependency graph for Main\+Frame.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -47,15 +48,18 @@ enum \{ \newline
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a639632d33942511b653f725d857ffd5b}{I\+D\+\_\+\+Exit} = 1, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7aca32bc171191e8b99eb7dcabdfa1d98d}{I\+D\+\_\+\+Input\+\_\+\+Analyzer}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a44303ef7f2a9d307bed8a718ba071960}{I\+D\+\_\+\+Run\+\_\+\+Sim}, 
-\hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7ad210006b74ec2726d6e116fadc61792d}{I\+D\+\_\+\+Model\+\_\+\+Settings}, 
+\hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a81d9a3ff8b8bc51bbc0d38fd73344641}{I\+D\+\_\+\+Build\+\_\+\+Sim\+Code}, 
 \newline
+\hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a32063e9a80b2d5fb85f482c9d3a548ec}{I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run}, 
+\hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7ad210006b74ec2726d6e116fadc61792d}{I\+D\+\_\+\+Model\+\_\+\+Settings}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a4260fef1a2b0c544e5cbb02eb7d107d6}{I\+D\+\_\+\+Create\+Notebook}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a6b0a5e0d8c1f13364dcdea0e7ee280f4}{I\+D\+\_\+\+Create\+Tree}, 
+\newline
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a9e007b2f8de36edc9a858018d04fc7f4}{I\+D\+\_\+\+Create\+Grid}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a105837f6f696b5daafea2d09c37ae427}{I\+D\+\_\+\+Create\+Canvas}, 
-\newline
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a3951627bab91b6fde4cf58eafe1993a1}{I\+D\+\_\+\+Create\+Sim\+Library}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a9a76924a66323ff3223a2987ca928b5c}{I\+D\+\_\+\+Drop\+Down\+Toolbar\+Item}, 
+\newline
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a8da9c464c438885e5b8f52678351965c}{I\+D\+\_\+\+Customize\+Toolbar}, 
 \hyperlink{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a8d7cb8b1ce8d01a0279ab38b20205706}{I\+D\+\_\+\+Sample\+Item}
  \}
@@ -78,6 +82,14 @@ I\+D\+\_\+\+Input\+\_\+\+Analyzer&\\
 
 \raisebox{\heightof{T}}[0pt][0pt]{\index{I\+D\+\_\+\+Run\+\_\+\+Sim@{I\+D\+\_\+\+Run\+\_\+\+Sim}!Main\+Frame.\+h@{Main\+Frame.\+h}}\index{Main\+Frame.\+h@{Main\+Frame.\+h}!I\+D\+\_\+\+Run\+\_\+\+Sim@{I\+D\+\_\+\+Run\+\_\+\+Sim}}}\mbox{\Hypertarget{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a44303ef7f2a9d307bed8a718ba071960}\label{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a44303ef7f2a9d307bed8a718ba071960}} 
 I\+D\+\_\+\+Run\+\_\+\+Sim&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I\+D\+\_\+\+Build\+\_\+\+Sim\+Code@{I\+D\+\_\+\+Build\+\_\+\+Sim\+Code}!Main\+Frame.\+h@{Main\+Frame.\+h}}\index{Main\+Frame.\+h@{Main\+Frame.\+h}!I\+D\+\_\+\+Build\+\_\+\+Sim\+Code@{I\+D\+\_\+\+Build\+\_\+\+Sim\+Code}}}\mbox{\Hypertarget{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a81d9a3ff8b8bc51bbc0d38fd73344641}\label{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a81d9a3ff8b8bc51bbc0d38fd73344641}} 
+I\+D\+\_\+\+Build\+\_\+\+Sim\+Code&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run@{I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run}!Main\+Frame.\+h@{Main\+Frame.\+h}}\index{Main\+Frame.\+h@{Main\+Frame.\+h}!I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run@{I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run}}}\mbox{\Hypertarget{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a32063e9a80b2d5fb85f482c9d3a548ec}\label{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7a32063e9a80b2d5fb85f482c9d3a548ec}} 
+I\+D\+\_\+\+Build\+\_\+\+And\+\_\+\+Run&\\
 \hline
 
 \raisebox{\heightof{T}}[0pt][0pt]{\index{I\+D\+\_\+\+Model\+\_\+\+Settings@{I\+D\+\_\+\+Model\+\_\+\+Settings}!Main\+Frame.\+h@{Main\+Frame.\+h}}\index{Main\+Frame.\+h@{Main\+Frame.\+h}!I\+D\+\_\+\+Model\+\_\+\+Settings@{I\+D\+\_\+\+Model\+\_\+\+Settings}}}\mbox{\Hypertarget{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7ad210006b74ec2726d6e116fadc61792d}\label{_main_frame_8h_adf764cbdea00d65edcd07bb9953ad2b7ad210006b74ec2726d6e116fadc61792d}} 
@@ -119,5 +131,5 @@ I\+D\+\_\+\+Sample\+Item&\\
 \end{DoxyEnumFields}
 
 
-Definition at line 25 of file Main\+Frame.\+h.
+Definition at line 26 of file Main\+Frame.\+h.
 

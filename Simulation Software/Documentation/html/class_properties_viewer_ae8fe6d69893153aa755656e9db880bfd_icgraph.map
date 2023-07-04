@@ -1,4 +1,6 @@
 <map id="PropertiesViewer::AddProperty" name="PropertiesViewer::AddProperty">
-<area shape="rect" id="node2" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="253,5,476,32"/>
-<area shape="rect" id="node3" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="524,5,736,32"/>
+<area shape="rect" id="node2" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="253,31,476,57"/>
+<area shape="rect" id="node3" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="524,31,719,57"/>
+<area shape="rect" id="node4" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="767,5,925,32"/>
+<area shape="rect" id="node5" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="768,56,924,83"/>
 </map>
