@@ -1,6 +1,5 @@
 # Discrete-Simulator
 This is the repo containing the source code for my personal discrete simulator.
-Kai is helping out tremendously with the GUI frontend.
 
 The software utilizes the MVC software architecture to handle the simulation and graphical interactions.
 
