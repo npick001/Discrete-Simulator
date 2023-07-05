@@ -86,7 +86,18 @@ bool SimProject::CheckBuildViability()
 			break;
 		default:
 
-			if ((currentNode->GetNext() == nullptr) && (currentNode->GetPrevious() == nullptr)) {
+			if ((currentNode->GetNext() == nullptr)) {
+				wxLogError("SERVER NODE NEEDS AN OUTPUT CONNECTION.\n Consider checking connections.");
+				m_hasBeenBuilt = false;
+				m_instantiatedNodes.clear();
+				m_nodeMap.clear();
+
+				return false;
+			}
+			else if ((currentNode->GetPrevious() == nullptr)) {
+				wxLogMessage("A SERVER NODE HAS NO INPUT CONNECTION.\n Consider checking connections.");
+			}
+			else if ((currentNode->GetNext() == nullptr) && (currentNode->GetPrevious() == nullptr)) {
 				wxLogError("SERVER NODE NEEDS BOTH INPUT AND OUTPUT CONNECTIONS.\n Consider checking connections.");
 				m_hasBeenBuilt = false;
 				m_instantiatedNodes.clear();

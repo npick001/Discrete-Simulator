@@ -6,7 +6,6 @@
 
 GraphicalNode::GraphicalNode() : GraphicalElement(), m_inputs(), m_outputs() 
 {
-
 }
 
 GraphicalNode::GraphicalNode(ElementKey id) : GraphicalElement(id), m_inputs(), m_outputs()
@@ -194,9 +193,54 @@ void GraphicalNode::Move(wxPoint2DDouble displacement) {
 		input->m_destinationPoint = GetInputPoint();
 }
 
+wxColor GraphicalNode::GetBodyColor()
+{
+	return m_bodyColor;
+}
+
 void GraphicalNode::SetBodyColor(const wxColor& color)
 {
 	m_bodyColor = color;
+}
+
+void GraphicalNode::SetBodyShape(wxRect2DDouble newBody)
+{
+	m_bodyShape = newBody;
+}
+
+wxRect2DDouble GraphicalNode::GetBodyShape()
+{
+	return m_bodyShape;
+}
+
+void GraphicalNode::SetInputRect(wxRect2DDouble newInput)
+{
+	m_inputRect = newInput;
+}
+
+wxRect2DDouble GraphicalNode::GetInputRect()
+{
+	return m_inputRect;
+}
+
+void GraphicalNode::SetOutputRect(wxRect2DDouble newOutput)
+{
+	m_outputRect = newOutput;
+}
+
+wxRect2DDouble GraphicalNode::GetOutputRect()
+{
+	return m_outputRect;
+}
+
+void GraphicalNode::SetIOColor(wxColor newColor)
+{
+	m_ioColor = newColor;
+}
+
+wxColor GraphicalNode::GetIOColor()
+{
+	return m_ioColor;
 }
 
 void GraphicalNode::SetNodeType(GenericNode::Type type)
@@ -246,12 +290,14 @@ private:
 GraphicalSource::GraphicalSource() : GraphicalNode()
 {
 	SetNodeType(GenericNode::SOURCE);
+	m_iaTime = new Exponential(0.25);
 }
 
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Source")
 {
 	SetNodeType(GenericNode::SOURCE);
+	m_iaTime = new Exponential(0.25);
 	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
 }
 
@@ -284,6 +330,21 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSource::GetSimProperties()
 {
 	return std::make_unique<SourceProperties>(m_myProps, GetID());
+}
+
+void GraphicalSource::Accept(Visitor& visitor)
+{
+	return visitor.Visit(*this);
+}
+
+void GraphicalSource::SetIATime(Distribution* iaTime)
+{
+	m_iaTime = iaTime;
+}
+
+Distribution* GraphicalSource::GetIATime()
+{
+	return m_iaTime;
 }
 
 /****************************************************************/
@@ -339,15 +400,15 @@ GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDoubl
 {
 	SetNodeType(GenericNode::SERVER);
 
-	m_serviceTime = 1.0;
+	m_serviceTime = new Triangular(1.0, 2.0, 3.0);
 	m_timeUnit = MINUTES;
 	m_numResources = 1;
 
-	auto stProp = new wxFloatProperty("Service Time", wxPG_LABEL, m_serviceTime);
+	//auto stProp = new wxFloatProperty("Service Time", wxPG_LABEL, m_serviceTime);
 	auto timeUnitProp = new wxStringProperty("Time Unit", wxPG_LABEL, TimeToString.at(m_timeUnit));
 	auto resourceNumProp = new wxUIntProperty("Number of Resources", wxPG_LABEL, m_numResources);
 
-	m_properties.Add(stProp);
+	//m_properties.Add(stProp);
 	m_properties.Add(timeUnitProp);
 	m_properties.Add(resourceNumProp);
 }
@@ -381,6 +442,21 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalServer::GetSimProperties()
 {
 	return std::make_unique<ServerProperties>(m_myProps, GetID());
+}
+
+void GraphicalServer::SetServiceTime(Distribution* serviceTime)
+{
+	m_serviceTime = serviceTime;
+}
+
+Distribution* GraphicalServer::GetServiceTime()
+{
+	return m_serviceTime;
+}
+
+void GraphicalServer::Accept(Visitor& visitor) 
+{
+	return visitor.Visit(*this);
 }
 
 /****************************************/
@@ -461,3 +537,7 @@ std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSink::GetSimPropertie
 	return std::make_unique<SinkProperties>(m_myProps, GetID());
 }
 
+void GraphicalSink::Accept(Visitor& visitor) 
+{
+	return visitor.Visit(*this);
+}

@@ -172,6 +172,7 @@
     <ClInclude Include="Source Files\SpecificNodes.h" />
     <ClInclude Include="Source Files\Statistics.h" />
     <ClInclude Include="Source Files\Utility.h" />
+    <ClInclude Include="Source Files\XMLSerialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Action.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Source Files\SpecificNodes.cpp" />
     <ClCompile Include="Source Files\Statistics.cpp" />
     <ClCompile Include="Source Files\Utility.cpp" />
+    <ClCompile Include="Source Files\XMLSerialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

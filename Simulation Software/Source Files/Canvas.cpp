@@ -168,6 +168,11 @@ Set<GraphicalNode> Canvas::GetSimObjects()
 	return m_gnodes;
 }
 
+ElementKey Canvas::GetNextID()
+{
+	return m_nextID;
+}
+
 void Canvas::SetSimulationProject(SimProject* parentProject)
 {
 	m_myProject = parentProject;

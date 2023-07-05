@@ -81,5 +81,4 @@ public:
 	static GenericNode* CreateSimObject(GenericNode::Type type);
 private:
 
-
 };

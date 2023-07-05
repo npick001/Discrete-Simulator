@@ -13,6 +13,7 @@
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 #include "Action.h"
+#include "XMLSerialization.h"
 
 class GraphicalEdge;
 //class MoveNodeAction;
@@ -65,6 +66,7 @@ public:
 
 	void Move(wxPoint2DDouble displacement);
 
+	wxColor GetBodyColor();
 	void SetBodyColor(const wxColor& color);
 
 	// PROPERTY REPORTING DESIGN PATTERN
@@ -78,6 +80,18 @@ public:
 	};
 
 	virtual std::unique_ptr<PropertiesWrapper> GetSimProperties() = 0;
+
+	// XML Serialization
+	virtual void Accept(Visitor& visitor) = 0;
+
+	void SetBodyShape(wxRect2DDouble newBody);
+	wxRect2DDouble GetBodyShape();
+	void SetInputRect(wxRect2DDouble newInput);
+	wxRect2DDouble GetInputRect();
+	void SetOutputRect(wxRect2DDouble newOutput);
+	wxRect2DDouble GetOutputRect();
+	void SetIOColor(wxColor newColor);
+	wxColor GetIOColor();
 
 protected:
 	friend class GraphicalEdge;
@@ -141,12 +155,19 @@ public:
 	class SourceProperties;
 	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
 
+	void SetIATime(Distribution* iaTime);
+	Distribution* GetIATime();
+
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
+
 protected:
 	class MyProperties;
 
 private:
 	// will be replaced with a distribution later
 	int m_arrivalTime;
+	Distribution* m_iaTime;
 
 	SimProperties* m_myProps;
 };
@@ -167,12 +188,19 @@ public:
 	class ServerProperties;
 	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
 
+	void SetServiceTime(Distribution* serviceTime);
+	Distribution* GetServiceTime();
+
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
+
 protected:
 	class MyProperties;
 
 private:
 	// will be replaced with a distribution later
-	double m_serviceTime;
+	//double m_serviceTime;
+	Distribution* m_serviceTime;
 
 	// will be replaced with a time unit later (second, minute, hour, day, year)
 	TimeUnit m_timeUnit;
@@ -195,6 +223,9 @@ public:
 
 	class SinkProperties;
 	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
 
 protected:
 	class MyProperties;
