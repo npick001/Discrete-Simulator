@@ -1,6 +1,7 @@
 #ifndef DISTRIBUTION_H
 #define DISTRIBUTION_H
-#include "XMLSerialization.h"
+
+class Visitor;
 
 namespace Distributions
 {

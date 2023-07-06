@@ -216,6 +216,7 @@ wxXmlNode XMLSerializer::SerializeDistribution(Distribution* dist)
 	XMLSerializingVisitor visitor{ docNode };
 
 	dist->Accept(visitor);
+	return *docNode;
 }
 
 std::unique_ptr<GraphicalNode> XMLDeserializationFactory::DeserializeNode(const wxXmlNode* node)
@@ -278,7 +279,7 @@ std::unique_ptr<Distribution> XMLDeserializationFactory::DeserializeDistribution
 
 GraphicalSource XMLDeserializationFactory::DeserializeSource(const wxXmlNode* node)
 {
-	GraphicalNode* sourceNode = NodeFactory::CreateGraphicalNode(GenericNode::SOURCE);
+	GraphicalSource* sourceNode = (GraphicalSource*)NodeFactory::CreateGraphicalNode(GenericNode::SOURCE);
 
 	// main rectangle properties
 	auto bodyColor = node->GetAttribute(XmlNodeKeys::ColorAttribute);
@@ -297,41 +298,16 @@ GraphicalSource XMLDeserializationFactory::DeserializeSource(const wxXmlNode* no
 	
 	// output rectangle properties
 	auto outputRect = node->GetChildren()->GetNext();
-	auto bodyColor = outputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
-	auto x = std::stod(outputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
-	auto y = std::stod(outputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());
-	auto width = std::stod(outputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
-	auto height = std::stod(outputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
-	wxRect2DDouble outputRectangle(x, y, width, height);
+	auto ibodyColor = outputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
+	auto ix = std::stod(outputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
+	auto iy = std::stod(outputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());
+	auto iwidth = std::stod(outputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
+	auto iheight = std::stod(outputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
+	wxRect2DDouble outputRectangle(ix, iy, iwidth, iheight);
 	sourceNode->SetOutputRect(outputRectangle);
-	
-	//sourceNode->SetBodyColor())
-	//// main object rectangle
-	//wxXmlNode* sourceNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::BaseNodeName);
-	//sourceNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::SourceNodeName);
-	//sourceNode->AddAttribute(XmlNodeKeys::ColorAttribute, source.GetBodyColor().GetAsString());
-	//sourceNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetBodyShape().m_x));
-	//sourceNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetBodyShape().m_y));
-	//sourceNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(source.GetBodyShape().m_width));
-	//sourceNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetBodyShape().m_height));
+	sourceNode->SetIOColor(ibodyColor);
 
-	//// Interarrival Distribution
-	//wxXmlNode iaDist = XMLSerializer::SerializeDistribution(source.GetIATime());
-
-	//// output rectangle
-	//wxXmlNode* outputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::OutputRectAttribute);
-	//outputNode->AddAttribute(XmlNodeKeys::ColorAttribute, source.GetIOColor().GetAsString());
-	//outputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetOutputRect().m_x));
-	//outputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetOutputRect().m_y));
-	//outputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(source.GetOutputRect().m_width));
-	//outputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetOutputRect().m_height));
-
-	//// make links
-	//sourceNode->AddChild(outputNode);
-	//sourceNode->AddChild(&iaDist);
-	//m_parentNode->AddChild(sourceNode);
-
-	return GraphicalSource();
+	return *sourceNode;
 }
 
 GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* node)

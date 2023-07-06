@@ -1,8 +1,8 @@
 #pragma once
 #include <wx/xml/xml.h>
 
-#include "GraphicalNode.h"
 #include "Distribution.h"
+#include "GraphicalNode.h"
 #include "SimProject.h"
 
 namespace XmlNodeKeys {
@@ -49,8 +49,21 @@ namespace XmlNodeKeys {
 	constexpr auto VersionValue = "0.0.2";
 }
 
-struct Visitor
+class GraphicalSource;
+class GraphicalServer;
+class GraphicalSink;
+class Exponential;
+class Uniform;
+class Triangular;
+class Normal;
+class Poisson;
+class Constant;
+class Weibull;
+class Erlang;
+
+class Visitor
 {
+public:
 	// Simulation Objects
 	virtual void Visit(GraphicalSource& source) = 0;
 	virtual void Visit(GraphicalServer& server) = 0;
@@ -67,8 +80,9 @@ struct Visitor
 	virtual void Visit(Erlang& erlang) = 0;
 };
 
-struct XMLSerializingVisitor : Visitor {
+class XMLSerializingVisitor : public Visitor {
 
+public:
 	XMLSerializingVisitor(wxXmlNode* parentNode) : m_parentNode(parentNode) {}
 
 	// Simulation Objects

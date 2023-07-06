@@ -17,11 +17,11 @@
 
 #include "SimulationExecutive.h"
 #include "Statistics.h"
+#include "GraphicalNode.h"
 #include "Canvas.h"
+#include "SimProject.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
-#include "GraphicalNode.h"
-#include "SimProject.h"
 
 enum {
     ID_Exit = 1,
@@ -41,9 +41,11 @@ enum {
     ID_SampleItem,
 };
 
+class GraphicalNode;
 class Canvas;
-class Selection;
+struct Selection;
 class SimProject;
+class SimObjectLibrary;
 
 class MainFrame : public wxFrame {
 public:

@@ -7,8 +7,10 @@
 
 Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	: wxPanel(parent, wxID_ANY), m_nextID(0), m_elements(), m_nodes(&m_elements),
-	m_edges(&m_elements), m_selection(), m_incompleteEdge(), m_history(100)
+	m_edges(&m_elements), m_selection(), m_incompleteEdge()
 {
+	m_history = new History(100);
+
 	m_gridSizes = { 1.0, 10.0, 100.0, 1000.0 };
 
 	// UI
@@ -297,8 +299,8 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	// Prepare to drag selected node
 	case Selection::State::NODE:
 
-		m_moveNodeAction = MoveNodeAction(m_selection->GetID(), &m_nodes);
-		m_moveNodeAction.SetPreviousPosition(m_nodes[m_selection]->GetPosition());
+		m_moveNodeAction = new MoveNodeAction(m_selection->GetID(), &m_nodes);
+		m_moveNodeAction->SetPreviousPosition(m_nodes[m_selection]->GetPosition());
 		break;
 
 	// Instatiate an edge and connect source to node's output
@@ -340,8 +342,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 
 	// Finish move action
 	case Selection::State::NODE:
-		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
-		m_history.LogAction(m_moveNodeAction);
+		m_moveNodeAction->SetNextPosition(m_nodes[m_selection]->GetPosition());
+		m_history->LogAction(m_moveNodeAction);
 
 		// for showing properties window
 		MainFrame::GetInstance()->RegisterNewSelection((GraphicalNode*)endSelection.element);
@@ -503,8 +505,8 @@ void Canvas::OnRightUp(wxMouseEvent& event) {
 // Unable to track mouse position outside of window; therefore, panning and dragging is disabled when the mouse leaves
 void Canvas::OnLeaveWindow(wxMouseEvent& event) {
 	if (m_selection.state == Selection::State::NODE) {
-		m_moveNodeAction.SetNextPosition(m_nodes[m_selection]->GetPosition());
-		m_history.LogAction(m_moveNodeAction);
+		m_moveNodeAction->SetNextPosition(m_nodes[m_selection]->GetPosition());
+		m_history->LogAction(m_moveNodeAction);
 	}
 
 	Refresh();
@@ -563,10 +565,10 @@ void Canvas::OnCharHook(wxKeyEvent& event) {
 	if (event.ControlDown()) {
 		switch (event.GetKeyCode()) {
 		case 'Y':
-			m_history.Redo();
+			m_history->Redo();
 			break;
 		case 'Z':
-			m_history.Undo();
+			m_history->Undo();
 			break;
 		}
 	}

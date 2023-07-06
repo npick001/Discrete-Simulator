@@ -47,7 +47,7 @@ public:
 			m_history.erase(m_history.begin(), m_current);
 		}
 
-		m_history.push_front(new T(action));
+		m_history.push_front(T(action));
 		m_current = m_history.begin();
 
 		// Delete allocated action before erasing pointer

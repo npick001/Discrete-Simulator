@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <list>
 #include <string>
 
@@ -8,15 +9,14 @@
 #include "wx/propgrid/propgrid.h"
 
 #include "SimulationExecutive.h"
+#include "Distribution.h"
 #include "Set.h"
 #include "GenericNode.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
-#include "Action.h"
 #include "XMLSerialization.h"
 
 class GraphicalEdge;
-//class MoveNodeAction;
 class NodeFactory;
 class SimProperties;
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <vector>
 
 #include "wx/wx.h"
 
@@ -8,8 +9,16 @@
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
-#include "Action.h"
 #include "SimProject.h"
+#include "Action.h"
+
+class GraphicalEdge;
+class GraphicalNode;
+class History;
+class MoveNodeAction;
+
+typedef SpecificElementContainer<GraphicalNode> NodeMap;
+typedef SpecificElementContainer<GraphicalEdge> EdgeMap;
 
 class Canvas : public wxPanel {
 public:
@@ -76,8 +85,8 @@ private:
 	wxSize m_canvasSize;
 
 	// History of actions
-	History m_history;
-	MoveNodeAction m_moveNodeAction;
+	History* m_history;
+	MoveNodeAction* m_moveNodeAction;
 
 	Selection m_selection;
 

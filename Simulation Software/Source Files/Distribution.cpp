@@ -1,6 +1,9 @@
 #include "Distribution.h"
+
 #include <stdlib.h>
 #include <math.h>
+
+#include "XMLSerialization.h"
 
 Distribution::Distribution() {}
 
