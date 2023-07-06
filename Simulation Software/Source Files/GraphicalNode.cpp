@@ -63,13 +63,19 @@ GraphicalNode& GraphicalNode::operator=(const GraphicalNode& other) {
 
 	GraphicalElement::operator=(other);
 
+	m_nodeType = other.m_nodeType;
+	m_properties = other.m_properties;
+	m_bodyColor = other.m_bodyColor;
 	m_bodyShape = other.m_bodyShape;
 	m_outputRect = other.m_outputRect;
 	m_inputRect = other.m_inputRect;
-
 	m_position = other.m_position;
-	m_outputs = other.m_outputs;
+	m_bodySize = other.m_bodySize;
+	m_ioSize = other.m_ioSize;
+	m_labelColor = other.m_labelColor;
+	m_ioColor = other.m_ioColor;
 	m_inputs = other.m_inputs;
+	m_outputs = other.m_outputs;
 
 	return (*this);
 }
@@ -248,7 +254,6 @@ void GraphicalNode::SetNodeType(GenericNode::Type type)
 	m_nodeType = type;
 }
 
-
 /********************************************/
 /* GraphicalSource:                         */
 /* defines an entity generating object      */
@@ -293,12 +298,25 @@ GraphicalSource::GraphicalSource() : GraphicalNode()
 	m_iaTime = new Exponential(0.25);
 }
 
+GraphicalSource::GraphicalSource(const GraphicalSource& other)
+{
+	GraphicalNode::operator=(other);
+
+	m_iaTime = other.m_iaTime;
+	m_myProps = other.m_myProps;
+}
+
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Source")
 {
 	SetNodeType(GenericNode::SOURCE);
 	m_iaTime = new Exponential(0.25);
 	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
+}
+
+std::unique_ptr<GraphicalNode> GraphicalSource::Clone()
+{
+	return std::make_unique<GraphicalSource>(*this);
 }
 
 void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
@@ -413,6 +431,21 @@ GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	m_properties.Add(resourceNumProp);
 }
 
+GraphicalServer::GraphicalServer(const GraphicalServer& other)
+{
+	GraphicalNode::operator=(other);
+
+	m_serviceTime = other.m_serviceTime;
+	m_timeUnit = other.m_timeUnit;
+	m_numResources = other.m_numResources;
+	m_myProps = other.m_myProps;
+}
+
+std::unique_ptr<GraphicalNode> GraphicalServer::Clone()
+{
+	return std::make_unique<GraphicalServer>(*this);
+}
+
 void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)
 {
 	// Transform coordinates according to camera and node transforms
@@ -494,14 +527,24 @@ private:
 
 GraphicalSink::GraphicalSink() : GraphicalNode() 
 {
-	//m_bodyColor = *wxLIGHT_GREY;
 	SetNodeType(GenericNode::SINK);
+}
+
+GraphicalSink::GraphicalSink(const GraphicalSink& other)
+{
+	GraphicalNode::operator=(other);
 }
 
 GraphicalSink::GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center)
 	: GraphicalNode(id, window, center, "Sink")
 {
 	SetNodeType(GenericNode::SINK);
+}
+
+
+std::unique_ptr<GraphicalNode> GraphicalSink::Clone()
+{
+	return std::make_unique<GraphicalSink>(*this);
 }
 
 void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc)

@@ -352,20 +352,25 @@ void MainFrame::OnSaveAs(wxCommandEvent& event) {
     try {
         // save the file to the browsed location
         // will need to choose the file type
-        wxFileDialog saveFileDialog(this, _("Save PNG file"), "", "",
-            "PNG files (*.png)|*.xyz", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+        wxFileDialog saveFileDialog(this, _("Save Model file"), "", "",
+            "XML files (*.xml)|*.xml", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
         if (saveFileDialog.ShowModal() == wxID_CANCEL)
             return;     // the user changed idea...
 
+        wxString path = saveFileDialog.GetPath();
+        wxString filename = saveFileDialog.GetFilename();
         // save the current contents in the file;
         // this can be done with e.g. wxWidgets output streams:
-        wxFileOutputStream output_stream(saveFileDialog.GetPath());
+        wxFileOutputStream output_stream(path);
         if (!output_stream.IsOk())
         {
-            wxLogError("Cannot save current contents in file '%s'.", saveFileDialog.GetPath());
+            wxLogError("Cannot save current contents in file '%s'.", path);
             return;
         }
+        XMLSerializer toXML;
+        wxXmlDocument serializedState = toXML.SerializeNodes(m_simProject->ViewCanvas().GetUniqueNodes());
+        serializedState.Save(output_stream);
     }
     catch (const std::exception& e) {
         wxLogError("Exception caught in OnOpen: %s", e.what());

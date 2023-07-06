@@ -136,12 +136,6 @@ wxPoint2DDouble Canvas::GetTransformedPoint(wxPoint2DDouble pointToTransform)
 
 void Canvas::DrawGrid(wxGraphicsContext* gc)
 {
-
-
-
-
-
-
 }
 
 void Canvas::TransformOriginLocation(wxSize canvasSize)
@@ -168,6 +162,19 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 Set<GraphicalNode> Canvas::GetSimObjects()
 {
 	return m_gnodes;
+}
+
+std::vector<std::unique_ptr<GraphicalNode>> Canvas::GetUniqueNodes()
+{
+	std::vector<std::unique_ptr<GraphicalNode>> nodes;
+	Set<GraphicalNode> canvasNodes = m_gnodes;
+
+	while (!canvasNodes.IsEmpty()) {
+		GraphicalNode* currentNode = canvasNodes.GetFirst();
+		nodes.push_back(currentNode->Clone());
+	}
+
+	return nodes;
 }
 
 ElementKey Canvas::GetNextID()

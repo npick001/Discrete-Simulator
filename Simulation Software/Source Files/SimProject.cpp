@@ -14,9 +14,9 @@ void SimProject::SetCanvas(Canvas* canvas)
 	m_canvas->SetSimulationProject(this);
 }
 
-const Canvas& SimProject::ViewCanvas()
+Canvas& SimProject::ViewCanvas()
 {
-	const Canvas& canvas_reference = *m_canvas;
+	Canvas& canvas_reference = *m_canvas;
 	return canvas_reference;
 }
 

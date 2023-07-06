@@ -32,6 +32,7 @@ public:
 	// Set the origin location to be 0, 0 at the center of the canvas on creation
 	void TransformOriginLocation(wxSize canvasSize);
 	Set<GraphicalNode> GetSimObjects();
+	std::vector<std::unique_ptr<GraphicalNode>> GetUniqueNodes();
 	ElementKey GetNextID();
 
 	void SetSimulationProject(SimProject* parentProject);

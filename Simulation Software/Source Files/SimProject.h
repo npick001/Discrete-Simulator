@@ -36,7 +36,7 @@ public:
 	SimProject(Canvas* canvas);
 
 	void SetCanvas(Canvas* canvas);
-	const Canvas& ViewCanvas();
+	Canvas& ViewCanvas();
 
 	/// <Build>
 	/// Take graphical nodes and generate 

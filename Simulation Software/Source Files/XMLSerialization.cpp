@@ -12,7 +12,8 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 	sourceNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetBodyShape().m_height));
 	
 	// Interarrival Distribution
-	wxXmlNode iaDist = XMLSerializer::SerializeDistribution(source.GetIATime());
+	XMLSerializer toXML;
+	wxXmlNode* iaDist = toXML.SerializeDistribution(sourceNode, source.GetIATime());
 
 	// output rectangle
 	wxXmlNode* outputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::OutputRectAttribute);
@@ -23,7 +24,7 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 	outputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetOutputRect().m_height));
 
 	// make links
-	sourceNode->AddChild(&iaDist);
+	sourceNode->AddChild(iaDist);
 	sourceNode->AddChild(outputNode);
 	m_parentNode->AddChild(sourceNode);
 }
@@ -40,7 +41,8 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 	serverNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(server.GetBodyShape().m_height));
 
 	// Service Time Distribution
-	wxXmlNode serviceTimeDist = XMLSerializer::SerializeDistribution(server.GetServiceTime());
+	XMLSerializer toXML;
+	wxXmlNode* serviceTimeDist = toXML.SerializeDistribution(serverNode, server.GetServiceTime());
 
 	// input rectangle
 	wxXmlNode* inputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::InputRectAttribute);
@@ -61,7 +63,7 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 	// make links
 	serverNode->AddChild(outputNode);
 	serverNode->AddChild(inputNode);
-	serverNode->AddChild(&serviceTimeDist);
+	serverNode->AddChild(serviceTimeDist);
 	m_parentNode->AddChild(serverNode);
 }
 
@@ -208,15 +210,12 @@ wxXmlDocument XMLSerializer::SerializeNodes(const std::vector<std::unique_ptr<Gr
 	return doc;
 }
 
-wxXmlNode XMLSerializer::SerializeDistribution(Distribution* dist)
+wxXmlNode* XMLSerializer::SerializeDistribution(wxXmlNode* parent, Distribution* dist)
 {
-	wxXmlNode* docNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DocumentNodeName);
-	docNode->AddAttribute(XmlNodeKeys::VersionAttribute, XmlNodeKeys::VersionValue);
-
+	wxXmlNode* docNode = new wxXmlNode(parent, wxXML_ELEMENT_NODE, "");
 	XMLSerializingVisitor visitor{ docNode };
-
 	dist->Accept(visitor);
-	return *docNode;
+	return docNode;
 }
 
 std::unique_ptr<GraphicalNode> XMLDeserializationFactory::DeserializeNode(const wxXmlNode* node)
@@ -274,6 +273,7 @@ std::unique_ptr<Distribution> XMLDeserializationFactory::DeserializeDistribution
 
 	}
 
+	// should never make it here
 	throw std::runtime_error("Unknown Distribution type " + distType);
 }
 

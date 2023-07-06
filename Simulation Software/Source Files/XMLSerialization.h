@@ -105,8 +105,8 @@ public:
 
 struct XMLSerializer
 {
-	static wxXmlDocument SerializeNodes(const std::vector<std::unique_ptr<GraphicalNode>>& nodes);
-	static wxXmlNode SerializeDistribution(Distribution* dist);
+	wxXmlDocument SerializeNodes(const std::vector<std::unique_ptr<GraphicalNode>>& nodes);
+	wxXmlNode* SerializeDistribution(wxXmlNode* parent, Distribution* dist);
 };
 
 struct XMLDeserializationFactory

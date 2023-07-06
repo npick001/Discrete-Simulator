@@ -31,9 +31,11 @@ public:
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center, const std::string& _text);
 	GraphicalNode(const GraphicalNode& other);
+	virtual std::unique_ptr<GraphicalNode> Clone() = 0;
 
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
+
 
 	void SetNext(GraphicalNode* next);
 	void SetPrevious(GraphicalNode* previous);
@@ -148,7 +150,9 @@ typedef SpecificElementContainer<GraphicalNode> NodeMap;
 class GraphicalSource : public GraphicalNode {
 public:
 	GraphicalSource();
+	GraphicalSource(const GraphicalSource& other);
 	GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
@@ -181,7 +185,9 @@ private:
 class GraphicalServer : public GraphicalNode {
 public:
 	GraphicalServer();
+	GraphicalServer(const GraphicalServer& other);
 	GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
@@ -217,7 +223,9 @@ private:
 class GraphicalSink : public GraphicalNode {
 public:
 	GraphicalSink();
+	GraphicalSink(const GraphicalSink& other);
 	GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
