@@ -177,6 +177,19 @@ std::vector<std::unique_ptr<GraphicalNode>> Canvas::GetUniqueNodes()
 	return nodes;
 }
 
+std::vector<std::unique_ptr<GraphicalEdge>> Canvas::GetUniqueEdges()
+{
+	std::vector<std::unique_ptr<GraphicalEdge>> edges;
+	Set<GraphicalEdge> canvasEdges = m_gEdges;
+
+	while (!canvasEdges.IsEmpty()) {
+		GraphicalEdge* currentEdge = canvasEdges.GetFirst();
+		edges.push_back(currentEdge->Clone());
+	}
+
+	return edges;
+}
+
 ElementKey Canvas::GetNextID()
 {
 	return m_nextID;
@@ -185,6 +198,38 @@ ElementKey Canvas::GetNextID()
 void Canvas::SetSimulationProject(SimProject* parentProject)
 {
 	m_myProject = parentProject;
+}
+
+void Canvas::PopulateCanvas(SimulationObjects simObjects)
+{
+	m_nodes.empty();
+	m_edges.empty();
+	m_gnodes.Empty();
+	m_gEdges.Empty();
+
+	Set<GraphicalNode> nodes = simObjects.GetNodes();
+	Set<GraphicalEdge> edges = simObjects.GetEdges();
+
+	// populate all nodes
+	while (!nodes.IsEmpty()) {
+
+		GraphicalNode* currentNode = nodes.GetFirst();
+		m_nodes.add_new(currentNode);
+		m_gnodes.Add(currentNode);
+	}
+
+	// populate all edges
+	while (!edges.IsEmpty()) {
+
+		GraphicalEdge* currentEdge = edges.GetFirst();
+
+		currentEdge->ConnectSource(m_nodes[currentEdge->GetSourceID()]);
+		currentEdge->ConnectDestination(m_nodes[currentEdge->GetDestinationID()]);
+
+		m_edges.add_new(currentEdge);
+		m_gEdges.Add(currentEdge);
+	}
+	Refresh();
 }
 
 // Return selection information containing which graphical node, if any, was selected and the state of the selection
@@ -362,6 +407,11 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
 			m_incompleteEdge->ConnectDestination(m_nodes[endSelection]);
+
+			// once edge is connected, its no longer incomplete
+			auto m_completeEdge = m_incompleteEdge;
+			m_gEdges.Add(m_completeEdge);
+
 			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
 			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
 			if (m_myProject->HasBeenBuilt()) {
@@ -381,6 +431,11 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
 			m_incompleteEdge->ConnectSource(m_nodes[endSelection]);
+
+			// once edge is connected, its no longer incomplete
+			auto m_completeEdge = m_incompleteEdge;
+			m_gEdges.Add(m_completeEdge);
+
 			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
 			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
 			if (m_myProject->HasBeenBuilt()) {

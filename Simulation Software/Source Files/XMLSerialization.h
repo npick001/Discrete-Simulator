@@ -5,26 +5,39 @@
 #include "GraphicalNode.h"
 #include "SimProject.h"
 
+class GraphicalNode;
+class GraphicalEdge;
+
 namespace XmlNodeKeys {
+
+	// Versioning
+	constexpr auto DocumentNodeName = "SimObjectDocument";
+	constexpr auto VersionAttribute = "version";
+	constexpr auto VersionValue = "0.0.2";
 
 	// Simulation Objects
 	constexpr auto BaseNodeName = "SimObject";
 	constexpr auto SourceNodeName = "Source";
 	constexpr auto ServerNodeName = "Server";
 	constexpr auto SinkNodeName = "Sink";
+	constexpr auto EdgeNodeName = "Edge";
 
 	// Simulation Object attributes
+	constexpr auto NameAttribute = "Name";
 	constexpr auto TypeAttribute = "Type";
+	constexpr auto NodeIDAttribute = "ID";
 	constexpr auto ColorAttribute = "Color";
 	constexpr auto XAttribute = "x";
 	constexpr auto YAttribute = "y";
 	constexpr auto WidthAttribute = "width";
 	constexpr auto HeightAttribute = "height";
-	constexpr auto InputRectAttribute = "Input Rectangle";
-	constexpr auto OutputRectAttribute = "Output Rectangle";
+	constexpr auto InputRectAttribute = "InputRectangle";
+	constexpr auto OutputRectAttribute = "OutputRectangle";
+	constexpr auto EdgeSourceID = "SourceID";
+	constexpr auto EdgeDestinationID = "DestinationID";
 
 	// Distributions
-	constexpr auto DistributionAttribute = "Distribution Attribute";
+	constexpr auto DistributionAttribute = "DistributionAttribute";
 	constexpr auto DistributionBaseName = "Distribution";
 	constexpr auto ExponentialDist = "Exponential";
 	constexpr auto UniformDist = "Uniform";
@@ -42,13 +55,22 @@ namespace XmlNodeKeys {
 	constexpr auto VarianceAttribute = "Variance";
 	constexpr auto ScaleAttribute = "Scale";
 	constexpr auto ShapeAttribute = "Shape";
-
-	// Versioning
-	constexpr auto DocumentNodeName = "SimObjectDocument";
-	constexpr auto VersionAttribute = "version";
-	constexpr auto VersionValue = "0.0.2";
 }
 
+class SimulationObjects
+{
+public:
+	SimulationObjects(Set<GraphicalNode> nodes, Set<GraphicalEdge> edges);
+	Set<GraphicalNode> GetNodes();
+	Set<GraphicalEdge> GetEdges();
+
+private:
+	Set<GraphicalNode> m_nodes;
+	Set<GraphicalEdge> m_edges;
+};
+
+
+class GraphicalEdge;
 class GraphicalSource;
 class GraphicalServer;
 class GraphicalSink;
@@ -68,6 +90,7 @@ public:
 	virtual void Visit(GraphicalSource& source) = 0;
 	virtual void Visit(GraphicalServer& server) = 0;
 	virtual void Visit(GraphicalSink& sink) = 0;
+	virtual void Visit(GraphicalEdge& edge) = 0;
 
 	// Distributions
 	virtual void Visit(Exponential& expo) = 0;
@@ -89,6 +112,7 @@ public:
 	void Visit(GraphicalSource& source) override;
 	void Visit(GraphicalServer& server) override;
 	void Visit(GraphicalSink& sink) override;
+	void Visit(GraphicalEdge& edge) override;
 
 	// Distributions
 	void Visit(Exponential& expo) override;
@@ -105,13 +129,16 @@ public:
 
 struct XMLSerializer
 {
-	wxXmlDocument SerializeNodes(const std::vector<std::unique_ptr<GraphicalNode>>& nodes);
-	wxXmlNode* SerializeDistribution(wxXmlNode* parent, Distribution* dist);
+	wxXmlDocument SerializeSimObjects(const std::vector<std::unique_ptr<GraphicalNode>>& nodes, const std::vector<std::unique_ptr<GraphicalEdge>>& edges);
+	wxXmlNode* SerializeDistribution(Distribution* dist);
+
+	SimulationObjects DeserializeXMLDocument(const wxXmlDocument& doc);
 };
 
 struct XMLDeserializationFactory
 {
 	std::unique_ptr<GraphicalNode> DeserializeNode(const wxXmlNode* node);
+	std::unique_ptr<GraphicalEdge> DeserializeEdge(const wxXmlNode* node);
 	std::unique_ptr<Distribution> DeserializeDistribution(const wxXmlNode* node);
 
 private:

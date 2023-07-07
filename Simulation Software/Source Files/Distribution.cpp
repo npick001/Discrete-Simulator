@@ -78,8 +78,8 @@ Triangular::Triangular(double min, double expected, double max) : Distribution()
 	SetType(Distributions::TRIANGULAR);
 
 	m_min = min;
-	m_max = expected;
-	m_expected = max;
+	m_expected = expected;
+	m_max = max;
 	fc = (m_max - m_min) / (m_expected - m_min);
 	term1 = (m_expected - m_min)*(m_max - m_min);
 	term2 = (m_expected - m_min)*(m_expected - m_max);

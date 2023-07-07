@@ -4,7 +4,9 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 {
 	// main object rectangle
 	wxXmlNode* sourceNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::BaseNodeName);
-	sourceNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::SourceNodeName);
+	sourceNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::BaseNodeName);
+	sourceNode->AddAttribute(XmlNodeKeys::NameAttribute, XmlNodeKeys::SourceNodeName);
+	sourceNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(source.GetID()));
 	sourceNode->AddAttribute(XmlNodeKeys::ColorAttribute, source.GetBodyColor().GetAsString());
 	sourceNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetBodyShape().m_x));
 	sourceNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetBodyShape().m_y));
@@ -13,7 +15,7 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 	
 	// Interarrival Distribution
 	XMLSerializer toXML;
-	wxXmlNode* iaDist = toXML.SerializeDistribution(sourceNode, source.GetIATime());
+	wxXmlNode* iaDist = toXML.SerializeDistribution(source.GetIATime());
 
 	// output rectangle
 	wxXmlNode* outputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::OutputRectAttribute);
@@ -33,7 +35,9 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 {
 	// main object rectangle
 	wxXmlNode* serverNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::BaseNodeName);
-	serverNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::ServerNodeName);
+	serverNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::BaseNodeName);
+	serverNode->AddAttribute(XmlNodeKeys::NameAttribute, XmlNodeKeys::ServerNodeName);
+	serverNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(server.GetID()));
 	serverNode->AddAttribute(XmlNodeKeys::ColorAttribute, server.GetBodyColor().GetAsString());
 	serverNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetBodyShape().m_x));
 	serverNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetBodyShape().m_y));
@@ -42,7 +46,7 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 
 	// Service Time Distribution
 	XMLSerializer toXML;
-	wxXmlNode* serviceTimeDist = toXML.SerializeDistribution(serverNode, server.GetServiceTime());
+	wxXmlNode* serviceTimeDist = toXML.SerializeDistribution(server.GetServiceTime());
 
 	// input rectangle
 	wxXmlNode* inputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::InputRectAttribute);
@@ -71,7 +75,9 @@ void XMLSerializingVisitor::Visit(GraphicalSink& sink)
 {
 	// main object rectangle
 	wxXmlNode* sinkNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::BaseNodeName);
-	sinkNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::SinkNodeName);
+	sinkNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::BaseNodeName);
+	sinkNode->AddAttribute(XmlNodeKeys::NameAttribute, XmlNodeKeys::SinkNodeName);
+	sinkNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(sink.GetID()));
 	sinkNode->AddAttribute(XmlNodeKeys::ColorAttribute, sink.GetBodyColor().GetAsString());
 	sinkNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(sink.GetBodyShape().m_x));
 	sinkNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(sink.GetBodyShape().m_y));
@@ -91,12 +97,24 @@ void XMLSerializingVisitor::Visit(GraphicalSink& sink)
 	m_parentNode->AddChild(sinkNode);
 }
 
+void XMLSerializingVisitor::Visit(GraphicalEdge& edge)
+{
+	wxXmlNode* edgeNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::EdgeNodeName);
+	edgeNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::EdgeNodeName);
+	edgeNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(edge.GetID()));
+	edgeNode->AddAttribute(XmlNodeKeys::EdgeSourceID, wxString::FromDouble(edge.GetSourceID()));
+	edgeNode->AddAttribute(XmlNodeKeys::EdgeDestinationID, wxString::FromDouble(edge.GetDestinationID()));
+
+	m_parentNode->AddChild(edgeNode);
+}
+
 void XMLSerializingVisitor::Visit(Exponential& expo)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::ExponentialDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto mean = wxString::FromDouble(expo.GetMean());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::ExponentialDist);
 	distNode->AddAttribute(XmlNodeKeys::MeanAttribute, mean);
 
 	m_parentNode->AddChild(distNode);
@@ -104,11 +122,12 @@ void XMLSerializingVisitor::Visit(Exponential& expo)
 
 void XMLSerializingVisitor::Visit(Uniform& uni)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::UniformDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto min = wxString::FromDouble(uni.GetMin());
 	auto max = wxString::FromDouble(uni.GetMax());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::UniformDist);
 	distNode->AddAttribute(XmlNodeKeys::MinAttribute, min);
 	distNode->AddAttribute(XmlNodeKeys::MaxAttribute, max);
 
@@ -117,12 +136,13 @@ void XMLSerializingVisitor::Visit(Uniform& uni)
 
 void XMLSerializingVisitor::Visit(Triangular& tri)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::TriangularDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto min = wxString::FromDouble(tri.GetMin());
 	auto expected = wxString::FromDouble(tri.GetExpected());
 	auto max = wxString::FromDouble(tri.GetMax());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::TriangularDist);
 	distNode->AddAttribute(XmlNodeKeys::MinAttribute, min);
 	distNode->AddAttribute(XmlNodeKeys::MeanAttribute, expected);
 	distNode->AddAttribute(XmlNodeKeys::MaxAttribute, max);
@@ -132,11 +152,12 @@ void XMLSerializingVisitor::Visit(Triangular& tri)
 
 void XMLSerializingVisitor::Visit(Normal& norm)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::NormalDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto mean = wxString::FromDouble(norm.GetMean());
 	auto variance = wxString::FromDouble(norm.GetVariance());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::NormalDist);
 	distNode->AddAttribute(XmlNodeKeys::MeanAttribute, mean);
 	distNode->AddAttribute(XmlNodeKeys::VarianceAttribute, variance);
 
@@ -145,10 +166,11 @@ void XMLSerializingVisitor::Visit(Normal& norm)
 
 void XMLSerializingVisitor::Visit(Poisson& poisson)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::PoissonDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto mean = wxString::FromDouble(poisson.GetMean());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::PoissonDist);
 	distNode->AddAttribute(XmlNodeKeys::MeanAttribute, mean);
 
 	m_parentNode->AddChild(distNode);
@@ -156,10 +178,11 @@ void XMLSerializingVisitor::Visit(Poisson& poisson)
 
 void XMLSerializingVisitor::Visit(Constant& constant)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::ConstantDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto mean = wxString::FromDouble(constant.GetMean());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::ConstantDist);
 	distNode->AddAttribute(XmlNodeKeys::MeanAttribute, mean);
 
 	m_parentNode->AddChild(distNode);
@@ -167,11 +190,12 @@ void XMLSerializingVisitor::Visit(Constant& constant)
 
 void XMLSerializingVisitor::Visit(Weibull& weibull)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::WeibullDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto scale = wxString::FromDouble(weibull.GetScale());
 	auto shape = wxString::FromDouble(weibull.GetShape());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::WeibullDist);
 	distNode->AddAttribute(XmlNodeKeys::ScaleAttribute, scale);
 	distNode->AddAttribute(XmlNodeKeys::ShapeAttribute, shape);
 
@@ -180,18 +204,20 @@ void XMLSerializingVisitor::Visit(Weibull& weibull)
 
 void XMLSerializingVisitor::Visit(Erlang& erlang)
 {
-	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::ErlangDist);
+	wxXmlNode* distNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::DistributionBaseName);
 
 	auto scale = wxString::FromDouble(erlang.GetScale());
 	auto shape = wxString::FromDouble(erlang.GetShape());
 
+	distNode->AddAttribute(XmlNodeKeys::TypeAttribute, XmlNodeKeys::ErlangDist);
 	distNode->AddAttribute(XmlNodeKeys::ScaleAttribute, scale);
 	distNode->AddAttribute(XmlNodeKeys::ShapeAttribute, shape);
 
 	m_parentNode->AddChild(distNode);
 }
 
-wxXmlDocument XMLSerializer::SerializeNodes(const std::vector<std::unique_ptr<GraphicalNode>>& nodes)
+wxXmlDocument XMLSerializer::SerializeSimObjects(const std::vector<std::unique_ptr<GraphicalNode>>& nodes,
+												 const std::vector<std::unique_ptr<GraphicalEdge>>& edges)
 {
 	wxXmlDocument doc;
 
@@ -204,18 +230,48 @@ wxXmlDocument XMLSerializer::SerializeNodes(const std::vector<std::unique_ptr<Gr
 	{
 		node->Accept(visitor);
 	}
+	for (const auto& edge : edges)
+	{
+		edge->Accept(visitor);
+	}
 
 	doc.SetRoot(docNode);
 
 	return doc;
 }
 
-wxXmlNode* XMLSerializer::SerializeDistribution(wxXmlNode* parent, Distribution* dist)
+wxXmlNode* XMLSerializer::SerializeDistribution(Distribution* dist)
 {
-	wxXmlNode* docNode = new wxXmlNode(parent, wxXML_ELEMENT_NODE, "");
+	wxXmlNode* docNode = new wxXmlNode(wxXML_ELEMENT_NODE, "");
 	XMLSerializingVisitor visitor{ docNode };
 	dist->Accept(visitor);
 	return docNode;
+}
+
+SimulationObjects XMLSerializer::DeserializeXMLDocument(const wxXmlDocument& doc)
+{
+	wxXmlNode* root = doc.GetRoot();
+
+	Set<GraphicalNode> nodes;
+	Set<GraphicalEdge> edges;
+
+	for (wxXmlNode* node = root->GetChildren(); node; node = node->GetNext()) {
+
+		auto type = node->GetAttribute(XmlNodeKeys::TypeAttribute);
+		XMLDeserializationFactory factory{ };
+
+		if (type == XmlNodeKeys::BaseNodeName) {
+			GraphicalNode* gnode = factory.DeserializeNode(node).release();
+			nodes.Add(gnode);
+		}
+		else if(type == XmlNodeKeys::EdgeNodeName) {
+			GraphicalEdge* gEdge = factory.DeserializeEdge(node).release();
+			edges.Add(gEdge);
+		}
+	}
+
+	SimulationObjects simObjs(nodes, edges);
+	return simObjs;
 }
 
 std::unique_ptr<GraphicalNode> XMLDeserializationFactory::DeserializeNode(const wxXmlNode* node)
@@ -234,6 +290,19 @@ std::unique_ptr<GraphicalNode> XMLDeserializationFactory::DeserializeNode(const 
 
 	// should never make it here
 	throw std::runtime_error("Unknown SimObject type " + type);
+}
+
+std::unique_ptr<GraphicalEdge> XMLDeserializationFactory::DeserializeEdge(const wxXmlNode* node)
+{
+	GraphicalEdge edge;
+
+	auto sourceID = std::stoi(node->GetAttribute(XmlNodeKeys::EdgeSourceID).ToStdString());
+	auto destinationID = std::stoi(node->GetAttribute(XmlNodeKeys::EdgeDestinationID).ToStdString());
+
+	edge.SetSourceID(sourceID);
+	edge.SetDestinationID(destinationID);
+
+	return std::make_unique<GraphicalEdge>(edge);
 }
 
 std::unique_ptr<Distribution> XMLDeserializationFactory::DeserializeDistribution(const wxXmlNode* node)
@@ -380,4 +449,20 @@ Erlang XMLDeserializationFactory::DeserializeErlang(const wxXmlNode* node)
 	auto shape = std::stod(node->GetAttribute(XmlNodeKeys::ShapeAttribute).ToStdString());
 	Erlang erlang(scale, shape);
 	return erlang;
+}
+
+SimulationObjects::SimulationObjects(Set<GraphicalNode> nodes, Set<GraphicalEdge> edges)
+{
+	m_nodes = nodes;
+	m_edges = edges;
+}
+
+Set<GraphicalNode> SimulationObjects::GetNodes()
+{
+	return m_nodes;
+}
+
+Set<GraphicalEdge> SimulationObjects::GetEdges()
+{
+	return m_edges;
 }

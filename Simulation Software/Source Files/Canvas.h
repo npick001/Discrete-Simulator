@@ -11,11 +11,13 @@
 #include "GraphicalEdge.h"
 #include "SimProject.h"
 #include "Action.h"
+#include "XMLSerialization.h"
 
 class GraphicalEdge;
 class GraphicalNode;
 class History;
 class MoveNodeAction;
+class SimulationObjects;
 
 typedef SpecificElementContainer<GraphicalNode> NodeMap;
 typedef SpecificElementContainer<GraphicalEdge> EdgeMap;
@@ -33,9 +35,13 @@ public:
 	void TransformOriginLocation(wxSize canvasSize);
 	Set<GraphicalNode> GetSimObjects();
 	std::vector<std::unique_ptr<GraphicalNode>> GetUniqueNodes();
+	std::vector<std::unique_ptr<GraphicalEdge>> GetUniqueEdges();
 	ElementKey GetNextID();
 
 	void SetSimulationProject(SimProject* parentProject);
+
+	// after XML deserialization, need to show objects on canvas 
+	void PopulateCanvas(SimulationObjects simObjects);
 
 private:
 	ElementKey m_nextID;
@@ -78,6 +84,7 @@ private:
 	NodeMap m_nodes;
 	EdgeMap m_edges;
 	Set<GraphicalNode> m_gnodes;
+	Set<GraphicalEdge> m_gEdges;
 
 	// Grid things
 	// "variable grid size in world space" approach

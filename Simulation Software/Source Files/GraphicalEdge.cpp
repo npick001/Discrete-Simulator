@@ -11,6 +11,9 @@ GraphicalEdge::GraphicalEdge(ElementKey id)
 
 	m_source = nullptr;
 	m_destination = nullptr;
+
+	m_sourceID = -1;
+	m_destinationID = -1;
 }
 
 GraphicalEdge::GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination)
@@ -18,10 +21,28 @@ GraphicalEdge::GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode
 
 	ConnectSource(source);
 	ConnectDestination(destination);
+
+	m_sourceID = source->GetID();
+	m_destinationID = destination->GetID();
 }
 
 GraphicalEdge::GraphicalEdge(const GraphicalEdge& other) {
-	(*this) = other;
+	
+	GraphicalElement::operator=(other);
+
+	m_source = other.m_source;
+	m_destination = other.m_destination;
+
+	m_sourceID = other.m_sourceID;
+	m_destinationID = other.m_destinationID;
+
+	m_sourcePoint = other.m_sourcePoint;
+	m_destinationPoint = other.m_destinationPoint;
+}
+
+std::unique_ptr<GraphicalEdge> GraphicalEdge::Clone()
+{
+	return std::make_unique<GraphicalEdge>(*this);
 }
 
 GraphicalEdge& GraphicalEdge::operator=(const GraphicalEdge& other) {
@@ -33,6 +54,9 @@ GraphicalEdge& GraphicalEdge::operator=(const GraphicalEdge& other) {
 	m_source = other.m_source;
 	m_destination = other.m_destination;
 
+	m_sourceID = other.m_sourceID;
+	m_destinationID = other.m_destinationID;
+
 	m_sourcePoint = other.m_sourcePoint;
 	m_destinationPoint = other.m_destinationPoint;
 
@@ -41,6 +65,11 @@ GraphicalEdge& GraphicalEdge::operator=(const GraphicalEdge& other) {
 
 GraphicalEdge::~GraphicalEdge() {
 	Disconnect();
+}
+
+void GraphicalEdge::Accept(Visitor& visitor)
+{
+	return visitor.Visit(*this);
 }
 
 void GraphicalEdge::ConnectSource(GraphicalNode* source) {
@@ -57,6 +86,16 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 	m_destinationPoint = m_sourcePoint;
 }
 
+ElementKey GraphicalEdge::GetSourceID()
+{
+	return m_source->GetID();
+}
+
+void GraphicalEdge::SetSourceID(ElementKey id)
+{
+	m_sourceID = id;
+}
+
 void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 	if (!destination)
 		return;
@@ -69,6 +108,16 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 		return;
 
 	m_sourcePoint = m_destinationPoint;
+}
+
+ElementKey GraphicalEdge::GetDestinationID()
+{
+	return m_destination->GetID();
+}
+
+void GraphicalEdge::SetDestinationID(ElementKey id)
+{
+	m_destinationID = id;
 }
 
 void GraphicalEdge::Disconnect() {

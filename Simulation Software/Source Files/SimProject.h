@@ -6,6 +6,7 @@
 #include "SpecificNodes.h"
 
 class Canvas;
+class GraphicalNode;
 
 /***************************************
 

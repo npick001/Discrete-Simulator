@@ -320,17 +320,44 @@ wxPoint MainFrame::GetStartPosition()
 
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
-    //wxLogMessage("Inside OnOpen");
-
     try {
         // open the file explorer
-        wxFileDialog openFileDialog(this, _("Open file"), "", "", "All files (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+        wxFileDialog openFileDialog(this, _("Open file"), "", "", "Model files (*.xml)|*.xml", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
         if (openFileDialog.ShowModal() == wxID_CANCEL) {
             return;
         }
 
         wxString path = openFileDialog.GetPath();
+        wxString filename = openFileDialog.GetFilename();
+
+        // Check if file exists
+        if (!wxFileExists(path))
+        {
+            wxLogError("File does not exist: %s", path);
+            return;
+        }
+
+        wxFileInputStream input_stream(path);
+        if (!input_stream.IsOk())
+        {
+            wxLogError("Cannot open current contents in file '%s'.", path);
+            return;
+        }
+
+        // get xml file 
+        wxXmlDocument serializedXMLFile(input_stream, "UTF-8");
+        if (!serializedXMLFile.IsOk()) {
+            wxLogError("Cannot load XML data located in '%s'.", path);
+            return;
+        }
+
+        // convert the xml to simobjects
+        XMLSerializer xmlToCode;
+        SimulationObjects deserializedObjects = xmlToCode.DeserializeXMLDocument(serializedXMLFile); 
+
+        m_simProject->ViewCanvas().PopulateCanvas(deserializedObjects);
+
         wxMessageBox("Selected file: " + path, "Info", wxOK | wxICON_INFORMATION);
     }
     catch (const std::exception& e) {
@@ -369,7 +396,8 @@ void MainFrame::OnSaveAs(wxCommandEvent& event) {
             return;
         }
         XMLSerializer toXML;
-        wxXmlDocument serializedState = toXML.SerializeNodes(m_simProject->ViewCanvas().GetUniqueNodes());
+        wxXmlDocument serializedState = toXML.SerializeSimObjects(m_simProject->ViewCanvas().GetUniqueNodes(),
+                                                                  m_simProject->ViewCanvas().GetUniqueEdges());
         serializedState.Save(output_stream);
     }
     catch (const std::exception& e) {

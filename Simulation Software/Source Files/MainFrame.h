@@ -22,6 +22,8 @@
 #include "SimProject.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
+#include "XMLSerialization.h"
+
 
 enum {
     ID_Exit = 1,

@@ -4,6 +4,7 @@
 
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
+#include "XMLSerialization.h"
 
 class GraphicalNode;
 
@@ -14,6 +15,9 @@ private:
 	GraphicalNode* m_source;
 	GraphicalNode* m_destination;
 
+	ElementKey m_sourceID;
+	ElementKey m_destinationID;
+
 	wxPoint2DDouble m_sourcePoint;
 	wxPoint2DDouble m_destinationPoint;
 
@@ -22,14 +26,22 @@ public:
 	GraphicalEdge(ElementKey id);
 	GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination);
 	GraphicalEdge(const GraphicalEdge& other);
+	std::unique_ptr<GraphicalEdge> Clone();
 
 	GraphicalEdge& operator=(const GraphicalEdge& other);
 
 	~GraphicalEdge();
+
+	void Accept(Visitor& visitor);
 	
 	// Used to connect a source or destination
 	void ConnectSource(GraphicalNode* source);
+	ElementKey GetSourceID();
+	void SetSourceID(ElementKey id);
 	void ConnectDestination(GraphicalNode* destination);
+	ElementKey GetDestinationID();
+	void SetDestinationID(ElementKey id);
+
 
 	// Disconnect both the source and destination
 	void Disconnect();
