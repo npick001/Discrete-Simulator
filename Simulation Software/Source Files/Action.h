@@ -1,5 +1,6 @@
 #pragma once
-
+#include <stdlib.h>
+#include <crtdbg.h>
 #include <list>
 
 #include "wx/geometry.h"

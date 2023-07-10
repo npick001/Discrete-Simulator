@@ -1,5 +1,6 @@
 #pragma once
 
+#include <crtdbg.h>
 #include <list>
 #include <vector>
 

@@ -6,6 +6,8 @@ MainFrame* MainFrame::m_instance = 0;
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
+   // _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
+
     this->Maximize(true);
     m_manager.SetManagedWindow(this);
 

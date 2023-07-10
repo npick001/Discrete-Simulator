@@ -1,4 +1,5 @@
 #pragma once
+#include <crtdbg.h>
 
 #include "wx/graphics.h"
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <crtdbg.h>
 #include <string>
 #include <fstream>
 #include <iostream>

@@ -1,8 +1,19 @@
 #pragma once
+
+#define USE_WX 0
+
+#include <crtdbg.h>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
+
+#if USE_WX
+#include <wx/wx.h>
+#include <wx/filename.h>
+#include <wx/wfstream.h>
+#include <wx/txtstrm.h>
+#endif // USE_WX
 
 /***************************************
 
@@ -51,3 +62,7 @@ void WriteToFile(std::string filename, T data, int openMode) {
 	outfile << data << '\n';
 	outfile.close();
 }
+
+#if USE_WX
+void wxWriteToFile(std::string filename, std::string data, int openMode);
+#endif // USE_WX

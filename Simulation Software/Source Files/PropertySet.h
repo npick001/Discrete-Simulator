@@ -1,3 +1,5 @@
+#pragma once
+#include <crtdbg.h>
 
 #include "wx/propgrid/propgrid.h"
 #include "Set.h"

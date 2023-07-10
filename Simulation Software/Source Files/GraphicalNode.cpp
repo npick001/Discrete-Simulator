@@ -342,7 +342,6 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
 	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
-
 }
 
 std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSource::GetSimProperties()

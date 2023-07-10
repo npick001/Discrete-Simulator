@@ -23,6 +23,8 @@ namespace XmlNodeKeys {
 	constexpr auto EdgeNodeName = "Edge";
 
 	// Simulation Object attributes
+	constexpr auto LabelAttribute = "Label";
+	constexpr auto LabelColorAttribute = "LabelColor";
 	constexpr auto NameAttribute = "Name";
 	constexpr auto TypeAttribute = "Type";
 	constexpr auto NodeIDAttribute = "ID";
@@ -37,7 +39,6 @@ namespace XmlNodeKeys {
 	constexpr auto EdgeDestinationID = "DestinationID";
 
 	// Distributions
-	constexpr auto DistributionAttribute = "DistributionAttribute";
 	constexpr auto DistributionBaseName = "Distribution";
 	constexpr auto ExponentialDist = "Exponential";
 	constexpr auto UniformDist = "Uniform";
@@ -49,6 +50,7 @@ namespace XmlNodeKeys {
 	constexpr auto ErlangDist = "Erlang";
 
 	// Distribution Attributes
+	constexpr auto DistributionAttribute = "DistributionAttribute";
 	constexpr auto MinAttribute = "Min";
 	constexpr auto MeanAttribute = "Mean";
 	constexpr auto MaxAttribute = "Max";

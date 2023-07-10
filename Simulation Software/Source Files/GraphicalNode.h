@@ -1,5 +1,5 @@
 #pragma once
-
+#include <crtdbg.h>
 #include <memory>
 #include <list>
 #include <string>
@@ -35,7 +35,6 @@ public:
 
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
-
 
 	void SetNext(GraphicalNode* next);
 	void SetPrevious(GraphicalNode* previous);

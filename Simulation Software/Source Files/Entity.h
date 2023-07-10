@@ -1,6 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <crtdbg.h>
+
 #include "SimulationExecutive.h"
 //#include "FIFO.h"
 #include "FIFO.h"

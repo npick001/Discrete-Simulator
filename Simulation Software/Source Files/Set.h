@@ -92,7 +92,7 @@ public:
 	// Delete all members in the Set
 	inline void Empty()
 	{
-		while (_head != nullptr) {
+		while (!IsEmpty()) {
 			auto temp = GetFirst();
 		}
 		_size = 0;

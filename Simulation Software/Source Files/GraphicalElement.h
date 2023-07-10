@@ -1,5 +1,5 @@
 #pragma once
-
+#include <crtdbg.h>
 #include <unordered_map>
 
 #include "wx/graphics.h"

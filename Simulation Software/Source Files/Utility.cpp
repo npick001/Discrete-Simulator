@@ -126,3 +126,20 @@ std::vector<double> Chi_Square_Distribution(int dof, int numPoints, bool writeTo
 
 	return points;
 }
+
+#if USE_WX
+void wxWriteToFile(std::string filename, std::string data, int openMode) {
+
+	wxString fileName = wxString(filename);
+	wxFileName wxfilename(fileName);
+
+	wxFile file(wxfilename.GetFullPath(), openMode == 0 ? wxFile::write_append : wxFile::write);
+	if (!file.IsOpened()) {
+		std::cout << filename << " WAS UNABLE TO OPEN. " << std::endl;
+		return;
+	}
+
+	file.Write(wxString(data));
+	file.Close();
+}
+#endif // USE_WX

@@ -1,4 +1,6 @@
 #pragma once
+#include <crtdbg.h>
+
 #include "wx/log.h"
 #include "wx/panel.h"
 #include "wx/propgrid/propgrid.h"

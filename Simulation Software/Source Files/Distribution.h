@@ -1,5 +1,6 @@
 #ifndef DISTRIBUTION_H
 #define DISTRIBUTION_H
+#include <crtdbg.h>
 
 class Visitor;
 

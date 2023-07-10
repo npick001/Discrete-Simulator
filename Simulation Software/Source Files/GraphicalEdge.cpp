@@ -77,6 +77,7 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 		return;
 	
 	m_source = source;
+	m_sourceID = source->GetID();
 	m_sourcePoint = source->GetOutputPoint();
 	m_source->m_outputs.push_back(this);
 
@@ -88,7 +89,7 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 
 ElementKey GraphicalEdge::GetSourceID()
 {
-	return m_source->GetID();
+	return m_sourceID;
 }
 
 void GraphicalEdge::SetSourceID(ElementKey id)
@@ -101,6 +102,7 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 		return;
 	
 	m_destination = destination;
+	m_destinationID = destination->GetID();
 	m_destinationPoint = destination->GetInputPoint();
 	m_destination->m_inputs.push_back(this);
 
@@ -112,7 +114,7 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 
 ElementKey GraphicalEdge::GetDestinationID()
 {
-	return m_destination->GetID();
+	return m_destinationID;
 }
 
 void GraphicalEdge::SetDestinationID(ElementKey id)

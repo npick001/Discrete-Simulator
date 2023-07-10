@@ -1,6 +1,7 @@
 #ifndef MAINFRAME_H
 #define MAINFRAME_H
 
+#include <crtdbg.h>
 #include <wx/wx.h>
 #include <wx/aui/aui.h>
 #include <wx/menu.h>

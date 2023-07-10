@@ -1,4 +1,6 @@
 #pragma once
+#include <crtdbg.h>
+
 #include <wx/wx.h>
 #include <wx/log.h>
 

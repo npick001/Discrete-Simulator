@@ -1,4 +1,5 @@
 #pragma once
+#include <crtdbg.h>
 #include <vector>
 #include <wx/wx.h>
 #include <wx/dnd.h>

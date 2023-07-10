@@ -1,5 +1,7 @@
 #pragma once
+#include <crtdbg.h>
 #include <iostream>
+
 #include "Distribution.h"
 #include "SimulationExecutive.h"
 #include "GenericNode.h"
