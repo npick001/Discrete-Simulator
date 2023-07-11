@@ -240,7 +240,7 @@ SinkNode::SinkNode() : GenericNode("Default Sink")
 	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
 }
 
-SinkNode::SinkNode(string name) : GenericNode(name) {
+SinkNode::SinkNode(std::string name) : GenericNode(name) {
 	SetNodeType(SINK);
 	sm_entitiesDestroyed = 0;
 	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);

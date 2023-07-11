@@ -45,6 +45,8 @@ void PropertiesViewer::AddProperty(wxPGProperty* propToAdd)
 
 	// save property in Set for easy access
 	m_props.Add(propToAdd);
+
+	Refresh();
 }
 
 void PropertiesViewer::EditProperty(wxPGProperty* propToEdit, wxVariant* newValue)

@@ -81,6 +81,9 @@
     <ClInclude Include="Source Files\XMLSerialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source Files\ExponentialProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Statistics.cpp">
@@ -144,6 +147,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\XMLSerialization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\ExponentialProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -126,7 +126,6 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
         Dockable(true).CenterPane());
 
-
     // PROPERTIES VIEWER
     auto propWidth = GetSize().x * 0.2;
     auto propSize = new wxSize(propWidth, GetSize().y);
@@ -135,7 +134,6 @@ MainFrame::MainFrame(const wxString& title)
 
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right().BestSize(*propSize));
-
 
     // Commit the changes with the AUI manager
     m_manager.Update();

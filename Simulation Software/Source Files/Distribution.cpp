@@ -7,12 +7,6 @@
 
 Distribution::Distribution() {}
 
-Distribution::~Distribution()
-{
-	delete m_type;
-}
-
-
 const char* Distribution::GetType()
 {
 	return m_type;
@@ -28,10 +22,15 @@ void Distribution::SetType(const char* type)
 	m_type = type;
 }
 
+Exponential::Exponential()
+{
+	SetType(Distributions::EXPONENTIAL);
+	m_mean = 0.25;
+}
+
 Exponential::Exponential(double mean) : Distribution()
 {
 	SetType(Distributions::EXPONENTIAL);
-
 	m_mean = mean;
 }
 
@@ -45,9 +44,22 @@ double Exponential::GetMean()
 	return m_mean;
 }
 
+void Exponential::SetMean(double mean)
+{
+	m_mean = mean;
+}
+
 void Exponential::Accept(Visitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+Uniform::Uniform()
+{
+	SetType(Distributions::UNIFORM);
+
+	m_min = 0;
+	m_max = 1;
 }
 
 Uniform::Uniform(double min, double max) : Distribution()
@@ -76,6 +88,18 @@ double Uniform::GetMax()
 void Uniform::Accept(Visitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+Triangular::Triangular()
+{
+	SetType(Distributions::TRIANGULAR);
+
+	m_min = 0;
+	m_expected = 1;
+	m_max = 2;
+	fc = (m_max - m_min) / (m_expected - m_min);
+	term1 = (m_expected - m_min) * (m_max - m_min);
+	term2 = (m_expected - m_min) * (m_expected - m_max);
 }
 
 Triangular::Triangular(double min, double expected, double max) : Distribution()
@@ -121,6 +145,15 @@ void Triangular::Accept(Visitor& visitor)
 	return visitor.Visit(*this);
 }
 
+Normal::Normal()
+{
+	SetType(Distributions::NORMAL);
+
+	m_mean = 0;
+	m_variance = 1 * 1;
+	m_isSavedRV = false;
+}
+
 Normal::Normal(double mean, double stdev)
 {
 	SetType(Distributions::NORMAL);
@@ -162,6 +195,13 @@ void Normal::Accept(Visitor& visitor)
 	return visitor.Visit(*this);
 }
 
+Poisson::Poisson()
+{
+	SetType(Distributions::POISSON);
+
+	m_mean = 0.25;
+}
+
 Poisson::Poisson(double mean)
 {
 	SetType(Distributions::POISSON);
@@ -189,6 +229,13 @@ void Poisson::Accept(Visitor& visitor)
 	return visitor.Visit(*this);
 }
 
+Constant::Constant()
+{
+	SetType(Distributions::CONSTANT);
+
+	m_mean = 1;
+}
+
 Constant::Constant(double mean)
 {
 	SetType(Distributions::CONSTANT);
@@ -209,6 +256,14 @@ double Constant::GetMean()
 void Constant::Accept(Visitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+Weibull::Weibull()
+{
+	SetType(Distributions::WEIBULL);
+
+	m_scale = 1;
+	m_shape = 1;
 }
 
 Weibull::Weibull(double scale, double shape)
@@ -237,6 +292,14 @@ double Weibull::GetShape()
 void Weibull::Accept(Visitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+Erlang::Erlang()
+{
+	SetType(Distributions::ERLANG);
+
+	m_scale = 1;
+	m_shape = 1;
 }
 
 Erlang::Erlang(int scale, double shape)

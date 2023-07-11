@@ -10,7 +10,6 @@
 #include "FIFO.h"
 #include "Set.h"
 
-using namespace std;
 class FIFO;
 
 /***************************************
@@ -22,6 +21,11 @@ Naming conventions for this library:
 - Public member functions are CamelCase
 
 ***************************************/
+
+namespace RoutingLogic
+{
+
+}
 
 // BEGIN IMPLEMENTED NODES
 
@@ -87,7 +91,7 @@ public:
 	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
 
 	SinkNode();
-	SinkNode(string name);
+	SinkNode(std::string name);
 	//~SinkNode() {}
 	void NodeProcess(Entity* e);
 

@@ -22,6 +22,7 @@
 #include "SimProject.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
+#include "ExponentialProperty.h"
 #include "XMLSerialization.h"
 
 

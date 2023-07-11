@@ -19,7 +19,7 @@ class Distribution
 {
 public:
 	Distribution();
-	~Distribution();
+	~Distribution() = default;
 	virtual double GetRV() = 0;
 	virtual void Accept(Visitor& visitor) = 0;
 	const char* GetType();
@@ -34,9 +34,11 @@ protected:
 class Exponential : public Distribution
 {
 public:
+	Exponential();
 	Exponential(double mean);
 	double GetRV();
 	double GetMean();
+	void SetMean(double mean);
 	void Accept(Visitor& visitor) override;
 
 private:
@@ -46,6 +48,7 @@ private:
 class Uniform : public Distribution
 {
 public:
+	Uniform();
 	Uniform(double min, double max);
 	double GetRV();
 	double GetMin();
@@ -60,6 +63,7 @@ private:
 class Triangular : public Distribution
 {
 public:
+	Triangular();
 	Triangular(double min, double expected, double max);
 	double GetRV();
 	double GetMin();
@@ -79,6 +83,7 @@ private:
 class Normal : public Distribution
 {
 public:
+	Normal();
 	Normal(double mean, double stdev);
 	double GetRV();
 	double GetMean();
@@ -95,6 +100,7 @@ private:
 class Poisson : public Distribution
 {
 public:
+	Poisson();
 	Poisson(double mean);
 	double GetRV();
 	double GetMean();
@@ -107,6 +113,7 @@ private:
 class Constant : public Distribution
 {
 public:
+	Constant();
 	Constant(double mean);
 	double GetRV();
 	double GetMean();
@@ -119,6 +126,7 @@ private:
 class Weibull : public Distribution
 {
 public:
+	Weibull();
 	Weibull(double scale, double shape);
 	double GetRV();
 	double GetScale();
@@ -133,6 +141,7 @@ private:
 class Erlang : public Distribution
 {
 public:
+	Erlang();
 	Erlang(int scale, double shape);
 	double GetRV();
 	double GetScale();

@@ -20,7 +20,7 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	// Default component dimensions and colors
 	// High pixel density displays are accounted for in the GraphicalNode constructor
 
-	auto headerProp = new wxStringProperty("Property_GNODE_CTOR", wxPG_LABEL, "Value");
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
 	m_properties.Add(headerProp);
 
 	m_next = nullptr;
@@ -310,8 +310,16 @@ GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	: GraphicalNode(id, window, center, "Source")
 {
 	SetNodeType(GenericNode::SOURCE);
+
 	m_iaTime = new Exponential(0.25);
-	m_properties.Add(new wxIntProperty("Interarrival Time", wxPG_LABEL, m_arrivalTime));
+	ExponentialProperty* iaTime = new ExponentialProperty("Interarrival Time", wxPG_LABEL, (Exponential&)m_iaTime);
+
+	m_properties.Add(iaTime);
+}
+
+GraphicalSource::~GraphicalSource()
+{
+	delete m_iaTime;
 }
 
 std::unique_ptr<GraphicalNode> GraphicalSource::Clone()
@@ -428,6 +436,11 @@ GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	//m_properties.Add(stProp);
 	m_properties.Add(timeUnitProp);
 	m_properties.Add(resourceNumProp);
+}
+
+GraphicalServer::~GraphicalServer()
+{
+	delete m_serviceTime;
 }
 
 GraphicalServer::GraphicalServer(const GraphicalServer& other)

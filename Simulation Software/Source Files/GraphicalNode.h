@@ -152,6 +152,7 @@ public:
 	GraphicalSource();
 	GraphicalSource(const GraphicalSource& other);
 	GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	~GraphicalSource();
 	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
@@ -187,6 +188,8 @@ public:
 	GraphicalServer();
 	GraphicalServer(const GraphicalServer& other);
 	GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	~GraphicalServer();
+
 	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
