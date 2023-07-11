@@ -1,4 +1,5 @@
 #pragma once
+#include "Utility.h"
 
 /*
 Set - First In/First Out

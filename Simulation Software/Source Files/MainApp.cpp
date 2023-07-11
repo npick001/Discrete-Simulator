@@ -41,7 +41,7 @@ bool MainApp::OnInit() {
     _CrtSetReportFile(_CRT_WARN, hLogFile);
 
     // Set the debug report callback function
-    _CrtSetReportHook(DebugReport);
+    //_CrtSetReportHook(DebugReport);
 
     wxImage::AddHandler(new wxPNGHandler);
 

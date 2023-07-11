@@ -1,5 +1,5 @@
 #pragma once
-#include <crtdbg.h>
+#include "Utility.h"
 
 #include <wx/wx.h>
 #include <wx/log.h>

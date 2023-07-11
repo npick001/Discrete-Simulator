@@ -7,6 +7,11 @@
 
 Distribution::Distribution() {}
 
+Distribution::~Distribution()
+{
+	delete m_type;
+}
+
 
 const char* Distribution::GetType()
 {

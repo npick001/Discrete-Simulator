@@ -41,7 +41,7 @@ void GenericNode::Depart(Entity* entity) {
 #if SIM_OUTPUT
     std::cout << "time = " << GetSimulationTime() << ", " << " " << m_name << ", depart, entity: " << entity->GetID() << std::endl << std::flush;
 #endif
-    std::string message = "time = " + std::to_string(GetSimulationTime()) + "\t" + m_name + "\Depart\tEntity: " + std::to_string(entity->GetID());
+    std::string message = "time = " + std::to_string(GetSimulationTime()) + "\t" + m_name + "\tDepart\tEntity: " + std::to_string(entity->GetID());
     wxLogMessage("%s", message.c_str());
     
     entity->SetSource(m_id);

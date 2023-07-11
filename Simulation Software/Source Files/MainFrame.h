@@ -1,7 +1,6 @@
-#ifndef MAINFRAME_H
-#define MAINFRAME_H
+#pragma once
+#include "Utility.h"
 
-#include <crtdbg.h>
 #include <wx/wx.h>
 #include <wx/aui/aui.h>
 #include <wx/menu.h>
@@ -109,7 +108,3 @@ private:
 
     void OnResize(wxSizeEvent& event);
 };
-
-
-#endif // MAINFRAME_H
-

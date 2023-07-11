@@ -1,8 +1,13 @@
 #pragma once
 
 #define USE_WX 0
+#define USE_DEBUG 1
 
+#if USE_DEBUG
+#include <stdlib.h>
 #include <crtdbg.h>
+#endif // USE_DEBUG
+
 #include <vector>
 #include <string>
 #include <iostream>

@@ -1,6 +1,5 @@
-#ifndef DISTRIBUTION_H
-#define DISTRIBUTION_H
-#include <crtdbg.h>
+#pragma once
+#include "Utility.h"
 
 class Visitor;
 
@@ -20,6 +19,7 @@ class Distribution
 {
 public:
 	Distribution();
+	~Distribution();
 	virtual double GetRV() = 0;
 	virtual void Accept(Visitor& visitor) = 0;
 	const char* GetType();
@@ -143,5 +143,3 @@ private:
 	int m_scale;
 	double m_shape;
 };
-
-#endif

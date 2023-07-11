@@ -1,7 +1,6 @@
-#ifndef MAINAPP_H
-#define MAINAPP_H
+#pragma once
+#include "Utility.h"
 
-#include <crtdbg.h>
 #include <wx/wx.h>
 #include <wx/app.h>
 
@@ -12,5 +11,3 @@ class MainApp : public wxApp {
 public:
     virtual bool OnInit();
 };
-
-#endif // MAINAPP_H

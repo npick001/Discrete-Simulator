@@ -1,5 +1,6 @@
 #pragma once
-#include <crtdbg.h>
+#include "Utility.h"
+
 #include <vector>
 #include <wx/wx.h>
 #include <wx/dnd.h>

@@ -1,5 +1,6 @@
 #pragma once
-#include <crtdbg.h>
+#include "Utility.h"
+
 #include <memory>
 #include <list>
 #include <string>

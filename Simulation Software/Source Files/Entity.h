@@ -1,10 +1,6 @@
-#ifndef ENTITY_H
-#define ENTITY_H
-
-#include <crtdbg.h>
-
+#pragma once
+#include "Utility.h"
 #include "SimulationExecutive.h"
-//#include "FIFO.h"
 #include "FIFO.h"
 
 enum EntityType { entity, transport, batch };
@@ -74,5 +70,3 @@ public:
 //
 //	const int m_defaultTransportSize = 10;
 //};
-
-#endif
