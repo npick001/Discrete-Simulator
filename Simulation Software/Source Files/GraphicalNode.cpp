@@ -196,10 +196,13 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 	windowToLocal.Concat(GetTransform());
 	windowToLocal.Invert();
 	clickPosition = windowToLocal.TransformPoint(clickPosition);
+	m_isSelected = false;
 
 	// Return selection state according to what user clicked on
 	for (int i = 0; i < 4; i++) {
 		if (m_sizers[i].Contains(clickPosition)) {
+
+			m_isSelected = true;
 			return { this, Selection::State::NODE_SIZER };
 		}
 	}
@@ -207,8 +210,10 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 		return { this, Selection::State::NODE_INPUT };
 	else if (m_outputRect.Contains(clickPosition))
 		return { this, Selection::State::NODE_OUTPUT };
-	else if (m_bodyShape.Contains(clickPosition))
+	else if (m_bodyShape.Contains(clickPosition)) {
+		this->m_isSelected = true;
 		return { this, Selection::State::NODE };
+	}
 	else
 		return { nullptr, Selection::State::NONE };
 }
@@ -232,9 +237,10 @@ int GraphicalNode::GetSelectedSizerIndex(wxPoint2DDouble clickPosition)
 {
 	for (int i = 0; i < 4; i++) {
 
-		auto x = m_sizers[i].m_x + m_bodySize.x;
-		auto y = m_sizers[i].m_y + m_bodySize.y;
-		wxRect2DDouble rect(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+		auto x = m_sizers[i].m_x;
+		auto y = m_sizers[i].m_y;
+		auto transformedStartPos = GetTransformedPoint(wxPoint2DDouble(x, y));
+		wxRect2DDouble rect(transformedStartPos.m_x, transformedStartPos.m_y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 
 		if (rect.Contains(clickPosition)) {
 			m_sizerSelected = i;
@@ -274,22 +280,23 @@ wxRect2DDouble GraphicalNode::GetBodyShape()
 	return m_bodyShape;
 }
 
+void GraphicalNode::SetTransformationMatrix(wxAffineMatrix2D transform)
+{
+	m_transformation = transform;
+}
+
 wxAffineMatrix2D GraphicalNode::GetTransformationMatrix()
 {
-	wxAffineMatrix2D matrix;
-	wxPoint2DDouble center = GetCenter();
+	return m_transformation;
+}
 
-	matrix.Translate(m_transformation.translationX, m_transformation.translationY);
-	
-	matrix.Translate(center.m_x, center.m_y);
-	matrix.Rotate(m_transformation.rotationAngle);
-	matrix.Translate(-center.m_x, -center.m_y);
-
-	matrix.Translate(center.m_x, center.m_y);
-	matrix.Scale(m_transformation.scaleX, m_transformation.scaleY);
-	matrix.Translate(-center.m_x, -center.m_y);
-
-	return matrix;
+wxPoint2DDouble GraphicalNode::GetTransformedPoint(wxPoint2DDouble toTransform)
+{
+	// transform drawing location to local
+	wxAffineMatrix2D cTransform = m_transformation;
+	cTransform.Invert();
+	wxPoint2DDouble transformedPoint = cTransform.TransformPoint(toTransform);
+	return transformedPoint;
 }
 
 void GraphicalNode::SetInputRect(wxRect2DDouble newInput)
@@ -418,15 +425,17 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	//gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
 	gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
 
-	// draw all the scaling rects
-	gc->SetBrush(wxBrush(m_sizerColor));
-	for (int i = 0; i < 4; i++) {
+	if (m_isSelected) {
+		// draw all the scaling rects
+		gc->SetBrush(wxBrush(m_sizerColor));
+		for (int i = 0; i < 4; i++) {
 
-		wxDouble x = m_sizers[i].m_x;
-		wxDouble y = m_sizers[i].m_y;
-		wxDouble width = m_sizers[i].m_width;
-		wxDouble height = m_sizers[i].m_height;
-		gc->DrawRectangle(x, y, width, height);
+			wxDouble x = m_sizers[i].m_x;
+			wxDouble y = m_sizers[i].m_y;
+			wxDouble width = m_sizers[i].m_width;
+			wxDouble height = m_sizers[i].m_height;
+			gc->DrawRectangle(x, y, width, height);
+		}
 	}
 
 	// draw the text on the object
@@ -560,15 +569,17 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
 	gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
 
-	// draw all the scaling rects
-	gc->SetBrush(wxBrush(m_sizerColor));
-	for (int i = 0; i < 4; i++) {
+	if (m_isSelected) {
+		// draw all the scaling rects
+		gc->SetBrush(wxBrush(m_sizerColor));
+		for (int i = 0; i < 4; i++) {
 
-		wxDouble x = m_sizers[i].m_x;
-		wxDouble y = m_sizers[i].m_y;
-		wxDouble width = m_sizers[i].m_width;
-		wxDouble height = m_sizers[i].m_height;
-		gc->DrawRectangle(x, y, width, height);
+			wxDouble x = m_sizers[i].m_x;
+			wxDouble y = m_sizers[i].m_y;
+			wxDouble width = m_sizers[i].m_width;
+			wxDouble height = m_sizers[i].m_height;
+			gc->DrawRectangle(x, y, width, height);
+		}
 	}
 
 	// draw the text on the object
@@ -674,15 +685,17 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 	gc->DrawRectangle(m_inputRect.m_x, m_inputRect.m_y, m_inputRect.m_width, m_inputRect.m_height);
 	//gc->DrawRectangle(m_outputRect.m_x, m_outputRect.m_y, m_outputRect.m_width, m_outputRect.m_height);
 
-	// draw all the scaling rects
-	gc->SetBrush(wxBrush(m_sizerColor));
-	for (int i = 0; i < 4; i++) {
+	if (m_isSelected) {
+		// draw all the scaling rects
+		gc->SetBrush(wxBrush(m_sizerColor));
+		for (int i = 0; i < 4; i++) {
 
-		wxDouble x = m_sizers[i].m_x;
-		wxDouble y = m_sizers[i].m_y;
-		wxDouble width = m_sizers[i].m_width;
-		wxDouble height = m_sizers[i].m_height;
-		gc->DrawRectangle(x, y, width, height);
+			wxDouble x = m_sizers[i].m_x;
+			wxDouble y = m_sizers[i].m_y;
+			wxDouble width = m_sizers[i].m_width;
+			wxDouble height = m_sizers[i].m_height;
+			gc->DrawRectangle(x, y, width, height);
+		}
 	}
 
 	// draw the text on the object
@@ -690,7 +703,6 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
 	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
-
 }
 
 std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSink::GetSimProperties()

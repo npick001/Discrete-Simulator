@@ -32,6 +32,16 @@ GraphicalElement& GraphicalElement::operator=(const GraphicalElement& other) {
 	return *this;
 }
 
+void GraphicalElement::SetSelected()
+{
+	m_isSelected = true;
+}
+
+void GraphicalElement::SetNotSelected()
+{
+	m_isSelected = false;
+}
+
 // Element Container
 
 ElementList::ElementList() : m_elements() {}

@@ -31,7 +31,8 @@ public:
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
 	// Set the origin location to be 0, 0 at the center of the canvas on creation
-	void TransformOriginLocation(wxSize canvasSize);
+	void InitializeOriginLocation(wxSize canvasSize);
+	void TransformOriginLocation();
 	Set<GraphicalNode> GetSimObjects();
 	std::vector<std::unique_ptr<GraphicalNode>> GetUniqueNodes();
 	std::vector<std::unique_ptr<GraphicalEdge>> GetUniqueEdges();
@@ -96,6 +97,7 @@ private:
 	MoveNodeAction* m_moveNodeAction;
 
 	Selection m_selection;
+	Selection m_previousSelection;
 
 	GraphicalEdge* m_incompleteEdge;
 
@@ -107,7 +109,8 @@ private:
 	bool m_isPanning = false;
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
-	wxPoint m_origin;
+	wxAffineMatrix2D m_originTransformation;
+	wxPoint2DDouble m_origin;
 	double m_zoomLevel;
 
 	wxAffineMatrix2D GetCameraTransform() const;
@@ -129,7 +132,6 @@ private:
 	void ScaleNode(wxPoint2DDouble clickPosition);
 
 	// Popup menu event handlers
-	void OnMenuAddNode(wxCommandEvent& event);
 	void OnMenuAddSource(wxCommandEvent& event);
 	void OnMenuAddServer(wxCommandEvent& event);
 	void OnMenuAddSink(wxCommandEvent& event);

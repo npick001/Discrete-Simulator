@@ -32,7 +32,6 @@ Canvas::Canvas(wxWindow* parent, wxStatusBar* statusBar)
 	m_canvasMenu = new wxMenu("Canvas");
 	m_canvasMenu->Append(ID_ADD_NODE, "Add node", "Add a node to the canvas");
 	m_canvasMenu->Append(wxID_ANY, "Specific Nodes", m_nodeSubMenu);
-	m_canvasMenu->Bind(wxEVT_MENU, &Canvas::OnMenuAddNode, this, ID_ADD_NODE);
 
 	m_nodeMenu = new wxMenu("");
 	m_nodeMenu->Append(ID_DELETE_NODE, "Delete", "Delete the currently selected node");
@@ -71,6 +70,8 @@ Canvas::~Canvas() {
 }
 
 void Canvas::AddNode(GraphicalNode* obj) {
+
+	obj->SetTransformationMatrix(GetCameraTransform());
 	m_nodes.add_new(obj);
 	m_gnodes.Add(obj);
 }
@@ -138,7 +139,7 @@ void Canvas::DrawGrid(wxGraphicsContext* gc)
 {
 }
 
-void Canvas::TransformOriginLocation(wxSize canvasSize)
+void Canvas::InitializeOriginLocation(wxSize canvasSize)
 {
 	m_canvasSize = canvasSize;
 
@@ -146,9 +147,13 @@ void Canvas::TransformOriginLocation(wxSize canvasSize)
 	int width, height;
 	GetClientSize(&width, &height);
 	m_origin = wxPoint(width / 2, height / 2);
-	m_cameraPan.Translate(m_origin.x, m_origin.y);
+	m_cameraPan.Translate(m_origin.m_x, m_origin.m_y);
 	m_zoomLevel = m_zoomLevel * 2.3;
 	m_cameraZoom.Scale(m_zoomLevel, m_zoomLevel);
+
+	// save origin transformations
+	m_originTransformation.Translate(m_origin.m_x, m_origin.m_y);
+	m_originTransformation.Scale(m_zoomLevel, m_zoomLevel);
 
 	// transform drawing location to local
 	wxPoint2DDouble originPosition = GetTransformedPoint(m_origin);
@@ -262,12 +267,14 @@ Selection Canvas::Select(wxPoint2DDouble clickPosition) {
 // Pan the camera by the displacement of the mouse position
 void Canvas::PanCamera(wxPoint2DDouble clickPosition) {
 	auto dragVector = clickPosition - m_previousMousePosition;
+	m_origin.m_x += dragVector.m_x;
+	m_origin.m_y += dragVector.m_y;
 
 	auto inv = GetCameraTransform();
 	inv.Invert();
 	dragVector = inv.TransformDistance(dragVector);
-
 	m_cameraPan.Translate(dragVector.m_x, dragVector.m_y);
+
 	m_previousMousePosition = clickPosition;
 
 	Refresh();
@@ -300,6 +307,8 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 
 	wxRect2DDouble newsize = m_nodes[m_selection]->GetBodyShape();
 	
+	// not working
+	// position is not even close to what it thinks it is
 	int sizerIndex = m_nodes[m_selection]->GetSelectedSizerIndex(GetTransformedPoint(clickPosition));
 
 	switch (sizerIndex)
@@ -323,9 +332,6 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 
 	}
 
-
-
-
 	m_nodes[m_selection]->SetBodyShape(newsize);
 
 	m_previousMousePosition = clickPosition;
@@ -334,16 +340,6 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 }
 
 // Event Handlers
-
-// Called upon user selecting add node in popup canvas menu
-// deprecated
-void Canvas::OnMenuAddNode(wxCommandEvent& event) {
-	auto inverse = GetCameraTransform();
-	inverse.Invert();
-
-	//AddNode(inverse.TransformPoint(m_previousMousePosition));
-}
-
 void Canvas::OnMenuAddSource(wxCommandEvent& event)
 {
 	AddNode(GenericNode::SOURCE, GetTransformedPoint(m_previousMousePosition));
@@ -385,6 +381,8 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// world to local coord transform
 	wxPoint2DDouble transformedPos = GetTransformedPoint(m_previousMousePosition);
+	//transformedPos.m_x += m_origin.x;
+	//transformedPos.m_y += m_origin.y;
 
 	m_debugStatusBar->SetStatusText("Zoom Level: " + std::to_string(m_zoomLevel), DebugField::ZOOM_LEVEL);
 	m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
@@ -402,6 +400,12 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		m_moveNodeAction = new MoveNodeAction(m_selection->GetID(), &m_nodes);
 		m_moveNodeAction->SetPreviousPosition(m_nodes[m_selection]->GetPosition());
+
+		m_nodes[m_selection]->SetSelected();
+		if (m_previousSelection.state == Selection::State::NODE) {
+			m_nodes[m_previousSelection]->SetNotSelected();
+		}
+
 		break;
 
 	// Instatiate an edge and connect source to node's output
@@ -429,6 +433,8 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		m_isPanning = true;
 		break;
 	}
+
+	m_previousSelection = m_selection;
 
 	Refresh();
 }
@@ -584,7 +590,11 @@ void Canvas::OnMouseWheel(wxMouseEvent& event) {
 	// Adjust the zoom and translation of the camera
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
 	m_zoomLevel = m_zoomLevel * scaleFactor;
-	m_cameraPan.Translate((1 - scaleFactor) * (localMousePosition.m_x), (1 - scaleFactor) * (localMousePosition.m_y));
+	m_cameraPan.Translate((1.0 - scaleFactor) * (localMousePosition.m_x), (1.0 - scaleFactor) * (localMousePosition.m_y));
+
+	// adjust origin location
+	m_origin.m_x += (1.0 - scaleFactor) * (localMousePosition.m_x);
+	m_origin.m_y += (1.0 - scaleFactor) * (localMousePosition.m_y);
 
 	Refresh();
 }
@@ -670,6 +680,12 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	//	if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
 	//		break;
 	//}
+
+	//dc.DrawLine(wxPoint(), wxPoint());
+
+	// show where origin is
+	dc.DrawLine(m_origin.m_x - 10000, m_origin.m_y, m_origin.m_x + 10000, m_origin.m_y); // xline
+	dc.DrawLine(m_origin.m_x, m_origin.m_y - 10000, m_origin.m_x, m_origin.m_y + 10000); // yline
 
 	for (GraphicalElement* const& element : m_elements)
 		element->Draw(GetCameraTransform(), gc);

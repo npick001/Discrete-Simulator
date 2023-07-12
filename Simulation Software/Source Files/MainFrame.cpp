@@ -142,7 +142,7 @@ MainFrame::MainFrame(const wxString& title)
     // transform the origin to middle of the canvas
     wxSize canvasSize = m_mainCanvas->GetSize();
     auto canvas = (Canvas*)m_mainCanvas->GetCurrentPage();
-    canvas->TransformOriginLocation(canvasSize);
+    canvas->InitializeOriginLocation(canvasSize);
 
     // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);

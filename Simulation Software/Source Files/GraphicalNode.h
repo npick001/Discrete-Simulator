@@ -101,7 +101,9 @@ public:
 	wxPoint2DDouble GetCenter();
 	void SetBodyShape(wxRect2DDouble newBody);
 	wxRect2DDouble GetBodyShape();
+	void SetTransformationMatrix(wxAffineMatrix2D transform);
 	wxAffineMatrix2D GetTransformationMatrix();
+	wxPoint2DDouble GetTransformedPoint(wxPoint2DDouble toTransform);
 	void SetInputRect(wxRect2DDouble newInput);
 	wxRect2DDouble GetInputRect();
 	void SetOutputRect(wxRect2DDouble newOutput);
@@ -136,7 +138,7 @@ protected:
 	wxColor m_ioColor;
 	wxColor m_sizerColor;
 	wxRect2DDouble m_bodyShape;
-	Transformation m_transformation;
+	wxAffineMatrix2D m_transformation;
 	wxRect2DDouble m_inputRect;
 	wxRect2DDouble m_outputRect;
 	wxPoint2DDouble m_position;
