@@ -680,7 +680,6 @@ void Canvas::OnPaint(wxPaintEvent& event) {
 	//	if (distanceOnScreen < 10.0) // Minimum pixel distance between grid lines
 	//		break;
 	//}
-
 	//dc.DrawLine(wxPoint(), wxPoint());
 
 	// show where origin is
