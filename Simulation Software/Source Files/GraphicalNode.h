@@ -21,6 +21,15 @@ class GraphicalEdge;
 class NodeFactory;
 class SimProperties;
 
+struct Transformation
+{
+	double translationX = 0.0;
+	double translationY = 0.0;
+	double rotationAngle = 0.0;
+	double scaleX = 1.0;
+	double scaleY = 1.0;
+};
+
 class GraphicalNode : public GraphicalElement {
 public:
 	void SetNodeType(GenericNode::Type type);
@@ -67,6 +76,8 @@ public:
 		wxPoint2DDouble clickPosition) override;
 
 	void Move(wxPoint2DDouble displacement);
+	int GetSelectedSizerIndex(wxPoint2DDouble clickPosition);
+	int GetSelectedSizer();
 
 	wxColor GetBodyColor();
 	void SetBodyColor(const wxColor& color);
@@ -86,8 +97,11 @@ public:
 	// XML Serialization
 	virtual void Accept(Visitor& visitor) = 0;
 
+	wxSize GetSize();
+	wxPoint2DDouble GetCenter();
 	void SetBodyShape(wxRect2DDouble newBody);
 	wxRect2DDouble GetBodyShape();
+	wxAffineMatrix2D GetTransformationMatrix();
 	void SetInputRect(wxRect2DDouble newInput);
 	wxRect2DDouble GetInputRect();
 	void SetOutputRect(wxRect2DDouble newOutput);
@@ -118,14 +132,19 @@ protected:
 
 	// graphical characteristics
 	wxColor m_bodyColor;
+	wxColor m_labelColor;
+	wxColor m_ioColor;
+	wxColor m_sizerColor;
 	wxRect2DDouble m_bodyShape;
+	Transformation m_transformation;
 	wxRect2DDouble m_inputRect;
 	wxRect2DDouble m_outputRect;
 	wxPoint2DDouble m_position;
+	wxRect2DDouble m_sizers[4];
+	int m_sizerSelected;
 	wxSize m_bodySize;
 	wxSize m_ioSize;
-	wxColor m_labelColor;
-	wxColor m_ioColor;
+	wxSize m_sizerSize;
 
 	// link to graphical edges
 	std::list<GraphicalEdge*> m_inputs;

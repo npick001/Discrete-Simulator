@@ -7,6 +7,7 @@ const std::string GraphicalElement::ms_selectionStateNames[Selection::State::STA
 	"NODE",
 	"NODE_OUTPUT",
 	"NODE_INPUT",
+	"NODE_SIZER",
 	"EDGE"
 };
 

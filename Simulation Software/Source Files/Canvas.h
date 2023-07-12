@@ -126,6 +126,7 @@ private:
 	// handled by the mouse event functions
 	void PanCamera(wxPoint2DDouble clickPosition);
 	void MoveNode(wxPoint2DDouble clickPosition);
+	void ScaleNode(wxPoint2DDouble clickPosition);
 
 	// Popup menu event handlers
 	void OnMenuAddNode(wxCommandEvent& event);

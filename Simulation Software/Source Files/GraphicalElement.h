@@ -17,6 +17,7 @@ struct Selection {
 		NODE,
 		NODE_OUTPUT,
 		NODE_INPUT,
+		NODE_SIZER,
 		EDGE,
 		STATES_MAX
 	};

@@ -120,8 +120,8 @@ void Canvas::DeleteNode() {
 
 // Returns the camera transform which is the scaling matrix multiplied by the translation matrix
 wxAffineMatrix2D Canvas::GetCameraTransform() const {
-	wxAffineMatrix2D cameraTransform = m_cameraZoom;
-	cameraTransform.Concat(m_cameraPan);
+	wxAffineMatrix2D cameraTransform = m_cameraZoom; // scaling
+	cameraTransform.Concat(m_cameraPan); // translating
 	return cameraTransform;
 }
 
@@ -289,6 +289,50 @@ void Canvas::MoveNode(wxPoint2DDouble clickPosition) {
 	Refresh();
 }
 
+void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
+{
+	auto dragVector = clickPosition - m_previousMousePosition;
+
+	auto inv = GetCameraTransform();
+	inv.Concat(m_nodes[m_selection]->GetTransform());
+	inv.Invert();
+	dragVector = inv.TransformDistance(dragVector);
+
+	wxRect2DDouble newsize = m_nodes[m_selection]->GetBodyShape();
+	
+	int sizerIndex = m_nodes[m_selection]->GetSelectedSizerIndex(GetTransformedPoint(clickPosition));
+
+	switch (sizerIndex)
+	{
+	case 0:
+		// works for top left
+		newsize.m_x += dragVector.m_x;
+		newsize.m_y += dragVector.m_y;
+		newsize.m_width -= dragVector.m_x;
+		newsize.m_height -= dragVector.m_y;
+		break;
+	case 1:
+
+		break;
+	case 2:
+
+		break;
+	case 3:
+
+		break;
+
+	}
+
+
+
+
+	m_nodes[m_selection]->SetBodyShape(newsize);
+
+	m_previousMousePosition = clickPosition;
+
+	Refresh();
+}
+
 // Event Handlers
 
 // Called upon user selecting add node in popup canvas menu
@@ -347,6 +391,11 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 		std::to_string((int)transformedPos.m_y) + ")", DebugField::MOUSE_POSITION);
 
 	switch (m_selection.state) {
+
+	case Selection::State::NODE_SIZER:
+
+		m_nodes[m_selection]->GetSelectedSizerIndex(transformedPos);
+		break;
 
 	// Prepare to drag selected node
 	case Selection::State::NODE:
@@ -450,6 +499,10 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 
 		break;
 
+	case Selection::State::NODE_SIZER:
+
+		break;
+
 	// User is no longer panning camera
 	case Selection::State::NONE:
 		m_isPanning = false;
@@ -474,6 +527,13 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 		return;
 
 	switch (m_selection.state) {
+
+	// scale node
+	case Selection::State::NODE_SIZER:
+
+		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
+			ScaleNode(mousePosition);
+		break;
 
 	// Move node
 	case Selection::State::NODE:
