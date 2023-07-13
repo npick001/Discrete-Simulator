@@ -233,18 +233,192 @@ void GraphicalNode::Move(wxPoint2DDouble displacement) {
 		input->m_destinationPoint = GetInputPoint();
 }
 
-int GraphicalNode::GetSelectedSizerIndex(wxPoint2DDouble clickPosition)
+void GraphicalNode::ShiftSizerPositions(int selectedSizer, wxPoint2DDouble displacement)
 {
 	for (int i = 0; i < 4; i++) {
 
-		auto x = m_sizers[i].m_x;
-		auto y = m_sizers[i].m_y;
-		auto transformedStartPos = GetTransformedPoint(wxPoint2DDouble(x, y));
-		wxRect2DDouble rect(transformedStartPos.m_x, transformedStartPos.m_y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+		switch (selectedSizer) {
+		
+		// top left selected
+		case 0:
+			switch (i) {
+			case 0:
+				// top left
+				m_sizers[i].m_x += displacement.m_x;
+				m_sizers[i].m_y += displacement.m_y;
 
-		if (rect.Contains(clickPosition)) {
-			m_sizerSelected = i;
-			return i;
+				break;
+			case 1:
+				// top right
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			case 2:
+				// bottom left
+				m_sizers[i].m_x += displacement.m_x;
+
+				break;
+			case 3:
+				// bottom right
+
+				break;
+			}
+			break;
+
+		// top right selected
+		case 1:
+			switch (i) {
+			case 0:
+				// top left
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			case 1:
+				// top right
+				m_sizers[i].m_x += displacement.m_x;
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			case 2:
+				// bottom left
+
+				break;
+			case 3:
+				// bottom right
+				m_sizers[i].m_x += displacement.m_x;
+
+				break;
+			}
+			break;
+
+		// bottom left selected
+		case 2:
+			switch (i) {
+			case 0:
+				// top left
+				m_sizers[i].m_x += displacement.m_x;
+
+				break;
+			case 1:
+				// top right
+
+				break;
+			case 2:
+				// bottom left
+				m_sizers[i].m_x += displacement.m_x;
+				m_sizers[i].m_y += displacement.m_y;
+				
+				break;
+			case 3:
+				// bottom right
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			}
+			break;
+
+		// bottom right selected
+		case 3:
+			switch (i) {
+			case 0:
+				// top left
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			case 1:
+				// top right
+				m_sizers[i].m_x += displacement.m_x;
+				m_sizers[i].m_y += displacement.m_y;
+
+				break;
+			case 2:
+				// bottom left
+
+				break;
+			case 3:
+				// bottom right
+				m_sizers[i].m_x += displacement.m_x;
+
+				break;
+			}
+			break;
+		}
+
+
+	}
+}
+
+int GraphicalNode::GetSelectedSizerIndex(wxPoint2DDouble clickPosition)
+{
+	for (int i = 0; i < 4; i++) {
+		double x, y;
+		wxRect2DDouble rect;
+
+		switch (i) {
+		case 0:
+			// top left
+			x = GetPosition().m_x - m_bodySize.x / 2 - m_sizerSize.x / 2;
+			y = GetPosition().m_y - m_bodySize.y / 2 - m_sizerSize.y / 2;
+
+			rect.m_x = x;
+			rect.m_y = y;
+			rect.m_width = m_sizerSize.GetWidth();
+			rect.m_height = m_sizerSize.GetHeight();
+			
+			if (rect.Contains(clickPosition)) {
+				m_sizerSelected = i;
+				return i;
+			}
+
+			break;
+		case 1:
+			// top right
+			x = GetPosition().m_x + m_bodySize.x / 2 - m_sizerSize.x / 2;
+			y = GetPosition().m_y - m_bodySize.y / 2 - m_sizerSize.y / 2;
+
+			rect.m_x = x;
+			rect.m_y = y;
+			rect.m_width = m_sizerSize.GetWidth();
+			rect.m_height = m_sizerSize.GetHeight();
+
+			if (rect.Contains(clickPosition)) {
+				m_sizerSelected = i;
+				return i;
+			}
+
+			break;
+		case 2:
+			// bottom left
+			x = GetPosition().m_x - m_bodySize.x / 2 - m_sizerSize.x / 2;
+			y = GetPosition().m_y + m_bodySize.y / 2 - m_sizerSize.y / 2;
+
+			rect.m_x = x;
+			rect.m_y = y;
+			rect.m_width = m_sizerSize.GetWidth();
+			rect.m_height = m_sizerSize.GetHeight();
+
+			if (rect.Contains(clickPosition)) {
+				m_sizerSelected = i;
+				return i;
+			}
+
+			break;
+		case 3:
+			// bottom right
+			x = GetPosition().m_x + m_bodySize.x / 2 - m_sizerSize.x / 2;
+			y = GetPosition().m_y + m_bodySize.y / 2 - m_sizerSize.y / 2;
+
+			rect.m_x = x;
+			rect.m_y = y;
+			rect.m_width = m_sizerSize.GetWidth();
+			rect.m_height = m_sizerSize.GetHeight();
+
+			if (rect.Contains(clickPosition)) {
+				m_sizerSelected = i;
+				return i;
+			}
+
+			break;
 		}
 	}
 	return -1;

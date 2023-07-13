@@ -113,7 +113,10 @@ private:
 	wxPoint2DDouble m_origin;
 	double m_zoomLevel;
 
+	// screen to local coordinates
 	wxAffineMatrix2D GetCameraTransform() const;
+
+	// point must be in screen coordinates for this to work
 	wxPoint2DDouble GetTransformedPoint(wxPoint2DDouble pointToTransform);
 	void DrawGrid(wxGraphicsContext* gc);
 

@@ -76,6 +76,7 @@ public:
 		wxPoint2DDouble clickPosition) override;
 
 	void Move(wxPoint2DDouble displacement);
+	void ShiftSizerPositions(int selectedSizer, wxPoint2DDouble displacement);
 	int GetSelectedSizerIndex(wxPoint2DDouble clickPosition);
 	int GetSelectedSizer();
 

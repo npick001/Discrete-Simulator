@@ -151,11 +151,7 @@ void Canvas::InitializeOriginLocation(wxSize canvasSize)
 	m_zoomLevel = m_zoomLevel * 2.3;
 	m_cameraZoom.Scale(m_zoomLevel, m_zoomLevel);
 
-	// save origin transformations
-	m_originTransformation.Translate(m_origin.m_x, m_origin.m_y);
-	m_originTransformation.Scale(m_zoomLevel, m_zoomLevel);
-
-	// transform drawing location to local
+	// transform drawing location from screen to local
 	wxPoint2DDouble originPosition = GetTransformedPoint(m_origin);
 
 	// draw a few basic nodes
@@ -307,31 +303,42 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 
 	wxRect2DDouble newsize = m_nodes[m_selection]->GetBodyShape();
 	
-	// not working
-	// position is not even close to what it thinks it is
 	int sizerIndex = m_nodes[m_selection]->GetSelectedSizerIndex(GetTransformedPoint(clickPosition));
 
 	switch (sizerIndex)
 	{
 	case 0:
-		// works for top left
+		// top left
 		newsize.m_x += dragVector.m_x;
 		newsize.m_y += dragVector.m_y;
 		newsize.m_width -= dragVector.m_x;
 		newsize.m_height -= dragVector.m_y;
+
 		break;
 	case 1:
+		// top right
+		newsize.m_y += dragVector.m_y;
+		newsize.m_width += dragVector.m_x;
+		newsize.m_height -= dragVector.m_y;
 
 		break;
 	case 2:
+		// bottom left
+		newsize.m_x += dragVector.m_x;
+		newsize.m_width -= dragVector.m_x;
+		newsize.m_height += dragVector.m_y;
 
 		break;
 	case 3:
+		// bottom right
+		newsize.m_width += dragVector.m_x;
+		newsize.m_height += dragVector.m_y;
 
 		break;
 
 	}
 
+	m_nodes[m_selection]->ShiftSizerPositions(sizerIndex, dragVector);
 	m_nodes[m_selection]->SetBodyShape(newsize);
 
 	m_previousMousePosition = clickPosition;
@@ -574,6 +581,14 @@ void Canvas::OnMotion(wxMouseEvent& event) {
 
 		Refresh();
 		break;
+
+	case Selection::State::NONE:
+
+		if (event.ButtonIsDown(wxMOUSE_BTN_LEFT) && m_previousSelection.state == Selection::State::NODE_SIZER) {
+			ScaleNode(mousePosition);
+		}
+
+		break;
 	}
 }
 
@@ -582,19 +597,30 @@ void Canvas::OnMouseWheel(wxMouseEvent& event) {
 
 	// Convert mouse position from screen to local coordinates
 	wxPoint2DDouble mousePosition = event.GetPosition();
-	wxPoint2DDouble localMousePosition = GetTransformedPoint(mousePosition);
+	m_previousMousePosition = mousePosition;
+	wxPoint2DDouble localMousePositionBeforeZoom = GetTransformedPoint(mousePosition);
 
 	// Determine the zoom scale factor
 	double scaleFactor = pow(2, 0.1 * event.GetWheelRotation() / event.GetWheelDelta());
 
 	// Adjust the zoom and translation of the camera
+	m_cameraPan.Translate(localMousePositionBeforeZoom.m_x, localMousePositionBeforeZoom.m_y);
 	m_cameraZoom.Scale(scaleFactor, scaleFactor);
+	m_cameraPan.Translate(-localMousePositionBeforeZoom.m_x, -localMousePositionBeforeZoom.m_y);
 	m_zoomLevel = m_zoomLevel * scaleFactor;
-	m_cameraPan.Translate((1.0 - scaleFactor) * (localMousePosition.m_x), (1.0 - scaleFactor) * (localMousePosition.m_y));
+	
+	Refresh();
+
+	// get mouse position after zoom
+	mousePosition = event.GetPosition();
+	auto localMousePositionAfterZoom = GetTransformedPoint(mousePosition);
+
+	auto mouseOffset = localMousePositionBeforeZoom - localMousePositionAfterZoom;
+	//m_cameraPan.Translate(mouseOffset.m_x, mouseOffset.m_y);
 
 	// adjust origin location
-	m_origin.m_x += (1.0 - scaleFactor) * (localMousePosition.m_x);
-	m_origin.m_y += (1.0 - scaleFactor) * (localMousePosition.m_y);
+	m_origin.m_x += (1.0 - scaleFactor) * (localMousePositionBeforeZoom.m_x);
+	m_origin.m_y += (1.0 - scaleFactor) * (localMousePositionBeforeZoom.m_y);
 
 	Refresh();
 }
