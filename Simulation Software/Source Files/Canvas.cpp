@@ -302,10 +302,8 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 	dragVector = inv.TransformDistance(dragVector);
 
 	wxRect2DDouble newsize = m_nodes[m_selection]->GetBodyShape();
-	
-	int sizerIndex = m_nodes[m_selection]->GetSelectedSizerIndex(GetTransformedPoint(clickPosition));
 
-	switch (sizerIndex)
+	switch (m_selectedSizerIndex)
 	{
 	case 0:
 		// top left
@@ -335,10 +333,9 @@ void Canvas::ScaleNode(wxPoint2DDouble clickPosition)
 		newsize.m_height += dragVector.m_y;
 
 		break;
-
 	}
 
-	m_nodes[m_selection]->ShiftSizerPositions(sizerIndex, dragVector);
+	m_nodes[m_selection]->ShiftSizerPositions(m_selectedSizerIndex, dragVector);
 	m_nodes[m_selection]->SetBodyShape(newsize);
 
 	m_previousMousePosition = clickPosition;
@@ -388,8 +385,6 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 	// world to local coord transform
 	wxPoint2DDouble transformedPos = GetTransformedPoint(m_previousMousePosition);
-	//transformedPos.m_x += m_origin.x;
-	//transformedPos.m_y += m_origin.y;
 
 	m_debugStatusBar->SetStatusText("Zoom Level: " + std::to_string(m_zoomLevel), DebugField::ZOOM_LEVEL);
 	m_debugStatusBar->SetStatusText("Mouse Position (" + std::to_string((int)transformedPos.m_x) + "," +
@@ -398,8 +393,8 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 	switch (m_selection.state) {
 
 	case Selection::State::NODE_SIZER:
-
-		m_nodes[m_selection]->GetSelectedSizerIndex(transformedPos);
+		m_selectedSizerIndex = m_nodes[m_selection]->GetSelectedSizerIndex(transformedPos);
+		m_isScaling = true;
 		break;
 
 	// Prepare to drag selected node
@@ -521,6 +516,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		m_isPanning = false;
 	}
 
+	m_isScaling = false;
+	m_selectedSizerIndex = -1;
 	m_selection.reset();
 	m_incompleteEdge = nullptr;
 

@@ -32,7 +32,6 @@ public:
 
 	// Set the origin location to be 0, 0 at the center of the canvas on creation
 	void InitializeOriginLocation(wxSize canvasSize);
-	void TransformOriginLocation();
 	Set<GraphicalNode> GetSimObjects();
 	std::vector<std::unique_ptr<GraphicalNode>> GetUniqueNodes();
 	std::vector<std::unique_ptr<GraphicalEdge>> GetUniqueEdges();
@@ -107,6 +106,8 @@ private:
 	bool isShiftDown = false;
 
 	bool m_isPanning = false;
+	bool m_isScaling = false;
+	int m_selectedSizerIndex = -1; // if a node sizer is selected, will be updated
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
 	wxAffineMatrix2D m_originTransformation;

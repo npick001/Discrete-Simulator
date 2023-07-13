@@ -322,29 +322,28 @@ void GraphicalNode::ShiftSizerPositions(int selectedSizer, wxPoint2DDouble displ
 			switch (i) {
 			case 0:
 				// top left
-				m_sizers[i].m_y += displacement.m_y;
 
 				break;
 			case 1:
 				// top right
 				m_sizers[i].m_x += displacement.m_x;
-				m_sizers[i].m_y += displacement.m_y;
 
 				break;
 			case 2:
 				// bottom left
+				m_sizers[i].m_y += displacement.m_y;
 
 				break;
 			case 3:
 				// bottom right
 				m_sizers[i].m_x += displacement.m_x;
+				m_sizers[i].m_y += displacement.m_y;
 
 				break;
 			}
 			break;
 		}
-
-
+		//break;
 	}
 }
 
