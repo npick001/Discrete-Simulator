@@ -9,10 +9,10 @@
 #include "wx/graphics.h"
 #include "wx/propgrid/propgrid.h"
 
-#include "SimulationExecutive.h"
-#include "Distribution.h"
 #include "Set.h"
+#include "SimulationExecutive.h"
 #include "GenericNode.h"
+#include "Distribution.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
 #include "XMLSerialization.h"
@@ -20,15 +20,7 @@
 class GraphicalEdge;
 class NodeFactory;
 class SimProperties;
-
-struct Transformation
-{
-	double translationX = 0.0;
-	double translationY = 0.0;
-	double rotationAngle = 0.0;
-	double scaleX = 1.0;
-	double scaleY = 1.0;
-};
+class SimProject;
 
 class GraphicalNode : public GraphicalElement {
 public:
@@ -46,10 +38,10 @@ public:
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
 
-	void SetNext(GraphicalNode* next);
-	void SetPrevious(GraphicalNode* previous);
-	GraphicalNode* GetNext();
-	GraphicalNode* GetPrevious();
+	void AddNext(GraphicalNode* next);
+	void AddPrevious(GraphicalNode* previous);
+	Set<GraphicalNode> GetNext();
+	Set<GraphicalNode> GetPrevious();
 
 	// all specific nodes should implement their own drawing for different pictures
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc);
@@ -83,18 +75,6 @@ public:
 	wxColor GetBodyColor();
 	void SetBodyColor(const wxColor& color);
 
-	// PROPERTY REPORTING DESIGN PATTERN
-	class PropertiesWrapper {
-	public:
-		PropertiesWrapper(int id) : m_id(id) {}
-		virtual void ReportProperties() = 0;
-
-	private:
-		int m_id;
-	};
-
-	virtual std::unique_ptr<PropertiesWrapper> GetSimProperties() = 0;
-
 	// XML Serialization
 	virtual void Accept(Visitor& visitor) = 0;
 
@@ -116,21 +96,10 @@ protected:
 	friend class GraphicalEdge;
 	GenericNode::Type m_nodeType;
 
-	GraphicalNode* m_next;
-	GraphicalNode* m_previous;
+	Set<GraphicalNode> m_next;
+	Set<GraphicalNode> m_previous;
 
-	/// <SimProperties>
-	/// This is the same design pattern as Statistics from the simulation code.
-	/// Idea is that the parent class defines a properties object that is populated by the
-	/// instances of this object. Any handlers using the parent class
-	/// can thus access instantiated object properties
-	class SimProperties
-	{
-	protected:
-		inline SimProperties() {}
-	};
-
-	// list of wxProperties that can be used and displayed (hopefully)
+	// list of wxProperties that can be used and displayed
 	Set<wxPGProperty> m_properties;
 
 	// graphical characteristics
@@ -179,24 +148,29 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class SourceProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
-
+	// Simulation values
+	void SetEntity(Entity* e);
 	void SetIATime(Distribution* iaTime);
+	void SetNumberToGenerate(int numgen);
+	Entity* GetEntity();
 	Distribution* GetIATime();
+	int GetNumberToGenerate();
 
 	// XML Serialization
 	void Accept(Visitor& visitor) override;
 
 protected:
-	class MyProperties;
+	friend class SimProject;
 
 private:
 	// will be replaced with a distribution later
 	int m_arrivalTime;
 	Distribution* m_iaTime;
 
-	SimProperties* m_myProps;
+	// Entity generation members
+	Entity* m_entity;
+	int m_numberToGenerate;
+	bool m_infiniteGeneration;
 };
 
 /****************************************************************/
@@ -216,28 +190,26 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class ServerProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
-
+	// Simulation values
 	void SetServiceTime(Distribution* serviceTime);
+	void SetNumResources(int resources);
 	Distribution* GetServiceTime();
+	int GetNumResources();
 
 	// XML Serialization
 	void Accept(Visitor& visitor) override;
 
 protected:
-	class MyProperties;
+	friend class SimProject;
 
 private:
 	// will be replaced with a distribution later
 	//double m_serviceTime;
 	Distribution* m_serviceTime;
 
-	// will be replaced with a time unit later (second, minute, hour, day, year)
+	// time unit (second, minute, hour, day, year)
 	TimeUnit m_timeUnit;
 	int m_numResources;
-
-	SimProperties* m_myProps;
 };
 
 /*****************************************/
@@ -254,15 +226,13 @@ public:
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class SinkProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
-
 	// XML Serialization
 	void Accept(Visitor& visitor) override;
 
 protected:
+	friend class SimProject;
+
 	class MyProperties;
 
 private:
-	SimProperties* m_myProps;
 };

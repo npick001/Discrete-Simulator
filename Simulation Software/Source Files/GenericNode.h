@@ -4,8 +4,11 @@
 #include <wx/wx.h>
 #include <wx/log.h>
 
+#include "Set.h"
 #include "Directives.h"
 #include "Entity.h"
+
+class GraphicalNode;
 
 class GenericNode
 {
@@ -16,10 +19,10 @@ public:
         SINK
     };
 
-    void SetNext(GenericNode* next);
-    void SetPrevious(GenericNode* prev);
-    GenericNode* GetNext();
-    GenericNode* GetPrevious();
+    void AddNext(GenericNode* next);
+    void AddPrevious(GenericNode* prev);
+    Set<GenericNode> GetNext();
+    Set<GenericNode> GetPrevious();
     inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
     std::string GetName();
     inline int GetID() { return m_id; }
@@ -45,7 +48,7 @@ protected:
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
-    GenericNode* m_next;
+    Set<GenericNode> m_next;
 
     /*
         Depart entity from this node
@@ -70,5 +73,5 @@ private:
     static int m_nextID;
     std::string m_name;
 
-    GenericNode* m_previous;
+    Set<GenericNode> m_previous;
 };

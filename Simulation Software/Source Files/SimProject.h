@@ -2,13 +2,21 @@
 #include "Utility.h"
 
 #include <vector>
+#include <map>
 
-#include "Canvas.h"
 #include "SimulationExecutive.h"
 #include "SpecificNodes.h"
+#include "GraphicalNode.h"
+#include "Canvas.h"
+
+class GenericNode;
+class GraphicalNode;
+
+class GraphicalSource;
+class GraphicalServer;
+class GraphicalSink;
 
 class Canvas;
-class GraphicalNode;
 
 /***************************************
 
@@ -55,6 +63,9 @@ public:
 	void RegisterNewConnection(GraphicalNode* from, GraphicalNode* to);
 	void RegisterNodeDeletion(GraphicalNode* deleted);
 
+protected:
+	void RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* previous);
+
 private:
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
 	std::unordered_map<GraphicalNode*, GenericNode*> m_nodeMap;
@@ -82,6 +93,7 @@ public:
 	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
 
 	static GenericNode* CreateSimObject(GenericNode::Type type);
+
 private:
 
 };

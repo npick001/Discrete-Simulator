@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DraggableText.h" />
     <ClInclude Include="Source Files\Action.h" />
     <ClInclude Include="Source Files\Canvas.h" />
     <ClInclude Include="Source Files\Directives.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Source Files\XMLSerialization.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DraggableText.cpp" />
     <ClCompile Include="Source Files\Action.cpp" />
     <ClCompile Include="Source Files\Canvas.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />

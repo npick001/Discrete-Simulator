@@ -469,8 +469,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			auto m_completeEdge = m_incompleteEdge;
 			m_gEdges.Add(m_completeEdge);
 
-			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
-			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
+			m_nodes[m_selection]->AddNext(m_nodes[endSelection]);
+			m_nodes[endSelection]->AddPrevious(m_nodes[m_selection]);
 			if (m_myProject->HasBeenBuilt()) {
 				m_myProject->RegisterNewConnection(m_nodes[m_selection], m_nodes[endSelection]);
 			}
@@ -493,8 +493,8 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 			auto m_completeEdge = m_incompleteEdge;
 			m_gEdges.Add(m_completeEdge);
 
-			m_nodes[m_selection]->SetNext(m_nodes[endSelection]);
-			m_nodes[endSelection]->SetPrevious(m_nodes[m_selection]);
+			m_nodes[m_selection]->AddNext(m_nodes[endSelection]);
+			m_nodes[endSelection]->AddPrevious(m_nodes[m_selection]);
 			if (m_myProject->HasBeenBuilt()) {
 				m_myProject->RegisterNewConnection(m_nodes[m_selection], m_nodes[endSelection]);
 			}

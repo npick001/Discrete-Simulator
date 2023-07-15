@@ -3,20 +3,20 @@
 
 int GenericNode::m_nextID = 0;
 
-void GenericNode::SetNext(GenericNode* next) {
-    m_next = next;
+void GenericNode::AddNext(GenericNode* next) {
+    m_next.Add(next);
 }
 
-void GenericNode::SetPrevious(GenericNode* prev) {
-    m_previous = prev;
+void GenericNode::AddPrevious(GenericNode* prev) {
+    m_previous.Add(prev);
 }
 
-GenericNode* GenericNode::GetNext()
+Set<GenericNode> GenericNode::GetNext()
 {
     return m_next;
 }
 
-GenericNode* GenericNode::GetPrevious()
+Set<GenericNode> GenericNode::GetPrevious()
 {
     return m_previous;
 }
@@ -33,7 +33,6 @@ void GenericNode::Arrive(Entity* entity) {
     std::string message = "time = " + std::to_string(GetSimulationTime()) + "\t" + m_name + "\tArrive\tEntity: " + std::to_string(entity->GetID());
     wxLogMessage("%s", message.c_str());
 
-
     NodeProcess(entity);
 }
 
@@ -45,17 +44,12 @@ void GenericNode::Depart(Entity* entity) {
     wxLogMessage("%s", message.c_str());
     
     entity->SetSource(m_id);
-    m_next->Arrive(entity);
+    m_next.GetRandom()->Arrive(entity);
 }
 
 GenericNode::GenericNode(const std::string& name) {
     m_name = name;
     m_id = m_nextID++;
-
-    m_next = 0;
-    m_previous = 0;
-
-    //m_size = wxSize(100, 50);
 }
 
 // Copy constructor
@@ -64,8 +58,6 @@ GenericNode::GenericNode(const GenericNode& other) {
 }
 
 GenericNode::~GenericNode() {
-    //delete m_prev;
-    //delete m_next;
 }
 
 void GenericNode::StatisticsWrapper::DeleteStats()

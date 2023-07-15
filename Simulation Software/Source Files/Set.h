@@ -73,6 +73,42 @@ public:
 		return nullptr; // if not found
 	}
 
+	T* GetRandom()
+	{
+		srand(time(NULL));
+		int dataIndex = rand() % _size;
+		int currentIndex = 0;
+
+		Node* n = _head;
+		Node* prev = n;
+		T* data = _head->data;
+
+		// search thru list and find the right node.
+		// at worst case it will be at the end
+		while (currentIndex != _size) {
+
+			// found the right one
+			if (currentIndex == dataIndex) {
+
+				// get data
+				data = n->data;
+
+				// fix links
+				prev->next = n->next;
+				delete n;
+				_size--;
+
+				// break out
+				return data;
+			}
+			currentIndex++;
+			prev = n;
+			n = n->next;
+		}
+
+		return nullptr;
+	}
+
 	inline bool Has(T* toFind)
 	{
 		if (_head == 0) return false;

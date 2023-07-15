@@ -12,6 +12,7 @@
 #include "Action.h"
 #include "XMLSerialization.h"
 
+class GenericNode;
 class GraphicalEdge;
 class GraphicalNode;
 class History;

@@ -23,8 +23,7 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
 	m_properties.Add(headerProp);
 
-	m_next = nullptr;
-	m_previous = nullptr;
+	//m_next = Set();
 
 	/// graphical characteristics
 	// size
@@ -163,22 +162,23 @@ void GraphicalNode::DisconnectInputs() {
 		input->Disconnect();
 }
 
-void GraphicalNode::SetNext(GraphicalNode* next)
+
+void GraphicalNode::AddNext(GraphicalNode* next)
 {
-	m_next = next;
+	m_next.Add(next);
 }
 
-void GraphicalNode::SetPrevious(GraphicalNode* previous)
+void GraphicalNode::AddPrevious(GraphicalNode* previous)
 {
-	m_previous = previous;
+	m_previous.Add(previous);
 }
 
-GraphicalNode* GraphicalNode::GetNext()
+Set<GraphicalNode> GraphicalNode::GetNext()
 {
 	return m_next;
 }
 
-GraphicalNode* GraphicalNode::GetPrevious()
+Set<GraphicalNode> GraphicalNode::GetPrevious()
 {
 	return m_previous;
 }
@@ -512,43 +512,13 @@ void GraphicalNode::SetNodeType(GenericNode::Type type)
 /* defines an entity generating object      */
 /* provides basic entity creation			*/
 /********************************************/
-class GraphicalSource::MyProperties : public SimProperties {
-
-public:
-	MyProperties() {
-		m_IA_Time = new Exponential(0.25);
-		m_numToGen = 10;
-	}
-
-	MyProperties(Distribution* ia_time, int numGen) {
-		m_IA_Time = ia_time;
-		m_numToGen = numGen;
-	}
-
-private:
-	Distribution* m_IA_Time;
-	int m_numToGen;
-};
-
-class GraphicalSource::SourceProperties : public PropertiesWrapper {
-
-public:
-	SourceProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
-		m_props = props;
-	}
-
-	void ReportProperties() override {
-
-	}
-
-private:
-	SimProperties* m_props;
-};
 
 GraphicalSource::GraphicalSource() : GraphicalNode()
 {
 	SetNodeType(GenericNode::SOURCE);
 	m_iaTime = new Exponential(0.25);
+	m_infiniteGeneration = false;
+	m_numberToGenerate = 10;
 }
 
 GraphicalSource::GraphicalSource(const GraphicalSource& other)
@@ -556,7 +526,11 @@ GraphicalSource::GraphicalSource(const GraphicalSource& other)
 	GraphicalNode::operator=(other);
 
 	m_iaTime = other.m_iaTime;
-	m_myProps = other.m_myProps;
+	m_entity = other.m_entity;
+	m_infiniteGeneration = other.m_infiniteGeneration;
+	m_numberToGenerate = other.m_numberToGenerate;
+	
+	m_properties = other.m_properties;
 }
 
 GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center)
@@ -565,8 +539,11 @@ GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	SetNodeType(GenericNode::SOURCE);
 
 	m_iaTime = new Exponential(0.25);
-	ExponentialProperty* iaTime = new ExponentialProperty("Interarrival Time", wxPG_LABEL, (Exponential&)m_iaTime);
+	m_entity = new MyEntity(GetSimulationTime());
+	m_infiniteGeneration = false;
+	m_numberToGenerate = 10;
 
+	ExponentialProperty* iaTime = new ExponentialProperty("Interarrival Time", wxPG_LABEL, (Exponential&)m_iaTime);
 	m_properties.Add(iaTime);
 }
 
@@ -618,14 +595,14 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
 }
 
-std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSource::GetSimProperties()
-{
-	return std::make_unique<SourceProperties>(m_myProps, GetID());
-}
-
 void GraphicalSource::Accept(Visitor& visitor)
 {
 	return visitor.Visit(*this);
+}
+
+void GraphicalSource::SetEntity(Entity* e)
+{
+	m_entity = e;
 }
 
 void GraphicalSource::SetIATime(Distribution* iaTime)
@@ -633,9 +610,31 @@ void GraphicalSource::SetIATime(Distribution* iaTime)
 	m_iaTime = iaTime;
 }
 
+void GraphicalSource::SetNumberToGenerate(int numgen)
+{
+	m_numberToGenerate = numgen;
+
+	if (m_numberToGenerate == -1){
+		m_infiniteGeneration = true;
+	}
+	else {
+		m_infiniteGeneration = false;
+	}
+}
+
+Entity* GraphicalSource::GetEntity()
+{
+	return m_entity;
+}
+
 Distribution* GraphicalSource::GetIATime()
 {
 	return m_iaTime;
+}
+
+int GraphicalSource::GetNumberToGenerate()
+{
+	return m_numberToGenerate;
 }
 
 /****************************************************************/
@@ -643,43 +642,6 @@ Distribution* GraphicalSource::GetIATime()
 /* defines a single server single queue object                  */
 /* provides basic server functionality							*/
 /****************************************************************/
-
-class GraphicalServer::MyProperties : public SimProperties {
-
-public:
-	MyProperties() {
-		m_serviceTime = 1.0;
-		m_st_timeUnit = MINUTES;
-		m_numResources = 1;
-	}
-
-	// getting lazy, this works
-	MyProperties(double st, TimeUnit tu, int nr) {
-		m_serviceTime = st;
-		m_st_timeUnit = tu;
-		m_numResources = nr;		
-	}
-
-private:
-	double m_serviceTime;
-	TimeUnit m_st_timeUnit;
-	int m_numResources;
-};
-
-class GraphicalServer::ServerProperties : public PropertiesWrapper {
-
-public:
-	ServerProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
-		m_props = props;
-	}
-
-	void ReportProperties() override {
-			
-	}
-
-private:
-	SimProperties* m_props;
-};
 
 GraphicalServer::GraphicalServer()
 {
@@ -716,7 +678,6 @@ GraphicalServer::GraphicalServer(const GraphicalServer& other)
 	m_serviceTime = other.m_serviceTime;
 	m_timeUnit = other.m_timeUnit;
 	m_numResources = other.m_numResources;
-	m_myProps = other.m_myProps;
 }
 
 std::unique_ptr<GraphicalNode> GraphicalServer::Clone()
@@ -763,19 +724,24 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 }
 
-std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalServer::GetSimProperties()
-{
-	return std::make_unique<ServerProperties>(m_myProps, GetID());
-}
-
 void GraphicalServer::SetServiceTime(Distribution* serviceTime)
 {
 	m_serviceTime = serviceTime;
 }
 
+void GraphicalServer::SetNumResources(int resources)
+{
+	m_numResources = resources;
+}
+
 Distribution* GraphicalServer::GetServiceTime()
 {
 	return m_serviceTime;
+}
+
+int GraphicalServer::GetNumResources()
+{
+	return m_numResources;
 }
 
 void GraphicalServer::Accept(Visitor& visitor) 
@@ -789,33 +755,6 @@ void GraphicalServer::Accept(Visitor& visitor)
 /* for sink specifically.				*/
 /* this is here for the design pattern. */
 /****************************************/
-
-class GraphicalSink::MyProperties : public SimProperties {
-
-public:
-	MyProperties() {
-
-	}
-
-private:
-
-};
-
-class GraphicalSink::SinkProperties : public PropertiesWrapper {
-
-public:
-	SinkProperties(SimProperties* props, int id) : PropertiesWrapper(id) {
-		m_props = props;
-	}
-
-	void ReportProperties() override {
-
-	}
-
-private:
-	SimProperties* m_props;
-};
-
 GraphicalSink::GraphicalSink() : GraphicalNode() 
 {
 	SetNodeType(GenericNode::SINK);
@@ -876,11 +815,6 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
 	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
-}
-
-std::unique_ptr<GraphicalNode::PropertiesWrapper> GraphicalSink::GetSimProperties()
-{
-	return std::make_unique<SinkProperties>(m_myProps, GetID());
 }
 
 void GraphicalSink::Accept(Visitor& visitor) 
