@@ -11,3 +11,4 @@ The software will incorporate knowledge from the following courses at ODU if you
   - Simulation Software Design
   - Analysis for M&S
   - Discrete Event Simulation
+  - Computer Graphics and Visualization
