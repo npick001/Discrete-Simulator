@@ -1,6 +1,8 @@
 #pragma once
 #include "Utility.h"
 
+#include <vector>
+
 /*
 Set - First In/First Out
 This class handles objects for a FIFO LL scheme.
@@ -10,167 +12,80 @@ template <class T>
 class Set
 {
 public:
-	inline Set()
-	{
-		_head = 0;
-		_tail = 0;
-		_size = 0;
-	}
+	inline Set() {}
 
 	// Adds item to the end of the list
 	inline void Add(T* t)
 	{
-		Node* node = new Node(t);
-		if (_head == NULL) {	//empty list
-			_head = _tail = node;
-		}
-		else {
-			_tail = _tail->next = node;
-		}
-		_size++;
+		m_items.push_back(t);
 	}
 
 	// Remove the first item from the set
 	inline T* GetFirst()
 	{
-		if (_head == 0) return 0;
-		else {
-			Node* n = _head;
-			T* data = _head->data;
-			_head = _head->next;
-			_size--;
-			return data;
-		}
+		T* first = m_items.front();
+		m_items.erase(m_items.begin());
+		return first;
 	}
 
 	// get the specific item from the set
 	inline T* Get(T* toFind)
 	{
-		if (_head == 0) return 0;
-		else if (_head->data == toFind) {
-			Node* n = _head;
-			_head = _head->next;
-			delete n;
-			return toFind;
-		}
-		else {
+		for (int i = 0; i < GetSize(); i++) {
+			if (m_items[i] == toFind) {
 
-			Node* prev = _head;
-			Node* n = _head->next;
-			T* data = _head->data;
-
-			while (n != nullptr) {
-				if (n->data == toFind) {
-					data = n->data;
-					prev->next = n->next;
-					delete n;
-					_size--;
-					return data;
-				}
-				n = n->next;
+				T* foundData = m_items[i];
+				m_items.erase(m_items.begin() + i);
+				return foundData;
 			}
 		}
-		return nullptr; // if not found
+		return nullptr;
 	}
 
 	T* GetRandom()
 	{
 		srand(time(NULL));
-		int dataIndex = rand() % _size;
-		int currentIndex = 0;
+		int dataIndex = ((GetSize() > 1) ? rand() % GetSize() : 0);
 
-		Node* n = _head;
-		Node* prev = n;
-		T* data = _head->data;
+		T* returnData = m_items[dataIndex];
+		m_items.erase(m_items.begin() + dataIndex);
 
-		// search thru list and find the right node.
-		// at worst case it will be at the end
-		while (currentIndex != _size) {
-
-			// found the right one
-			if (currentIndex == dataIndex) {
-
-				// get data
-				data = n->data;
-
-				// fix links
-				prev->next = n->next;
-				delete n;
-				_size--;
-
-				// break out
-				return data;
-			}
-			currentIndex++;
-			prev = n;
-			n = n->next;
-		}
-
-		return nullptr;
+		return returnData;
 	}
 
 	inline bool Has(T* toFind)
 	{
-		if (_head == 0) return false;
-		else {
-
-			Node* n = _head;
-
-			while (n != nullptr) {
-				if (n->data == toFind) {
-					return true;					
-				}
-				n = n->next;
+		for (int i = 0; i < GetSize(); i++) {
+			if (m_items[i] == toFind) {
+				return true;
 			}
-			return false;
 		}
+		return false;
 	}
 
 	// Delete all members in the Set
 	inline void Empty()
 	{
-		while (!IsEmpty()) {
-			auto temp = GetFirst();
-		}
-		_size = 0;
+		m_items.clear();
 	}
 
 	// view the first item in the set
 	inline T* View()
 	{
-		return(_head->data);
+		return(m_items.front());
 	}
 
 	// Do a deep copy of the passed Set to this one
 	inline Set<T>& operator=(const Set<T>& other)
 	{
 		if (this != &other) {
-			Empty();
-			Node* n = other._head;
-
-			// traverse the set and copy all members to this
-			while (n != nullptr) {
-				Add(n->data);
-				n = n->next;
-			}
+			m_items = other.m_items;
 		}
 		return *this;
 	}
 
-	inline bool IsEmpty() { return (_size == 0); }
-	inline int GetSize() { return _size; }
+	inline bool IsEmpty() { return (m_items.size() == 0); }
+	inline int GetSize() { return m_items.size(); }
 private:
-	struct Node
-	{
-		Node(T* data) {
-			this->data = data;
-			next = 0;
-		}
-		T* data;
-		Node* next;
-	};
-
-	Node* _head;
-	Node* _tail;
-	int _size;
+	std::vector<T*> m_items;
 };

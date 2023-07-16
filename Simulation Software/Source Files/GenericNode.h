@@ -23,7 +23,6 @@ public:
     void AddPrevious(GenericNode* prev);
     Set<GenericNode> GetNext();
     Set<GenericNode> GetPrevious();
-    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
     std::string GetName();
     inline int GetID() { return m_id; }
     inline Type GetType() { return m_nodeType; }
@@ -59,6 +58,7 @@ protected:
 
     // Node process handler
     virtual void NodeProcess(Entity* entity) = 0;
+    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
 
     class Statistics {
     public: 

@@ -164,7 +164,6 @@ protected:
 
 private:
 	// will be replaced with a distribution later
-	int m_arrivalTime;
 	Distribution* m_iaTime;
 
 	// Entity generation members

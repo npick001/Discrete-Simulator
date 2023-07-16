@@ -642,7 +642,6 @@ int GraphicalSource::GetNumberToGenerate()
 /* defines a single server single queue object                  */
 /* provides basic server functionality							*/
 /****************************************************************/
-
 GraphicalServer::GraphicalServer()
 {
 	SetNodeType(GenericNode::SERVER);

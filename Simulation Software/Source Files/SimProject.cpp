@@ -146,16 +146,21 @@ void SimProject::RegisterNodeDeletion(GraphicalNode* deleted)
 
 void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* previous)
 {
-	// if node is in map, dont do anything
-	// we just want a unique list
+	// if node is in map, just make connections
+	// we just want a unique list of SimObjs
 	if (m_nodeMap[node] != nullptr) {
+
+		if (previous != nullptr) {
+			m_nodeMap[node]->AddPrevious(m_nodeMap[previous]);
+			m_nodeMap[previous]->AddNext(m_nodeMap[node]);
+		}
 		return;
 	}
 	else {
 		// create sim obj
 		GenericNode* simObj = NodeFactory::CreateSimObject(node->GetNodeType());
 
-		auto nodesBefore = node->GetPrevious();
+		auto previousNodes = node->GetPrevious();
 
 		SourceNode* src;
 		ServerNode* server;
@@ -190,16 +195,13 @@ void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* pr
 			server->SetServiceTime(gserver->GetServiceTime());
 			server->SetNumResources(gserver->GetNumResources());
 
-			if (previous != nullptr)
-			{
-				// hook up connections
-				while (!nodesBefore.IsEmpty()) {
+			// hook up connections
+			while (!previousNodes.IsEmpty()) {
 
-					auto prevNode = nodesBefore.GetFirst();
+				auto prevNode = previousNodes.GetFirst();
 
-					server->AddPrevious(m_nodeMap[prevNode]);
-					m_nodeMap[prevNode]->AddNext(server);
-				}
+				server->AddPrevious(m_nodeMap[prevNode]);
+				m_nodeMap[prevNode]->AddNext(server);
 			}
 
 			m_nodeMap[node] = server;
@@ -215,9 +217,9 @@ void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* pr
 			if (previous != nullptr)
 			{
 				// hook up connections
-				while (!nodesBefore.IsEmpty()) {
+				while (!previousNodes.IsEmpty()) {
 
-					auto prevNode = nodesBefore.GetFirst();
+					auto prevNode = previousNodes.GetFirst();
 
 					sink->AddPrevious(m_nodeMap[prevNode]);
 					m_nodeMap[prevNode]->AddNext(sink);

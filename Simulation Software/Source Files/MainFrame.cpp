@@ -181,14 +181,14 @@ void MainFrame::DoUpdate()
 
 void MainFrame::RegisterNewSelection(GraphicalNode* selection)
 {
-    // reset properties but dont populate again
+    // reset properties
     m_properties->Reset();
     
     auto selectionProps = selection->GetProperties();
     auto numProps = selectionProps.GetSize();
 
     // populate properties
-    while (selectionProps.GetSize() > 0) {
+    while (!selectionProps.IsEmpty()) {
         m_properties->AddProperty(selectionProps.GetFirst());
     }
 

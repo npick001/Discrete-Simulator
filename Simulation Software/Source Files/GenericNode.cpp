@@ -44,7 +44,18 @@ void GenericNode::Depart(Entity* entity) {
     wxLogMessage("%s", message.c_str());
     
     entity->SetSource(m_id);
-    m_next.GetRandom()->Arrive(entity);
+
+    if (m_next.GetSize() > 1) {
+        m_next.GetRandom()->Arrive(entity);
+    }
+    else {
+
+        if (m_next.GetSize() == 0) { 
+            throw std::runtime_error("No next destinations for Node: " + std::to_string(GetID()));
+        }
+
+        m_next.GetFirst()->Arrive(entity);
+    }
 }
 
 GenericNode::GenericNode(const std::string& name) {
