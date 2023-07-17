@@ -1,11 +1,11 @@
 <map id="Simulation Software/Source Files/Canvas.h" name="Simulation Software/Source Files/Canvas.h">
-<area shape="rect" id="node2" href="$_canvas_8cpp.html" title="Simulation Software\l/Source Files/Canvas.cpp" alt="" coords="420,184,591,225"/>
-<area shape="rect" id="node3" href="$_main_frame_8h.html" title="Simulation Software\l/Source Files/MainFrame.h" alt="" coords="209,95,388,136"/>
-<area shape="rect" id="node6" href="$_main_frame_8cpp.html" title="Simulation Software\l/Source Files/MainFrame.cpp" alt="" coords="202,184,395,225"/>
-<area shape="rect" id="node7" href="$_sim_project_8h.html" title="Simulation Software\l/Source Files/SimProject.h" alt="" coords="513,95,692,136"/>
-<area shape="rect" id="node10" href="$_node_drop_target_8cpp.html" title="Simulation Software\l/Source Files/NodeDropTarget.cpp" alt="" coords="716,95,937,136"/>
-<area shape="rect" id="node4" href="$_main_app_8h.html" title="Simulation Software\l/Source Files/MainApp.h" alt="" coords="12,184,177,225"/>
-<area shape="rect" id="node5" href="$_main_app_8cpp.html" title="Simulation Software\l/Source Files/MainApp.cpp" alt="" coords="5,273,184,315"/>
-<area shape="rect" id="node8" href="$_graphical_node_8cpp.html" title="Simulation Software\l/Source Files/GraphicalNode.cpp" alt="" coords="831,184,1044,225"/>
-<area shape="rect" id="node9" href="$_sim_project_8cpp.html" title="Simulation Software\l/Source Files/SimProject.cpp" alt="" coords="615,184,807,225"/>
+<area shape="rect" id="node2" href="$_canvas_8cpp.html" title="Simulation Software\l/Source Files/Canvas.cpp" alt="" coords="5,184,176,225"/>
+<area shape="rect" id="node3" href="$_main_frame_8h.html" title="Simulation Software\l/Source Files/MainFrame.h" alt="" coords="200,184,379,225"/>
+<area shape="rect" id="node6" href="$_main_frame_8cpp.html" title="Simulation Software\l/Source Files/MainFrame.cpp" alt="" coords="585,273,778,315"/>
+<area shape="rect" id="node7" href="$_sim_project_8h.html" title="Simulation Software\l/Source Files/SimProject.h" alt="" coords="339,95,517,136"/>
+<area shape="rect" id="node10" href="$_node_drop_target_8cpp.html" title="Simulation Software\l/Source Files/NodeDropTarget.cpp" alt="" coords="907,95,1128,136"/>
+<area shape="rect" id="node4" href="$_main_app_8h.html" title="Simulation Software\l/Source Files/MainApp.h" alt="" coords="207,273,372,315"/>
+<area shape="rect" id="node5" href="$_main_app_8cpp.html" title="Simulation Software\l/Source Files/MainApp.cpp" alt="" coords="200,363,379,404"/>
+<area shape="rect" id="node8" href="$_graphical_node_8cpp.html" title="Simulation Software\l/Source Files/GraphicalNode.cpp" alt="" coords="619,184,832,225"/>
+<area shape="rect" id="node9" href="$_sim_project_8cpp.html" title="Simulation Software\l/Source Files/SimProject.cpp" alt="" coords="403,184,595,225"/>
 </map>

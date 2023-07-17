@@ -1,4 +1,5 @@
 #pragma once
+#include "Utility.h"
 
 #include <unordered_map>
 
@@ -16,6 +17,7 @@ struct Selection {
 		NODE,
 		NODE_OUTPUT,
 		NODE_INPUT,
+		NODE_SIZER,
 		EDGE,
 		STATES_MAX
 	};
@@ -67,6 +69,7 @@ struct Selection {
 class GraphicalElement {
 protected:
 	ElementKey m_id;
+	bool m_isSelected;
 	
 	std::string m_label;
 	wxPoint2DDouble m_labelPos;
@@ -90,6 +93,8 @@ public:
 
 	virtual Selection Select(const wxAffineMatrix2D& camera,
 		wxPoint2DDouble clickPosition) = 0;
+	void SetSelected();
+	void SetNotSelected();
 
 	// Elements are guarenteed to be the same if they share the same day
 	inline bool operator==(const GraphicalElement& other) const

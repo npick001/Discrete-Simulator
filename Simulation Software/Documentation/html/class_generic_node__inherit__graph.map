@@ -1,7 +1,6 @@
 <map id="GenericNode" name="GenericNode">
-<area shape="rect" id="node2" href="$class_connection.html" title="{Connection\n||+ Connection()\l}" alt="" coords="5,373,112,450"/>
-<area shape="rect" id="node3" href="$class_server_n_queue.html" title="{ServerNQueue\n||+ ServerNQueue()\l+ ~ServerNQueue()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="136,343,275,479"/>
-<area shape="rect" id="node4" href="$class_sink_node.html" title="{SinkNode\n||+ Test()\l+ SinkNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="299,343,437,479"/>
-<area shape="rect" id="node5" href="$class_source_node.html" title="{SourceNode\n||+ Test()\l+ SourceNode()\l+ SourceNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="461,336,600,487"/>
-<area shape="rect" id="node6" href="$class_s_s_s_q.html" title="{SSSQ\n||+ Test()\l+ SSSQ()\l+ ~SSSQ()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="624,336,763,487"/>
+<area shape="rect" id="node2" href="$class_server_n_queue.html" title="{ServerNQueue\n||+ ServerNQueue()\l+ ~ServerNQueue()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="5,351,144,487"/>
+<area shape="rect" id="node3" href="$class_sink_node.html" title="{SinkNode\n||+ Test()\l+ SinkNode()\l+ SinkNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="168,343,307,494"/>
+<area shape="rect" id="node4" href="$class_source_node.html" title="{SourceNode\n||+ Test()\l+ SourceNode()\l+ SourceNode()\l+ SourceNode()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="331,336,469,501"/>
+<area shape="rect" id="node5" href="$class_s_s_s_q.html" title="{SSSQ\n||+ Test()\l+ SSSQ()\l+ SSSQ()\l+ ~SSSQ()\l+ NodeProcess()\l+ UpdateStatistics()\l+ GetStatistics()\l}" alt="" coords="493,336,632,501"/>
 </map>

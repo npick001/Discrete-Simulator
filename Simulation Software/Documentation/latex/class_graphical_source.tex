@@ -24,6 +24,13 @@ Collaboration diagram for Graphical\+Source\+:
 \includegraphics[height=550pt]{class_graphical_source__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_graphical_source_1_1_my_properties}{My\+Properties}
+\item 
+class \hyperlink{class_graphical_source_1_1_source_properties}{Source\+Properties}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -32,6 +39,8 @@ Collaboration diagram for Graphical\+Source\+:
 \hyperlink{class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b}{Graphical\+Source} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id, wx\+Window $\ast$window, wx\+Point2\+D\+Double center)
 \item 
 void \hyperlink{class_graphical_source_af01b1de06f0e6653edd60b59a279b154}{My\+Draw} (const wx\+Affine\+Matrix2D \&camera, wx\+Graphics\+Context $\ast$gc) override
+\item 
+std\+::unique\+\_\+ptr$<$ \hyperlink{class_graphical_node_1_1_properties_wrapper}{Properties\+Wrapper} $>$ \hyperlink{class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573}{Get\+Sim\+Properties} () override
 \end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
@@ -39,7 +48,7 @@ void \hyperlink{class_graphical_source_af01b1de06f0e6653edd60b59a279b154}{My\+Dr
 \subsection{Detailed Description}
 
 
-Definition at line 105 of file Graphical\+Node.\+h.
+Definition at line 134 of file Graphical\+Node.\+h.
 
 
 
@@ -52,8 +61,16 @@ Definition at line 105 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 180 of file Graphical\+Node.\+cpp.
+Definition at line 246 of file Graphical\+Node.\+cpp.
 
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_source_ad798712e86d821da957bbb7864d76c5a_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b}\label{class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b}} 
 \index{Graphical\+Source@{Graphical\+Source}!Graphical\+Source@{Graphical\+Source}}
 \index{Graphical\+Source@{Graphical\+Source}!Graphical\+Source@{Graphical\+Source}}
@@ -62,19 +79,41 @@ Definition at line 180 of file Graphical\+Node.\+cpp.
 
 
 
-Definition at line 185 of file Graphical\+Node.\+cpp.
+Definition at line 251 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=307pt]{class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph}
+\includegraphics[width=350pt]{class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph}
 \end{center}
 \end{figure}
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573}\label{class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573}} 
+\index{Graphical\+Source@{Graphical\+Source}!Get\+Sim\+Properties@{Get\+Sim\+Properties}}
+\index{Get\+Sim\+Properties@{Get\+Sim\+Properties}!Graphical\+Source@{Graphical\+Source}}
+\subsubsection{\texorpdfstring{Get\+Sim\+Properties()}{GetSimProperties()}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$ \hyperlink{class_graphical_node_1_1_properties_wrapper}{Graphical\+Node\+::\+Properties\+Wrapper} $>$ Graphical\+Source\+::\+Get\+Sim\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a}{Graphical\+Node}.
+
+
+
+Definition at line 284 of file Graphical\+Node.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_graphical_source_af01b1de06f0e6653edd60b59a279b154}\label{class_graphical_source_af01b1de06f0e6653edd60b59a279b154}} 
 \index{Graphical\+Source@{Graphical\+Source}!My\+Draw@{My\+Draw}}
 \index{My\+Draw@{My\+Draw}!Graphical\+Source@{Graphical\+Source}}
@@ -87,7 +126,7 @@ Implements \hyperlink{class_graphical_node_a4a5d4f48454a9721a940499d4f59b0ce}{Gr
 
 
 
-Definition at line 191 of file Graphical\+Node.\+cpp.
+Definition at line 258 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak

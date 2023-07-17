@@ -1,12 +1,15 @@
 <map id="Set::GetFirst" name="Set::GetFirst">
-<area shape="rect" id="node2" href="$class_properties_viewer.html#a610dc708815ecdc748c2898551f086c0" title="PropertiesViewer::Reset" alt="" coords="179,5,341,32"/>
-<area shape="rect" id="node5" href="$class_properties_viewer.html#a728c21d8325941bfcee2599ea9edd9bc" title="PropertiesViewer::ShowProperties" alt="" coords="151,56,369,83"/>
-<area shape="rect" id="node9" href="$class_properties_viewer.html#aa8b18eb764e97888751e5c5ef0bd207f" title="PropertiesViewer::HideProperties" alt="" coords="153,107,367,133"/>
-<area shape="rect" id="node10" href="$class_property_set.html#aece224749884f449d1afda598d468b41" title="PropertySet::GetFirst" alt="" coords="187,157,333,184"/>
-<area shape="rect" id="node11" href="$class_set.html#a747da8b4e20a30c1fe7e5e1fd61881aa" title="Set\&lt; wxPGProperty \&gt;\l::Empty" alt="" coords="185,209,335,250"/>
-<area shape="rect" id="node3" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="625,5,848,32"/>
-<area shape="rect" id="node4" href="$class_canvas.html#a4afa0e24da7b82be3696131c13d89404" title="Canvas::TransformOriginLocation" alt="" coords="896,5,1108,32"/>
-<area shape="rect" id="node6" href="$class_main_frame.html#a00c85521dad6b24000967206bcc53688" title="MainFrame::MainFrame" alt="" coords="417,56,577,83"/>
-<area shape="rect" id="node7" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="654,56,819,83"/>
-<area shape="rect" id="node8" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="945,56,1059,83"/>
+<area shape="rect" id="node2" href="$class_properties_viewer.html#a610dc708815ecdc748c2898551f086c0" title="PropertiesViewer::Reset" alt="" coords="179,31,341,57"/>
+<area shape="rect" id="node7" href="$class_properties_viewer.html#a728c21d8325941bfcee2599ea9edd9bc" title="PropertiesViewer::ShowProperties" alt="" coords="151,81,369,108"/>
+<area shape="rect" id="node11" href="$class_properties_viewer.html#aa8b18eb764e97888751e5c5ef0bd207f" title="PropertiesViewer::HideProperties" alt="" coords="153,132,367,159"/>
+<area shape="rect" id="node12" href="$class_property_set.html#aece224749884f449d1afda598d468b41" title="PropertySet::GetFirst" alt="" coords="187,183,333,209"/>
+<area shape="rect" id="node13" href="$class_set.html#a747da8b4e20a30c1fe7e5e1fd61881aa" title="Set\&lt; wxPGProperty \&gt;\l::Empty" alt="" coords="185,234,335,275"/>
+<area shape="rect" id="node14" href="$class_sim_project.html#afefd1eb6d63ea4e0c698084d51a29fcd" title="SimProject::Build" alt="" coords="436,216,559,243"/>
+<area shape="rect" id="node3" href="$class_main_frame.html#af5c0679e1a94303e8bd0a0742c25a59b" title="MainFrame::RegisterNewSelection" alt="" coords="625,31,848,57"/>
+<area shape="rect" id="node4" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="896,31,1091,57"/>
+<area shape="rect" id="node5" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="1139,5,1297,32"/>
+<area shape="rect" id="node6" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="1140,56,1296,83"/>
+<area shape="rect" id="node8" href="$class_main_frame.html#a00c85521dad6b24000967206bcc53688" title="MainFrame::MainFrame" alt="" coords="417,81,577,108"/>
+<area shape="rect" id="node9" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="654,81,819,108"/>
+<area shape="rect" id="node10" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="936,81,1051,108"/>
 </map>

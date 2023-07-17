@@ -38,6 +38,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_graphical_source-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -51,8 +52,8 @@ Inheritance diagram for GraphicalSource:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_graphical_source__inherit__graph.png" border="0" usemap="#_graphical_source_inherit__map" alt="Inheritance graph"/></div>
 <map name="_graphical_source_inherit__map" id="_graphical_source_inherit__map">
-<area shape="rect" id="node2" href="class_graphical_node.html" title="{GraphicalNode\n|# m_type\l# m_nodeType\l# m_properties\l# m_bodyColor\l# m_bodyShape\l# m_inputRect\l# m_outputRect\l# m_position\l# m_bodySize\l# m_ioSize\l# m_labelColor\l# m_ioColor\l# m_inputs\l# m_outputs\l|+ GetType()\l+ GetNodeType()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ ~GraphicalNode()\l+ Draw()\l+ MyDraw()\land 12 more...\l# GetOutputPoint()\l# GetInputPoint()\l}" alt="" coords="29,351,164,795"/>
-<area shape="rect" id="node3" href="class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ GetType()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,303"/>
+<area shape="rect" id="node2" href="class_graphical_node.html" title="{GraphicalNode\n|# m_nodeType\l# m_next\l# m_previous\l# m_properties\l# m_bodyColor\l# m_bodyShape\l# m_inputRect\l# m_outputRect\l# m_position\l# m_bodySize\l# m_ioSize\l# m_labelColor\l# m_ioColor\l# m_inputs\l# m_outputs\l|+ SetNodeType()\l+ GetNodeType()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ ~GraphicalNode()\l+ SetNext()\l+ SetPrevious()\land 17 more...\l# GetOutputPoint()\l# GetInputPoint()\l}" alt="" coords="29,336,164,795"/>
+<area shape="rect" id="node3" href="class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,288"/>
 </map>
 </div>
 <div class="dynheader">
@@ -60,12 +61,19 @@ Collaboration diagram for GraphicalSource:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_graphical_source__coll__graph.png" border="0" usemap="#_graphical_source_coll__map" alt="Collaboration graph"/></div>
 <map name="_graphical_source_coll__map" id="_graphical_source_coll__map">
-<area shape="rect" id="node2" href="class_graphical_node.html" title="{GraphicalNode\n|# m_type\l# m_nodeType\l# m_bodyColor\l# m_bodyShape\l# m_inputRect\l# m_outputRect\l# m_position\l# m_bodySize\l# m_ioSize\l# m_labelColor\l# m_ioColor\l# m_inputs\l# m_outputs\l|+ GetType()\l+ GetNodeType()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ ~GraphicalNode()\l+ Draw()\l+ MyDraw()\land 12 more...\l# GetOutputPoint()\l# GetInputPoint()\l}" alt="" coords="124,365,259,795"/>
-<area shape="rect" id="node3" href="class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ GetType()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,303"/>
-<area shape="rect" id="node4" href="class_set.html" title="{Set\&lt; wxPGProperty \&gt;\n||+ Set()\l+ Add()\l+ GetFirst()\l+ Get()\l+ Has()\l+ Empty()\l+ View()\l+ operator=()\l+ IsEmpty()\l+ GetSize()\l}" alt="" coords="212,49,363,259"/>
+<area shape="rect" id="node2" href="class_graphical_node.html" title="{GraphicalNode\n|# m_nodeType\l# m_bodyColor\l# m_bodyShape\l# m_inputRect\l# m_outputRect\l# m_position\l# m_bodySize\l# m_ioSize\l# m_labelColor\l# m_ioColor\l# m_inputs\l# m_outputs\l|+ SetNodeType()\l+ GetNodeType()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ GraphicalNode()\l+ ~GraphicalNode()\l+ SetNext()\l+ SetPrevious()\land 17 more...\l# GetOutputPoint()\l# GetInputPoint()\l}" alt="" coords="124,351,259,765"/>
+<area shape="rect" id="node3" href="class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,288"/>
+<area shape="rect" id="node4" href="class_set.html" title="{Set\&lt; wxPGProperty \&gt;\n||+ Set()\l+ Add()\l+ GetFirst()\l+ Get()\l+ Has()\l+ Empty()\l+ View()\l+ operator=()\l+ IsEmpty()\l+ GetSize()\l}" alt="" coords="212,42,363,251"/>
 </map>
 </div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_source_1_1_my_properties.html">MyProperties</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_source_1_1_source_properties.html">SourceProperties</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad798712e86d821da957bbb7864d76c5a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_source.html#ad798712e86d821da957bbb7864d76c5a">GraphicalSource</a> ()</td></tr>
@@ -74,9 +82,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad557a50f4519460a53e8f7b6f4b21f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01b1de06f0e6653edd60b59a279b154"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_source.html#af01b1de06f0e6653edd60b59a279b154">MyDraw</a> (const wxAffineMatrix2D &amp;camera, wxGraphicsContext *gc) override</td></tr>
 <tr class="separator:af01b1de06f0e6653edd60b59a279b154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b7bb7a964e5a5b3a815a005711bb573"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_graphical_node_1_1_properties_wrapper.html">PropertiesWrapper</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_source.html#a3b7bb7a964e5a5b3a815a005711bb573">GetSimProperties</a> () override</td></tr>
+<tr class="separator:a3b7bb7a964e5a5b3a815a005711bb573"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_graphical_node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_graphical_node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_graphical_node.html">GraphicalNode</a></td></tr>
-<tr class="memitem:a6bfbcb9a6b85dd3093a8f6541252ebfe inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_element.html#aa485be48b901d85de97b3bd86f381d9e">GraphicalElement::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a6bfbcb9a6b85dd3093a8f6541252ebfe">GetType</a> () const override</td></tr>
-<tr class="separator:a6bfbcb9a6b85dd3093a8f6541252ebfe inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be01228b0d5b17f1d14038aeee25619 inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a2be01228b0d5b17f1d14038aeee25619">SetNodeType</a> (<a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a> type)</td></tr>
+<tr class="separator:a2be01228b0d5b17f1d14038aeee25619 inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c5493ddcfca4d433421ae06eac1b19a inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a">GetNodeType</a> () const</td></tr>
 <tr class="separator:a4c5493ddcfca4d433421ae06eac1b19a inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c34baa875b133f8c5b1da78da189f1d inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a9c34baa875b133f8c5b1da78da189f1d">GraphicalNode</a> ()</td></tr>
@@ -91,6 +101,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a63c2c7ac34c3f9b3a1383dd157cf731c inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a044a09111bb337580f2a40fcff42ef6f inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a044a09111bb337580f2a40fcff42ef6f">~GraphicalNode</a> ()</td></tr>
 <tr class="separator:a044a09111bb337580f2a40fcff42ef6f inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a036c1cc48701511037e50bc74fd8d430 inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a036c1cc48701511037e50bc74fd8d430">SetNext</a> (<a class="el" href="class_graphical_node.html">GraphicalNode</a> *next)</td></tr>
+<tr class="separator:a036c1cc48701511037e50bc74fd8d430 inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad165a0c444192d4c7ff6a07c62972dab inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#ad165a0c444192d4c7ff6a07c62972dab">SetPrevious</a> (<a class="el" href="class_graphical_node.html">GraphicalNode</a> *previous)</td></tr>
+<tr class="separator:ad165a0c444192d4c7ff6a07c62972dab inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ea0722141f7915424a8db83b72f8c8 inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a77ea0722141f7915424a8db83b72f8c8">GetNext</a> ()</td></tr>
+<tr class="separator:a77ea0722141f7915424a8db83b72f8c8 inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e097f9b7b10970e20c530176a5e50b2 inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a2e097f9b7b10970e20c530176a5e50b2">GetPrevious</a> ()</td></tr>
+<tr class="separator:a2e097f9b7b10970e20c530176a5e50b2 inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5675edef9951820c61973cd8fb242287 inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a5675edef9951820c61973cd8fb242287">Draw</a> (const wxAffineMatrix2D &amp;camera, wxGraphicsContext *gc)</td></tr>
 <tr class="separator:a5675edef9951820c61973cd8fb242287 inherit pub_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c5dc1b7f344e2785531318167c2826b inherit pub_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_node.html">GraphicalNode</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a9c5dc1b7f344e2785531318167c2826b">operator=</a> (const <a class="el" href="class_graphical_node.html">GraphicalNode</a> &amp;other)</td></tr>
@@ -141,11 +159,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_class_graphical_element"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_graphical_element')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="class_graphical_element.html">GraphicalElement</a></td></tr>
-<tr class="memitem:aa485be48b901d85de97b3bd86f381d9e inherit pub_types_class_graphical_element"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_element.html#aa485be48b901d85de97b3bd86f381d9e">Type</a> : unsigned int { <a class="el" href="class_graphical_element.html#aa485be48b901d85de97b3bd86f381d9ead7107fc1a13076e7d37baa5bcab76515">NODE</a>, 
-<a class="el" href="class_graphical_element.html#aa485be48b901d85de97b3bd86f381d9ea3d2a2290806febda78ebe8200e43e4d8">EDGE</a>
- }</td></tr>
-<tr class="separator:aa485be48b901d85de97b3bd86f381d9e inherit pub_types_class_graphical_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_class_graphical_element"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_class_graphical_element')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="class_graphical_element.html">GraphicalElement</a></td></tr>
 <tr class="memitem:afac661e0e1c8a699c8f8264dc99437cc inherit pub_static_attribs_class_graphical_element"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_element.html#afac661e0e1c8a699c8f8264dc99437cc">ms_selectionStateNames</a> [Selection::State::STATES_MAX]</td></tr>
 <tr class="separator:afac661e0e1c8a699c8f8264dc99437cc inherit pub_static_attribs_class_graphical_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,10 +168,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a29991fc9117db0975aa1a61d0df48822 inherit pro_methods_class_graphical_node"><td class="memItemLeft" align="right" valign="top">wxPoint2DDouble&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a29991fc9117db0975aa1a61d0df48822">GetInputPoint</a> () const</td></tr>
 <tr class="separator:a29991fc9117db0975aa1a61d0df48822 inherit pro_methods_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_graphical_node"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_graphical_node')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_graphical_node.html">GraphicalNode</a></td></tr>
-<tr class="memitem:a1e660124c138a5394dc347cb3b523f9f inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_element.html#aa485be48b901d85de97b3bd86f381d9e">GraphicalElement::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a1e660124c138a5394dc347cb3b523f9f">m_type</a></td></tr>
-<tr class="separator:a1e660124c138a5394dc347cb3b523f9f inherit pro_attribs_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d2546ba2e20ff4eb546de82109e2ac8 inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_generic_node.html#a9e7985ab9bbfa1c85091adc0ab71a6b6">GenericNode::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a8d2546ba2e20ff4eb546de82109e2ac8">m_nodeType</a></td></tr>
 <tr class="separator:a8d2546ba2e20ff4eb546de82109e2ac8 inherit pro_attribs_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96b667de782400463e9106af4eacb854 inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a96b667de782400463e9106af4eacb854">m_next</a></td></tr>
+<tr class="separator:a96b667de782400463e9106af4eacb854 inherit pro_attribs_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a968283abe8cfcfd48900e7d6943cb435 inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graphical_node.html">GraphicalNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a968283abe8cfcfd48900e7d6943cb435">m_previous</a></td></tr>
+<tr class="separator:a968283abe8cfcfd48900e7d6943cb435 inherit pro_attribs_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f45ea17bdca2d822ef4d604effcca0e inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_set.html">Set</a>&lt; wxPGProperty &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a7f45ea17bdca2d822ef4d604effcca0e">m_properties</a></td></tr>
 <tr class="separator:a7f45ea17bdca2d822ef4d604effcca0e inherit pro_attribs_class_graphical_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bcf3e642619e571bd8b5eca3e7bdbb6 inherit pro_attribs_class_graphical_node"><td class="memItemLeft" align="right" valign="top">wxColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graphical_node.html#a2bcf3e642619e571bd8b5eca3e7bdbb6">m_bodyColor</a></td></tr>
@@ -193,7 +208,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8h_source.html#l00105">105</a> of file <a class="el" href="_graphical_node_8h_source.html">GraphicalNode.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graphical_node_8h_source.html#l00134">134</a> of file <a class="el" href="_graphical_node_8h_source.html">GraphicalNode.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad798712e86d821da957bbb7864d76c5a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad798712e86d821da957bbb7864d76c5a">&#9670;&nbsp;</a></span>GraphicalSource() <span class="overload">[1/2]</span></h2>
@@ -210,7 +225,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00180">180</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00246">246</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graphical_source_ad798712e86d821da957bbb7864d76c5a_cgraph.png" border="0" usemap="#class_graphical_source_ad798712e86d821da957bbb7864d76c5a_cgraph" alt=""/></div>
+<map name="class_graphical_source_ad798712e86d821da957bbb7864d76c5a_cgraph" id="class_graphical_source_ad798712e86d821da957bbb7864d76c5a_cgraph">
+<area shape="rect" id="node2" href="class_graphical_node.html#a2be01228b0d5b17f1d14038aeee25619" title="GraphicalNode::SetNodeType" alt="" coords="235,13,428,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -246,19 +269,57 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00185">185</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00251">251</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph.png" border="0" usemap="#class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph" alt=""/></div>
 <map name="class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph" id="class_graphical_source_ad557a50f4519460a53e8f7b6f4b21f5b_cgraph">
-<area shape="rect" id="node2" href="class_set.html#afc630403d8cd371e244ff4c425b40edf" title="Set::Add" alt="" coords="235,13,308,39"/>
+<area shape="rect" id="node2" href="class_graphical_node.html#a2be01228b0d5b17f1d14038aeee25619" title="GraphicalNode::SetNodeType" alt="" coords="235,5,428,32"/>
+<area shape="rect" id="node3" href="class_set.html#afc630403d8cd371e244ff4c425b40edf" title="Set::Add" alt="" coords="295,56,368,83"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3b7bb7a964e5a5b3a815a005711bb573"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b7bb7a964e5a5b3a815a005711bb573">&#9670;&nbsp;</a></span>GetSimProperties()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="class_graphical_node_1_1_properties_wrapper.html">GraphicalNode::PropertiesWrapper</a> &gt; GraphicalSource::GetSimProperties </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="class_graphical_node.html#a2ad6386709ceabfbf97daabf4c6cd64a">GraphicalNode</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00284">284</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573_cgraph.png" border="0" usemap="#class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573_cgraph" alt=""/></div>
+<map name="class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573_cgraph" id="class_graphical_source_a3b7bb7a964e5a5b3a815a005711bb573_cgraph">
+<area shape="rect" id="node2" href="class_graphical_element.html#a09ed630bc819c852f96ed20dda8d84e8" title="GraphicalElement::GetID" alt="" coords="283,5,449,32"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="af01b1de06f0e6653edd60b59a279b154"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af01b1de06f0e6653edd60b59a279b154">&#9670;&nbsp;</a></span>MyDraw()</h2>
 
@@ -295,7 +356,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_graphical_node.html#a4a5d4f48454a9721a940499d4f59b0ce">GraphicalNode</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00191">191</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graphical_node_8cpp_source.html#l00258">258</a> of file <a class="el" href="_graphical_node_8cpp_source.html">GraphicalNode.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

@@ -1,4 +1,7 @@
 #pragma once
+#include "Utility.h"
+#include "Directives.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -9,9 +12,7 @@
 
 //#include "gcem.hpp"
 //#include "stats.hpp"
-#include "Utility.h"
 #include "Distribution.h"
-#include "Directives.h"
 
 class Entity;
 
@@ -73,7 +74,6 @@ public:
 	void LeastSquaresEstimate();
 	////////////////////////////
 
-
 	// setter for tolerance
 	// default tolerance = 10^-6
 	// default iterations = 500
@@ -131,11 +131,11 @@ private:
 	// Input data
 	std::vector<double> m_dataset;
 	int m_numDataPoints;
-	float m_dataRange;
-	float m_binSize;
+	double m_dataRange;
+	double m_binSize;
 	std::string m_currentFile;
-	float m_xMinimum, m_xMaximum;
-	float m_yMinimum, m_yMaximum;
+	double m_xMinimum, m_xMaximum;
+	double m_yMinimum, m_yMaximum;
 
 	// Histogram
 	int m_numHistogramIntervals;

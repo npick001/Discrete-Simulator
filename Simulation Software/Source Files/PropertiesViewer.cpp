@@ -17,7 +17,7 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 
 void PropertiesViewer::Reset()
 {
-	while (m_props.GetSize() > 0) {
+	while (!m_props.IsEmpty()) {
 		m_propGrid->RemoveProperty(m_props.GetFirst());
 	}
 }
@@ -45,6 +45,8 @@ void PropertiesViewer::AddProperty(wxPGProperty* propToAdd)
 
 	// save property in Set for easy access
 	m_props.Add(propToAdd);
+
+	Refresh();
 }
 
 void PropertiesViewer::EditProperty(wxPGProperty* propToEdit, wxVariant* newValue)

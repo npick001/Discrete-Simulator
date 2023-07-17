@@ -24,6 +24,13 @@ Collaboration diagram for Graphical\+Server\+:
 \includegraphics[height=550pt]{class_graphical_server__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_graphical_server_1_1_my_properties}{My\+Properties}
+\item 
+class \hyperlink{class_graphical_server_1_1_server_properties}{Server\+Properties}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -32,6 +39,8 @@ Collaboration diagram for Graphical\+Server\+:
 \hyperlink{class_graphical_server_a2690b914b1876f1eded21c1601803e93}{Graphical\+Server} (\hyperlink{_graphical_element_8h_ade5fd6c85839a416577ff9de1605141e}{Element\+Key} id, wx\+Window $\ast$window, wx\+Point2\+D\+Double center)
 \item 
 void \hyperlink{class_graphical_server_ad144b6cfdf945981fd0db425dfc41e5b}{My\+Draw} (const wx\+Affine\+Matrix2D \&camera, wx\+Graphics\+Context $\ast$gc) override
+\item 
+std\+::unique\+\_\+ptr$<$ \hyperlink{class_graphical_node_1_1_properties_wrapper}{Properties\+Wrapper} $>$ \hyperlink{class_graphical_server_a857655d34a7e3662100e7b86526e2855}{Get\+Sim\+Properties} () override
 \end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
@@ -39,7 +48,7 @@ void \hyperlink{class_graphical_server_ad144b6cfdf945981fd0db425dfc41e5b}{My\+Dr
 \subsection{Detailed Description}
 
 
-Definition at line 123 of file Graphical\+Node.\+h.
+Definition at line 160 of file Graphical\+Node.\+h.
 
 
 
@@ -52,8 +61,16 @@ Definition at line 123 of file Graphical\+Node.\+h.
 
 
 
-Definition at line 218 of file Graphical\+Node.\+cpp.
+Definition at line 332 of file Graphical\+Node.\+cpp.
 
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_server_a676ae0f9427d8dae12256c6203127541_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_graphical_server_a2690b914b1876f1eded21c1601803e93}\label{class_graphical_server_a2690b914b1876f1eded21c1601803e93}} 
 \index{Graphical\+Server@{Graphical\+Server}!Graphical\+Server@{Graphical\+Server}}
 \index{Graphical\+Server@{Graphical\+Server}!Graphical\+Server@{Graphical\+Server}}
@@ -62,11 +79,41 @@ Definition at line 218 of file Graphical\+Node.\+cpp.
 
 
 
-Definition at line 223 of file Graphical\+Node.\+cpp.
+Definition at line 337 of file Graphical\+Node.\+cpp.
 
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_server_a2690b914b1876f1eded21c1601803e93_cgraph}
+\end{center}
+\end{figure}
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graphical_server_a857655d34a7e3662100e7b86526e2855}\label{class_graphical_server_a857655d34a7e3662100e7b86526e2855}} 
+\index{Graphical\+Server@{Graphical\+Server}!Get\+Sim\+Properties@{Get\+Sim\+Properties}}
+\index{Get\+Sim\+Properties@{Get\+Sim\+Properties}!Graphical\+Server@{Graphical\+Server}}
+\subsubsection{\texorpdfstring{Get\+Sim\+Properties()}{GetSimProperties()}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$ \hyperlink{class_graphical_node_1_1_properties_wrapper}{Graphical\+Node\+::\+Properties\+Wrapper} $>$ Graphical\+Server\+::\+Get\+Sim\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \hyperlink{class_graphical_node_a2ad6386709ceabfbf97daabf4c6cd64a}{Graphical\+Node}.
+
+
+
+Definition at line 381 of file Graphical\+Node.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_graphical_server_a857655d34a7e3662100e7b86526e2855_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_graphical_server_ad144b6cfdf945981fd0db425dfc41e5b}\label{class_graphical_server_ad144b6cfdf945981fd0db425dfc41e5b}} 
 \index{Graphical\+Server@{Graphical\+Server}!My\+Draw@{My\+Draw}}
 \index{My\+Draw@{My\+Draw}!Graphical\+Server@{Graphical\+Server}}
@@ -79,7 +126,7 @@ Implements \hyperlink{class_graphical_node_a4a5d4f48454a9721a940499d4f59b0ce}{Gr
 
 
 
-Definition at line 239 of file Graphical\+Node.\+cpp.
+Definition at line 355 of file Graphical\+Node.\+cpp.
 
 Here is the call graph for this function\+:
 \nopagebreak

@@ -6,6 +6,9 @@ MainFrame* MainFrame::m_instance = 0;
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
+   // _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
+
+    this->Maximize(true);
     m_manager.SetManagedWindow(this);
 
     // set up default notebook style
@@ -123,7 +126,6 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(m_mainCanvas, wxAuiPaneInfo().Name("Current Model").
         Dockable(true).CenterPane());
 
-
     // PROPERTIES VIEWER
     auto propWidth = GetSize().x * 0.2;
     auto propSize = new wxSize(propWidth, GetSize().y);
@@ -133,7 +135,6 @@ MainFrame::MainFrame(const wxString& title)
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right().BestSize(*propSize));
 
-
     // Commit the changes with the AUI manager
     m_manager.Update();
     this->Layout();
@@ -141,7 +142,7 @@ MainFrame::MainFrame(const wxString& title)
     // transform the origin to middle of the canvas
     wxSize canvasSize = m_mainCanvas->GetSize();
     auto canvas = (Canvas*)m_mainCanvas->GetCurrentPage();
-    canvas->TransformOriginLocation(canvasSize);
+    canvas->InitializeOriginLocation(canvasSize);
 
     // File menu events 
     this->Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
@@ -180,14 +181,14 @@ void MainFrame::DoUpdate()
 
 void MainFrame::RegisterNewSelection(GraphicalNode* selection)
 {
-    // reset properties but dont populate again
+    // reset properties
     m_properties->Reset();
     
     auto selectionProps = selection->GetProperties();
     auto numProps = selectionProps.GetSize();
 
     // populate properties
-    while (selectionProps.GetSize() > 0) {
+    while (!selectionProps.IsEmpty()) {
         m_properties->AddProperty(selectionProps.GetFirst());
     }
 
@@ -319,17 +320,44 @@ wxPoint MainFrame::GetStartPosition()
 
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
-    //wxLogMessage("Inside OnOpen");
-
     try {
         // open the file explorer
-        wxFileDialog openFileDialog(this, _("Open file"), "", "", "All files (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+        wxFileDialog openFileDialog(this, _("Open file"), "", "", "Model files (*.xml)|*.xml", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
         if (openFileDialog.ShowModal() == wxID_CANCEL) {
             return;
         }
 
         wxString path = openFileDialog.GetPath();
+        wxString filename = openFileDialog.GetFilename();
+
+        // Check if file exists
+        if (!wxFileExists(path))
+        {
+            wxLogError("File does not exist: %s", path);
+            return;
+        }
+
+        wxFileInputStream input_stream(path);
+        if (!input_stream.IsOk())
+        {
+            wxLogError("Cannot open current contents in file '%s'.", path);
+            return;
+        }
+
+        // get xml file 
+        wxXmlDocument serializedXMLFile(input_stream, "UTF-8");
+        if (!serializedXMLFile.IsOk()) {
+            wxLogError("Cannot load XML data located in '%s'.", path);
+            return;
+        }
+
+        // convert the xml to simobjects
+        XMLSerializer xmlToCode;
+        SimulationObjects deserializedObjects = xmlToCode.DeserializeXMLDocument(serializedXMLFile); 
+
+        m_simProject->ViewCanvas().PopulateCanvas(deserializedObjects);
+
         wxMessageBox("Selected file: " + path, "Info", wxOK | wxICON_INFORMATION);
     }
     catch (const std::exception& e) {
@@ -351,20 +379,26 @@ void MainFrame::OnSaveAs(wxCommandEvent& event) {
     try {
         // save the file to the browsed location
         // will need to choose the file type
-        wxFileDialog saveFileDialog(this, _("Save PNG file"), "", "",
-            "PNG files (*.png)|*.xyz", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+        wxFileDialog saveFileDialog(this, _("Save Model file"), "", "",
+            "XML files (*.xml)|*.xml", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
         if (saveFileDialog.ShowModal() == wxID_CANCEL)
             return;     // the user changed idea...
 
+        wxString path = saveFileDialog.GetPath();
+        wxString filename = saveFileDialog.GetFilename();
         // save the current contents in the file;
         // this can be done with e.g. wxWidgets output streams:
-        wxFileOutputStream output_stream(saveFileDialog.GetPath());
+        wxFileOutputStream output_stream(path);
         if (!output_stream.IsOk())
         {
-            wxLogError("Cannot save current contents in file '%s'.", saveFileDialog.GetPath());
+            wxLogError("Cannot save current contents in file '%s'.", path);
             return;
         }
+        XMLSerializer toXML;
+        wxXmlDocument serializedState = toXML.SerializeSimObjects(m_simProject->ViewCanvas().GetUniqueNodes(),
+                                                                  m_simProject->ViewCanvas().GetUniqueEdges());
+        serializedState.Save(output_stream);
     }
     catch (const std::exception& e) {
         wxLogError("Exception caught in OnOpen: %s", e.what());
@@ -436,17 +470,25 @@ void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 void MainFrame::OnBuild(wxCommandEvent& event)
 {
     m_simProject->Build();
+    m_simProject->CheckBuildViability();
 }
 
 void MainFrame::OnRun(wxCommandEvent& event)
 {
-    m_simProject->Run();
-    m_simProject->WriteStatistics();
+    if (m_simProject->HasBeenBuilt()) {
+        m_simProject->Run();
+        m_simProject->WriteStatistics();
+    }
+    else {
+        wxLogMessage("No simulation code has been generated.\nProject has not been built yet.");
+    }
 }
 
 void MainFrame::OnBuildAndRun(wxCommandEvent& event)
 {
     m_simProject->Build();
+    m_simProject->CheckBuildViability();
+
     m_simProject->Run();
     m_simProject->WriteStatistics();
 }

@@ -1,9 +1,14 @@
 #pragma once
+#include "Utility.h"
+
 #include <wx/wx.h>
 #include <wx/log.h>
 
+#include "Set.h"
 #include "Directives.h"
 #include "Entity.h"
+
+class GraphicalNode;
 
 class GenericNode
 {
@@ -14,9 +19,10 @@ public:
         SINK
     };
 
-    void SetNext(GenericNode* next);
-    void SetPrevious(GenericNode* prev);
-    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
+    void AddNext(GenericNode* next);
+    void AddPrevious(GenericNode* prev);
+    Set<GenericNode> GetNext();
+    Set<GenericNode> GetPrevious();
     std::string GetName();
     inline int GetID() { return m_id; }
     inline Type GetType() { return m_nodeType; }
@@ -36,11 +42,12 @@ public:
     virtual std::unique_ptr<StatisticsWrapper> GetStatistics() = 0;
 
 protected:
+    friend class SimProject;
     GenericNode(const std::string& name);
     GenericNode(const GenericNode& other);
     ~GenericNode();
 
-    GenericNode* m_next;
+    Set<GenericNode> m_next;
 
     /*
         Depart entity from this node
@@ -51,6 +58,7 @@ protected:
 
     // Node process handler
     virtual void NodeProcess(Entity* entity) = 0;
+    inline void SetNodeType(Type nodetype) { m_nodeType = nodetype; }
 
     class Statistics {
     public: 
@@ -65,5 +73,5 @@ private:
     static int m_nextID;
     std::string m_name;
 
-    GenericNode* m_prev;
+    Set<GenericNode> m_previous;
 };

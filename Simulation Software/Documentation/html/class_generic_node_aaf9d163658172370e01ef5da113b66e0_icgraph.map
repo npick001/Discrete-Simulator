@@ -1,5 +1,6 @@
 <map id="GenericNode::GetName" name="GenericNode::GetName">
-<area shape="rect" id="node2" href="$class_generic_node.html#ad05137b18cf33caa12d6c0d1293205c2" title="GenericNode::SetNodeType" alt="" coords="213,31,396,57"/>
-<area shape="rect" id="node3" href="$class_source_node.html#aad28db9c905ffdccd8013bc1e4481848" title="SourceNode::SourceNode" alt="" coords="444,5,616,32"/>
-<area shape="rect" id="node4" href="$class_sink_node.html#a0c3227da9d4ca0757f3512e4473c9b5c" title="SinkNode::SinkNode" alt="" coords="459,56,601,83"/>
+<area shape="rect" id="node2" href="$class_generic_node.html#a793b15e284a17095c013015049628a03" title="GenericNode::SetNodeType" alt="" coords="213,56,396,83"/>
+<area shape="rect" id="node3" href="$class_source_node.html#abb26d83cef2e50b0add1499a05e6905d" title="SourceNode::SourceNode" alt="" coords="444,5,616,32"/>
+<area shape="rect" id="node4" href="$class_sink_node.html#a098ae3f4e358acdfe3e3aa0906b41c60" title="SinkNode::SinkNode" alt="" coords="459,56,601,83"/>
+<area shape="rect" id="node5" href="$class_s_s_s_q.html#a03276f98400682df04d5a770f6615733" title="SSSQ::SSSQ" alt="" coords="478,107,582,133"/>
 </map>

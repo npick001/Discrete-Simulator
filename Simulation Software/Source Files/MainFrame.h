@@ -1,5 +1,5 @@
-#ifndef MAINFRAME_H
-#define MAINFRAME_H
+#pragma once
+#include "Utility.h"
 
 #include <wx/wx.h>
 #include <wx/aui/aui.h>
@@ -17,11 +17,14 @@
 
 #include "SimulationExecutive.h"
 #include "Statistics.h"
+#include "GraphicalNode.h"
 #include "Canvas.h"
+#include "SimProject.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
-#include "GraphicalNode.h"
-#include "SimProject.h"
+#include "ExponentialProperty.h"
+#include "XMLSerialization.h"
+
 
 enum {
     ID_Exit = 1,
@@ -41,9 +44,11 @@ enum {
     ID_SampleItem,
 };
 
+class GraphicalNode;
 class Canvas;
-class Selection;
+struct Selection;
 class SimProject;
+class SimObjectLibrary;
 
 class MainFrame : public wxFrame {
 public:
@@ -57,8 +62,6 @@ public:
     static MainFrame* GetInstance();
 
 private:
-
-
     static MainFrame* m_instance;
     SimProject* m_simProject;
 
@@ -106,7 +109,3 @@ private:
 
     void OnResize(wxSizeEvent& event);
 };
-
-
-#endif // MAINFRAME_H
-

@@ -1,5 +1,8 @@
 #pragma once
+#include "Utility.h"
+
 #include <iostream>
+
 #include "Distribution.h"
 #include "SimulationExecutive.h"
 #include "GenericNode.h"
@@ -7,7 +10,6 @@
 #include "FIFO.h"
 #include "Set.h"
 
-using namespace std;
 class FIFO;
 
 /***************************************
@@ -19,6 +21,11 @@ Naming conventions for this library:
 - Public member functions are CamelCase
 
 ***************************************/
+
+namespace RoutingLogic
+{
+
+}
 
 // BEGIN IMPLEMENTED NODES
 
@@ -44,6 +51,10 @@ public:
 	void NodeProcess(Entity* e) override;
 
 	class SourceStatistics;
+
+	void SetIATime(Distribution* iaTime);
+	void SetNumberToGenerate(int numtogen);
+	void SetEntityToGenerate(Entity* toGenerate);
 
 	// commit changes to statistics
 	// should be improved by adding a timer to call this,
@@ -74,57 +85,28 @@ private:
 };
 
 /****************************************************************/
-/* Sink Node:                                                   */
-/* defines an entity deletion object                            */
-/* the sink object provides statistics				     	    */
-/****************************************************************/
-class SinkNode : public GenericNode
-{
-public:
-	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
-
-	SinkNode();
-	SinkNode(string name);
-	//~SinkNode() {}
-	void NodeProcess(Entity* e);
-
-	// inherit the statistics wrapper to populate 
-	class SinkStatistics;
-	void UpdateStatistics();
-
-	// Override the GetStatistics method
-	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
-
-protected:
-	class MyStatistics;
-
-private:
-
-	// Statistics handling
-	Statistics* m_myStats;
-	int sm_entitiesDestroyed;
-	static int sm_totalEntitiesDestroyed;
-};
-
-/****************************************************************/
-/* SSSQ:                                                        */
-/* defines a single server single queue object                  */
+/* Server:                                                      */
+/* defines a server with a single queue object                  */
 /* provides basic server functionality							*/
 /* the server object provides statistics and queue statistics   */
 /****************************************************************/
-class SSSQ : public GenericNode {
+class ServerNode : public GenericNode {
 public:
 	void Test() { std::cout << "SSSQ NODE EXISTS" << std::endl; }
 
-	SSSQ();
-	SSSQ(std::string name, Distribution* serviceTime);
-	~SSSQ();
+	ServerNode();
+	ServerNode(std::string name, Distribution* serviceTime);
+	~ServerNode();
 	void NodeProcess(Entity* e);
 	void UpdateStatistics();
 
 	class SSSQStatistics;
 
-	// Override the GetStatistics method
+	void SetServiceTime(Distribution* serviceTime);
+	void SetNumResources(int resources);
+	Distribution* GetServiceTime();
+	int GetNumResources();
+
 	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
 
 protected:
@@ -137,6 +119,7 @@ private:
 	void EndProcessingEM(Entity* e);
 
 	Distribution* m_serviceTime;
+	int m_numResources;
 
 	enum ServerState { busy, idle };
 	ServerState m_state;
@@ -160,18 +143,22 @@ private:
 };
 
 /****************************************************************/
-/* ServerNQueue:                                                */
-/* defines a single server having N resources and M queues.	    */
-/* provides advanced server functionality						*/
-/* the server object provides statistics and queue statistics   */
+/* Sink Node:                                                   */
+/* defines an entity deletion object                            */
+/* the sink object provides statistics				     	    */
 /****************************************************************/
-class ServerNQueue : public GenericNode {
+class SinkNode : public GenericNode
+{
 public:
-	ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime);
-	~ServerNQueue();
+	void Test() { std::cout << "SINK NODE EXISTS" << std::endl; }
+
+	SinkNode();
+	SinkNode(std::string name);
+	//~SinkNode() {}
 	void NodeProcess(Entity* e);
 
-	class ServerNQueueStatistics;
+	// inherit the statistics wrapper to populate 
+	class SinkStatistics;
 	void UpdateStatistics();
 
 	// Override the GetStatistics method
@@ -181,34 +168,62 @@ protected:
 	class MyStatistics;
 
 private:
-	class StartProcessingEA;
-	class EndProcessingEA;
-	void StartProcessingEM();
-	void EndProcessingEM(Entity* e);
-
-	int m_maxResources;
-	int m_remainingResources;
-
-	// for scheduled utilization
-	std::vector<double> sm_states;
-	std::vector<Time> sm_stateChangeTimes;
-
-	Distribution* m_serviceTime;
-
-	//static FIFO<Entity>* m_queue;
-	std::vector<FIFO*> m_queues;
-
 	// Statistics handling
 	Statistics* m_myStats;
-	int sm_processed;
-	static int sm_totalProcessed;
-	double sm_waitTime; // sum of entity queue times at this server
-	static double sm_totalWaitTime; // sum of entity queue times at all servers
-	double sm_totalServiceTime;
-	double sm_idleTime;
-	static double sm_totalIdleTime;
-	double sm_utilization;
+	int sm_entitiesDestroyed;
+	static int sm_totalEntitiesDestroyed;
 };
+
+/****************************************************************/
+/* ServerNQueue:                                                */
+/* defines a single server having N resources and M queues.	    */
+/* provides advanced server functionality						*/
+/* the server object provides statistics and queue statistics   */
+///****************************************************************/
+//class ServerNQueue : public GenericNode {
+//public:
+//	ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime);
+//	~ServerNQueue();
+//	void NodeProcess(Entity* e);
+//
+//	class ServerNQueueStatistics;
+//	void UpdateStatistics();
+//
+//	// Override the GetStatistics method
+//	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
+//
+//protected:
+//	class MyStatistics;
+//
+//private:
+//	class StartProcessingEA;
+//	class EndProcessingEA;
+//	void StartProcessingEM();
+//	void EndProcessingEM(Entity* e);
+//
+//	int m_maxResources;
+//	int m_remainingResources;
+//
+//	// for scheduled utilization
+//	std::vector<double> sm_states;
+//	std::vector<Time> sm_stateChangeTimes;
+//
+//	Distribution* m_serviceTime;
+//
+//	//static FIFO<Entity>* m_queue;
+//	std::vector<FIFO*> m_queues;
+//
+//	// Statistics handling
+//	Statistics* m_myStats;
+//	int sm_processed;
+//	static int sm_totalProcessed;
+//	double sm_waitTime; // sum of entity queue times at this server
+//	static double sm_totalWaitTime; // sum of entity queue times at all servers
+//	double sm_totalServiceTime;
+//	double sm_idleTime;
+//	static double sm_totalIdleTime;
+//	double sm_utilization;
+//};
 
 
 ///****************************************************************/

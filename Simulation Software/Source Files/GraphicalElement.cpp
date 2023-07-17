@@ -7,6 +7,7 @@ const std::string GraphicalElement::ms_selectionStateNames[Selection::State::STA
 	"NODE",
 	"NODE_OUTPUT",
 	"NODE_INPUT",
+	"NODE_SIZER",
 	"EDGE"
 };
 
@@ -29,6 +30,16 @@ GraphicalElement& GraphicalElement::operator=(const GraphicalElement& other) {
 	m_labelPos = other.m_labelPos;
 
 	return *this;
+}
+
+void GraphicalElement::SetSelected()
+{
+	m_isSelected = true;
+}
+
+void GraphicalElement::SetNotSelected()
+{
+	m_isSelected = false;
 }
 
 // Element Container

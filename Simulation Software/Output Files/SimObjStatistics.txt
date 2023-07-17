@@ -61,3 +61,309 @@ SINK 2
 	- Entities Created: 10
 	- Total Entities Created: 10
 
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 18.532060
+	- Time Idle: 1.844191
+	- Percent Utilization: 0.909493
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 6.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SOURCE 3
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 4
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 20.376252
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 9.000000
+SINK 5
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 18.532060
+	- Time Idle: 1.844191
+	- Percent Utilization: 0.909493
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 6.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SOURCE 3
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SSSQ 4
+
+	- Entities Processed: 10
+	- Time Waiting: 134.876764
+	- Time in Service: 20.376252
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 9.000000
+SINK 5
+
+	- Entities Created: 10
+	- Total Entities Created: 20
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SINK 1
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 71.259027
+	- Time in Service: 18.945601
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 204.021165
+	- Time in Service: 18.108763
+	- Time Idle: 6.641583
+	- Percent Utilization: 0.731657
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SSSQ 2
+
+	- Entities Processed: 10
+	- Time Waiting: 204.021165
+	- Time in Service: 18.621767
+	- Time Idle: 6.128579
+	- Percent Utilization: 0.752384
+	- Average Queue Wait Time: inf
+	- Average Queue Size: -nan(ind)
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000
+SSSQ 3
+
+	- Entities Processed: 10
+	- Time Waiting: 204.021165
+	- Time in Service: 19.847948
+	- Time Idle: 4.902398
+	- Percent Utilization: 0.801926
+	- Average Queue Wait Time: inf
+	- Average Queue Size: -nan(ind)
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000
+SINK 4
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 1
+	- Time Waiting: 51.714323
+	- Time in Service: 2.143137
+	- Time Idle: 14.405865
+	- Percent Utilization: 0.129503
+	- Average Queue Wait Time: -nan(ind)
+	- Average Queue Size: -nan(ind)
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 3
+
+	- Entities Processed: 8
+	- Time Waiting: 51.714323
+	- Time in Service: 16.336044
+	- Time Idle: 0.212958
+	- Percent Utilization: 0.987132
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 7.000000
+SSSQ 4
+
+	- Entities Processed: 1
+	- Time Waiting: 51.714323
+	- Time in Service: 2.296381
+	- Time Idle: 14.252622
+	- Percent Utilization: 0.138762
+	- Average Queue Wait Time: -nan(ind)
+	- Average Queue Size: -nan(ind)
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 1.000000

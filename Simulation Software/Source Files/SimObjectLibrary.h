@@ -1,12 +1,17 @@
 #pragma once
+#include "Utility.h"
+
+#include <vector>
 #include <wx/wx.h>
 #include <wx/dnd.h>
+
 #include "GraphicalNode.h"
-#include "NodeDataObject.h"
 
 enum {
     ID_NodeBeginDrag
 };
+
+class GraphicalNode;
 
 class SimObjectLibrary : public wxPanel {
 public:

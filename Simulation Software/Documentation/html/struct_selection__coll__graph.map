@@ -1,3 +1,3 @@
 <map id="Selection" name="Selection">
-<area shape="rect" id="node2" href="$class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ GetType()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,303"/>
+<area shape="rect" id="node2" href="$class_graphical_element.html" title="{GraphicalElement\n|+ ms_selectionStateNames\l# m_id\l# m_label\l# m_labelPos\l|+ GraphicalElement()\l+ GraphicalElement()\l+ GraphicalElement()\l+ operator=()\l+ ~GraphicalElement()\l+ GetID()\l+ GetLabel()\l+ SetLabel()\l+ Draw()\l+ Select()\l+ operator==()\l+ operator!=()\l}" alt="" coords="5,5,188,288"/>
 </map>

@@ -1,5 +1,7 @@
 #pragma once
+#include "Utility.h"
 
+#include <memory>
 #include <list>
 #include <string>
 
@@ -7,20 +9,22 @@
 #include "wx/graphics.h"
 #include "wx/propgrid/propgrid.h"
 
-#include "SimulationExecutive.h"
 #include "Set.h"
+#include "SimulationExecutive.h"
 #include "GenericNode.h"
+#include "Distribution.h"
 #include "GraphicalElement.h"
 #include "GraphicalEdge.h"
-#include "Action.h"
+#include "XMLSerialization.h"
 
 class GraphicalEdge;
-//class MoveNodeAction;
 class NodeFactory;
 class SimProperties;
+class SimProject;
 
 class GraphicalNode : public GraphicalElement {
 public:
+	void SetNodeType(GenericNode::Type type);
 	GenericNode::Type GetNodeType() const
 		{ return m_nodeType; }
 
@@ -29,9 +33,15 @@ public:
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center);
 	GraphicalNode(ElementKey id, wxWindow* window, wxPoint2DDouble center, const std::string& _text);
 	GraphicalNode(const GraphicalNode& other);
+	virtual std::unique_ptr<GraphicalNode> Clone() = 0;
 
 	// Also disconnects attached edges, preparing them for deletion
 	~GraphicalNode();
+
+	void AddNext(GraphicalNode* next);
+	void AddPrevious(GraphicalNode* previous);
+	Set<GraphicalNode> GetNext();
+	Set<GraphicalNode> GetPrevious();
 
 	// all specific nodes should implement their own drawing for different pictures
 	void Draw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc);
@@ -58,50 +68,55 @@ public:
 		wxPoint2DDouble clickPosition) override;
 
 	void Move(wxPoint2DDouble displacement);
+	void ShiftSizerPositions(int selectedSizer, wxPoint2DDouble displacement);
+	int GetSelectedSizerIndex(wxPoint2DDouble clickPosition);
+	int GetSelectedSizer();
 
+	wxColor GetBodyColor();
 	void SetBodyColor(const wxColor& color);
-	void SetNodeType(GenericNode::Type type);
 
-	// PROPERTY REPORTING DESIGN PATTERN
-	class PropertiesWrapper {
-	public:
-		PropertiesWrapper(int id) : m_id(id) {}
-		virtual void ReportProperties() = 0;
+	// XML Serialization
+	virtual void Accept(Visitor& visitor) = 0;
 
-	private:
-		int m_id;
-	};
-
-	virtual std::unique_ptr<PropertiesWrapper> GetSimProperties() = 0;
+	wxSize GetSize();
+	wxPoint2DDouble GetCenter();
+	void SetBodyShape(wxRect2DDouble newBody);
+	wxRect2DDouble GetBodyShape();
+	void SetTransformationMatrix(wxAffineMatrix2D transform);
+	wxAffineMatrix2D GetTransformationMatrix();
+	wxPoint2DDouble GetTransformedPoint(wxPoint2DDouble toTransform);
+	void SetInputRect(wxRect2DDouble newInput);
+	wxRect2DDouble GetInputRect();
+	void SetOutputRect(wxRect2DDouble newOutput);
+	wxRect2DDouble GetOutputRect();
+	void SetIOColor(wxColor newColor);
+	wxColor GetIOColor();
 
 protected:
 	friend class GraphicalEdge;
 	GenericNode::Type m_nodeType;
 
-	/// <SimProperties>
-	/// This is the same design pattern as Statistics from the simulation code.
-	/// Idea is that the parent class defines a properties object that is populated by the
-	/// instances of this object. Any handlers using the parent class
-	/// can thus access instantiated object properties
-	class SimProperties
-	{
-	protected:
-		inline SimProperties() {}
-	};
+	Set<GraphicalNode> m_next;
+	Set<GraphicalNode> m_previous;
 
-	// list of wxProperties that can be used and displayed (hopefully)
+	// list of wxProperties that can be used and displayed
 	Set<wxPGProperty> m_properties;
 
 	// graphical characteristics
 	wxColor m_bodyColor;
+	wxColor m_labelColor;
+	wxColor m_ioColor;
+	wxColor m_sizerColor;
 	wxRect2DDouble m_bodyShape;
+	wxAffineMatrix2D m_transformation;
 	wxRect2DDouble m_inputRect;
 	wxRect2DDouble m_outputRect;
 	wxPoint2DDouble m_position;
+	wxRect2DDouble m_sizers[4];
+	int m_sizerSelected;
 	wxSize m_bodySize;
 	wxSize m_ioSize;
-	wxColor m_labelColor;
-	wxColor m_ioColor;
+	wxSize m_sizerSize;
 
 	// link to graphical edges
 	std::list<GraphicalEdge*> m_inputs;
@@ -126,21 +141,35 @@ typedef SpecificElementContainer<GraphicalNode> NodeMap;
 class GraphicalSource : public GraphicalNode {
 public:
 	GraphicalSource();
+	GraphicalSource(const GraphicalSource& other);
 	GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	~GraphicalSource();
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class SourceProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+	// Simulation values
+	void SetEntity(Entity* e);
+	void SetIATime(Distribution* iaTime);
+	void SetNumberToGenerate(int numgen);
+	Entity* GetEntity();
+	Distribution* GetIATime();
+	int GetNumberToGenerate();
+
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
 
 protected:
-	class MyProperties;
+	friend class SimProject;
 
 private:
 	// will be replaced with a distribution later
-	int m_arrivalTime;
+	Distribution* m_iaTime;
 
-	SimProperties* m_myProps;
+	// Entity generation members
+	Entity* m_entity;
+	int m_numberToGenerate;
+	bool m_infiniteGeneration;
 };
 
 /****************************************************************/
@@ -152,25 +181,34 @@ private:
 class GraphicalServer : public GraphicalNode {
 public:
 	GraphicalServer();
+	GraphicalServer(const GraphicalServer& other);
 	GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	~GraphicalServer();
+
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class ServerProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+	// Simulation values
+	void SetServiceTime(Distribution* serviceTime);
+	void SetNumResources(int resources);
+	Distribution* GetServiceTime();
+	int GetNumResources();
+
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
 
 protected:
-	class MyProperties;
+	friend class SimProject;
 
 private:
 	// will be replaced with a distribution later
-	double m_serviceTime;
+	//double m_serviceTime;
+	Distribution* m_serviceTime;
 
-	// will be replaced with a time unit later (second, minute, hour, day, year)
+	// time unit (second, minute, hour, day, year)
 	TimeUnit m_timeUnit;
 	int m_numResources;
-
-	SimProperties* m_myProps;
 };
 
 /*****************************************/
@@ -181,16 +219,19 @@ private:
 class GraphicalSink : public GraphicalNode {
 public:
 	GraphicalSink();
+	GraphicalSink(const GraphicalSink& other);
 	GraphicalSink(ElementKey id, wxWindow* window, wxPoint2DDouble center);
+	std::unique_ptr<GraphicalNode> Clone() override;
 
 	void MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc) override;
 
-	class SinkProperties;
-	std::unique_ptr<PropertiesWrapper> GetSimProperties() override;
+	// XML Serialization
+	void Accept(Visitor& visitor) override;
 
 protected:
+	friend class SimProject;
+
 	class MyProperties;
 
 private:
-	SimProperties* m_myProps;
 };

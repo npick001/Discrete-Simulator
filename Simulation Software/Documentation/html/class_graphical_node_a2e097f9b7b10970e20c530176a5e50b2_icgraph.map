@@ -1,0 +1,9 @@
+<map id="GraphicalNode::GetPrevious" name="GraphicalNode::GetPrevious">
+<area shape="rect" id="node2" href="$class_graphical_node.html#a4c5493ddcfca4d433421ae06eac1b19a" title="GraphicalNode::GetNodeType" alt="" coords="239,56,433,83"/>
+<area shape="rect" id="node3" href="$class_sim_project.html#afefd1eb6d63ea4e0c698084d51a29fcd" title="SimProject::Build" alt="" coords="481,56,604,83"/>
+<area shape="rect" id="node4" href="$class_main_frame.html#a17926c75eb083f5b8249696c4cdccf55" title="MainFrame::GetInstance" alt="" coords="652,56,817,83"/>
+<area shape="rect" id="node5" href="$class_canvas.html#ae7b17a82b7376ee4105b8f36179ab90e" title="Canvas::SetSimulationProject" alt="" coords="865,31,1060,57"/>
+<area shape="rect" id="node8" href="$class_main_app.html#aff3d398e1b61f1016c37d57798f86731" title="MainApp::OnInit" alt="" coords="905,81,1020,108"/>
+<area shape="rect" id="node6" href="$class_sim_project.html#a970fe219d4659b02bf5e870a69351399" title="SimProject::SimProject" alt="" coords="1108,5,1267,32"/>
+<area shape="rect" id="node7" href="$class_sim_project.html#aa0e8fbbc7a2307501e31601ac6e9d967" title="SimProject::SetCanvas" alt="" coords="1109,56,1265,83"/>
+</map>

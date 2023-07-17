@@ -1,3 +1,4 @@
 <map id="GraphicalSource::GraphicalSource" name="GraphicalSource::GraphicalSource">
-<area shape="rect" id="node2" href="$class_set.html#afc630403d8cd371e244ff4c425b40edf" title="Set::Add" alt="" coords="235,13,308,39"/>
+<area shape="rect" id="node2" href="$class_graphical_node.html#a2be01228b0d5b17f1d14038aeee25619" title="GraphicalNode::SetNodeType" alt="" coords="235,5,428,32"/>
+<area shape="rect" id="node3" href="$class_set.html#afc630403d8cd371e244ff4c425b40edf" title="Set::Add" alt="" coords="295,56,368,83"/>
 </map>

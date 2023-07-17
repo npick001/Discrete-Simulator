@@ -1,9 +1,20 @@
 #pragma once
-#include <vector>
+#include "Utility.h"
 
-#include "Canvas.h"
+#include <vector>
+#include <map>
+
 #include "SimulationExecutive.h"
 #include "SpecificNodes.h"
+#include "GraphicalNode.h"
+#include "Canvas.h"
+
+class GenericNode;
+class GraphicalNode;
+
+class GraphicalSource;
+class GraphicalServer;
+class GraphicalSink;
 
 class Canvas;
 
@@ -36,19 +47,30 @@ public:
 	SimProject(Canvas* canvas);
 
 	void SetCanvas(Canvas* canvas);
-	const Canvas& ViewCanvas();
+	Canvas& ViewCanvas();
 
 	/// <Build>
 	/// Take graphical nodes and generate 
 	/// simulation code
 	void Build();
+	bool CheckBuildViability();
 	void Run();
 	void WriteStatistics();
 
 	void SetTimeUnit(TimeUnit newUnit);
+	bool HasBeenBuilt();
+
+	void RegisterNewConnection(GraphicalNode* from, GraphicalNode* to);
+	void RegisterNodeDeletion(GraphicalNode* deleted);
+
+protected:
+	void BuildChildren(GraphicalNode* node, GraphicalNode* previous);
+	void LinkChildren(Set<GraphicalNode> roots);
 
 private:
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
+	std::unordered_map<GraphicalNode*, GenericNode*> m_nodeMap;
+	bool m_hasBeenBuilt;
 
 	TimeUnit m_modelTimeUnit;
 
@@ -72,6 +94,7 @@ public:
 	static GraphicalNode* CreateGraphicalNode(GenericNode::Type type, ElementKey id, wxWindow* window, wxPoint2DDouble center);
 
 	static GenericNode* CreateSimObject(GenericNode::Type type);
+
 private:
 
 };

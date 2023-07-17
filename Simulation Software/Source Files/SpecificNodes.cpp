@@ -111,7 +111,7 @@ SourceNode::SourceNode() : GenericNode("Default Source")
 
 	sm_entitiesCreated = 0;
 	m_myStats = new MyStatistics(sm_entitiesCreated, sm_totalEntitiesCreated);
-
+	
 	ScheduleEventIn(0.0, new ArriveEA(this));
 }
 
@@ -131,7 +131,6 @@ SourceNode::SourceNode(std::string name, int numGen, Entity* entity, Distributio
 	ScheduleEventIn(0.0, new ArriveEA(this));
 };
 
-// For infinite entity generation => NOT COMPLETED
 SourceNode::SourceNode(std::string name, Entity* entity, Distribution* dist) : GenericNode(name) {
 
 	SetNodeType(SOURCE);
@@ -162,6 +161,28 @@ void SourceNode::NodeProcess(Entity* e)
 	wxLogMessage("%s", message.c_str());
 }
 
+void SourceNode::SetIATime(Distribution* iaTime)
+{
+	m_arrivalDistribution = iaTime;
+}
+
+void SourceNode::SetNumberToGenerate(int numtogen)
+{
+	m_numberToGenerate = numtogen;
+
+	if (m_numberToGenerate == -1) {
+		m_infiniteGeneration = true;
+	}
+	else {
+		m_infiniteGeneration = false;
+	}
+}
+
+void SourceNode::SetEntityToGenerate(Entity* toGenerate)
+{
+	m_entity = toGenerate;
+}
+
 // commit changes to statistics
 // should be improved by adding a timer to call this,
 // investigate more later.
@@ -176,106 +197,12 @@ std::unique_ptr<GenericNode::StatisticsWrapper> SourceNode::GetStatistics() {
 	return std::make_unique<SourceStatistics>(m_myStats, GetID());
 }
 
-// Get custom statistics for sink
-class SinkNode::MyStatistics : public Statistics {
-
-public:
-	MyStatistics() {
-		m_sm_entitiesDestroyed = 0;
-		m_sm_totalEntitiesDestroyed = 0;
-	}
-
-	MyStatistics(int entitiesDestroyed, int totalEntitiesDestroyed) {
-		m_sm_entitiesDestroyed = entitiesDestroyed;
-		m_sm_totalEntitiesDestroyed = totalEntitiesDestroyed;
-	}
-
-	// write statistics to the file
-	void Report(std::string header) override {
-
-		auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
-
-		// final parameter of write file is 1 for reset, 0 for append to current file
-		// Generate the header
-		WriteToFile(outputFile, header, 0);
-
-		// to_string the data
-		std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesDestroyed) +
-			"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesDestroyed) + '\n';
-
-		// write data to the file
-		WriteToFile(outputFile, data, 0);
-	}
-
-private:
-	int m_sm_entitiesDestroyed;
-	int m_sm_totalEntitiesDestroyed;
-};
-
-class SinkNode::SinkStatistics : public StatisticsWrapper
-{
-public:
-	SinkStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
-		m_stats = stats;
-	}
-	~SinkStatistics() {}
-
-	void ReportStats() override {
-		std::string header = "SINK " + std::to_string(m_id) + "\n";
-		m_stats->Report(header);
-	}
-
-	void DeleteStats() override {
-		delete m_stats;
-	}
-
-private:
-	Statistics* m_stats;
-};
-
-SinkNode::SinkNode() : GenericNode("Default Sink")
-{
-	SetNodeType(SINK);
-	sm_entitiesDestroyed = 0;
-	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
-}
-
-SinkNode::SinkNode(string name) : GenericNode(name) {
-	SetNodeType(SINK);
-	sm_entitiesDestroyed = 0;
-	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
-};
-
-void SinkNode::NodeProcess(Entity* entity) {
-
-	std::string message = "Deleting " + std::to_string(entity->GetID()) + '\n';
-	wxLogMessage("%s", message.c_str());
-
-	entity->SetDeletionTime(GetSimulationTime());
-
-	sm_entitiesDestroyed++;
-	SinkNode::sm_totalEntitiesDestroyed++;
-
-	delete entity;
-}
-
-void SinkNode::UpdateStatistics() {
-	delete m_myStats;
-	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
-}
-
-// Override the GetStatistics method
-std::unique_ptr<GenericNode::StatisticsWrapper> SinkNode::GetStatistics() {
-	UpdateStatistics();
-	return std::make_unique<SinkStatistics>(m_myStats, GetID());
-}
-
 // statics to be initialized
-int SSSQ::sm_totalProcessed = 0;
-double SSSQ::sm_totalWaitTime = 0;
-double SSSQ::sm_totalIdleTime = 0;
+int ServerNode::sm_totalProcessed = 0;
+double ServerNode::sm_totalWaitTime = 0;
+double ServerNode::sm_totalIdleTime = 0;
 
-class SSSQ::MyStatistics : public Statistics
+class ServerNode::MyStatistics : public Statistics
 {
 public:
 	MyStatistics() {
@@ -340,7 +267,7 @@ private:
 	double m_sm_QmazSize;
 };
 
-class SSSQ::SSSQStatistics : public StatisticsWrapper
+class ServerNode::SSSQStatistics : public StatisticsWrapper
 {
 public:
 	SSSQStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
@@ -362,9 +289,9 @@ private:
 	Statistics* m_stats;
 };
 
-class SSSQ::StartProcessingEA : public EventAction {
+class ServerNode::StartProcessingEA : public EventAction {
 public:
-	StartProcessingEA(SSSQ* s) {
+	StartProcessingEA(ServerNode* s) {
 		_s = s;
 	}
 
@@ -372,12 +299,12 @@ public:
 		_s->StartProcessingEM();
 	}
 private:
-	SSSQ* _s;
+	ServerNode* _s;
 };
 
-class SSSQ::EndProcessingEA : public EventAction {
+class ServerNode::EndProcessingEA : public EventAction {
 public:
-	EndProcessingEA(SSSQ* s, Entity* e) {
+	EndProcessingEA(ServerNode* s, Entity* e) {
 		_s = s;
 		_e = e;
 	}
@@ -386,11 +313,11 @@ public:
 		_s->EndProcessingEM(_e);
 	}
 private:
-	SSSQ* _s;
+	ServerNode* _s;
 	Entity* _e;
 };
 
-SSSQ::SSSQ() : GenericNode("Default Server")
+ServerNode::ServerNode() : GenericNode("Default Server")
 {
 	SetNodeType(SERVER);
 
@@ -409,7 +336,7 @@ SSSQ::SSSQ() : GenericNode("Default Server")
 	sm_utilization = 0;
 }
 
-SSSQ::SSSQ(std::string name, Distribution* serviceTime) : GenericNode(name) {
+ServerNode::ServerNode(std::string name, Distribution* serviceTime) : GenericNode(name) {
 	SetNodeType(SERVER);
 
 	m_state = idle;
@@ -427,7 +354,7 @@ SSSQ::SSSQ(std::string name, Distribution* serviceTime) : GenericNode(name) {
 	sm_utilization = 0;
 }
 
-SSSQ::~SSSQ()
+ServerNode::~ServerNode()
 {
 	sm_states.clear();
 	sm_stateChangeTimes.clear();
@@ -437,7 +364,7 @@ SSSQ::~SSSQ()
 	//&SSSQStatistics::DeleteStats;
 }
 
-void SSSQ::StartProcessingEM() {
+void ServerNode::StartProcessingEM() {
 	m_state = busy;
 	Entity* e = m_queue->GetEntity();
 
@@ -457,14 +384,14 @@ void SSSQ::StartProcessingEM() {
 	ScheduleEventIn(serviceTime, new EndProcessingEA(this, e));
 }
 
-void SSSQ::EndProcessingEM(Entity* e) {
+void ServerNode::EndProcessingEM(Entity* e) {
 	m_state = idle;
 
 	sm_states.push_back(1.0);
 	sm_stateChangeTimes.push_back(GetSimulationTime());
 
 	sm_processed++;
-	SSSQ::sm_totalProcessed++;
+	ServerNode::sm_totalProcessed++;
 
 	if (!m_queue->IsEmpty()) {
 		ScheduleEventIn(0.0, new StartProcessingEA(this));
@@ -477,7 +404,7 @@ void SSSQ::EndProcessingEM(Entity* e) {
 	Depart(e);
 }
 
-void SSSQ::NodeProcess(Entity* e) {
+void ServerNode::NodeProcess(Entity* e) {
 	m_queue->AddEntity(e);
 
 	if (m_state == idle) {
@@ -485,7 +412,7 @@ void SSSQ::NodeProcess(Entity* e) {
 	}
 }
 
-void SSSQ::UpdateStatistics()
+void ServerNode::UpdateStatistics()
 {
 	double timeUtilized = 0;
 
@@ -504,44 +431,43 @@ void SSSQ::UpdateStatistics()
 	m_myStats = new MyStatistics(sm_processed, sm_totalWaitTime, sm_totalServiceTime, sm_idleTime, sm_utilization, m_queue);
 }
 
-std::unique_ptr<GenericNode::StatisticsWrapper> SSSQ::GetStatistics() {
+void ServerNode::SetServiceTime(Distribution* serviceTime)
+{
+	m_serviceTime = serviceTime;
+}
+
+void ServerNode::SetNumResources(int resources)
+{
+	m_numResources = resources;
+}
+
+Distribution* ServerNode::GetServiceTime()
+{
+	return m_serviceTime;
+}
+
+int ServerNode::GetNumResources()
+{
+	return m_numResources;
+}
+
+std::unique_ptr<GenericNode::StatisticsWrapper> ServerNode::GetStatistics() {
 	UpdateStatistics();
 	return std::make_unique<SSSQStatistics>(m_myStats, GetID());
 }
 
+// Get custom statistics for sink
+class SinkNode::MyStatistics : public Statistics {
 
-// statics to be initialized
-//int SSSQ::sm_totalProcessed = 0;
-//double SSSQ::sm_totalWaitTime = 0;
-//double SSSQ::sm_totalIdleTime = 0;
-
-class ServerNQueue::MyStatistics : public Statistics
-{
 public:
 	MyStatistics() {
-		m_sm_processed = 0.0;
-		m_sm_waitTime = 0.0;
-		m_sm_totalServiceTime = 0.0;
-		m_sm_idleTime = 0.0;
-		m_sm_utilization = 0.0;
-		m_sm_QavgWaitTime = 0.0;
-		m_sm_QavgSize = 0.0;
-		m_sm_QminSize = 0.0;
-		m_sm_QmazSize = 0.0;
+		m_sm_entitiesDestroyed = 0;
+		m_sm_totalEntitiesDestroyed = 0;
 	}
 
-	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO* queue) {
-
-		m_sm_processed = processed;
-		m_sm_waitTime = waitTime;
-		m_sm_totalServiceTime = serviceTime;
-		m_sm_idleTime = idleTime;
-		m_sm_utilization = util;
-
-		m_sm_QavgWaitTime = queue->GetAverageWaitTime();
-		m_sm_QavgSize = queue->GetAverageQueueSize();
-		m_sm_QminSize = queue->GetMinimumQueueSize();
-		m_sm_QmazSize = queue->GetMaximumQueueSize();
+	MyStatistics(int entitiesDestroyed, int totalEntitiesDestroyed) {
+		m_sm_entitiesDestroyed = entitiesDestroyed;
+		m_sm_totalEntitiesDestroyed = totalEntitiesDestroyed;
 	}
 
 	// write statistics to the file
@@ -554,41 +480,28 @@ public:
 		WriteToFile(outputFile, header, 0);
 
 		// to_string the data
-		std::string data = "\t- Entities Processed: " + std::to_string(m_sm_processed) +
-			"\n\t- Time Waiting: " + std::to_string(m_sm_waitTime) + "\n\t- Time in Service: " + std::to_string(m_sm_totalServiceTime) +
-			"\n\t- Time Idle: " + std::to_string(m_sm_idleTime) + "\n\t- Percent Utilization: " + std::to_string(m_sm_utilization) +
-			"\n\t- Average Queue Wait Time: " + std::to_string(m_sm_QavgWaitTime) + "\n\t- Average Queue Size: " + std::to_string(m_sm_QavgSize) +
-			"\n\t- Minimum Queue Size: " + std::to_string(m_sm_QminSize) + "\n\t- Maximum Queue Size: " + std::to_string(m_sm_QmazSize);
+		std::string data = "\t- Entities Created: " + std::to_string(m_sm_entitiesDestroyed) +
+			"\n\t- Total Entities Created: " + std::to_string(m_sm_totalEntitiesDestroyed) + '\n';
 
 		// write data to the file
 		WriteToFile(outputFile, data, 0);
 	}
 
 private:
-
-	int m_sm_processed;
-	double m_sm_waitTime;
-	double m_sm_totalServiceTime;
-	double m_sm_idleTime;
-	double m_sm_utilization;
-
-	double m_sm_QavgWaitTime;
-	double m_sm_QavgSize;
-	double m_sm_QminSize;
-	double m_sm_QmazSize;
+	int m_sm_entitiesDestroyed;
+	int m_sm_totalEntitiesDestroyed;
 };
 
-class ServerNQueue::ServerNQueueStatistics : public StatisticsWrapper
+class SinkNode::SinkStatistics : public StatisticsWrapper
 {
 public:
-	ServerNQueueStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
+	SinkStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
 		m_stats = stats;
 	}
-
-	~ServerNQueueStatistics() {}
+	~SinkStatistics() {}
 
 	void ReportStats() override {
-		std::string header = "ServerNQueue: " + std::to_string(m_id) + "\n";
+		std::string header = "SINK " + std::to_string(m_id) + "\n";
 		m_stats->Report(header);
 	}
 
@@ -601,82 +514,207 @@ private:
 };
 
 
-class ServerNQueue::StartProcessingEA : public EventAction {
-public:
-	StartProcessingEA(ServerNQueue* s) {
-		_s = s;
-	}
 
-	void Execute() {
-		_s->StartProcessingEM();
-	}
-private:
-	ServerNQueue* _s;
+SinkNode::SinkNode() : GenericNode("Default Sink")
+{
+	SetNodeType(SINK);
+	sm_entitiesDestroyed = 0;
+	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
+}
+
+SinkNode::SinkNode(std::string name) : GenericNode(name) {
+	SetNodeType(SINK);
+	sm_entitiesDestroyed = 0;
+	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
 };
 
-class ServerNQueue::EndProcessingEA : public EventAction {
-public:
-	EndProcessingEA(ServerNQueue* s, Entity* e) {
-		_s = s;
-		_e = e;
-	}
+void SinkNode::NodeProcess(Entity* entity) {
 
-	void Execute() {
-		_s->EndProcessingEM(_e);
-	}
-private:
-	ServerNQueue* _s;
-	Entity* _e;
-};
+	std::string message = "Deleting " + std::to_string(entity->GetID()) + '\n';
+	wxLogMessage("%s", message.c_str());
 
+	entity->SetDeletionTime(GetSimulationTime());
 
-ServerNQueue::ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime)
-	: GenericNode(name)
-{
-	m_remainingResources = resources;
-	m_maxResources = resources;
-	
-	for (int i = 0; i < queues; i++) {
-		m_queues.push_back(new FIFO());
-	}
+	sm_entitiesDestroyed++;
+	SinkNode::sm_totalEntitiesDestroyed++;
 
-	m_serviceTime = serviceTime;
-
-	m_myStats = new MyStatistics();
-	sm_processed = 0;
-	sm_waitTime = 0;
-	sm_totalServiceTime = 0;
-	sm_idleTime = 0;
-	sm_utilization = 0;
+	delete entity;
 }
 
-ServerNQueue::~ServerNQueue()
-{
-	delete m_serviceTime;
-
-	&ServerNQueueStatistics::DeleteStats;
+void SinkNode::UpdateStatistics() {
+	delete m_myStats;
+	m_myStats = new MyStatistics(sm_entitiesDestroyed, sm_totalEntitiesDestroyed);
 }
 
-void ServerNQueue::NodeProcess(Entity* e)
-{
+// Override the GetStatistics method
+std::unique_ptr<GenericNode::StatisticsWrapper> SinkNode::GetStatistics() {
+	UpdateStatistics();
+	return std::make_unique<SinkStatistics>(m_myStats, GetID());
 }
 
-void ServerNQueue::UpdateStatistics()
-{
-}
-
-std::unique_ptr<GenericNode::StatisticsWrapper> ServerNQueue::GetStatistics()
-{
-	return std::unique_ptr<StatisticsWrapper>();
-}
-
-void ServerNQueue::StartProcessingEM()
-{
-}
-
-void ServerNQueue::EndProcessingEM(Entity* e)
-{
-}
+//
+//class ServerNQueue::MyStatistics : public Statistics
+//{
+//public:
+//	MyStatistics() {
+//		m_sm_processed = 0.0;
+//		m_sm_waitTime = 0.0;
+//		m_sm_totalServiceTime = 0.0;
+//		m_sm_idleTime = 0.0;
+//		m_sm_utilization = 0.0;
+//		m_sm_QavgWaitTime = 0.0;
+//		m_sm_QavgSize = 0.0;
+//		m_sm_QminSize = 0.0;
+//		m_sm_QmazSize = 0.0;
+//	}
+//
+//	MyStatistics(int processed, double waitTime, double serviceTime, double idleTime, double util, FIFO* queue) {
+//
+//		m_sm_processed = processed;
+//		m_sm_waitTime = waitTime;
+//		m_sm_totalServiceTime = serviceTime;
+//		m_sm_idleTime = idleTime;
+//		m_sm_utilization = util;
+//
+//		m_sm_QavgWaitTime = queue->GetAverageWaitTime();
+//		m_sm_QavgSize = queue->GetAverageQueueSize();
+//		m_sm_QminSize = queue->GetMinimumQueueSize();
+//		m_sm_QmazSize = queue->GetMaximumQueueSize();
+//	}
+//
+//	// write statistics to the file
+//	void Report(std::string header) override {
+//
+//		auto outputFile = ".\\Output Files\\SimObjStatistics.txt";
+//
+//		// final parameter of write file is 1 for reset, 0 for append to current file
+//		// Generate the header
+//		WriteToFile(outputFile, header, 0);
+//
+//		// to_string the data
+//		std::string data = "\t- Entities Processed: " + std::to_string(m_sm_processed) +
+//			"\n\t- Time Waiting: " + std::to_string(m_sm_waitTime) + "\n\t- Time in Service: " + std::to_string(m_sm_totalServiceTime) +
+//			"\n\t- Time Idle: " + std::to_string(m_sm_idleTime) + "\n\t- Percent Utilization: " + std::to_string(m_sm_utilization) +
+//			"\n\t- Average Queue Wait Time: " + std::to_string(m_sm_QavgWaitTime) + "\n\t- Average Queue Size: " + std::to_string(m_sm_QavgSize) +
+//			"\n\t- Minimum Queue Size: " + std::to_string(m_sm_QminSize) + "\n\t- Maximum Queue Size: " + std::to_string(m_sm_QmazSize);
+//
+//		// write data to the file
+//		WriteToFile(outputFile, data, 0);
+//	}
+//
+//private:
+//
+//	int m_sm_processed;
+//	double m_sm_waitTime;
+//	double m_sm_totalServiceTime;
+//	double m_sm_idleTime;
+//	double m_sm_utilization;
+//
+//	double m_sm_QavgWaitTime;
+//	double m_sm_QavgSize;
+//	double m_sm_QminSize;
+//	double m_sm_QmazSize;
+//};
+//
+//class ServerNQueue::ServerNQueueStatistics : public StatisticsWrapper
+//{
+//public:
+//	ServerNQueueStatistics(Statistics* stats, int id) : StatisticsWrapper(id) {
+//		m_stats = stats;
+//	}
+//
+//	~ServerNQueueStatistics() {}
+//
+//	void ReportStats() override {
+//		std::string header = "ServerNQueue: " + std::to_string(m_id) + "\n";
+//		m_stats->Report(header);
+//	}
+//
+//	void DeleteStats() override {
+//		delete m_stats;
+//	}
+//
+//private:
+//	Statistics* m_stats;
+//};
+//
+//
+//class ServerNQueue::StartProcessingEA : public EventAction {
+//public:
+//	StartProcessingEA(ServerNQueue* s) {
+//		_s = s;
+//	}
+//
+//	void Execute() {
+//		_s->StartProcessingEM();
+//	}
+//private:
+//	ServerNQueue* _s;
+//};
+//
+//class ServerNQueue::EndProcessingEA : public EventAction {
+//public:
+//	EndProcessingEA(ServerNQueue* s, Entity* e) {
+//		_s = s;
+//		_e = e;
+//	}
+//
+//	void Execute() {
+//		_s->EndProcessingEM(_e);
+//	}
+//private:
+//	ServerNQueue* _s;
+//	Entity* _e;
+//};
+//
+//
+//ServerNQueue::ServerNQueue(std::string name, int resources, int queues, Distribution* serviceTime)
+//	: GenericNode(name)
+//{
+//	m_remainingResources = resources;
+//	m_maxResources = resources;
+//	
+//	for (int i = 0; i < queues; i++) {
+//		m_queues.push_back(new FIFO());
+//	}
+//
+//	m_serviceTime = serviceTime;
+//
+//	m_myStats = new MyStatistics();
+//	sm_processed = 0;
+//	sm_waitTime = 0;
+//	sm_totalServiceTime = 0;
+//	sm_idleTime = 0;
+//	sm_utilization = 0;
+//}
+//
+//ServerNQueue::~ServerNQueue()
+//{
+//	delete m_serviceTime;
+//
+//	&ServerNQueueStatistics::DeleteStats;
+//}
+//
+//void ServerNQueue::NodeProcess(Entity* e)
+//{
+//}
+//
+//void ServerNQueue::UpdateStatistics()
+//{
+//}
+//
+//std::unique_ptr<GenericNode::StatisticsWrapper> ServerNQueue::GetStatistics()
+//{
+//	return std::unique_ptr<StatisticsWrapper>();
+//}
+//
+//void ServerNQueue::StartProcessingEM()
+//{
+//}
+//
+//void ServerNQueue::EndProcessingEM(Entity* e)
+//{
+//}
 
 //SystemOfSSSQs::SystemOfSSSQs(int numSSSQs, Distribution* distr)
 //{

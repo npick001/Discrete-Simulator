@@ -1,6 +1,6 @@
 #pragma once
-
 #include <list>
+#include <vector>
 
 #include "wx/wx.h"
 
@@ -8,7 +8,19 @@
 #include "GraphicalElement.h"
 #include "GraphicalNode.h"
 #include "GraphicalEdge.h"
+#include "SimProject.h"
 #include "Action.h"
+#include "XMLSerialization.h"
+
+class GenericNode;
+class GraphicalEdge;
+class GraphicalNode;
+class History;
+class MoveNodeAction;
+class SimulationObjects;
+
+typedef SpecificElementContainer<GraphicalNode> NodeMap;
+typedef SpecificElementContainer<GraphicalEdge> EdgeMap;
 
 class Canvas : public wxPanel {
 public:
@@ -20,19 +32,31 @@ public:
 	void AddNode(GenericNode::Type type, wxPoint2DDouble center);
 
 	// Set the origin location to be 0, 0 at the center of the canvas on creation
-	void TransformOriginLocation(wxSize canvasSize);
+	void InitializeOriginLocation(wxSize canvasSize);
 	Set<GraphicalNode> GetSimObjects();
+	std::vector<std::unique_ptr<GraphicalNode>> GetUniqueNodes();
+	std::vector<std::unique_ptr<GraphicalEdge>> GetUniqueEdges();
+	ElementKey GetNextID();
+
+	void SetSimulationProject(SimProject* parentProject);
+
+	// after XML deserialization, need to show objects on canvas 
+	void PopulateCanvas(SimulationObjects simObjects);
 
 private:
 	ElementKey m_nextID;
+	int m_statusBarFields;
+
+	// canvas is the visual controller, need to let project know of a change user made
+	SimProject* m_myProject; 
 
 	// Used to identify and write to specific fields in the debug status bar
 	enum DebugField : unsigned int {
 		SELECTION_STATE,
 		COMPONENT_SELECTED,
 		COMPONENTS_CONNECTED,
-		MOUSE_POSITION,
-		FIELDS_MAX
+		ZOOM_LEVEL = 2,
+		MOUSE_POSITION = 3,
 	};
 
 	// IDs used for popup menu options
@@ -60,20 +84,20 @@ private:
 	NodeMap m_nodes;
 	EdgeMap m_edges;
 	Set<GraphicalNode> m_gnodes;
+	Set<GraphicalEdge> m_gEdges;
 
 	// Grid things
 	// "variable grid size in world space" approach
+	// not implemented yet
 	std::vector<double> m_gridSizes;
 	wxSize m_canvasSize;
 
-	/*std::vector<GraphicalNode> m_nodes;
-	std::vector<GraphicalEdge> m_edges;*/
-
 	// History of actions
-	History m_history;
-	MoveNodeAction m_moveNodeAction;
+	History* m_history;
+	MoveNodeAction* m_moveNodeAction;
 
 	Selection m_selection;
+	Selection m_previousSelection;
 
 	GraphicalEdge* m_incompleteEdge;
 
@@ -83,12 +107,19 @@ private:
 	bool isShiftDown = false;
 
 	bool m_isPanning = false;
+	bool m_isScaling = false;
+	int m_selectedSizerIndex = -1; // if a node sizer is selected, will be updated
 	wxAffineMatrix2D m_cameraPan;
 	wxAffineMatrix2D m_cameraZoom;
-	wxPoint m_origin;
+	wxAffineMatrix2D m_originTransformation;
+	wxPoint2DDouble m_origin;
 	double m_zoomLevel;
 
+	// screen to local coordinates
 	wxAffineMatrix2D GetCameraTransform() const;
+
+	// point must be in screen coordinates for this to work
+	wxPoint2DDouble GetTransformedPoint(wxPoint2DDouble pointToTransform);
 	void DrawGrid(wxGraphicsContext* gc);
 
 	// Selection contains the graphical node which was selected, if any, and the
@@ -103,9 +134,9 @@ private:
 	// handled by the mouse event functions
 	void PanCamera(wxPoint2DDouble clickPosition);
 	void MoveNode(wxPoint2DDouble clickPosition);
+	void ScaleNode(wxPoint2DDouble clickPosition);
 
 	// Popup menu event handlers
-	void OnMenuAddNode(wxCommandEvent& event);
 	void OnMenuAddSource(wxCommandEvent& event);
 	void OnMenuAddServer(wxCommandEvent& event);
 	void OnMenuAddSink(wxCommandEvent& event);
@@ -130,4 +161,5 @@ private:
 
 	// Key events for handling shortcuts
 	void OnCharHook(wxKeyEvent& event);
+	void OnDeleteKey(wxKeyEvent& event);
 };
