@@ -45,7 +45,14 @@ public:
 	T* GetRandom()
 	{
 		srand(time(NULL));
-		int dataIndex = ((GetSize() > 1) ? rand() % GetSize() : 0);
+		int dataIndex = -1;
+		
+		if ((GetSize() > 1)) {
+			dataIndex = rand() % GetSize();
+		}
+		else {
+			dataIndex = 0;
+		}
 
 		T* returnData = m_items[dataIndex];
 		m_items.erase(m_items.begin() + dataIndex);

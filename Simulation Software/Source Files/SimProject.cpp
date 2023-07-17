@@ -44,10 +44,14 @@ void SimProject::Build() {
 		}
 	}
 
+	Set<GraphicalNode> rootsForLinking = roots;
+
 	// build all the roots children
 	while (!roots.IsEmpty()) {
-		RecursivelyBuildChildren(roots.GetFirst(), nullptr);
+		BuildChildren(roots.GetFirst(), nullptr);
 	}
+
+	LinkChildren(rootsForLinking);
 
 	m_hasBeenBuilt = true;
 }
@@ -133,6 +137,12 @@ bool SimProject::HasBeenBuilt()
 
 void SimProject::RegisterNewConnection(GraphicalNode* from, GraphicalNode* to)
 {
+	// make sure theyve both been built, if not then return
+	if (m_nodeMap[from] == nullptr || m_nodeMap[to] == nullptr) {
+		m_hasBeenBuilt = false;
+		return;
+	}
+
 	m_nodeMap[from]->AddNext(m_nodeMap[to]);
 	m_nodeMap[to]->AddPrevious(m_nodeMap[from]);
 }
@@ -144,16 +154,11 @@ void SimProject::RegisterNodeDeletion(GraphicalNode* deleted)
 	m_nodeMap.erase(deleted);
 }
 
-void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* previous)
+void SimProject::BuildChildren(GraphicalNode* node, GraphicalNode* previous)
 {
 	// if node is in map, just make connections
 	// we just want a unique list of SimObjs
 	if (m_nodeMap[node] != nullptr) {
-
-		if (previous != nullptr) {
-			m_nodeMap[node]->AddPrevious(m_nodeMap[previous]);
-			m_nodeMap[previous]->AddNext(m_nodeMap[node]);
-		}
 		return;
 	}
 	else {
@@ -195,15 +200,6 @@ void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* pr
 			server->SetServiceTime(gserver->GetServiceTime());
 			server->SetNumResources(gserver->GetNumResources());
 
-			// hook up connections
-			while (!previousNodes.IsEmpty()) {
-
-				auto prevNode = previousNodes.GetFirst();
-
-				server->AddPrevious(m_nodeMap[prevNode]);
-				m_nodeMap[prevNode]->AddNext(server);
-			}
-
 			m_nodeMap[node] = server;
 			m_instantiatedNodes.push_back(server);
 
@@ -213,18 +209,6 @@ void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* pr
 
 			gsink = (GraphicalSink*)node;
 			sink = (SinkNode*)simObj;
-
-			if (previous != nullptr)
-			{
-				// hook up connections
-				while (!previousNodes.IsEmpty()) {
-
-					auto prevNode = previousNodes.GetFirst();
-
-					sink->AddPrevious(m_nodeMap[prevNode]);
-					m_nodeMap[prevNode]->AddNext(sink);
-				}
-			}
 
 			m_nodeMap[node] = sink;
 			m_instantiatedNodes.push_back(sink);
@@ -241,9 +225,31 @@ void SimProject::RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* pr
 		Set<GraphicalNode> children = node->GetNext();
 
 		// loop thru all nodes in the children and recursively call this fn
-		while (!children.IsEmpty())
-		{
-			RecursivelyBuildChildren(children.GetFirst(), node);
+		// is top heavy and need to balance more for breadth
+		while (!children.IsEmpty()){
+			BuildChildren(children.GetFirst(), node);
+		}
+	}
+}
+
+void SimProject::LinkChildren(Set<GraphicalNode> roots)
+{
+	Set<GraphicalNode> rootz = roots;
+	while (!rootz.IsEmpty()) {
+
+		GraphicalNode* thisNode = rootz.GetFirst();
+		Set<GraphicalNode> children = thisNode->GetNext();
+		Set<GraphicalNode> nextRoots = thisNode->GetNext();
+
+		while (!children.IsEmpty()) {
+
+			GraphicalNode* thisChild = children.GetFirst();
+			m_nodeMap[thisNode]->AddNext(m_nodeMap[thisChild]);
+			m_nodeMap[thisChild]->AddPrevious(m_nodeMap[thisNode]);
+		}
+
+		if (!nextRoots.IsEmpty()) {
+			LinkChildren(nextRoots);
 		}
 	}
 }

@@ -54,7 +54,9 @@ void GenericNode::Depart(Entity* entity) {
             throw std::runtime_error("No next destinations for Node: " + std::to_string(GetID()));
         }
 
-        m_next.GetFirst()->Arrive(entity);
+        auto next = m_next.GetFirst();
+        next->Arrive(entity);
+        m_next.Add(next);
     }
 }
 
