@@ -23,8 +23,6 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
 	m_properties.Add(headerProp);
 
-	//m_next = Set();
-
 	/// graphical characteristics
 	// size
 	m_bodySize = parent->FromDIP(wxSize(100, 75));
@@ -221,11 +219,6 @@ Selection GraphicalNode::Select(const wxAffineMatrix2D& camera, wxPoint2DDouble 
 void GraphicalNode::Move(wxPoint2DDouble displacement) {
 	m_position += displacement;
 
-	for (int i = 0; i < 4; i++) {
-		//m_sizers[i].m_x += displacement.m_x;
-		//m_sizers[i].m_y += displacement.m_y;
-	}
-	
 	for (auto output : m_outputs)
 		output->m_sourcePoint = GetOutputPoint();
 
@@ -441,6 +434,11 @@ void GraphicalNode::SetBodyColor(const wxColor& color)
 wxSize GraphicalNode::GetSize()
 {
 	return m_bodySize;
+}
+
+wxPoint2DDouble GraphicalNode::GetTopLeft()
+{
+	return wxPoint2DDouble(m_bodyShape.m_x, m_bodyShape.m_y);
 }
 
 void GraphicalNode::SetBodyShape(wxRect2DDouble newBody)

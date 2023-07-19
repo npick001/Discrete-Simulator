@@ -79,6 +79,7 @@ public:
 	virtual void Accept(Visitor& visitor) = 0;
 
 	wxSize GetSize();
+	wxPoint2DDouble GetTopLeft();
 	wxPoint2DDouble GetCenter();
 	void SetBodyShape(wxRect2DDouble newBody);
 	wxRect2DDouble GetBodyShape();
@@ -163,10 +164,9 @@ protected:
 	friend class SimProject;
 
 private:
-	// will be replaced with a distribution later
-	Distribution* m_iaTime;
 
 	// Entity generation members
+	Distribution* m_iaTime;
 	Entity* m_entity;
 	int m_numberToGenerate;
 	bool m_infiniteGeneration;

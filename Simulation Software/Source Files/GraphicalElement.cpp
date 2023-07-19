@@ -11,6 +11,11 @@ const std::string GraphicalElement::ms_selectionStateNames[Selection::State::STA
 	"EDGE"
 };
 
+void GraphicalElement::SetID(ElementKey id)
+{
+	m_id = id;
+}
+
 GraphicalElement::GraphicalElement()
 	: m_id(-1), m_label("ERROR"), m_labelPos() {}
 

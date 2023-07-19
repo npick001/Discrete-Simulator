@@ -74,6 +74,7 @@ protected:
 	std::string m_label;
 	wxPoint2DDouble m_labelPos;
 
+
 public:
 	static const std::string ms_selectionStateNames[Selection::State::STATES_MAX];
 
@@ -84,6 +85,7 @@ public:
 
 	virtual ~GraphicalElement() = default;
 
+	void SetID(ElementKey id);
 	inline const ElementKey& GetID() const { return m_id; }
 
 	inline std::string GetLabel() const { return m_label; }

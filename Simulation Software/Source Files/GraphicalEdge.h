@@ -36,13 +36,14 @@ public:
 	void Accept(Visitor& visitor);
 	
 	// Used to connect a source or destination
-	void ConnectSource(GraphicalNode* source);
+	void SetSource(GraphicalNode* source);
+	GraphicalNode* GetSource();
 	ElementKey GetSourceID();
 	void SetSourceID(ElementKey id);
-	void ConnectDestination(GraphicalNode* destination);
+	void SetDestination(GraphicalNode* destination);
+	GraphicalNode* GetDestination();
 	ElementKey GetDestinationID();
 	void SetDestinationID(ElementKey id);
-
 
 	// Disconnect both the source and destination
 	void Disconnect();

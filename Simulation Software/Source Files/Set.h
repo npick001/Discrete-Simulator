@@ -42,6 +42,18 @@ public:
 		return nullptr;
 	}
 
+	inline T* GetIndex(int index)
+	{
+		T* returnData = m_items[index];
+		m_items.erase(m_items.begin() + index);
+		return returnData;
+	}
+
+	inline T* ViewIndex(int index)
+	{
+		return m_items[index];
+	}
+
 	T* GetRandom()
 	{
 		srand(time(NULL));
@@ -82,6 +94,11 @@ public:
 			m_items = other.m_items;
 		}
 		return *this;
+	}
+
+	inline T* operator[](const int index)
+	{
+		return m_items[index];
 	}
 
 	inline bool IsEmpty() { return (m_items.size() == 0); }

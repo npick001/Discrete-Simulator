@@ -19,8 +19,8 @@ GraphicalEdge::GraphicalEdge(ElementKey id)
 GraphicalEdge::GraphicalEdge(ElementKey id, GraphicalNode* source, GraphicalNode* destination)
 	: GraphicalEdge(id) {
 
-	ConnectSource(source);
-	ConnectDestination(destination);
+	SetSource(source);
+	SetDestination(destination);
 
 	m_sourceID = source->GetID();
 	m_destinationID = destination->GetID();
@@ -72,7 +72,7 @@ void GraphicalEdge::Accept(Visitor& visitor)
 	return visitor.Visit(*this);
 }
 
-void GraphicalEdge::ConnectSource(GraphicalNode* source) {
+void GraphicalEdge::SetSource(GraphicalNode* source) {
 	if (!source)
 		return;
 	
@@ -87,6 +87,11 @@ void GraphicalEdge::ConnectSource(GraphicalNode* source) {
 	m_destinationPoint = m_sourcePoint;
 }
 
+GraphicalNode* GraphicalEdge::GetSource()
+{
+	return m_source;
+}
+
 ElementKey GraphicalEdge::GetSourceID()
 {
 	return m_sourceID;
@@ -97,7 +102,7 @@ void GraphicalEdge::SetSourceID(ElementKey id)
 	m_sourceID = id;
 }
 
-void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
+void GraphicalEdge::SetDestination(GraphicalNode* destination) {
 	if (!destination)
 		return;
 	
@@ -110,6 +115,11 @@ void GraphicalEdge::ConnectDestination(GraphicalNode* destination) {
 		return;
 
 	m_sourcePoint = m_destinationPoint;
+}
+
+GraphicalNode* GraphicalEdge::GetDestination()
+{
+	return m_destination;
 }
 
 ElementKey GraphicalEdge::GetDestinationID()

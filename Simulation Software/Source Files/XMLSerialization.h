@@ -71,7 +71,6 @@ private:
 	Set<GraphicalEdge> m_edges;
 };
 
-
 class GraphicalEdge;
 class GraphicalSource;
 class GraphicalServer;
@@ -135,6 +134,9 @@ struct XMLSerializer
 	wxXmlNode* SerializeDistribution(Distribution* dist);
 
 	SimulationObjects DeserializeXMLDocument(const wxXmlDocument& doc);
+
+private:
+	SimulationObjects LinkSimObjects(SimulationObjects& simObjects);
 };
 
 struct XMLDeserializationFactory

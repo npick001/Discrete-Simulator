@@ -283,8 +283,48 @@ SimulationObjects XMLSerializer::DeserializeXMLDocument(const wxXmlDocument& doc
 		}
 	}
 
-	SimulationObjects simObjs(nodes, edges);
-	return simObjs;
+	SimulationObjects unlinkedObjs(nodes, edges);
+	SimulationObjects linkedSimObjs = LinkSimObjects(unlinkedObjs);
+	return linkedSimObjs;
+}
+
+SimulationObjects XMLSerializer::LinkSimObjects(SimulationObjects& simObjects)
+{
+	Set<GraphicalNode> nodes = simObjects.GetNodes();
+	Set<GraphicalEdge> edges = simObjects.GetEdges();
+
+	// populate all nodes with their next
+	for (int i = 0; i < edges.GetSize(); i++) {
+		for (int j = 0; j < nodes.GetSize(); j++) {
+
+			if (edges[i]->GetSourceID() == nodes[j]->GetID()){
+				edges[i]->SetSource(nodes[j]);
+			}
+			else if (edges[i]->GetDestinationID() == nodes[j]->GetID()) {
+				edges[i]->SetDestination(nodes[j]);
+
+				// if both are set already
+				if ((edges[i]->GetSource() != nullptr) && (edges[i]->GetDestination() != nullptr))
+					break;
+			}
+		}
+
+		// if both are set already
+		if ((edges[i]->GetSource() != nullptr) && (edges[i]->GetDestination() != nullptr)) {
+
+			GraphicalNode* from = edges[i]->GetSource();
+			GraphicalNode* to = edges[i]->GetDestination();
+
+			from->AddNext(to);
+			to->AddPrevious(from);
+
+			edges[i]->SetSource(from);
+			edges[i]->SetDestination(to);
+		}
+	}
+
+	SimulationObjects linkedSimObjs(nodes, edges);
+	return linkedSimObjs;
 }
 
 std::unique_ptr<GraphicalNode> XMLDeserializationFactory::DeserializeNode(const wxXmlNode* node)
@@ -309,9 +349,11 @@ std::unique_ptr<GraphicalEdge> XMLDeserializationFactory::DeserializeEdge(const 
 {
 	GraphicalEdge edge;
 
+	auto id = std::stoi(node->GetAttribute(XmlNodeKeys::NodeIDAttribute).ToStdString());
 	auto sourceID = std::stoi(node->GetAttribute(XmlNodeKeys::EdgeSourceID).ToStdString());
 	auto destinationID = std::stoi(node->GetAttribute(XmlNodeKeys::EdgeDestinationID).ToStdString());
 
+	edge.SetID(id);
 	edge.SetSourceID(sourceID);
 	edge.SetDestinationID(destinationID);
 
@@ -320,11 +362,10 @@ std::unique_ptr<GraphicalEdge> XMLDeserializationFactory::DeserializeEdge(const 
 
 std::unique_ptr<Distribution> XMLDeserializationFactory::DeserializeDistribution(const wxXmlNode* node)
 {
-	auto distType = node->GetAttribute(XmlNodeKeys::TypeAttribute);
+	auto distType  = node->GetAttribute(XmlNodeKeys::TypeAttribute);
 
 	if (distType == XmlNodeKeys::ExponentialDist) {
 		return std::make_unique<Exponential>(DeserializeExponential(node));
-
 	}
 	else if (distType == XmlNodeKeys::UniformDist) {
 		return std::make_unique<Uniform>(DeserializeUniform(node));
@@ -364,6 +405,7 @@ GraphicalSource XMLDeserializationFactory::DeserializeSource(const wxXmlNode* no
 	GraphicalSource* sourceNode = (GraphicalSource*)NodeFactory::CreateGraphicalNode(GenericNode::SOURCE);
 
 	// main rectangle properties
+	auto id = std::stoi(node->GetAttribute(XmlNodeKeys::NodeIDAttribute).ToStdString());
 	auto label = node->GetAttribute(XmlNodeKeys::LabelAttribute).ToStdString();
 	auto bodyColor = node->GetAttribute(XmlNodeKeys::ColorAttribute);
 	auto x = std::stod(node->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
@@ -371,25 +413,28 @@ GraphicalSource XMLDeserializationFactory::DeserializeSource(const wxXmlNode* no
 	auto width = std::stod(node->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto height = std::stod(node->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble bodyShape(x, y, width, height);
-	sourceNode->SetBodyShape(bodyShape);
-	sourceNode->SetBodyColor(bodyColor);
-	sourceNode->SetLabel(label);
-	
+
 	// interarrival distribution
 	wxXmlNode* iaDistXml = node->GetChildren()->GetChildren();
 	Distribution* iaDist = DeserializeDistribution(iaDistXml).release();
-	sourceNode->SetIATime(iaDist);
 	
 	// output rectangle properties
 	auto outputRect = node->GetChildren()->GetNext();
-	auto ibodyColor = outputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
-	auto ix = std::stod(outputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
-	auto iy = std::stod(outputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());
-	auto iwidth = std::stod(outputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
-	auto iheight = std::stod(outputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
-	wxRect2DDouble outputRectangle(ix, iy, iwidth, iheight);
+	auto obodyColor = outputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
+	auto ox = std::stod(outputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
+	auto oy = std::stod(outputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());
+	auto owidth = std::stod(outputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
+	auto oheight = std::stod(outputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
+	wxRect2DDouble outputRectangle(ox, oy, owidth, oheight);
+
+	sourceNode->SetLabel(label);
+	sourceNode->SetID(id);
+	sourceNode->SetBodyColor(bodyColor);
+	sourceNode->SetBodyShape(bodyShape);
+	sourceNode->SetPosition(bodyShape.GetCentre());
+	sourceNode->SetIATime(iaDist);
 	sourceNode->SetOutputRect(outputRectangle);
-	sourceNode->SetIOColor(ibodyColor);
+	sourceNode->SetIOColor(obodyColor);
 
 	return *sourceNode;
 }
@@ -399,6 +444,7 @@ GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* no
 	GraphicalServer* serverNode = (GraphicalServer*)NodeFactory::CreateGraphicalNode(GenericNode::SERVER);
 
 	// main rectangle properties
+	auto id = std::stoi(node->GetAttribute(XmlNodeKeys::NodeIDAttribute).ToStdString());
 	auto label = node->GetAttribute(XmlNodeKeys::LabelAttribute).ToStdString();
 	auto bodyColor = node->GetAttribute(XmlNodeKeys::ColorAttribute);
 	auto x = std::stod(node->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
@@ -406,14 +452,10 @@ GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* no
 	auto width = std::stod(node->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto height = std::stod(node->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble bodyShape(x, y, width, height);
-	serverNode->SetBodyShape(bodyShape);
-	serverNode->SetBodyColor(bodyColor);
-	serverNode->SetLabel(label);
 
 	// interarrival distribution
-	wxXmlNode* serviceTimeDistXml = node->GetChildren();
+	wxXmlNode* serviceTimeDistXml = node->GetChildren()->GetChildren();
 	Distribution* serviceTimeDist = DeserializeDistribution(serviceTimeDistXml).release();
-	serverNode->SetServiceTime(serviceTimeDist);
 
 	// input rectangle properties
 	auto inputRect = node->GetChildren()->GetNext();
@@ -423,8 +465,6 @@ GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* no
 	auto iwidth = std::stod(inputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto iheight = std::stod(inputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble inputRectangle(ix, iy, iwidth, iheight);
-	serverNode->SetInputRect(inputRectangle);
-	serverNode->SetIOColor(iobodyColor);
 
 	// output rectangle properties
 	auto outputRect = inputRect->GetNext();
@@ -433,7 +473,15 @@ GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* no
 	auto owidth = std::stod(outputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto oheight = std::stod(outputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble outputRectangle(ox, oy, owidth, oheight);
+
+	serverNode->SetLabel(label);
+	serverNode->SetID(id);
+	serverNode->SetBodyColor(bodyColor);
+	serverNode->SetBodyShape(bodyShape);
+	serverNode->SetServiceTime(serviceTimeDist);
+	serverNode->SetInputRect(inputRectangle);
 	serverNode->SetOutputRect(outputRectangle);
+	serverNode->SetIOColor(iobodyColor);
 
 	return *serverNode;
 }
@@ -443,6 +491,7 @@ GraphicalSink XMLDeserializationFactory::DeserializeSink(const wxXmlNode* node)
 	GraphicalSink* sinkNode = (GraphicalSink*)NodeFactory::CreateGraphicalNode(GenericNode::SINK);
 
 	// main rectangle properties
+	auto id = std::stoi(node->GetAttribute(XmlNodeKeys::NodeIDAttribute).ToStdString());
 	auto label = node->GetAttribute(XmlNodeKeys::LabelAttribute).ToStdString();
 	auto bodyColor = node->GetAttribute(XmlNodeKeys::ColorAttribute);
 	auto x = std::stod(node->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
@@ -450,18 +499,20 @@ GraphicalSink XMLDeserializationFactory::DeserializeSink(const wxXmlNode* node)
 	auto width = std::stod(node->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto height = std::stod(node->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble bodyShape(x, y, width, height);
-	sinkNode->SetBodyShape(bodyShape);
-	sinkNode->SetBodyColor(bodyColor);
-	sinkNode->SetLabel(label);
 
 	// input rectangle properties
-	auto inputRect = node->GetChildren()->GetNext();
+	auto inputRect = node->GetChildren();
 	auto ibodyColor = inputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
 	auto ix = std::stod(inputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
 	auto iy = std::stod(inputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());
 	auto iwidth = std::stod(inputRect->GetAttribute(XmlNodeKeys::WidthAttribute).ToStdString());
 	auto iheight = std::stod(inputRect->GetAttribute(XmlNodeKeys::HeightAttribute).ToStdString());
 	wxRect2DDouble inputRectangle(ix, iy, iwidth, iheight);
+
+	sinkNode->SetLabel(label);
+	sinkNode->SetID(id);
+	sinkNode->SetBodyColor(bodyColor);
+	sinkNode->SetBodyShape(bodyShape);
 	sinkNode->SetInputRect(inputRectangle);
 	sinkNode->SetIOColor(ibodyColor);
 

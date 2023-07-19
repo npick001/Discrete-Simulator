@@ -224,12 +224,10 @@ void Canvas::PopulateCanvas(SimulationObjects simObjects)
 
 		GraphicalEdge* currentEdge = edges.GetFirst();
 
-		currentEdge->ConnectSource(m_nodes[currentEdge->GetSourceID()]);
-		currentEdge->ConnectDestination(m_nodes[currentEdge->GetDestinationID()]);
-
 		m_edges.add_new(currentEdge);
 		m_gEdges.Add(currentEdge);
 	}
+
 	Refresh();
 }
 
@@ -417,7 +415,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
-		m_incompleteEdge->ConnectSource(m_nodes[m_selection]);
+		m_incompleteEdge->SetSource(m_nodes[m_selection]);
 		break;
 
 	// Instatiate an edge and connect destination to node's input
@@ -427,7 +425,7 @@ void Canvas::OnLeftDown(wxMouseEvent& event) {
 
 		// Get pointer to edge that was just added
 		m_incompleteEdge = m_edges.recent();
-		m_incompleteEdge->ConnectDestination(m_nodes[m_selection]);
+		m_incompleteEdge->SetDestination(m_nodes[m_selection]);
 		break;
 
 	// Panning also works with left click
@@ -463,7 +461,7 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == Selection::State::NODE_INPUT
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
-			m_incompleteEdge->ConnectDestination(m_nodes[endSelection]);
+			m_incompleteEdge->SetDestination(m_nodes[endSelection]);
 
 			// once edge is connected, its no longer incomplete
 			auto m_completeEdge = m_incompleteEdge;
@@ -487,7 +485,7 @@ void Canvas::OnLeftUp(wxMouseEvent& event) {
 		if (endSelection.state == Selection::State::NODE_OUTPUT
 			&& m_nodes[endSelection] != m_nodes[m_selection]) {
 
-			m_incompleteEdge->ConnectSource(m_nodes[endSelection]);
+			m_incompleteEdge->SetSource(m_nodes[endSelection]);
 
 			// once edge is connected, its no longer incomplete
 			auto m_completeEdge = m_incompleteEdge;
