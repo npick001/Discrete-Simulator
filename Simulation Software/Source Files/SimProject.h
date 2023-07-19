@@ -64,7 +64,8 @@ public:
 	void RegisterNodeDeletion(GraphicalNode* deleted);
 
 protected:
-	void RecursivelyBuildChildren(GraphicalNode* node, GraphicalNode* previous);
+	void BuildChildren(GraphicalNode* node, GraphicalNode* previous);
+	void LinkChildren(Set<GraphicalNode> roots);
 
 private:
 	std::vector<std::unique_ptr<GenericNode::StatisticsWrapper>> stats;
