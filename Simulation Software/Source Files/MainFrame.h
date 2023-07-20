@@ -23,6 +23,7 @@
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
 #include "ExponentialProperty.h"
+#include "InputAnalyzerPanel.h"
 #include "XMLSerialization.h"
 
 

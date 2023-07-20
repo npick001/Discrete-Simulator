@@ -79,7 +79,6 @@ public:
 	virtual void Accept(Visitor& visitor) = 0;
 
 	wxSize GetSize();
-	wxPoint2DDouble GetTopLeft();
 	wxPoint2DDouble GetCenter();
 	void SetBodyShape(wxRect2DDouble newBody);
 	wxRect2DDouble GetBodyShape();

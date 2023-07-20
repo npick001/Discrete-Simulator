@@ -11,8 +11,8 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 	sourceNode->AddAttribute(XmlNodeKeys::LabelAttribute, label);
 	sourceNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(source.GetID()));
 	sourceNode->AddAttribute(XmlNodeKeys::ColorAttribute, source.GetBodyColor().GetAsString());
-	sourceNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetBodyShape().m_x));
-	sourceNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetBodyShape().m_y));
+	sourceNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetPosition().m_x));
+	sourceNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetPosition().m_y));
 	sourceNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(source.GetBodyShape().m_width));
 	sourceNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetBodyShape().m_height));
 	
@@ -23,8 +23,8 @@ void XMLSerializingVisitor::Visit(GraphicalSource& source)
 	// output rectangle
 	wxXmlNode* outputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::OutputRectAttribute);
 	outputNode->AddAttribute(XmlNodeKeys::ColorAttribute, source.GetIOColor().GetAsString());
-	outputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetOutputRect().m_x));
-	outputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetOutputRect().m_y));
+	outputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(source.GetOutputRect().GetLeftTop().m_x));
+	outputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(source.GetOutputRect().GetLeftTop().m_y));
 	outputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(source.GetOutputRect().m_width));
 	outputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(source.GetOutputRect().m_height));
 
@@ -45,8 +45,8 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 	serverNode->AddAttribute(XmlNodeKeys::LabelAttribute, label);
 	serverNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(server.GetID()));
 	serverNode->AddAttribute(XmlNodeKeys::ColorAttribute, server.GetBodyColor().GetAsString());
-	serverNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetBodyShape().m_x));
-	serverNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetBodyShape().m_y));
+	serverNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetPosition().m_x));
+	serverNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetPosition().m_y));
 	serverNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(server.GetBodyShape().m_width));
 	serverNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(server.GetBodyShape().m_height));
 
@@ -57,16 +57,16 @@ void XMLSerializingVisitor::Visit(GraphicalServer& server)
 	// input rectangle
 	wxXmlNode* inputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::InputRectAttribute);
 	inputNode->AddAttribute(XmlNodeKeys::ColorAttribute, server.GetIOColor().GetAsString());
-	inputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetOutputRect().m_x));
-	inputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetOutputRect().m_y));
-	inputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(server.GetOutputRect().m_width));
-	inputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(server.GetOutputRect().m_height));
+	inputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetInputRect().GetLeftTop().m_x));
+	inputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetInputRect().GetLeftTop().m_y));
+	inputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(server.GetInputRect().m_width));
+	inputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(server.GetInputRect().m_height));
 
 	// output rectangle
 	wxXmlNode* outputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::OutputRectAttribute);
 	outputNode->AddAttribute(XmlNodeKeys::ColorAttribute, server.GetIOColor().GetAsString());
-	outputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetOutputRect().m_x));
-	outputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetOutputRect().m_y));
+	outputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(server.GetOutputRect().GetLeftTop().m_x));
+	outputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(server.GetOutputRect().GetLeftTop().m_y));
 	outputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(server.GetOutputRect().m_width));
 	outputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(server.GetOutputRect().m_height));
 
@@ -88,16 +88,16 @@ void XMLSerializingVisitor::Visit(GraphicalSink& sink)
 	sinkNode->AddAttribute(XmlNodeKeys::LabelAttribute, label);
 	sinkNode->AddAttribute(XmlNodeKeys::NodeIDAttribute, wxString::FromDouble(sink.GetID()));
 	sinkNode->AddAttribute(XmlNodeKeys::ColorAttribute, sink.GetBodyColor().GetAsString());
-	sinkNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(sink.GetBodyShape().m_x));
-	sinkNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(sink.GetBodyShape().m_y));
+	sinkNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(sink.GetPosition().m_x));
+	sinkNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(sink.GetPosition().m_y));
 	sinkNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(sink.GetBodyShape().m_width));
 	sinkNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(sink.GetBodyShape().m_height));
 
 	// input rectangle
 	wxXmlNode* inputNode = new wxXmlNode(wxXML_ELEMENT_NODE, XmlNodeKeys::InputRectAttribute);
 	inputNode->AddAttribute(XmlNodeKeys::ColorAttribute, sink.GetIOColor().GetAsString());
-	inputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(sink.GetOutputRect().m_x));
-	inputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(sink.GetOutputRect().m_y));
+	inputNode->AddAttribute(XmlNodeKeys::XAttribute, wxString::FromDouble(sink.GetOutputRect().GetLeftTop().m_x));
+	inputNode->AddAttribute(XmlNodeKeys::YAttribute, wxString::FromDouble(sink.GetOutputRect().GetLeftTop().m_y));
 	inputNode->AddAttribute(XmlNodeKeys::WidthAttribute, wxString::FromDouble(sink.GetOutputRect().m_width));
 	inputNode->AddAttribute(XmlNodeKeys::HeightAttribute, wxString::FromDouble(sink.GetOutputRect().m_height));
 
