@@ -436,11 +436,6 @@ wxSize GraphicalNode::GetSize()
 	return m_bodySize;
 }
 
-wxPoint2DDouble GraphicalNode::GetTopLeft()
-{
-	return wxPoint2DDouble(m_bodyShape.m_x, m_bodyShape.m_y);
-}
-
 void GraphicalNode::SetBodyShape(wxRect2DDouble newBody)
 {
 	m_bodyShape = newBody;

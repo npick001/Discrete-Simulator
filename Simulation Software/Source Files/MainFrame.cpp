@@ -356,7 +356,23 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
         XMLSerializer xmlToCode;
         SimulationObjects deserializedObjects = xmlToCode.DeserializeXMLDocument(serializedXMLFile); 
 
-        m_simProject->ViewCanvas().PopulateCanvas(deserializedObjects);
+        // create new canvas for deserialized model
+        Canvas* savedModel = new Canvas(this, GetStatusBar());
+
+        wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
+        m_mainCanvas->AddPage(savedModel, "Canvas notebook", true, page_bmp);
+
+        wxSize canvasSize = m_mainCanvas->GetSize();
+        auto canvas = (Canvas*)m_mainCanvas->GetCurrentPage();
+        canvas->InitializeOriginLocation(canvasSize);
+        canvas->PopulateCanvas(deserializedObjects);
+
+        // update simproject to have new canvas
+        m_simProject->SetCanvas(canvas);
+
+        // add canvas to the notebook and make it be selected
+        //int notebookPageCount = m_mainCanvas->GetPageCount();
+        //m_mainCanvas->SetSelection(notebookPageCount);
 
         wxMessageBox("Selected file: " + path, "Info", wxOK | wxICON_INFORMATION);
     }
@@ -457,7 +473,9 @@ void MainFrame::OnCreateSimLibrary(wxCommandEvent& event)
 void MainFrame::OnClickAnalyzer(wxCommandEvent& event) {
 
     try {
-       // StatTesting();
+        wxBitmapBundle page_bmp = wxArtProvider::GetBitmapBundle(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16, 16));
+        InputAnalyzerPanel* stats = new InputAnalyzerPanel(this, new StatisticsObject(10));
+        m_mainCanvas->AddPage(stats, "Input Analyzer", true, page_bmp);
     }
     catch (const std::exception& e) {
         wxLogError("Exception caught in OnOpen: %s", e.what());
