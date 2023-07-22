@@ -411,7 +411,7 @@ GraphicalServer XMLDeserializationFactory::DeserializeServer(const wxXmlNode* no
 	serverNode->SetLabel(label);
 
 	// interarrival distribution
-	wxXmlNode* serviceTimeDistXml = node->GetChildren();
+	wxXmlNode* serviceTimeDistXml = node->GetChildren()->GetChildren();
 	Distribution* serviceTimeDist = DeserializeDistribution(serviceTimeDistXml).release();
 	serverNode->SetServiceTime(serviceTimeDist);
 
@@ -455,7 +455,7 @@ GraphicalSink XMLDeserializationFactory::DeserializeSink(const wxXmlNode* node)
 	sinkNode->SetLabel(label);
 
 	// input rectangle properties
-	auto inputRect = node->GetChildren()->GetNext();
+	auto inputRect = node->GetChildren();
 	auto ibodyColor = inputRect->GetAttribute(XmlNodeKeys::ColorAttribute);
 	auto ix = std::stod(inputRect->GetAttribute(XmlNodeKeys::XAttribute).ToStdString());
 	auto iy = std::stod(inputRect->GetAttribute(XmlNodeKeys::YAttribute).ToStdString());

@@ -71,7 +71,7 @@ public:
 	}
 
 	// Delete all members in the Set
-	inline void Empty()
+	inline void Clear()
 	{
 		m_items.clear();
 	}

@@ -25,9 +25,9 @@ bool PropertySet::Has(wxPGProperty* toFind)
 	return m_propSet.Has(toFind);
 }
 
-void PropertySet::Empty()
+void PropertySet::Clear()
 {
-	m_propSet.Empty();
+	m_propSet.Clear();
 }
 
 wxPGProperty* PropertySet::View()

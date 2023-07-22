@@ -15,7 +15,7 @@ private:
 	Set<wxPGProperty> m_propSet;
 public:
 	void Add(wxPGProperty* property);
-	void Empty();
+	void Clear();
 	bool IsEmpty();
 	int GetSize();
 	bool Has(wxPGProperty* toFind);

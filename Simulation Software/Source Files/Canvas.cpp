@@ -203,10 +203,10 @@ void Canvas::SetSimulationProject(SimProject* parentProject)
 
 void Canvas::PopulateCanvas(SimulationObjects simObjects)
 {
-	m_nodes.empty();
-	m_edges.empty();
-	m_gnodes.Empty();
-	m_gEdges.Empty();
+	m_nodes.clear();
+	m_edges.clear();
+	m_gnodes.Clear();
+	m_gEdges.Clear();
 
 	Set<GraphicalNode> nodes = simObjects.GetNodes();
 	Set<GraphicalEdge> edges = simObjects.GetEdges();

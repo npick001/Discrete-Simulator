@@ -173,6 +173,14 @@ public:
 		return m_elements[selection->GetID()];
 	}
 
+	inline void clear() {
+		for (auto element : m_elements) {
+			m_link->remove(element.second);
+		}
+
+		m_elements.clear();
+	}
+
 	inline bool empty() const
 		{ return m_elements.empty(); }
 
