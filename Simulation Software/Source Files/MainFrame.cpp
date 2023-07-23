@@ -485,6 +485,9 @@ void MainFrame::OnBuild(wxCommandEvent& event)
 void MainFrame::OnRun(wxCommandEvent& event)
 {
     if (m_simProject->HasBeenBuilt()) {
+
+        // override file data and reset it
+        WriteToFile(".\\Output Files\\SimObjStatistics.txt", "", 1);
         m_simProject->Run();
         m_simProject->WriteStatistics();
 
@@ -508,6 +511,7 @@ void MainFrame::OnBuildAndRun(wxCommandEvent& event)
     m_simProject->Build();
     m_simProject->CheckBuildViability();
 
+    WriteToFile(".\\Output Files\\SimObjStatistics.txt", "", 1);
     m_simProject->Run();
     m_simProject->WriteStatistics();
 }
