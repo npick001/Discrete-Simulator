@@ -456,6 +456,26 @@ std::unique_ptr<GenericNode::StatisticsWrapper> ServerNode::GetStatistics() {
 	return std::make_unique<SSSQStatistics>(m_myStats, GetID());
 }
 
+std::vector<double> ServerNode::GetStatesOverTime()
+{
+	return sm_states;
+}
+
+std::vector<Time> ServerNode::GetStateChangeTimes()
+{
+	return sm_stateChangeTimes;
+}
+
+std::vector<double> ServerNode::GetUtilsOverTime()
+{
+	return sm_utilStampsFromStateChanges;
+}
+
+std::vector<Time> ServerNode::GetWaitTimesOverTime()
+{
+	return sm_waitTimes;
+}
+
 // Get custom statistics for sink
 class SinkNode::MyStatistics : public Statistics {
 

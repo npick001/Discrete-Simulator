@@ -125,6 +125,58 @@ void SimProject::WriteStatistics()
 	}
 }
 
+wxAuiNotebook* SimProject::CreateStatisticsGraphs(wxWindow* parent)
+{
+	wxAuiNotebook* graphs = new wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	for (int i = 0; i < m_instantiatedNodes.size(); i++) {
+		
+		std::vector<wxString> x_labels;
+
+		std::vector<Time> eventTimes;
+		std::vector<double> values;
+
+		ServerNode* server;
+		ChartControl* statesOverTimeChart;
+
+		switch (m_instantiatedNodes[i]->GetType())
+		{
+		case GenericNode::SOURCE:
+
+			break;
+
+		case GenericNode::SERVER:
+			server = (ServerNode*)m_instantiatedNodes[i];
+
+			eventTimes = server->GetStateChangeTimes();
+
+			// create all the statistics graphs
+			values = server->GetStatesOverTime();
+
+			// create x-axis labels for states over time chart
+			for (int i = 0; i < values.size(); i++) {
+				x_labels.push_back(wxString::FromDouble(values[i]));
+			}
+
+			statesOverTimeChart = new ChartControl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+			statesOverTimeChart->m_title = "Server " + std::to_string(server->GetID()) + " states over time";
+			statesOverTimeChart->m_values = values;
+			statesOverTimeChart->m_x_axis_labels = x_labels;
+
+			graphs->AddPage(statesOverTimeChart, "ServerStates", true);
+
+			break;
+
+		case GenericNode::SINK:
+
+			break;
+		}
+
+	}
+
+	return graphs;
+}
+
 void SimProject::SetTimeUnit(TimeUnit newUnit)
 {
 	m_modelTimeUnit = newUnit;

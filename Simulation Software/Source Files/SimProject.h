@@ -1,6 +1,7 @@
 #pragma once
 #include "Utility.h"
 
+#include <wx/aui/auibook.h>
 #include <vector>
 #include <map>
 
@@ -8,6 +9,7 @@
 #include "SpecificNodes.h"
 #include "GraphicalNode.h"
 #include "Canvas.h"
+#include "ChartControls.h"
 
 class GenericNode;
 class GraphicalNode;
@@ -56,6 +58,7 @@ public:
 	bool CheckBuildViability();
 	void Run();
 	void WriteStatistics();
+	wxAuiNotebook* CreateStatisticsGraphs(wxWindow* parent);
 
 	void SetTimeUnit(TimeUnit newUnit);
 	bool HasBeenBuilt();

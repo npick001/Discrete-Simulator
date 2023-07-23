@@ -155,9 +155,9 @@ void Canvas::InitializeOriginLocation(wxSize canvasSize)
 	wxPoint2DDouble originPosition = GetTransformedPoint(m_origin);
 
 	// draw a few basic nodes
-	//AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
-	//AddNode(GenericNode::SERVER, wxPoint2DDouble(originPosition.m_x, originPosition.m_y));
-	//AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
+	AddNode(GenericNode::SOURCE, wxPoint2DDouble(originPosition.m_x - 150, originPosition.m_y));
+	AddNode(GenericNode::SERVER, wxPoint2DDouble(originPosition.m_x, originPosition.m_y));
+	AddNode(GenericNode::SINK, wxPoint2DDouble(originPosition.m_x + 150, originPosition.m_y));
 }
 
 Set<GraphicalNode> Canvas::GetSimObjects()

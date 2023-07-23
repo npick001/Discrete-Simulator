@@ -70,6 +70,7 @@ private:
     PropertiesViewer* m_properties;
     wxArrayString m_perspectives; // not used yet
     wxAuiNotebook* m_mainCanvas;
+    wxAuiNotebook* m_graphs;
 
     long m_notebook_style;
     long m_notebook_theme;
@@ -82,9 +83,7 @@ private:
 
     // Loads the .\Source Files directory into the passed tree.
     void LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, const wxString& directory);
-    
-    wxPoint GetStartPosition();
- 
+     
     // File menu events
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);

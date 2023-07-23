@@ -109,6 +109,12 @@ public:
 
 	std::unique_ptr<StatisticsWrapper> GetStatistics() override;
 
+	// for chart generation
+	std::vector<double> GetStatesOverTime();
+	std::vector<Time> GetStateChangeTimes();
+	std::vector<double> GetUtilsOverTime();
+	std::vector<Time> GetWaitTimesOverTime();
+
 protected:
 	class MyStatistics;
 
@@ -124,9 +130,11 @@ private:
 	enum ServerState { busy, idle };
 	ServerState m_state;
 
-	// for scheduled utilization
+	// for data visualizations
 	std::vector<double> sm_states;
 	std::vector<Time> sm_stateChangeTimes;
+	std::vector<Time> sm_waitTimes;
+	std::vector<double> sm_utilStampsFromStateChanges;
 
 	FIFO* m_queue;
 

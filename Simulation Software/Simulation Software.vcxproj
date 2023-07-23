@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Source Files\Action.h" />
     <ClInclude Include="Source Files\Canvas.h" />
+    <ClInclude Include="Source Files\ChartControls.h" />
     <ClInclude Include="Source Files\Directives.h" />
     <ClInclude Include="Source Files\Distribution.h" />
     <ClInclude Include="Source Files\Entity.h" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="Source Files\Action.cpp" />
     <ClCompile Include="Source Files\Canvas.cpp" />
+    <ClCompile Include="Source Files\ChartControls.cpp" />
     <ClCompile Include="Source Files\Distribution.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\ExponentialProperty.cpp" />

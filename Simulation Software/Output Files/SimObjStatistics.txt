@@ -367,3 +367,108 @@ SSSQ 4
 	- Average Queue Size: -nan(ind)
 	- Minimum Queue Size: 0.000000
 	- Maximum Queue Size: 1.000000
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SOURCE 0
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+
+SSSQ 1
+
+	- Entities Processed: 10
+	- Time Waiting: 68.954895
+	- Time in Service: 18.626502
+	- Time Idle: 0.000000
+	- Percent Utilization: 1.000000
+	- Average Queue Wait Time: inf
+	- Average Queue Size: inf
+	- Minimum Queue Size: 0.000000
+	- Maximum Queue Size: 8.000000
+SINK 2
+
+	- Entities Created: 10
+	- Total Entities Created: 10
+

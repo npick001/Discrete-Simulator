@@ -6,8 +6,6 @@ MainFrame* MainFrame::m_instance = 0;
 MainFrame::MainFrame(const wxString& title) 
     : wxFrame(nullptr, wxID_ANY, "Dynamic GUI Application", wxDefaultPosition, wxSize(800, 600))
 {   
-   // _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
-
     this->Maximize(true);
     m_manager.SetManagedWindow(this);
 
@@ -313,11 +311,6 @@ void MainFrame::LoadDirectory(wxTreeCtrl* treeCtrl, const wxTreeItemId& parent, 
     }
 }
 
-wxPoint MainFrame::GetStartPosition()
-{
-    return wxPoint();
-}
-
 void MainFrame::OnOpen(wxCommandEvent& event) {
 
     try {
@@ -445,15 +438,13 @@ void MainFrame::OnCreateTree(wxCommandEvent& event)
 {
     m_manager.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().
         Caption("Tree Control").
-        Float().FloatingPosition(GetStartPosition()).
-        FloatingSize(FromDIP(wxSize(150, 300))));
+        Float().FloatingSize(FromDIP(wxSize(150, 300))));
     m_manager.Update();
 }
 void MainFrame::OnCreateGrid(wxCommandEvent& event)
 {
     m_manager.AddPane(CreateGrid(), wxAuiPaneInfo().Dockable(true).
-        Caption("Grid").Float().FloatingPosition(GetStartPosition()).
-        FloatingSize(FromDIP(wxSize(150, 300))));
+        Caption("Grid").Float().FloatingSize(FromDIP(wxSize(150, 300))));
     m_manager.Update();
 }
 
@@ -496,6 +487,16 @@ void MainFrame::OnRun(wxCommandEvent& event)
     if (m_simProject->HasBeenBuilt()) {
         m_simProject->Run();
         m_simProject->WriteStatistics();
+
+        if (m_graphs != nullptr) {
+            m_manager.DetachPane(m_graphs);
+        }
+
+        m_graphs = m_simProject->CreateStatisticsGraphs(this);
+
+        m_manager.AddPane(m_graphs, wxAuiPaneInfo().Name("Statistics Graphs").
+            Dockable(true).Right());
+        m_manager.Update();
     }
     else {
         wxLogMessage("No simulation code has been generated.\nProject has not been built yet.");
