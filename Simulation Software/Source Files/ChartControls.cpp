@@ -8,6 +8,7 @@ ChartControl::ChartControl(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	: wxWindow(parent, id, pos, size, wxFULL_REPAINT_ON_RESIZE)
 {
 	m_title = "Basic Chart";
+	m_x_axis_textRotationAngle = 90;
 
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	this->Bind(wxEVT_PAINT, &ChartControl::OnPaint, this);
@@ -49,38 +50,54 @@ void ChartControl::OnPaint(wxPaintEvent& event)
 		normalizedToChartArea.Translate(chartArea.GetLeft(), chartArea.GetTop());
 		normalizedToChartArea.Scale(chartArea.m_width, chartArea.m_height);
 
-		double lowValue = *std::min_element(m_values.begin(), m_values.end());
-		double highValue = *std::max_element(m_values.begin(), m_values.end());
-		double xValueSpan = m_values.size();
-		double yValueSpan = highValue - lowValue;
+		std::vector<wxPoint2DDouble> points;
+		if (m_xvalues.size() != m_yvalues.size()) {
+			throw std::runtime_error("X and Y vectors must be the same size for plotting");
+		}
+		else {
+			for (int i = 0; i < m_xvalues.size(); i++) {
+				points.push_back(wxPoint2DDouble(m_xvalues[i], m_yvalues[i]));
+			}
+		}
+
+		double ylowValue = *std::min_element(m_yvalues.begin(), m_yvalues.end());
+		double yhighValue = *std::max_element(m_yvalues.begin(), m_yvalues.end());
+		double xlowValue = *std::min_element(m_xvalues.begin(), m_xvalues.end());
+		double xhighValue = *std::max_element(m_xvalues.begin(), m_xvalues.end());
+		double xValueSpan = xhighValue - xlowValue;
+		double yValueSpan = yhighValue - ylowValue;
 
 		wxAffineMatrix2D normalizedToValue{};
-		normalizedToValue.Translate(0, highValue);
+		normalizedToValue.Translate(0, yhighValue);
 		normalizedToValue.Scale(1, -1);
-		normalizedToValue.Scale(static_cast<double>(m_values.size() - 1), yValueSpan);
+		normalizedToValue.Scale(static_cast<double>(m_yvalues.size() - 1), yValueSpan);
 
-		const std::tuple<int, double, double> ylines = CalculateChartSegmentCountAndRange(lowValue, highValue);
+		const std::tuple<int, double, double> ylines = CalculateChartSegmentCountAndRange(ylowValue, yhighValue);
 
 		int segmentCount = std::get<0>(ylines);
 		double rangeLow = std::get<1>(ylines);
 		double rangeHigh = std::get<2>(ylines);
 
-		lowValue = rangeLow;
-		highValue = rangeHigh;
-		yValueSpan = highValue - lowValue;
+		ylowValue = rangeLow;
+		yhighValue = rangeHigh;
+		yValueSpan = yhighValue - ylowValue;
 
-		double xLinesCount = m_values.size();
+		double xLinesCount = m_x_axis_labels.size();
 		double yLinesCount = segmentCount + 1;
 
-		gc->SetPen(*wxBLACK_PEN);
+		wxColour fadedBlack(0, 0, 0, 16);
+		gc->SetPen(wxPen(fadedBlack, 3));
 		gc->SetFont(*wxNORMAL_FONT, *wxBLACK);
 
 		if (m_x_axis_labels.size() != xLinesCount) {
 			wxLogError("Chart does not have adequate x-axis labels");
 		}
-
 		for (int i = 0; i < xLinesCount; i++) {
-			double normalizedLineX = static_cast<double>(i) / (xLinesCount - 1);
+
+			double xvalue;
+			m_x_axis_labels[i].ToDouble(&xvalue);
+
+			double normalizedLineX = xvalue / xhighValue;
 
 			auto lineStartPoint = normalizedToChartArea.TransformPoint({ normalizedLineX, 0 });
 			auto lineEndPoint = normalizedToChartArea.TransformPoint({ normalizedLineX, 1 });
@@ -89,14 +106,29 @@ void ChartControl::OnPaint(wxPaintEvent& event)
 
 			gc->StrokeLines(2, linePoints);
 
-			double valueAtLineX = normalizedToValue.TransformPoint({ normalizedLineX, 0  }).m_x;
+			double valueAtLineX = normalizedToValue.TransformPoint({ normalizedLineX, 0 }).m_x;
 
 			auto text = wxString::Format("%.2f", valueAtLineX);
 			text = wxControl::Ellipsize(text, dc, wxELLIPSIZE_MIDDLE, chartArea.GetBottom() - labelsToChartAreaMargin);
 
 			double tw, th;
 			gc->GetTextExtent(text, &tw, &th);
-			gc->DrawText(m_x_axis_labels[i], lineEndPoint.m_x, lineEndPoint.m_y + th / 2.0);
+
+			double x = lineEndPoint.m_x;
+			double y = lineEndPoint.m_y;
+			double textX = x + (tw / 2.0);
+			double textY = y - (tw / 2.0);
+			double rotationAngle = wxDegToRad(m_x_axis_textRotationAngle);
+
+			gc->Translate(x, y);
+			gc->Rotate(rotationAngle);
+			gc->Translate(-x, -y);
+
+			gc->DrawText(m_x_axis_labels[i], textX, textY);
+
+			gc->Translate(x, y);
+			gc->Rotate(-rotationAngle);
+			gc->Translate(-x, -y);
 		}
 
 		for (int i = 0; i < yLinesCount; i++) {
@@ -132,19 +164,26 @@ void ChartControl::OnPaint(wxPaintEvent& event)
 		gc->StrokeLines(2, leftHLinePoints);
 		gc->StrokeLines(2, rightHLinePoints);
 
-		wxPoint2DDouble* pointArray = new wxPoint2DDouble[m_values.size() + 1];
+		wxPoint2DDouble* pointArray = new wxPoint2DDouble[points.size()];
 
 		wxAffineMatrix2D valueToNormalized = normalizedToValue;
 		valueToNormalized.Invert();
 		wxAffineMatrix2D valueToChartArea = normalizedToChartArea;
-		valueToChartArea.Concat(valueToNormalized);
+		//valueToChartArea.Concat(valueToNormalized);
 
-		for (int i = 0; i < m_values.size(); i++) {
-			pointArray[i] = valueToChartArea.TransformPoint({ static_cast<double>(i), m_values[i] });
+		for (int i = 0; i < points.size(); i++) {
+
+			// transform [0, last state change time] to time weighted [0, 1] percent of axis
+			/*int xValueLocation = ((i % 2) == 0) ? (2 * i) : ();*/
+
+			double x_axis_percent = points[i].m_x / xhighValue;
+			double x_location = xhighValue * x_axis_percent;
+
+			pointArray[i] = valueToChartArea.TransformPoint(wxPoint2DDouble(x_axis_percent, m_yvalues[i]));
 		}
 
-		gc->SetPen(*wxBLUE_PEN);
-		gc->StrokeLines(m_values.size(), pointArray);
+		gc->SetPen(*wxRED_PEN);
+		gc->StrokeLines(m_yvalues.size(), pointArray);
 
 		delete[] pointArray;
 		delete gc;

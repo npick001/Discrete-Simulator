@@ -1,6 +1,8 @@
 #pragma once
 #include "Utility.h"
 
+#include <stdlib.h>
+
 class Visitor;
 
 namespace Distributions

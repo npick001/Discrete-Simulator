@@ -14,6 +14,8 @@ const char* Distribution::GetType()
 
 double Distribution::Uniform_0_1()
 {
+	srand(time(NULL));
+
 	return (((double)rand()) / (((double)RAND_MAX) + 1.0));
 }
 

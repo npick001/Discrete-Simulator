@@ -69,6 +69,9 @@ public:
 
 private:
 	static const wxColor ms_labelColor;
+
+	int m_edgeID;
+	static int m_nextEdgeID;
 };
 
 typedef SpecificElementContainer<GraphicalEdge> EdgeMap;

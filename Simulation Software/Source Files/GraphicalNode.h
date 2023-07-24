@@ -117,6 +117,7 @@ protected:
 	wxSize m_bodySize;
 	wxSize m_ioSize;
 	wxSize m_sizerSize;
+	const int m_cornerRadius = 10;
 
 	// link to graphical edges
 	std::list<GraphicalEdge*> m_inputs;

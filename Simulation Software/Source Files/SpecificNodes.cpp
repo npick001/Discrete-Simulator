@@ -322,10 +322,8 @@ ServerNode::ServerNode() : GenericNode("Default Server")
 	SetNodeType(SERVER);
 
 	m_state = idle;
-	sm_states.push_back(1.0);
-	sm_stateChangeTimes.push_back(GetSimulationTime());
 
-	m_serviceTime = new Triangular(1.0, 2.0, 3.0);
+	m_serviceTime = new Triangular(0.25, 0.3, 0.35);
 	m_queue = new FIFO();
 
 	m_myStats = new MyStatistics();
@@ -340,8 +338,6 @@ ServerNode::ServerNode(std::string name, Distribution* serviceTime) : GenericNod
 	SetNodeType(SERVER);
 
 	m_state = idle;
-	sm_states.push_back(1.0);
-	sm_stateChangeTimes.push_back(GetSimulationTime());
 
 	m_serviceTime = serviceTime;
 	m_queue = new FIFO();
@@ -365,10 +361,14 @@ ServerNode::~ServerNode()
 }
 
 void ServerNode::StartProcessingEM() {
+
+	sm_states.push_back(0.0);
+	sm_stateChangeTimes.push_back(GetSimulationTime());
+
 	m_state = busy;
 	Entity* e = m_queue->GetEntity();
 
-	sm_states.push_back(0.0);
+	sm_states.push_back(1.0);
 	sm_stateChangeTimes.push_back(GetSimulationTime());
 	
 	sm_totalWaitTime +=	e->GetWaitTime();
@@ -385,9 +385,13 @@ void ServerNode::StartProcessingEM() {
 }
 
 void ServerNode::EndProcessingEM(Entity* e) {
-	m_state = idle;
 
 	sm_states.push_back(1.0);
+	sm_stateChangeTimes.push_back(GetSimulationTime());
+
+	m_state = idle;
+
+	sm_states.push_back(0.0);
 	sm_stateChangeTimes.push_back(GetSimulationTime());
 
 	sm_processed++;
@@ -400,6 +404,7 @@ void ServerNode::EndProcessingEM(Entity* e) {
 	std::string message = "Time: " + std::to_string(GetSimulationTime()) +
 		"\tSSSQ " + std::to_string(GetID()) +
 		"\tEnd Processing\n";
+	wxLogMessage("%s", message.c_str());
 
 	Depart(e);
 }

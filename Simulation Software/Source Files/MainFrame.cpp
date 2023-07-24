@@ -514,6 +514,16 @@ void MainFrame::OnBuildAndRun(wxCommandEvent& event)
     WriteToFile(".\\Output Files\\SimObjStatistics.txt", "", 1);
     m_simProject->Run();
     m_simProject->WriteStatistics();
+
+    if (m_graphs != nullptr) {
+        m_manager.DetachPane(m_graphs);
+    }
+
+    m_graphs = m_simProject->CreateStatisticsGraphs(this);
+
+    m_manager.AddPane(m_graphs, wxAuiPaneInfo().Name("Statistics Graphs").
+        Dockable(true).Right());
+    m_manager.Update();
 }
 
 void MainFrame::OnResize(wxSizeEvent& event)

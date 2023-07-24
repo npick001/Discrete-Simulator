@@ -561,7 +561,7 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 	// draw the rectangle 
 	gc->SetBrush(wxBrush(m_bodyColor));
-	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
+	gc->DrawRoundedRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height, m_cornerRadius);
 
 	// draw input and output rectangles
 	gc->SetBrush(wxBrush(m_ioColor));
@@ -585,7 +585,7 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	gc->SetFont(*wxNORMAL_FONT, m_labelColor);
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
-	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
+	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight / 1.5);
 }
 
 void GraphicalSource::Accept(Visitor& visitor)
@@ -688,7 +688,7 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 	// draw the rectangle 
 	gc->SetBrush(wxBrush(m_bodyColor));
-	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
+	gc->DrawRoundedRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height, m_cornerRadius);
 
 	// draw input and output rectangles
 	gc->SetBrush(wxBrush(m_ioColor));
@@ -712,8 +712,7 @@ void GraphicalServer::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	gc->SetFont(*wxNORMAL_FONT, m_labelColor);
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
-	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
-
+	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight / 1.5);
 }
 
 void GraphicalServer::SetServiceTime(Distribution* serviceTime)
@@ -782,7 +781,7 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 
 	// draw the rectangle 
 	gc->SetBrush(wxBrush(m_bodyColor));
-	gc->DrawRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height);
+	gc->DrawRoundedRectangle(m_bodyShape.m_x, m_bodyShape.m_y, m_bodyShape.m_width, m_bodyShape.m_height, m_cornerRadius);
 
 	// draw input and output rectangles
 	gc->SetBrush(wxBrush(m_ioColor));
@@ -806,7 +805,7 @@ void GraphicalSink::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* gc
 	gc->SetFont(*wxNORMAL_FONT, m_labelColor);
 	double textWidth, textHeight;
 	gc->GetTextExtent(m_label, &textWidth, &textHeight);
-	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight);
+	gc->DrawText(m_label, m_bodyShape.m_x + m_bodyShape.m_width / 2 - textWidth / 2, m_bodyShape.m_y + m_bodyShape.m_height / 2 - textHeight / 1.5);
 }
 
 void GraphicalSink::Accept(Visitor& visitor) 

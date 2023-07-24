@@ -134,10 +134,12 @@ wxAuiNotebook* SimProject::CreateStatisticsGraphs(wxWindow* parent)
 		std::vector<wxString> x_labels;
 
 		std::vector<Time> eventTimes;
-		std::vector<double> values;
+		std::vector<double> states;
 
 		ServerNode* server;
 		ChartControl* statesOverTimeChart;
+		std::map<double, bool> eventTimeSkimmingMap;
+		std::vector<double> uniqueEventTimes;
 
 		switch (m_instantiatedNodes[i]->GetType())
 		{
@@ -151,17 +153,23 @@ wxAuiNotebook* SimProject::CreateStatisticsGraphs(wxWindow* parent)
 			eventTimes = server->GetStateChangeTimes();
 
 			// create all the statistics graphs
-			values = server->GetStatesOverTime();
+			states = server->GetStatesOverTime();
+
+			// skim non unique times from list
+			for (int j = 0; j < eventTimes.size(); j++) {
+				eventTimeSkimmingMap.insert({ eventTimes[j], true });
+			}
 
 			// create x-axis labels for states over time chart
-			for (int i = 0; i < values.size(); i++) {
-				x_labels.push_back(wxString::FromDouble(values[i]));
+			for (auto const& event : eventTimeSkimmingMap) {
+				x_labels.push_back(wxString::FromDouble(event.first));
 			}
 
 			statesOverTimeChart = new ChartControl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 			statesOverTimeChart->m_title = "Server " + std::to_string(server->GetID()) + " states over time";
-			statesOverTimeChart->m_values = values;
 			statesOverTimeChart->m_x_axis_labels = x_labels;
+			statesOverTimeChart->m_xvalues = eventTimes;
+			statesOverTimeChart->m_yvalues = states;
 
 			graphs->AddPage(statesOverTimeChart, "ServerStates", true);
 
