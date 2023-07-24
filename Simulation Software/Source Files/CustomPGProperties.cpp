@@ -1,4 +1,4 @@
-#include "ExponentialProperty.h"
+#include "CustomPGProperties.h"
 
 ExponentialProperty::ExponentialProperty(const wxString& label, const wxString& name, Exponential& value)
     : wxPGProperty(label, name)

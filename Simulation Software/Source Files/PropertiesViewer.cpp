@@ -1,5 +1,8 @@
 #include "PropertiesViewer.h"
 
+#include "GraphicalNode.h"
+#include "CustomPGProperties.h"
+
 PropertiesViewer::PropertiesViewer(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY)
 {
@@ -36,6 +39,11 @@ void PropertiesViewer::SetSize(wxSize newSize)
 
 	m_propGrid->SetSize(panelSize);
 	m_propGrid->Refresh();
+}
+
+void PropertiesViewer::SetSelectedObject(GraphicalNode* selectedNode)
+{
+	m_selectedNode = selectedNode;
 }
 
 void PropertiesViewer::AddProperty(wxPGProperty* propToAdd)
@@ -128,6 +136,59 @@ void PropertiesViewer::HideProperties()
 	m_propGrid->Thaw();
 }
 
+void PropertiesViewer::PopulateCorrectChildren(int choice)
+{
+	if (choice == 0) {
+		// Exponential
+
+		
+	}
+	else if (choice == 1) {
+		// Uniform
+
+
+	}
+	else if (choice == 2) {
+		// Triangular
+
+
+	}
+	else if (choice == 3) {
+		// Normal
+
+
+	}
+	else if (choice == 4) {
+		// Poisson
+
+
+	}
+	else if (choice == 5) {
+		// Constant
+
+
+	}
+	else if (choice == 6) {
+		// Weibull
+
+
+	}
+	else if (choice == 7) {
+		// Erlang
+
+
+	}
+}
+
+void PropertiesViewer::ResetPropertyGrid()
+{
+	for (int i = 2; i < m_props.GetSize(); i++) {
+
+		auto prop = m_props.GetIndex(i);
+		m_propGrid->DeleteProperty(prop);
+	}
+}
+
 void PropertiesViewer::OnResize(wxSizeEvent& event)
 {
 	auto width = GetSize().x;
@@ -146,6 +207,105 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 	if (!changedProp) return;
 
 	auto value = event.GetValue();
+	Distribution* dist;
+
+	if (changedProp->GetName() == "Interarrival Distribution") {
+
+		// Get the value of the choice property
+		int value = changedProp->GetValue().GetLong();
+
+		changedProp->DeleteChildren();
+
+		if (value == 1) {
+
+			// Exponential
+			double mean = 0.25;
+			dist = new Exponential(mean);
+			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
+		}
+		else if (value == 2) {
+
+			// Uniform
+			double min = 0.0;
+			double max = 1.0;
+			dist = new Uniform(min, max);
+			changedProp->AppendChild(new wxFloatProperty("Min", wxPG_LABEL, min));
+			changedProp->AppendChild(new wxFloatProperty("Max", wxPG_LABEL, max));
+		}
+		else if (value == 3) {
+
+			// Triangular
+			double min = 1.0;
+			double mean = 2.0;
+			double max = 3.0;
+			dist = new Triangular(min, mean, max);
+			changedProp->AppendChild(new wxFloatProperty("Min", wxPG_LABEL, min));
+			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
+			changedProp->AppendChild(new wxFloatProperty("Max", wxPG_LABEL, max));
+		}
+		else if (value == 4) {
+
+			// Normal
+			double mean = 1.0;
+			double stdev = 0.25;
+			dist = new Normal(mean, stdev);
+			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
+			changedProp->AppendChild(new wxFloatProperty("Standard Deviation", wxPG_LABEL, stdev));
+		}
+		else if (value == 5) {
+
+			// Poisson
+			double mean = 0.25;
+			dist = new Poisson(mean);
+			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
+		}
+		else if (value == 6) {
+
+			// Constant
+			double value = 1.0;
+			dist = new Constant(value);
+			changedProp->AppendChild(new wxFloatProperty("Value", wxPG_LABEL, value));
+		}
+		else if (value == 7) {
+
+			// Weibull
+			double shape = 1.0;
+			double scale = 1.0;
+			dist = new Weibull(shape, scale);
+			changedProp->AppendChild(new wxFloatProperty("Shape", wxPG_LABEL, shape));
+			changedProp->AppendChild(new wxFloatProperty("Scale", wxPG_LABEL, scale));
+		}
+		else if (value == 8) {
+
+			// Erlang
+			double shape = 1.0;
+			double scale = 1.0;
+			dist = new Erlang(shape, scale);
+			changedProp->AppendChild(new wxFloatProperty("Shape", wxPG_LABEL, shape));
+			changedProp->AppendChild(new wxFloatProperty("Scale", wxPG_LABEL, scale));
+		}
+
+		switch (m_selectedNode->GetNodeType()) {
+		case GenericNode::SOURCE:
+
+			break;
+		case GenericNode::SERVER:
+
+			break;
+		case GenericNode::SINK:
+
+			break;
+		}
+
+		wxArrayString timeUnits;
+		timeUnits.push_back(wxString(TimeToString[TimeUnit::SECONDS]));
+		timeUnits.push_back(wxString(TimeToString[TimeUnit::MINUTES]));
+		timeUnits.push_back(wxString(TimeToString[TimeUnit::HOURS]));
+		timeUnits.push_back(wxString(TimeToString[TimeUnit::YEARS]));
+
+		wxEnumProperty* unitChoices = new wxEnumProperty("Time Unit", wxPG_LABEL, timeUnits);
+		changedProp->AppendChild(unitChoices);
+	}
 
 	changedProp->SetValueInEvent(value);
 }

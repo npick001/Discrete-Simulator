@@ -22,7 +22,7 @@
 #include "SimProject.h"
 #include "SimObjectLibrary.h"
 #include "PropertiesViewer.h"
-#include "ExponentialProperty.h"
+#include "CustomPGProperties.h"
 #include "InputAnalyzerPanel.h"
 #include "XMLSerialization.h"
 

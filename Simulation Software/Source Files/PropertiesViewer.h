@@ -11,6 +11,8 @@ enum {
 
 };
 
+class GraphicalNode;
+
 class PropertiesViewer : public wxPanel
 {
 public:
@@ -20,6 +22,7 @@ public:
 	void Refresh();
 	void SetSize(wxSize newSize);
 
+	void SetSelectedObject(GraphicalNode* selectedNode);
 	void AddProperty(wxPGProperty* propToAdd);
 	void EditProperty(wxPGProperty* propToEdit, wxVariant* newValue);
 	void RemoveProperty(wxPGProperty* propToRemove);
@@ -27,9 +30,15 @@ public:
 	void ShowProperties();
 	void HideProperties();
 
+protected:
+	void PopulateCorrectChildren(int choice);
+	void ResetPropertyGrid();
+
 private:
 	wxPropertyGrid* m_propGrid;
 	Set<wxPGProperty> m_props;
+
+	GraphicalNode* m_selectedNode;
 
 	void OnResize(wxSizeEvent& event);
 	void OnPropertyGridChange(wxPropertyGridEvent& event);

@@ -536,8 +536,24 @@ GraphicalSource::GraphicalSource(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	m_infiniteGeneration = false;
 	m_numberToGenerate = 10;
 
-	ExponentialProperty* iaTime = new ExponentialProperty("Interarrival Time", wxPG_LABEL, (Exponential&)m_iaTime);
-	m_properties.Add(iaTime);
+	wxArrayString distributions;
+	distributions.push_back("Default");
+	distributions.push_back("Exponential");
+	distributions.push_back("Uniform");
+	distributions.push_back("Triangular");
+	distributions.push_back("Normal");
+	distributions.push_back("Poisson");
+	distributions.push_back("Constant");
+	distributions.push_back("Weibull");
+	distributions.push_back("Erlang");
+
+	wxEnumProperty* distChoices = new wxEnumProperty("Interarrival Distribution", wxPG_LABEL, distributions);
+	m_properties.Add(distChoices);
+
+	wxFloatProperty* iaDistMean = new wxFloatProperty("Mean", wxPG_LABEL, 0.25);
+
+	//ExponentialProperty* iaTime = new ExponentialProperty("Interarrival Time", wxPG_LABEL, (Exponential&)m_iaTime);
+	//m_properties.Add(iaTime);
 }
 
 GraphicalSource::~GraphicalSource()
