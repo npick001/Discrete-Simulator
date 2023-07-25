@@ -438,6 +438,9 @@ void ServerNode::UpdateStatistics()
 
 void ServerNode::SetServiceTime(Distribution* serviceTime)
 {
+	if (m_serviceTime != nullptr) {
+		delete m_serviceTime;
+	}
 	m_serviceTime = serviceTime;
 }
 

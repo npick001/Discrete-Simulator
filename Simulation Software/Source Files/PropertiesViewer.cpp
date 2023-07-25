@@ -15,7 +15,8 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 
 	// Event bindings
 	this->Bind(wxEVT_SIZE, &PropertiesViewer::OnResize, this);
-	this->Bind(wxEVT_PG_CHANGED, &PropertiesViewer::OnPropertyGridChange, this);
+	this->Bind(wxEVT_PG_CHANGED, &PropertiesViewer::OnDistributionChange, this);
+	this->Bind(wxEVT_PG_CHANGED, &PropertiesViewer::OnDistributionPropertyChange, this);
 }
 
 void PropertiesViewer::Reset()
@@ -87,6 +88,7 @@ void PropertiesViewer::RemoveProperty(wxPGProperty* propToRemove)
 	else {
 		// get prop to remove from Set
 		auto prop = m_props.Get(propToRemove);
+		prop->DeleteChildren();
 		m_propGrid->DeleteProperty(prop);
 	}
 }
@@ -128,56 +130,11 @@ void PropertiesViewer::HideProperties()
 
 		// make sure its actually enabled
 		if (m_propGrid->IsPropertyEnabled(thisOne)) {
-			
 			m_propGrid->DisableProperty(thisOne);
 		}
 	}
 
 	m_propGrid->Thaw();
-}
-
-void PropertiesViewer::PopulateCorrectChildren(int choice)
-{
-	if (choice == 0) {
-		// Exponential
-
-		
-	}
-	else if (choice == 1) {
-		// Uniform
-
-
-	}
-	else if (choice == 2) {
-		// Triangular
-
-
-	}
-	else if (choice == 3) {
-		// Normal
-
-
-	}
-	else if (choice == 4) {
-		// Poisson
-
-
-	}
-	else if (choice == 5) {
-		// Constant
-
-
-	}
-	else if (choice == 6) {
-		// Weibull
-
-
-	}
-	else if (choice == 7) {
-		// Erlang
-
-
-	}
 }
 
 void PropertiesViewer::ResetPropertyGrid()
@@ -201,13 +158,12 @@ void PropertiesViewer::OnResize(wxSizeEvent& event)
 	event.Skip();
 }
 
-void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
+void PropertiesViewer::OnDistributionChange(wxPropertyGridEvent& event)
 {
 	auto changedProp = event.GetProperty();
 	if (!changedProp) return;
 
 	auto value = event.GetValue();
-	Distribution* dist;
 
 	if (changedProp->GetName() == "Interarrival Distribution") {
 
@@ -215,11 +171,15 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 		int value = changedProp->GetValue().GetLong();
 
 		changedProp->DeleteChildren();
+		Distribution* dist = new Uniform(0, 1);
+		GraphicalSource* src;
+		GraphicalServer* server;
 
 		if (value == 1) {
 
 			// Exponential
 			double mean = 0.25;
+			delete dist;
 			dist = new Exponential(mean);
 			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
 		}
@@ -228,6 +188,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 			// Uniform
 			double min = 0.0;
 			double max = 1.0;
+			delete dist;
 			dist = new Uniform(min, max);
 			changedProp->AppendChild(new wxFloatProperty("Min", wxPG_LABEL, min));
 			changedProp->AppendChild(new wxFloatProperty("Max", wxPG_LABEL, max));
@@ -238,6 +199,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 			double min = 1.0;
 			double mean = 2.0;
 			double max = 3.0;
+			delete dist;
 			dist = new Triangular(min, mean, max);
 			changedProp->AppendChild(new wxFloatProperty("Min", wxPG_LABEL, min));
 			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
@@ -248,6 +210,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 			// Normal
 			double mean = 1.0;
 			double stdev = 0.25;
+			delete dist;
 			dist = new Normal(mean, stdev);
 			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
 			changedProp->AppendChild(new wxFloatProperty("Standard Deviation", wxPG_LABEL, stdev));
@@ -256,6 +219,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 
 			// Poisson
 			double mean = 0.25;
+			delete dist;
 			dist = new Poisson(mean);
 			changedProp->AppendChild(new wxFloatProperty("Mean", wxPG_LABEL, mean));
 		}
@@ -263,6 +227,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 
 			// Constant
 			double value = 1.0;
+			delete dist;
 			dist = new Constant(value);
 			changedProp->AppendChild(new wxFloatProperty("Value", wxPG_LABEL, value));
 		}
@@ -271,6 +236,7 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 			// Weibull
 			double shape = 1.0;
 			double scale = 1.0;
+			delete dist;
 			dist = new Weibull(shape, scale);
 			changedProp->AppendChild(new wxFloatProperty("Shape", wxPG_LABEL, shape));
 			changedProp->AppendChild(new wxFloatProperty("Scale", wxPG_LABEL, scale));
@@ -280,20 +246,26 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 			// Erlang
 			double shape = 1.0;
 			double scale = 1.0;
+			delete dist;
 			dist = new Erlang(shape, scale);
 			changedProp->AppendChild(new wxFloatProperty("Shape", wxPG_LABEL, shape));
 			changedProp->AppendChild(new wxFloatProperty("Scale", wxPG_LABEL, scale));
 		}
 
+		if (dist == nullptr) {
+			throw std::runtime_error("Distribution issue. Should never be here.\n\nPropertiesViewer.cpp : OnDistributionChange()");
+		}
+
 		switch (m_selectedNode->GetNodeType()) {
 		case GenericNode::SOURCE:
-
+			src = (GraphicalSource*)m_selectedNode;
+			src->SetIATime(dist);
 			break;
 		case GenericNode::SERVER:
-
+			server = (GraphicalServer*)m_selectedNode;
+			server->SetServiceTime(dist);
 			break;
 		case GenericNode::SINK:
-
 			break;
 		}
 
@@ -308,4 +280,22 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 
 	changedProp->SetValueInEvent(value);
+	Refresh();
+}
+
+void PropertiesViewer::OnDistributionPropertyChange(wxPropertyGridEvent& event)
+{
+	// Designed to capture changes in distribution properties
+	// i.e, means, stdev, shape, scale
+
+	auto changedProp = event.GetProperty();
+	if (!changedProp) return;
+
+	auto value = event.GetValue();
+	Distribution* dist; // the new distribution
+
+	if (changedProp->GetName() != "Interarrival Distribution") {
+		auto parent = changedProp->GetParent();
+		auto parentValue = parent->GetValue();
+	}
 }

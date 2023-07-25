@@ -7,10 +7,6 @@
 
 #include "Set.h"
 
-enum {
-
-};
-
 class GraphicalNode;
 
 class PropertiesViewer : public wxPanel
@@ -31,7 +27,6 @@ public:
 	void HideProperties();
 
 protected:
-	void PopulateCorrectChildren(int choice);
 	void ResetPropertyGrid();
 
 private:
@@ -41,5 +36,6 @@ private:
 	GraphicalNode* m_selectedNode;
 
 	void OnResize(wxSizeEvent& event);
-	void OnPropertyGridChange(wxPropertyGridEvent& event);
+	void OnDistributionChange(wxPropertyGridEvent& event);
+	void OnDistributionPropertyChange(wxPropertyGridEvent& event);
 };
