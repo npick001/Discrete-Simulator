@@ -14,7 +14,7 @@ enum TimeUnit{
 };
 
 // MAP FOR TIME UNIT TO STRING CONVERSION
-static const std::map<TimeUnit, std::string> TimeToString = { {SECONDS, "Seconds"}, {MINUTES, "Minutes"},
+static std::map<TimeUnit, std::string> TimeToString = { {SECONDS, "Seconds"}, {MINUTES, "Minutes"},
 												 {HOURS, "Hours"}, {YEARS, "Years"} };
 // MAP FOR STRING TO TIME UNIT CONVERSION
 static const std::map<std::string, TimeUnit> StringToTimeUnit = { {"Seconds", SECONDS}, {"Minutes", MINUTES},

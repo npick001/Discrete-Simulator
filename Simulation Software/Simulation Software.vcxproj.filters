@@ -81,13 +81,13 @@
     <ClInclude Include="Source Files\XMLSerialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source Files\ExponentialProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source Files\InputAnalyzerPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source Files\ChartControls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Files\CustomPGProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,13 +155,13 @@
     <ClCompile Include="Source Files\XMLSerialization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\ExponentialProperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\InputAnalyzerPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\ChartControls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\CustomPGProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

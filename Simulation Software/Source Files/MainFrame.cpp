@@ -190,6 +190,7 @@ void MainFrame::RegisterNewSelection(GraphicalNode* selection)
         m_properties->AddProperty(selectionProps.GetFirst());
     }
 
+    m_properties->SetSelectedObject(selection);
     m_properties->Refresh();
 }
 
