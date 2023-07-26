@@ -129,6 +129,7 @@ MainFrame::MainFrame(const wxString& title)
     auto propSize = new wxSize(propWidth, GetSize().y);
     m_properties = new PropertiesViewer(this);
     m_properties->ShowProperties();
+    m_graphs = new HTMLViewer(this);
 
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right().BestSize(*propSize));
@@ -496,7 +497,7 @@ void MainFrame::OnRun(wxCommandEvent& event)
             m_manager.DetachPane(m_graphs);
         }
 
-        m_graphs = m_simProject->CreateStatisticsGraphs(this);
+       // m_graphs = m_simProject->CreateStatisticsGraphs(this);
 
         m_manager.AddPane(m_graphs, wxAuiPaneInfo().Name("Statistics Graphs").
             Dockable(true).Right());
@@ -520,7 +521,7 @@ void MainFrame::OnBuildAndRun(wxCommandEvent& event)
         m_manager.DetachPane(m_graphs);
     }
 
-    m_graphs = m_simProject->CreateStatisticsGraphs(this);
+    //m_graphs = m_simProject->CreateStatisticsGraphs(this);
 
     m_manager.AddPane(m_graphs, wxAuiPaneInfo().Name("Statistics Graphs").
         Dockable(true).Right());

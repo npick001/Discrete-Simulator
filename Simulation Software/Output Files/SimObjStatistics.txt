@@ -7,14 +7,14 @@ SOURCE 0
 SSSQ 1
 
 	- Entities Processed: 10
-	- Time Waiting: 52.816440
-	- Time in Service: 16.013088
+	- Time Waiting: 91.889317
+	- Time in Service: 21.467888
 	- Time Idle: 0.000000
 	- Percent Utilization: 1.000000
 	- Average Queue Wait Time: inf
 	- Average Queue Size: inf
 	- Minimum Queue Size: 0.000000
-	- Maximum Queue Size: 7.000000
+	- Maximum Queue Size: 9.000000
 SINK 2
 
 	- Entities Created: 10

@@ -163,6 +163,7 @@
     <ClInclude Include="Source Files\GraphicalEdge.h" />
     <ClInclude Include="Source Files\GraphicalElement.h" />
     <ClInclude Include="Source Files\GraphicalNode.h" />
+    <ClInclude Include="Source Files\HTMLControls.h" />
     <ClInclude Include="Source Files\InputAnalyzerPanel.h" />
     <ClInclude Include="Source Files\PropertiesViewer.h" />
     <ClInclude Include="Source Files\PropertySet.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Source Files\GraphicalEdge.cpp" />
     <ClCompile Include="Source Files\GraphicalElement.cpp" />
     <ClCompile Include="Source Files\GraphicalNode.cpp" />
+    <ClCompile Include="Source Files\HTMLControls.cpp" />
     <ClCompile Include="Source Files\InputAnalyzerPanel.cpp" />
     <ClCompile Include="Source Files\PropertiesViewer.cpp" />
     <ClCompile Include="Source Files\PropertySet.cpp" />

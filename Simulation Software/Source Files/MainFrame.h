@@ -25,7 +25,7 @@
 #include "CustomPGProperties.h"
 #include "InputAnalyzerPanel.h"
 #include "XMLSerialization.h"
-
+#include "HTMLControls.h"
 
 enum {
     ID_Exit = 1,
@@ -70,7 +70,7 @@ private:
     PropertiesViewer* m_properties;
     wxArrayString m_perspectives; // not used yet
     wxAuiNotebook* m_mainCanvas;
-    wxAuiNotebook* m_graphs;
+    HTMLViewer* m_graphs;
 
     long m_notebook_style;
     long m_notebook_theme;

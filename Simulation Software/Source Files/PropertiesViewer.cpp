@@ -13,6 +13,9 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 	m_propGrid = new wxPropertyGrid(this, wxID_ANY, wxDefaultPosition, panelSize,
 		wxPG_SPLITTER_AUTO_CENTER);
 
+	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
+	AddProperty(headerProp);
+
 	// Event bindings
 	this->Bind(wxEVT_SIZE, &PropertiesViewer::OnResize, this);
 	this->Bind(wxEVT_PG_CHANGED, &PropertiesViewer::OnDistributionChange, this);
@@ -21,9 +24,7 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 
 void PropertiesViewer::Reset()
 {
-	while (!m_props.IsEmpty()) {
-		m_propGrid->RemoveProperty(m_props.GetFirst());
-	}
+	ResetPropertyGrid();
 }
 
 void PropertiesViewer::Refresh()
@@ -139,10 +140,10 @@ void PropertiesViewer::HideProperties()
 
 void PropertiesViewer::ResetPropertyGrid()
 {
-	for (int i = 2; i < m_props.GetSize(); i++) {
+	auto numProps = m_props.GetSize() - 1;
 
-		auto prop = m_props.GetIndex(i);
-		m_propGrid->DeleteProperty(prop);
+	for (int i = numProps; i >= 1; i--) {
+		RemoveProperty(m_props[i]);
 	}
 }
 
@@ -294,7 +295,10 @@ void PropertiesViewer::OnDistributionPropertyChange(wxPropertyGridEvent& event)
 	auto value = event.GetValue();
 	Distribution* dist; // the new distribution
 
-	if (changedProp->GetName() != "Interarrival Distribution") {
+	if (changedProp->GetName() == "Interarrival Distribution") {
+		OnDistributionChange(event);
+	}
+	else {
 		auto parent = changedProp->GetParent();
 		auto parentValue = parent->GetValue();
 	}

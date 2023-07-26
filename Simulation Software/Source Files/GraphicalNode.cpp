@@ -20,9 +20,6 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	// Default component dimensions and colors
 	// High pixel density displays are accounted for in the GraphicalNode constructor
 
-	auto headerProp = new wxStringProperty("Property", wxPG_LABEL, "Value");
-	m_properties.Add(headerProp);
-
 	/// graphical characteristics
 	// size
 	m_bodySize = parent->FromDIP(wxSize(100, 75));
@@ -40,28 +37,6 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 
 	// position
 	m_position = center;
-
-	// user sizing nodes
-	// TOP_LEFT
-	double x = GetPosition().m_x - (m_bodyShape.m_width / 2);
-	double y = GetPosition().m_y - (m_bodyShape.m_height / 2);
-	m_sizers[TOP_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
-
-	// TOP_RIGHT
-	x = GetPosition().m_x + (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
-	y = GetPosition().m_y - (m_bodyShape.m_height / 2);
-	m_sizers[TOP_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
-
-	// BOTTOM_LEFT
-	x = GetPosition().m_x - (m_bodyShape.m_width / 2);
-	y = GetPosition().m_y + (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
-	m_sizers[BOTTOM_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
-
-	// BOTTOM_RIGHT
-	x = GetPosition().m_x - (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
-	y = GetPosition().m_y - (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
-	m_sizers[BOTTOM_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
-	// END SIZERS
 	
 	// IO nodes
 	m_inputRect = wxRect2DDouble(-m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
@@ -601,14 +576,34 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 	if (m_isSelected) {
 		// draw all the scaling rects
 		gc->SetBrush(wxBrush(m_sizerColor));
-		for (int i = 0; i < 4; i++) {
 
-			wxDouble x = m_sizers[i].m_x;
-			wxDouble y = m_sizers[i].m_y;
-			wxDouble width = m_sizers[i].m_width;
-			wxDouble height = m_sizers[i].m_height;
-			gc->DrawRectangle(x, y, width, height);
-		}
+		// user sizing nodes
+		// TOP_LEFT
+		double x = GetPosition().m_x - (m_bodyShape.m_width / 2);
+		double y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+		m_sizers[TOP_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+
+		// TOP_RIGHT
+		x = GetPosition().m_x + (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+		y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+		m_sizers[TOP_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+
+		// BOTTOM_LEFT
+		x = GetPosition().m_x - (m_bodyShape.m_width / 2);
+		y = GetPosition().m_y + (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+		m_sizers[BOTTOM_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+
+		// BOTTOM_RIGHT
+		x = GetPosition().m_x - (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+		y = GetPosition().m_y - (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+		m_sizers[BOTTOM_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+		// END SIZERS
+
+		// draw the sizers
+		gc->DrawRectangle(m_sizers[TOP_LEFT].m_x, m_sizers[TOP_LEFT].m_y, m_sizers[TOP_LEFT].m_width, m_sizers[TOP_LEFT].m_height);
+		gc->DrawRectangle(m_sizers[TOP_RIGHT].m_x, m_sizers[TOP_RIGHT].m_y, m_sizers[TOP_RIGHT].m_width, m_sizers[TOP_RIGHT].m_height);
+		gc->DrawRectangle(m_sizers[BOTTOM_LEFT].m_x, m_sizers[BOTTOM_LEFT].m_y, m_sizers[BOTTOM_LEFT].m_width, m_sizers[BOTTOM_LEFT].m_height);
+		gc->DrawRectangle(m_sizers[BOTTOM_RIGHT].m_x, m_sizers[BOTTOM_RIGHT].m_y, m_sizers[BOTTOM_RIGHT].m_width, m_sizers[BOTTOM_RIGHT].m_height);
 	}
 
 	// draw the text on the object

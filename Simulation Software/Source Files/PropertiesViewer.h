@@ -28,6 +28,7 @@ public:
 
 protected:
 	void ResetPropertyGrid();
+	void RecursivelyRemovePropertyChildren(wxPGProperty* prop);
 
 private:
 	wxPropertyGrid* m_propGrid;
