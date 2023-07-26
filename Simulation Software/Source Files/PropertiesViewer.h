@@ -32,7 +32,6 @@ public:
 
 protected:
 	void PopulateCorrectChildren(int choice);
-	void ResetPropertyGrid();
 
 private:
 	wxPropertyGrid* m_propGrid;

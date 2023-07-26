@@ -21,7 +21,10 @@ PropertiesViewer::PropertiesViewer(wxWindow* parent)
 void PropertiesViewer::Reset()
 {
 	while (!m_props.IsEmpty()) {
-		m_propGrid->RemoveProperty(m_props.GetFirst());
+
+		auto prop = m_props.GetFirst();
+		prop->DeleteChildren();
+		m_propGrid->RemoveProperty(prop);
 	}
 }
 
@@ -180,15 +183,6 @@ void PropertiesViewer::PopulateCorrectChildren(int choice)
 	}
 }
 
-void PropertiesViewer::ResetPropertyGrid()
-{
-	for (int i = 2; i < m_props.GetSize(); i++) {
-
-		auto prop = m_props.GetIndex(i);
-		m_propGrid->DeleteProperty(prop);
-	}
-}
-
 void PropertiesViewer::OnResize(wxSizeEvent& event)
 {
 	auto width = GetSize().x;
@@ -209,7 +203,8 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 	auto value = event.GetValue();
 	Distribution* dist;
 
-	if (changedProp->GetName() == "Interarrival Distribution") {
+	if (changedProp->GetName() == "Interarrival Distribution" ||
+		changedProp->GetName() == "Service Time Distribution") {
 
 		// Get the value of the choice property
 		int value = changedProp->GetValue().GetLong();
@@ -288,11 +283,17 @@ void PropertiesViewer::OnPropertyGridChange(wxPropertyGridEvent& event)
 		switch (m_selectedNode->GetNodeType()) {
 		case GenericNode::SOURCE:
 
+
+
 			break;
 		case GenericNode::SERVER:
 
+
+
 			break;
 		case GenericNode::SINK:
+
+
 
 			break;
 		}

@@ -666,12 +666,26 @@ GraphicalServer::GraphicalServer(ElementKey id, wxWindow* window, wxPoint2DDoubl
 	m_numResources = 1;
 
 	//auto stProp = new wxFloatProperty("Service Time", wxPG_LABEL, m_serviceTime);
-	auto timeUnitProp = new wxStringProperty("Time Unit", wxPG_LABEL, TimeToString.at(m_timeUnit));
+	//auto timeUnitProp = new wxStringProperty("Time Unit", wxPG_LABEL, TimeToString.at(m_timeUnit));
 	auto resourceNumProp = new wxUIntProperty("Number of Resources", wxPG_LABEL, m_numResources);
+	m_properties.Add(resourceNumProp);
+
+	wxArrayString distributions;
+	distributions.push_back("Default");
+	distributions.push_back("Exponential");
+	distributions.push_back("Uniform");
+	distributions.push_back("Triangular");
+	distributions.push_back("Normal");
+	distributions.push_back("Poisson");
+	distributions.push_back("Constant");
+	distributions.push_back("Weibull");
+	distributions.push_back("Erlang");
+
+	wxEnumProperty* distChoices = new wxEnumProperty("Service Time Distribution", wxPG_LABEL, distributions);
+	m_properties.Add(distChoices);
 
 	//m_properties.Add(stProp);
-	m_properties.Add(timeUnitProp);
-	m_properties.Add(resourceNumProp);
+	//m_properties.Add(timeUnitProp);
 }
 
 GraphicalServer::~GraphicalServer()
