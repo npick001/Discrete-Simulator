@@ -42,13 +42,27 @@ GraphicalNode::GraphicalNode(ElementKey id, wxWindow* parent, wxPoint2DDouble ce
 	m_position = center;
 
 	// user sizing nodes
-	m_sizers[0] = wxRect2DDouble(-m_bodyShape.m_width/2 -m_sizerSize.GetX()/2, -m_bodyShape.m_height/2 -m_sizerSize.GetY()/2, m_sizerSize.GetWidth(), m_sizerSize.GetHeight()); // top left
-	m_sizers[1] = wxRect2DDouble(m_bodyShape.m_width/2 - m_sizerSize.GetX()/2, -m_bodyShape.m_height/2 -m_sizerSize.GetY()/2, m_sizerSize.GetWidth(), m_sizerSize.GetHeight()); // top right
-	m_sizers[2] = wxRect2DDouble(-m_bodyShape.m_width/2 -m_sizerSize.GetX()/2, m_bodyShape.m_height - m_bodyShape.m_height / 2 -m_sizerSize.GetY()/2, m_sizerSize.GetWidth(), m_sizerSize.GetHeight()); // bottom left
-	m_sizers[3] = wxRect2DDouble(m_bodyShape.m_width/2 - m_sizerSize.GetX()/2,
-								 m_bodyShape.m_height - m_bodyShape.m_height / 2 - m_sizerSize.GetY()/2,
-								 m_sizerSize.GetWidth(), m_sizerSize.GetHeight()); // bottom right
+	// TOP_LEFT
+	double x = GetPosition().m_x - (m_bodyShape.m_width / 2);
+	double y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+	m_sizers[TOP_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 
+	// TOP_RIGHT
+	x = GetPosition().m_x + (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+	y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+	m_sizers[TOP_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+
+	// BOTTOM_LEFT
+	x = GetPosition().m_x - (m_bodyShape.m_width / 2);
+	y = GetPosition().m_y + (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+	m_sizers[BOTTOM_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+
+	// BOTTOM_RIGHT
+	x = GetPosition().m_x - (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+	y = GetPosition().m_y - (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+	m_sizers[BOTTOM_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
+	// END SIZERS
+	
 	// IO nodes
 	m_inputRect = wxRect2DDouble(-m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
 	m_outputRect = wxRect2DDouble(m_bodyShape.m_width / 2 - m_ioSize.GetWidth() / 2, -m_ioSize.GetHeight() / 2, m_ioSize.GetWidth(), m_ioSize.GetHeight());
