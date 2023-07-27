@@ -25,6 +25,10 @@ public:
 	void SetBackgroundColor(wxColour& color);
 	void SetChartLabel(wxString& label);
 
+	// linear interpolation methods
+	void SetInterpolationMode(bool defaultMode);
+	void SetInterpolationTension(double tension);
+
 	// bring all strings together in the correct order to build  
 	// a script that will chart the data based on the values saved in the document
 	wxString BuildGraphingScript();
@@ -38,13 +42,24 @@ private:
 	const wxString m_chart_js_path = "D:\\wxChart.js-master";
 	const wxString m_output_path = ".\\Output Files\\Charts\\";
 
-	wxSize* m_size;
+	// canvas
+	wxSize m_size;
+
+	// chart building
+	wxString m_chartTitle;
+	wxString m_chartType;
+	wxString m_lineWidth;
+	wxColour m_lineColor;
+	wxColour m_borderColor;
+	wxColour m_backgroundColor;
 
 	// charting values
-	std::vector<wxString> m_labels;
-	std::vector<double> m_data;
+	wxString m_data;
+	wxString m_labels;
 
-	//static wxHtml
+	// Line Graph Interpolation 
+	wxString m_interpolationMode;
+	double m_interpolationTension;
 };
 
 class HTMLViewer : public wxPanel

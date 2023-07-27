@@ -579,23 +579,23 @@ void GraphicalSource::MyDraw(const wxAffineMatrix2D& camera, wxGraphicsContext* 
 
 		// user sizing nodes
 		// TOP_LEFT
-		double x = GetPosition().m_x - (m_bodyShape.m_width / 2);
-		double y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+		double x = -(m_bodyShape.m_width / 2);
+		double y = -(m_bodyShape.m_height / 2);
 		m_sizers[TOP_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 
 		// TOP_RIGHT
-		x = GetPosition().m_x + (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
-		y = GetPosition().m_y - (m_bodyShape.m_height / 2);
+		x = (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+		y = -(m_bodyShape.m_height / 2);
 		m_sizers[TOP_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 
 		// BOTTOM_LEFT
-		x = GetPosition().m_x - (m_bodyShape.m_width / 2);
-		y = GetPosition().m_y + (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+		x = -(m_bodyShape.m_width / 2);
+		y = (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
 		m_sizers[BOTTOM_LEFT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 
 		// BOTTOM_RIGHT
-		x = GetPosition().m_x - (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
-		y = GetPosition().m_y - (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
+		x = (m_bodyShape.m_width / 2) - m_sizerSize.GetWidth();
+		y = (m_bodyShape.m_height / 2) - m_sizerSize.GetHeight();
 		m_sizers[BOTTOM_RIGHT] = wxRect2DDouble(x, y, m_sizerSize.GetWidth(), m_sizerSize.GetHeight());
 		// END SIZERS
 

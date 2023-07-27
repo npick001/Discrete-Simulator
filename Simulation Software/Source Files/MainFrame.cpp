@@ -129,7 +129,7 @@ MainFrame::MainFrame(const wxString& title)
     auto propSize = new wxSize(propWidth, GetSize().y);
     m_properties = new PropertiesViewer(this);
     m_properties->ShowProperties();
-    m_graphs = new HTMLViewer(this);
+    m_graphs = new HTMLPageViewer(this);
 
     m_manager.AddPane(m_properties, wxAuiPaneInfo().Name("Test Property Panel").
         Dockable(true).Right().BestSize(*propSize));

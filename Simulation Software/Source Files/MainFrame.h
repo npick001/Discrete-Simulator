@@ -70,7 +70,7 @@ private:
     PropertiesViewer* m_properties;
     wxArrayString m_perspectives; // not used yet
     wxAuiNotebook* m_mainCanvas;
-    HTMLViewer* m_graphs;
+    HTMLPageViewer* m_graphs;
 
     long m_notebook_style;
     long m_notebook_theme;
